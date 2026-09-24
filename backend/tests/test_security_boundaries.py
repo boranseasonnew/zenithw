@@ -47,6 +47,13 @@ def function_source(name):
 
 
 class OriginLockTests(unittest.TestCase):
+    def test_production_cannot_enable_development_key_or_cors_overrides(self):
+        self.assertNotIn('ALLOW_INSECURE_KEY', APP_SOURCE)
+        self.assertNotIn('ALLOW_DEV_CORS', APP_SOURCE)
+        self.assertIn('if os.environ.get("FLASK_ENV") == "development":', APP_SOURCE)
+        self.assertIn('SECRET_KEY.startswith("replace-with-")', APP_SOURCE)
+        self.assertIn('ORIGIN_SECRET_VALUE.startswith("replace-with-")', APP_SOURCE)
+
     def test_missing_secret_is_allowed_only_by_an_explicit_development_override(self):
         self.assertIn('ORIGIN_LOCK_DEV_BYPASS = (', APP_SOURCE)
         self.assertIn('os.environ.get("FLASK_ENV") == "development"', APP_SOURCE)
@@ -74,6 +81,11 @@ class SocketAndSsrfBoundaryTests(unittest.TestCase):
 
 
 class TokenLoggingTests(unittest.TestCase):
+    def test_origin_lock_logs_use_token_redaction(self):
+        source = function_source("_enforce_cloudflare_origin")
+        self.assertNotIn("{request.path}", source)
+        self.assertIn('_safe_log_url("https://api.zenithw.space" + request.path)', source)
+
     def test_prepared_file_token_is_redacted_from_logged_urls(self):
         safe_log_url = load_function(
             "_safe_log_url",

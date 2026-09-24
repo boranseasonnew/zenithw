@@ -3,6 +3,7 @@ const { spawn, execFileSync } = require('node:child_process');
 const { randomUUID } = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
+const { pathToFileURL } = require('node:url');
 
 const activeJobs = new Map();
 const COOKIE_PARTITION = 'persist:zenithw-login';
@@ -73,6 +74,15 @@ function sanitizeProxy(value) {
   if (!['http:', 'https:', 'socks4:', 'socks5:'].includes(url.protocol)) throw new Error('Proxy: http, https, socks4 veya socks5 kullanın.');
   return url.href;
 }
+function sanitizeNaming(value) {
+  const naming = String(value || '').trim();
+  // yt-dlp expands this template inside the private job directory. Never let
+  // settings turn it into a path or a Windows drive/device name.
+  if (!naming || naming.length > 200 || /[\\/:*?"<>|\x00-\x1f]/.test(naming) || naming.startsWith('.')) {
+    throw new Error('Invalid output filename template.');
+  }
+  return naming;
+}
 function bounded(value, min, max, fallback) {
   const number = Number.parseInt(value, 10);
   return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
@@ -87,7 +97,13 @@ function createWindow() {
     backgroundColor: '#080b14', titleBarStyle: 'hidden', titleBarOverlay: { color: '#080b14', symbolColor: '#d8e1ff' },
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true }
   });
-  mainWindow.loadFile(path.join(__dirname, 'app.html'));
+  const appHtml = path.join(__dirname, 'app.html');
+  const appUrl = pathToFileURL(appHtml).href;
+  mainWindow.webContents.on('will-navigate', (event, nextUrl) => {
+    if (nextUrl !== appUrl) event.preventDefault();
+  });
+  mainWindow.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  mainWindow.loadFile(appHtml);
 }
 function emit(job, type, payload) {
   if (mainWindow && !mainWindow.isDestroyed()) mainWindow.webContents.send('download:event', { jobId: job.id, type, ...payload });
@@ -117,7 +133,7 @@ function aria2Args(current = settings) {
 }
 const baseArgs = (current = settings) => ['--ignore-config', '--no-warnings', '--ffmpeg-location', requiredTool('ffmpeg.exe'), ...networkArgs(current)];
 function downloadArgs(job, current, workDir) {
-  const output = path.join(workDir, current.naming);
+  const output = path.join(workDir, sanitizeNaming(current.naming));
   const args = ['--newline', ...baseArgs(current), '--paths', workDir, '--paths', `temp:${workDir}`, '-o', output,
     '--retries', String(bounded(current.retries, 1, 30, 10)), '--fragment-retries', String(bounded(current.retries, 1, 30, 10)),
     '--concurrent-fragments', String(bounded(current.concurrentFragments, 1, 16, 4)), ...aria2Args(current)];
@@ -236,15 +252,25 @@ app.whenReady().then(() => {
 });
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
 
-ipcMain.handle('settings:get', () => settings);
-ipcMain.handle('settings:save', (_, next) => saveSettings(next || {}));
-ipcMain.handle('folder:choose', async () => { const result = await dialog.showOpenDialog({ properties: ['openDirectory', 'createDirectory'] }); return result.canceled ? null : result.filePaths[0]; });
-ipcMain.handle('app:tools', async () => ({ ytDlp: fs.existsSync(resource('yt-dlp.exe')), ytDlpVersion: toolVersion('yt-dlp.exe'), ffmpeg: fs.existsSync(resource('ffmpeg.exe')), ffmpegVersion: toolVersion('ffmpeg.exe', ['-version']), aria2: fs.existsSync(resource('aria2c.exe')), aria2Version: toolVersion('aria2c.exe'), cookieCount: (await session.fromPartition(COOKIE_PARTITION).cookies.get({})).length, sessionCookies: fs.existsSync(cookiePath()), directConnection: !settings.proxyUrl }));
-ipcMain.handle('engine:update', (_, channel) => performUpdate(channel));
-ipcMain.handle('cookies:login', (_, url) => openLogin(url));
-ipcMain.handle('cookies:save', () => exportCookies());
-ipcMain.handle('cookies:clear', async () => { await session.fromPartition(COOKIE_PARTITION).clearStorageData({ storages: ['cookies'] }); fs.rmSync(cookiePath(), { force: true }); saveSettings({ cookieMode: 'none' }); return { count: 0 }; });
-ipcMain.handle('media:inspect', async (_, rawUrl) => {
+function handleMain(channel, handler) {
+  ipcMain.handle(channel, (event, ...args) => {
+    if (!mainWindow || event.sender !== mainWindow.webContents ||
+        event.senderFrame !== mainWindow.webContents.mainFrame) {
+      throw new Error('Unauthorized IPC sender.');
+    }
+    return handler(event, ...args);
+  });
+}
+
+handleMain('settings:get', () => settings);
+handleMain('settings:save', (_, next) => saveSettings(next || {}));
+handleMain('folder:choose', async () => { const result = await dialog.showOpenDialog({ properties: ['openDirectory', 'createDirectory'] }); return result.canceled ? null : result.filePaths[0]; });
+handleMain('app:tools', async () => ({ ytDlp: fs.existsSync(resource('yt-dlp.exe')), ytDlpVersion: toolVersion('yt-dlp.exe'), ffmpeg: fs.existsSync(resource('ffmpeg.exe')), ffmpegVersion: toolVersion('ffmpeg.exe', ['-version']), aria2: fs.existsSync(resource('aria2c.exe')), aria2Version: toolVersion('aria2c.exe'), cookieCount: (await session.fromPartition(COOKIE_PARTITION).cookies.get({})).length, sessionCookies: fs.existsSync(cookiePath()), directConnection: !settings.proxyUrl }));
+handleMain('engine:update', (_, channel) => performUpdate(channel));
+handleMain('cookies:login', (_, url) => openLogin(url));
+handleMain('cookies:save', () => exportCookies());
+handleMain('cookies:clear', async () => { await session.fromPartition(COOKIE_PARTITION).clearStorageData({ storages: ['cookies'] }); fs.rmSync(cookiePath(), { force: true }); saveSettings({ cookieMode: 'none' }); return { count: 0 }; });
+handleMain('media:inspect', async (_, rawUrl) => {
   const url = sanitizeUrl(rawUrl);
   try {
     const result = await runTool(requiredTool('yt-dlp.exe'), ['--no-playlist', '--dump-single-json', '--skip-download', ...baseArgs(), url], 90000);
@@ -253,7 +279,7 @@ ipcMain.handle('media:inspect', async (_, rawUrl) => {
     return { title: data.title, uploader: data.uploader || data.channel, duration: data.duration, thumbnail: data.thumbnail, formats };
   } catch (error) { throw new Error(`${msg('inspect')} ${error.message || ''}`.trim()); }
 });
-ipcMain.handle('download:start', (_, request) => {
+handleMain('download:start', (_, request) => {
   const job = { id: randomUUID(), url: sanitizeUrl(request.url), kind: request.kind === 'audio' ? 'audio' : 'video', format: String(request.format || ''), audioFormat: String(request.audioFormat || 'mp3') };
   const key = jobKey(job);
   const existing = [...activeJobs.values()].find((item) => item.key === key);
@@ -287,5 +313,5 @@ ipcMain.handle('download:start', (_, request) => {
   });
   return { id: job.id };
 });
-ipcMain.handle('download:cancel', (_, jobId) => { const record = activeJobs.get(jobId); if (record) record.child.kill(); return Boolean(record); });
-ipcMain.handle('folder:open', () => shell.openPath(settings.downloadFolder));
+handleMain('download:cancel', (_, jobId) => { const record = activeJobs.get(jobId); if (record) record.child.kill(); return Boolean(record); });
+handleMain('folder:open', () => shell.openPath(settings.downloadFolder));

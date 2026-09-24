@@ -109,8 +109,10 @@ if TRUST_PROXY:
 # SECRET_KEY: Production'da mutlaka env variable ile sabit değer set edilmeli.
 # Set edilmezse her restart'ta session'lar geçersiz olur.
 SECRET_KEY = os.environ.get("SECRET_KEY")
+if SECRET_KEY and SECRET_KEY.startswith("replace-with-"):
+    raise RuntimeError("SECRET_KEY must be replaced with a generated secret")
 if not SECRET_KEY:
-    if os.environ.get("FLASK_ENV") == "development" or os.environ.get("ALLOW_INSECURE_KEY"):
+    if os.environ.get("FLASK_ENV") == "development":
         SECRET_KEY = secrets.token_hex(32)
         logger.warning("[INIT] Using random SECRET_KEY (development mode)")
     else:
@@ -474,7 +476,7 @@ if SELF_HOSTED_ORIGIN:
     ):
         raise RuntimeError("SELF_HOSTED_ORIGIN must be a plain http(s) origin")
     ALLOWED_ORIGINS.append(SELF_HOSTED_ORIGIN)
-if os.environ.get("FLASK_ENV") == "development" or os.environ.get("ALLOW_DEV_CORS"):
+if os.environ.get("FLASK_ENV") == "development":
     ALLOWED_ORIGINS += ["http://localhost:5000", "http://127.0.0.1:3000"]
 
 CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
@@ -687,6 +689,8 @@ _CF_NETWORKS = [ipaddress.ip_network(n) for n in CLOUDFLARE_IPV4 + CLOUDFLARE_IP
 
 ORIGIN_SECRET_HEADER = "X-Origin-Verify"
 ORIGIN_SECRET_VALUE = os.environ.get("ORIGIN_SECRET", "")
+if ORIGIN_SECRET_VALUE.startswith("replace-with-"):
+    raise RuntimeError("ORIGIN_SECRET must be replaced with a generated secret")
 DIAGNOSTICS_TOKEN = os.environ.get("DIAGNOSTICS_TOKEN", "").strip()
 ORIGIN_LOCK_DEV_BYPASS = (
     os.environ.get("FLASK_ENV") == "development"
@@ -815,7 +819,7 @@ def _enforce_cloudflare_origin():
     if not _is_cloudflare_ip(remote_ip):
         logger.debug(
             f"[ORIGIN-LOCK] Non-Cloudflare-range IP (bilgi amaçlı, engellenmedi): "
-            f"{remote_ip} {request.path}"
+            f"{remote_ip} {_safe_log_url('https://api.zenithw.space' + request.path)}"
         )
 
     # CORS preflight (OPTIONS) isteklerinde tarayıcı custom header (X-Origin-Verify)
@@ -827,7 +831,11 @@ def _enforce_cloudflare_origin():
 
     if ORIGIN_SECRET_VALUE:
         if not hmac.compare_digest(request.headers.get(ORIGIN_SECRET_HEADER, ""), ORIGIN_SECRET_VALUE):
-            logger.warning(f"[ORIGIN-LOCK] Secret header missing/invalid: {remote_ip} {request.path}")
+            logger.warning(
+                "[ORIGIN-LOCK] Secret header missing/invalid: %s %s",
+                remote_ip,
+                _safe_log_url("https://api.zenithw.space" + request.path),
+            )
             return jsonify({"error": "Not Found"}), 404
     elif not ORIGIN_LOCK_DEV_BYPASS:
         # Startup already rejects this state. Keep the request boundary
@@ -3564,7 +3572,7 @@ def finalize_prepared_download(full_path, *, fmt, video_title, requested_downloa
         if not state.get("cancel_discarded"):
             discard_cancel_event(download_id)
             state["cancel_discarded"] = True
-        logger.info(f"[DL] ready for native transfer: {download_name} ({final_size} bytes)")
+        logger.info("[DL] ready for native transfer (%s bytes)", final_size)
         state["result"] = ((
             jsonify({
                 "ok": True,
@@ -4161,7 +4169,7 @@ def convert_file_with_slot(ip, spool_reservation):
             if result.returncode == 0 and os.path.isfile(output_path):
                 completed_mode = 'remux'
             elif conversion_mode == 'remux':
-                logger.info(f"[REMUX INCOMPATIBLE] {result.stderr[:300]}")
+                logger.info("[REMUX INCOMPATIBLE] %s", _redact_log_text(result.stderr)[:300])
                 _force_cleanup(output_path)
                 return jsonify({
                     "error": "The streams are not compatible with this container.",
