@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Ayarlar — ZenithW</title>
+<meta name="description" content="ZenithW indirme, görünüm ve dosya adı ayarları.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" href="zenithw.png">
+<link href="/fonts.css?v=1" rel="stylesheet">
+<link rel="stylesheet" href="style.487d49f0164d.css">
+<link rel="stylesheet" href="site-shell.css?v=14.4">
+<link rel="stylesheet" href="premium-pages.css?v=1.0">
+<link rel="stylesheet" href="media-guidance.css?v=14.4">
+<script src="/version.js?v=14.4"></script>
+</head>
+<body class="theme-default tool-page settings-page mobile-settings-index">
+<main class="tool-page-main">
+  <a class="tool-page-brand" href="/">ZenithW<span>.</span></a>
+  <div class="st-modal tool-page-panel" aria-labelledby="stModalTitle">
+    <div class="mobile-settings-header">
+      <button type="button" class="mobile-settings-back" id="mobileSettingsBack" onclick="showMobileSettingsHome()" aria-label="Ayar kategorilerine dön"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+      <strong id="mobileSettingsTitle">ayarlar</strong>
+      <a href="/" class="mobile-settings-home" aria-label="Ana sayfa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M5 16l7 5 7-5"/></svg></a>
+    </div>
+    <header class="st-modal-header">
+      <div class="st-modal-heading">
+        <span class="st-modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6"/></svg></span>
+        <div><small class="settings-version" id="appVersion">v14.4 — 8 eylül 2026</small><strong id="stModalTitle">ayarlar</strong><small id="stModalSubtitle">indirme deneyimini özelleştir</small></div>
+      </div>
+      <button type="button" class="st-modal-close" aria-label="Ayarları kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </header>
+    <div class="st-modal-layout">
+    <nav class="st-sidebar" aria-labelledby="stModalTitle" role="tablist">
+      <button class="st-nav-btn" data-page="video" role="tab" aria-selected="false" aria-controls="stPageVideo" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z"/></svg>
+        <span id="stNavVideo">video</span>
+      </button>
+      <button class="st-nav-btn" data-page="audio" role="tab" aria-selected="false" aria-controls="stPageAudio" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span id="stNavAudio">ses</span>
+      </button>
+      <button class="st-nav-btn active" data-page="appearance" role="tab" aria-selected="true" aria-controls="stPageAppearance" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+        <span id="stNavAppearance">görünüm</span>
+      </button>
+      <button class="st-nav-btn" data-page="accessibility" role="tab" aria-selected="false" aria-controls="stPageAccessibility" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 8h8M12 8v9M9 12l3 2 3-2"/></svg>
+        <span id="stNavAccessibility">erişilebilirlik</span>
+      </button>
+      <button class="st-nav-btn" data-page="meta" role="tab" aria-selected="false" aria-controls="stPageMeta" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span id="stNavMeta">metadata</span>
+      </button>
+      <button class="st-nav-btn" data-page="filename" role="tab" aria-selected="false" aria-controls="stPageFilename" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        <span id="stNavFilename">dosya adı</span>
+      </button>
+      <button class="st-nav-btn" data-page="advanced" role="tab" aria-selected="false" aria-controls="stPageAdvanced" onclick="stTab(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6"/></svg>
+        <span id="stNavAdvanced">gelişmiş</span>
+      </button>
+    </nav>
+    <div class="st-content">
+      <!-- VIDEO -->
+      <div class="st-page" id="stPageVideo">
+        <div class="st-section st-profile-section">
+          <div class="st-section-label" id="stLblProfiles">hızlı kalite profilleri</div>
+          <div class="download-profile-grid" id="downloadProfileGrid" role="group" aria-labelledby="stLblProfiles">
+            <button class="download-profile-card" type="button" data-profile="minimal" onclick="applyDownloadProfile('minimal')">
+              <span class="download-profile-top"><strong id="profileMinimal">minimal</strong><i>480p</i></span>
+              <span class="download-profile-spec">H.264 · MP4 · MP3 128</span>
+              <small id="profileMinimalDesc">küçük dosya · daha az veri</small>
+            </button>
+            <button class="download-profile-card" type="button" data-profile="standard" onclick="applyDownloadProfile('standard')">
+              <span class="download-profile-top"><strong id="profileStandard">standart</strong><i>1080p</i></span>
+              <span class="download-profile-spec">H.264 · MP4 · MP3 192</span>
+              <small id="profileStandardDesc">uyumluluk ve kalite dengesi</small>
+            </button>
+            <button class="download-profile-card is-quality" type="button" data-profile="quality" onclick="applyDownloadProfile('quality')">
+              <span class="download-profile-top"><strong id="profileQuality">kalite</strong><i>4K</i></span>
+              <span class="download-profile-spec">AV1 · WebM · Opus 192</span>
+              <small id="profileQualityDesc">uygunsa en verimli yüksek kalite</small>
+            </button>
+          </div>
+          <div class="st-note" id="stProfileHint">Profil video ve ses tercihlerini birlikte ayarlar. Sonra tek bir ayarı değiştirirsen özel ayara geçer.</div>
+          <div class="download-profile-status" id="downloadProfileStatus" aria-live="polite"></div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblQuality">video kalitesi</div>
+          <div class="st-chips" id="stQChips">
+            <div class="chip" data-v="4320" onclick="stChip(this,'quality')">8k+</div>
+            <div class="chip" data-v="2160" onclick="stChip(this,'quality')">4k</div>
+            <div class="chip" data-v="1440" onclick="stChip(this,'quality')">1440p</div>
+            <div class="chip active" data-v="1080" onclick="stChip(this,'quality')">1080p</div>
+            <div class="chip" data-v="720" onclick="stChip(this,'quality')">720p</div>
+            <div class="chip" data-v="480" onclick="stChip(this,'quality')">480p</div>
+            <div class="chip" data-v="360" onclick="stChip(this,'quality')">360p</div>
+            <div class="chip" data-v="240" onclick="stChip(this,'quality')">240p</div>
+            <div class="chip" data-v="144" onclick="stChip(this,'quality')">144p</div>
+            <div class="chip" data-v="9999" onclick="stChip(this,'quality')">max ✦</div>
+          </div>
+          <div class="st-note" id="stNoteQuality">tercih edilen kalite seçilir; bulunamazsa en yakın kullanılır.</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblCodec">youtube codec</div>
+          <div class="st-chips" id="stCodecChips">
+            <div class="chip active" data-v="h264" onclick="stChip(this,'codec')">h264 + aac</div>
+            <div class="chip" data-v="av1" onclick="stChip(this,'codec')">av1 + opus</div>
+            <div class="chip" data-v="vp9" onclick="stChip(this,'codec')">vp9 + opus</div>
+          </div>
+          <div class="st-note" id="stNoteCodec">h264: max uyumluluk · av1: en iyi kalite, 8k & hdr · vp9: av1 kalitesi</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblVFmt">video formatı</div>
+          <div class="st-chips" id="stVFmtChips">
+            <div class="chip active" data-v="mp4" onclick="stChip(this,'vfmt')">mp4</div>
+            <div class="chip" data-v="webm" onclick="stChip(this,'vfmt')">webm</div>
+            <div class="chip" data-v="mkv" onclick="stChip(this,'vfmt')">mkv</div>
+            <div class="chip" data-v="avi" onclick="stChip(this,'vfmt')">avi</div>
+            <div class="chip" data-v="mov" onclick="stChip(this,'vfmt')">mov</div>
+          </div>
+          <div class="st-note" id="stNoteVFmt">mp4: en yüksek uyumluluk · webm: daha iyi kalite/verim, daha az uyumluluk · mkv: gelişmiş altyazı ve ses parçaları · mov: apple ve kurgu uygulamaları · avi: eski cihazlar</div>
+        </div>
+        <div class="st-section">
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stYoutubeAdaptiveName">YouTube uyarlanabilir kalite</div><div class="st-tl-desc" id="stYoutubeAdaptiveDesc">Sunucu boşsa en fazla 1080p, yoğun veya kuyrukluysa en fazla 720p seçer. Yalnızca YouTube videolarına uygulanır.</div></div>
+            <button type="button" class="toggle on" id="togYoutubeAdaptiveQuality" role="switch" aria-checked="true" onclick="stToggle('youtubeAdaptiveQuality')" aria-label="YouTube uyarlanabilir kalite"></button>
+          </div>
+        </div>
+      </div>
+      <!-- AUDIO -->
+      <div class="st-page" id="stPageAudio">
+        <div class="st-section">
+          <div class="st-section-label" id="stLblAFmt">ses formatı</div>
+          <div class="st-chips" id="stAFmtChips">
+            <div class="chip active" data-v="mp3" onclick="stChip(this,'afmt')">mp3</div>
+            <div class="chip" data-v="flac" onclick="stChip(this,'afmt')">flac</div>
+            <div class="chip" data-v="wav" onclick="stChip(this,'afmt')">wav</div>
+            <div class="chip" data-v="ogg" onclick="stChip(this,'afmt')">ogg</div>
+            <div class="chip" data-v="opus" onclick="stChip(this,'afmt')">opus</div>
+            <div class="chip" data-v="m4a" onclick="stChip(this,'afmt')">m4a</div>
+          </div>
+          <div class="st-note" id="stNoteAFmt">flac, wav: kayıpsız · mp3, ogg, opus, m4a: kayıplı</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblBitrate">ses bit hızı</div>
+          <div class="st-chips" id="stAQChips">
+            <div class="chip" data-v="320" onclick="stChip(this,'audioQ')">320 kbps</div>
+            <div class="chip active" data-v="256" onclick="stChip(this,'audioQ')">256 kbps</div>
+            <div class="chip" data-v="192" onclick="stChip(this,'audioQ')">192 kbps</div>
+            <div class="chip" data-v="128" onclick="stChip(this,'audioQ')">128 kbps</div>
+            <div class="chip" data-v="96" onclick="stChip(this,'audioQ')">96 kbps</div>
+            <div class="chip" data-v="64" onclick="stChip(this,'audioQ')">64 kbps</div>
+          </div>
+          <div class="st-note st-note-caution" id="stNoteBitrate">* Yüksek bitrate seçmek, kaynağın sesini veya kalitesini olağanüstü biçimde artırmaz; düşük kaliteli bir sesi kaliteli hâle getirmez. Yalnızca kayıplı dönüştürmede daha fazla ayrıntıyı koruyabilir ve dosya boyutunu büyütür.</div>
+        </div>
+      </div>
+      <!-- APPEARANCE -->
+      <div class="st-page active" id="stPageAppearance">
+        <div class="st-section">
+          <div class="st-section-label" id="stLblTheme">tema</div>
+          <div class="theme-row">
+            <button class="theme-btn" id="themeAuto" onclick="setTheme('auto')">otomatik</button>
+            <button class="theme-btn" id="themeLight" onclick="setTheme('light')">açık</button>
+            <button class="theme-btn active" id="themeDark" onclick="setTheme('dark')">koyu</button>
+          </div>
+          <div class="st-note" id="stNoteTheme">otomatik tema cihaz ekran modunu takip eder.</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblLang">dil</div>
+          <div class="lang-select-wrap">
+            <svg class="lang-select-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg>
+            <select class="lang-select" id="langSelect" onchange="setLang(this.value);applyShellLanguage()" aria-labelledby="stLblLang">
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+            </select>
+            <svg class="lang-select-chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 10 5 5 5-5"/></svg>
+          </div>
+          <div class="st-note" id="stNoteLang">arayüz dili. tarayıcıdan otomatik algılanır.</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblAccent">renk teması</div>
+          <div class="accent-grid" id="stAccentChips" role="group" aria-labelledby="stLblAccent">
+            <button type="button" class="accent-option active" data-v="default" onclick="setAccent('default')" aria-pressed="true">
+              <span class="accent-swatch swatch-default" aria-hidden="true"><i></i></span>
+              <span class="accent-option-copy"><strong id="accDefault">klasik</strong><small id="accDefaultDesc">buz mavisi · dengeli</small></span>
+              <span class="accent-check" aria-hidden="true">✓</span>
+            </button>
+            <button type="button" class="accent-option" data-v="purple" onclick="setAccent('purple')" aria-pressed="false">
+              <span class="accent-swatch swatch-purple" aria-hidden="true"><i></i></span>
+              <span class="accent-option-copy"><strong id="accPurple">neon mor</strong><small id="accPurpleDesc">elektrik moru · derin uzay</small></span>
+              <span class="accent-check" aria-hidden="true">✓</span>
+            </button>
+          </div>
+          <div class="st-note" id="stNoteAccent">tema; arka planı, panelleri, parlamaları ve etkileşim renklerini birlikte değiştirir.</div>
+        </div>
+      </div>
+      <!-- ACCESSIBILITY -->
+      <div class="st-page" id="stPageAccessibility">
+        <div class="st-section">
+          <div class="st-section-label" id="stLblVisual">görsel rahatlık</div>
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stReduceMotionName">hareketleri azalt</div><div class="st-tl-desc" id="stReduceMotionDesc">animasyon ve geçişleri mümkün olduğunca kapatır.</div></div>
+            <button type="button" class="toggle" id="togReduceMotion" role="switch" aria-checked="false" onclick="stToggle('reduceMotion')" aria-label="Hareketleri azalt"></button>
+          </div>
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stReduceTransparencyName">şeffaflığı azalt</div><div class="st-tl-desc" id="stReduceTransparencyDesc">bulanıklık efektlerini kapatıp yüzeyleri daha belirgin yapar.</div></div>
+            <button type="button" class="toggle" id="togReduceTransparency" role="switch" aria-checked="false" onclick="stToggle('reduceTransparency')" aria-label="Şeffaflığı azalt"></button>
+          </div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblBehavior">davranış</div>
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stQueueName">kuyruğu otomatik açma</div><div class="st-tl-desc" id="stQueueDesc">playlist indirmesi başlarken kuyruk arka planda çalışır.</div></div>
+            <button type="button" class="toggle" id="togKeepQueueClosed" role="switch" aria-checked="false" onclick="stToggle('keepQueueClosed')" aria-label="Kuyruğu otomatik açma"></button>
+          </div>
+        </div>
+      </div>
+      <!-- META -->
+      <div class="st-page" id="stPageMeta">
+        <div class="st-section">
+          <div class="st-section-label" id="stLblMeta">dosya metadatası</div>
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stMetaName">metadata göm</div><div class="st-tl-desc" id="stMetaDesc">dosyaya başlık, sanatçı ve platform bilgisi gömülür.</div></div>
+            <button type="button" class="toggle on" id="togMetadata" role="switch" aria-checked="true" onclick="stToggle('metadata')" aria-label="Metadata göm"></button>
+          </div>
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stSbName">SponsorBlock</div><div class="st-tl-desc" id="stSbDesc">sponsor/reklam bölümlerini videodan otomatik keser (YouTube).</div></div>
+            <button type="button" class="toggle" id="togSponsorblock" role="switch" aria-checked="false" onclick="stToggle('sponsorblock')" aria-label="SponsorBlock"></button>
+          </div>
+          <div class="st-toggle-row">
+            <div class="st-tl"><div class="st-tl-name" id="stSubName">altyazı göm</div><div class="st-tl-desc" id="stSubDesc">mevcutsa altyazıyı videoya gömer (varsayılan dil: tr, yoksa en).</div></div>
+            <button type="button" class="toggle" id="togSubtitles" role="switch" aria-checked="false" onclick="stToggle('subtitles')" aria-label="Altyazı göm"></button>
+          </div>
+          <div class="settings-field">
+            <label class="st-tl-name" id="stSubtitleLangName" for="subtitleLangSelect">tercih edilen altyazı dili</label>
+            <div class="lang-select-wrap">
+              <select class="lang-select settings-select-plain" id="subtitleLangSelect" onchange="setSettingValue('subtitleLang',this.value)">
+                <option value="tr">Türkçe</option><option value="en">English</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="es">Español</option><option value="auto">otomatik</option>
+              </select>
+              <svg class="lang-select-chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 10 5 5 5-5"/></svg>
+            </div>
+            <div class="st-note" id="stSubtitleLangDesc">seçilen dil yoksa İngilizce altyazı denenir.</div>
+          </div>
+        </div>
+      </div>
+      <!-- FILENAME -->
+      <div class="st-page" id="stPageFilename">
+        <div class="st-section">
+          <div class="st-section-label" id="stLblFilenameStyle">dosya adı stili</div>
+          <div class="st-chips" id="filenameStyleChips">
+            <div class="chip" data-v="classic" onclick="setFilenameStyle(this)">classic</div>
+            <div class="chip active" data-v="basic" onclick="setFilenameStyle(this)">basic</div>
+            <div class="chip" data-v="pretty" onclick="setFilenameStyle(this)">pretty</div>
+            <div class="chip" data-v="nerdy" onclick="setFilenameStyle(this)">nerdy</div>
+          </div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblFnf">dosya adı formatı</div>
+          <input class="fnf-input" id="fnfInput" type="text" value="{title}.{ext}" oninput="updateFnfPreview()"/>
+          <div class="fnf-tags">
+            <span class="fnf-tag" onclick="insertFnfTag('{title}')">{title}</span>
+            <span class="fnf-tag" onclick="insertFnfTag('{artist}')">{artist}</span>
+            <span class="fnf-tag" onclick="insertFnfTag('{date}')">{date}</span>
+            <span class="fnf-tag" onclick="insertFnfTag('{platform}')">{platform}</span>
+            <span class="fnf-tag" onclick="insertFnfTag('{ext}')">{ext}</span>
+          </div>
+          <div class="fnf-preview" id="fnfPreview">Örnek: video_başlığı.mp4</div>
+          <div class="st-note" id="stNoteFnf">İndirme başlamadan önce dosya adı bu formata göre oluşturulur.</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblFnfEx">örnek formatlar</div>
+          <div class="fnf-tags fnf-presets">
+            <button type="button" class="fnf-tag" onclick="setFnfTemplate('{title}.{ext}')">{title}.{ext}</button>
+            <button type="button" class="fnf-tag" onclick="setFnfTemplate('{artist} - {title}.{ext}')">{artist} - {title}.{ext}</button>
+            <button type="button" class="fnf-tag" onclick="setFnfTemplate('{date} - {title}.{ext}')">{date} - {title}.{ext}</button>
+            <button type="button" class="fnf-tag" onclick="setFnfTemplate('[{platform}] {title}.{ext}')">[{platform}] {title}.{ext}</button>
+          </div>
+        </div>
+      </div>
+      <!-- ADVANCED -->
+      <div class="st-page" id="stPageAdvanced">
+        <div class="st-section">
+          <div class="st-section-label" id="stLblSaving">kaydetme yöntemi</div>
+          <div class="st-chips" id="saveMethodChips">
+            <div class="chip active" id="stSaveAsk" data-v="ask" onclick="setChoice(this,'saveMethod')">sor</div>
+            <div class="chip" id="stSaveDownload" data-v="download" onclick="setChoice(this,'saveMethod')">indir</div>
+            <div class="chip" id="stSaveShare" data-v="share" onclick="setChoice(this,'saveMethod')">paylaş</div>
+            <div class="chip" id="stSaveCopy" data-v="copy" onclick="setChoice(this,'saveMethod')">kopyala</div>
+          </div>
+          <div class="st-note" id="stNoteSaving">desteklenmeyen yöntemlerde güvenli indirme seçeneğine dönülür.</div>
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblSettingsData">ayar verileri</div>
+          <div class="settings-actions">
+            <button type="button" class="settings-action" id="stImportBtn" onclick="document.getElementById('settingsImportInput').click()">içe aktar</button>
+            <button type="button" class="settings-action" id="stExportBtn" onclick="exportSettings()">dışa aktar</button>
+            <button type="button" class="settings-action danger" id="stResetBtn" onclick="resetSettings()">sıfırla</button>
+          </div>
+          <input id="settingsImportInput" type="file" accept="application/json,.json" hidden onchange="importSettings(this.files[0]);this.value=''">
+        </div>
+        <div class="st-section">
+          <div class="st-section-label" id="stLblLocalData">yerel veriler</div>
+          <button type="button" class="settings-action danger" id="stClearLocalBtn" onclick="clearZenithLocalData()">geçmişi ve kuyruğu temizle</button>
+          <div class="st-note" id="stNoteLocalData">ayarların ve dil tercihin korunur; yalnızca ZenithW geçmişi ile yarım kalan kuyruk silinir.</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</main>
+<input id="urlInput" type="url" hidden aria-hidden="true"><textarea id="urlTextarea" hidden aria-hidden="true"></textarea>
+<div id="siteBottomNav" data-active="settings"></div>
+<div class="toast" id="toast"><div class="toast-dot" id="toastDot"></div><span id="toastTxt"></span></div>
+
+<script src="app.d4596317c4a7.js?v=15.4"></script>
+<script src="site-shell.js?v=14.3"></script>
+</body>
+</html>

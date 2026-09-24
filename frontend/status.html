@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title id="pgTitle">Sistem Durumu — ZenithW</title>
+  <meta name="description" id="pgDesc" content="ZenithW temel hizmetlerinin sade, canlı ve gizlilik odaklı durum görünümü.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://zenithw.space/status">
+  <meta name="theme-color" content="#060606">
+  <link rel="icon" type="image/png" href="zenithw.png">
+  <link href="/fonts.css?v=1" rel="stylesheet">
+  <link rel="stylesheet" href="info.6c44eb6f52e7.css?v=14.3-status3">
+  <link rel="stylesheet" href="site-shell.css?v=14.4">
+</head>
+<body class="info-page status-page">
+  <main class="info-shell">
+    <nav class="info-nav" aria-label="Sayfa navigasyonu">
+      <a href="/" class="info-logo" aria-label="ZenithW ana sayfa">ZenithW<span>.</span></a>
+      <div class="info-actions">
+        <div class="lang-switch" id="langSwitch" aria-label="Dil seçimi">
+          <button type="button" data-lang="tr" onclick="setPageLang('tr')">TR</button>
+          <button type="button" data-lang="en" onclick="setPageLang('en')">EN</button>
+        </div>
+        <a href="/" class="info-back" id="pgBack">← ana sayfa</a>
+      </div>
+    </nav>
+    <header class="info-hero">
+      <div class="info-kicker" id="pgKicker">canlı servis görünümü</div>
+      <h1 id="pgH1">Sistem durumu.</h1>
+      <p class="info-lead" id="pgLead">Temel ZenithW bileşenleri, hassas operasyon verisi göstermeden her 30 saniyede bir kontrol edilir.</p>
+      <p class="info-meta" id="lastChecked">İlk kontrol hazırlanıyor…</p>
+    </header>
+
+    <article class="info-card status-card">
+      <div class="status-summary" id="statusSummary" role="status" aria-live="polite">
+        <div class="status-orbit" aria-hidden="true">
+          <span class="status-orbit-ring"></span>
+          <span class="status-indicator" id="statusIndicator"></span>
+        </div>
+        <div class="status-summary-copy">
+          <span class="status-eyebrow" id="statusEyebrow">CANLI DURUM</span>
+          <span class="status-main" id="statusMain">Durum kontrol ediliyor…</span>
+          <span class="status-detail" id="statusDetail">Temel bileşenler kontrol ediliyor.</span>
+        </div>
+        <div class="status-summary-actions">
+          <span class="status-live"><i aria-hidden="true"></i> LIVE</span>
+          <button class="info-button status-refresh" id="refreshButton" type="button" onclick="checkStatus()"><span aria-hidden="true">↻</span> yenile</button>
+        </div>
+      </div>
+      <div class="status-grid">
+        <section class="status-tile" id="apiTile">
+          <div class="status-tile-top"><span class="status-glyph" aria-hidden="true">API</span><span class="status-pill" id="apiState">—</span></div>
+          <h2 id="apiLabel">Public API</h2>
+          <p id="apiValue">—</p>
+        </section>
+        <section class="status-tile" id="ffmpegTile">
+          <div class="status-tile-top"><span class="status-glyph" aria-hidden="true">MX</span><span class="status-pill" id="ffmpegState">—</span></div>
+          <h2 id="ffmpegLabel">Medya işleme</h2>
+          <p id="ffmpegValue">—</p>
+        </section>
+        <section class="status-tile" id="sourceTile">
+          <div class="status-tile-top"><span class="status-glyph" aria-hidden="true">SRC</span><span class="status-pill" id="sourceState">—</span></div>
+          <h2 id="sourceLabel">Kaynak platformları</h2>
+          <p id="sourceValue">—</p>
+        </section>
+        <section class="status-tile" id="intakeTile">
+          <div class="status-tile-top"><span class="status-glyph" aria-hidden="true">IN</span><span class="status-pill" id="intakeState">—</span></div>
+          <h2 id="intakeLabel">İş kabulü</h2>
+          <p id="intakeValue">—</p>
+        </section>
+      </div>
+      <div class="status-notes">
+        <section class="info-section status-note">
+          <span class="status-note-number" aria-hidden="true">01</span>
+          <h2 id="dependencyTitle">Bu sayfa neyi ölçer?</h2>
+          <p id="dependencyText">Public API, medya işleme ve iş kabulü doğrudan ölçülür. Kaynak platformları ise yalnızca gerçek bir kullanıcı isteği sırasında doğrulanır; bu yüzden sayfa üçüncü taraf servisler için yanıltıcı bir “tam erişim” vaadi vermez.</p>
+        </section>
+        <section class="info-section status-note">
+          <span class="status-note-number" aria-hidden="true">02</span>
+          <h2 id="helpTitle">Sorun devam mı ediyor?</h2>
+          <p id="helpText">Durum çalışıyor görünmesine rağmen hata alıyorsanız, kullandığınız kaynak bağlantısını ve gördüğünüz hata mesajını <a href="mailto:info@zenithw.space?subject=ZenithW%20Sorun%20Bildirimi">info@zenithw.space</a> adresine gönderebilirsiniz.</p>
+        </section>
+      </div>
+    </article>
+    <footer class="info-footer" id="pgFooter"></footer>
+  </main>
+
+  <script>
+    const API = 'https://api.zenithw.space';
+    const COPY = {
+      tr: {
+        title: 'Sistem Durumu — ZenithW', desc: 'ZenithW temel hizmetlerinin sade, canlı ve gizlilik odaklı durum görünümü.',
+        back: '← ana sayfa', kicker: 'canlı servis görünümü', h1: 'Sistem durumu.',
+        lead: 'Temel ZenithW bileşenleri, hassas operasyon verisi göstermeden her 30 saniyede bir kontrol edilir.',
+        initial: 'İlk kontrol hazırlanıyor…', checking: 'Durum kontrol ediliyor…', refresh: 'yenile',
+        api: 'Public API', media: 'Medya işleme', sources: 'Kaynak platformları', intake: 'İş kabulü', eyebrow: 'CANLI DURUM', checkingDetail: 'Temel bileşenler kontrol ediliyor.', okDetail: 'Tüm temel ZenithW bileşenleri normal yanıt veriyor.', degradedDetail: 'API erişilebilir; işaretli bileşenlerden biri kontrol bekliyor.', downDetail: 'Canlı durum verisi şu anda alınamıyor.',
+        dependencyTitle: 'Bu sayfa neyi ölçer?',
+        dependencyText: 'Public API, medya işleme ve iş kabulü doğrudan ölçülür. Kaynak platformları ise yalnızca gerçek bir kullanıcı isteği sırasında doğrulanır; bu yüzden sayfa üçüncü taraf servisler için yanıltıcı bir “tam erişim” vaadi vermez.',
+        helpTitle: 'Sorun devam mı ediyor?',
+        helpText: 'Durum çalışıyor görünmesine rağmen hata alıyorsanız, kullandığınız kaynak bağlantısını ve gördüğünüz hata mesajını <a href="mailto:info@zenithw.space?subject=ZenithW%20Sorun%20Bildirimi">info@zenithw.space</a> adresine gönderebilirsiniz.',
+        checkingMeta: 'kontrol ediliyor…', ok: 'Tüm temel sistemler çalışıyor', degraded: 'Bazı bileşenler kontrol edilmeli', maintenance: 'Planlı bakım sürüyor', down: 'Sunucuya şu anda ulaşılamıyor',
+        apiActive: ms => `Yanıt süresi ${ms} ms`, apiMaintenance: ms => `Bakım modu · ${ms} ms`, unreachable: 'Sunucuya ulaşılamadı', ready: 'Hazır ve kullanılabilir', issue: 'Kontrol bekliyor', onDemand: 'İstek anında doğrulanır', intakeReady: 'Yeni işler kabul ediliyor', intakeMaintenance: 'Yeni işler geçici olarak bekletiliyor',
+        stateOnline: 'ÇALIŞIYOR', stateReady: 'HAZIR', stateOnDemand: 'İSTEKLE', stateIssue: 'SORUN', stateDown: 'KAPALI', stateMaintenance: 'BAKIM',
+        checked: 'son kontrol: ', locale: 'tr-TR',
+        footer: '<a href="/about">hakkında</a><a href="/privacy">gizlilik</a><a href="/terms">kullanım koşulları</a><a href="/dmca">telif</a>'
+      },
+      en: {
+        title: 'System Status — ZenithW', desc: 'A simple, live, privacy-aware view of ZenithW core services.',
+        back: '← home', kicker: 'live service view', h1: 'System status.',
+        lead: 'Core ZenithW components are checked every 30 seconds without exposing sensitive operational data.',
+        initial: 'Preparing the first check…', checking: 'Checking system status…', refresh: 'refresh',
+        api: 'Public API', media: 'Media processing', sources: 'Source platforms', intake: 'Job intake', eyebrow: 'LIVE STATUS', checkingDetail: 'Checking core components.', okDetail: 'All core ZenithW components are responding normally.', degradedDetail: 'The API is reachable; one marked component needs attention.', downDetail: 'Live status data is currently unavailable.',
+        dependencyTitle: 'What does this page measure?',
+        dependencyText: 'The public API, media processing, and job intake are measured directly. Source platforms are verified only during a real user request, so this page does not make a misleading promise of full third-party availability.',
+        helpTitle: 'Still having trouble?',
+        helpText: 'If the status is healthy but you still receive an error, send the source link and the error message to <a href="mailto:info@zenithw.space?subject=ZenithW%20Issue%20Report">info@zenithw.space</a>.',
+        checkingMeta: 'checking…', ok: 'All core systems operational', degraded: 'Some components need attention', maintenance: 'Scheduled maintenance in progress', down: 'The server is currently unreachable',
+        apiActive: ms => `Response time ${ms} ms`, apiMaintenance: ms => `Maintenance mode · ${ms} ms`, unreachable: 'Server is unreachable', ready: 'Ready and available', issue: 'Needs attention', onDemand: 'Verified on demand', intakeReady: 'Accepting new jobs', intakeMaintenance: 'New jobs are temporarily paused',
+        stateOnline: 'ONLINE', stateReady: 'READY', stateOnDemand: 'ON DEMAND', stateIssue: 'ISSUE', stateDown: 'DOWN', stateMaintenance: 'MAINTENANCE',
+        checked: 'last checked: ', locale: 'en-US',
+        footer: '<a href="/about">about</a><a href="/privacy">privacy</a><a href="/terms">terms</a><a href="/dmca">copyright</a>'
+      }
+    };
+    let currentLanguage = 'tr';
+    let requestInProgress = false;
+
+    function setPageLang(lang) {
+      currentLanguage = COPY[lang] ? lang : 'en';
+      const text = COPY[currentLanguage];
+      document.documentElement.lang = currentLanguage;
+      document.getElementById('pgTitle').textContent = text.title;
+      document.getElementById('pgDesc').setAttribute('content', text.desc);
+      document.getElementById('pgBack').textContent = text.back;
+      document.getElementById('pgKicker').textContent = text.kicker;
+      document.getElementById('pgH1').textContent = text.h1;
+      document.getElementById('pgLead').textContent = text.lead;
+      document.getElementById('refreshButton').innerHTML = `<span aria-hidden="true">↻</span> ${text.refresh}`;
+      document.getElementById('apiLabel').textContent = text.api;
+      document.getElementById('ffmpegLabel').textContent = text.media;
+      document.getElementById('sourceLabel').textContent = text.sources;
+      document.getElementById('intakeLabel').textContent = text.intake;
+      document.getElementById('statusEyebrow').textContent = text.eyebrow;
+      document.getElementById('statusDetail').textContent = text.checkingDetail;
+      document.getElementById('dependencyTitle').textContent = text.dependencyTitle;
+      document.getElementById('dependencyText').textContent = text.dependencyText;
+      document.getElementById('helpTitle').textContent = text.helpTitle;
+      document.getElementById('helpText').innerHTML = text.helpText;
+      document.getElementById('pgFooter').innerHTML = text.footer;
+      document.querySelectorAll('#langSwitch button').forEach(button => button.classList.toggle('active', button.dataset.lang === currentLanguage));
+      try { localStorage.setItem('zw_lang', currentLanguage); } catch (_) {}
+      checkStatus();
+    }
+
+    function setTileState(tileId, pillId, state, label) {
+      const tile = document.getElementById(tileId);
+      const pill = document.getElementById(pillId);
+      tile.dataset.state = state;
+      pill.textContent = label;
+    }
+
+    async function checkStatus() {
+      if (requestInProgress) return;
+      requestInProgress = true;
+      const text = COPY[currentLanguage];
+      const refreshButton = document.getElementById('refreshButton');
+      const indicator = document.getElementById('statusIndicator');
+      refreshButton.disabled = true;
+      indicator.className = 'status-indicator';
+      document.getElementById('statusMain').textContent = text.checking;
+      document.getElementById('statusDetail').textContent = text.checkingDetail;
+      document.getElementById('lastChecked').textContent = text.checkingMeta;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      try {
+        const startedAt = performance.now();
+        const response = await fetch(`${API}/status`, { cache: 'no-store', signal: controller.signal });
+        const latency = Math.round(performance.now() - startedAt);
+        if (!response.ok) throw new Error('health check failed');
+        const data = await response.json();
+        const components = data.components || {};
+        const maintenance = data.status === 'maintenance' || components.job_intake === 'maintenance';
+        const mediaReady = components.media_processing === 'operational';
+        const allReady = !maintenance && components.api === 'operational' && mediaReady;
+        indicator.className = maintenance || !allReady ? 'status-indicator' : 'status-indicator ok';
+        document.getElementById('statusSummary').dataset.state = maintenance || !allReady ? 'warning' : 'ok';
+        document.getElementById('statusMain').textContent = maintenance ? text.maintenance : (allReady ? text.ok : text.degraded);
+        document.getElementById('statusDetail').textContent = allReady ? text.okDetail : text.degradedDetail;
+        document.getElementById('apiValue').textContent = maintenance ? text.apiMaintenance(latency) : text.apiActive(latency);
+        document.getElementById('ffmpegValue').textContent = mediaReady ? text.ready : text.issue;
+        document.getElementById('sourceValue').textContent = text.onDemand;
+        document.getElementById('intakeValue').textContent = maintenance ? text.intakeMaintenance : text.intakeReady;
+        setTileState('apiTile', 'apiState', maintenance ? 'warning' : 'ok', maintenance ? text.stateMaintenance : text.stateOnline);
+        setTileState('ffmpegTile', 'ffmpegState', mediaReady ? 'ok' : 'down', mediaReady ? text.stateReady : text.stateIssue);
+        setTileState('sourceTile', 'sourceState', 'neutral', text.stateOnDemand);
+        setTileState('intakeTile', 'intakeState', maintenance ? 'warning' : 'ok', maintenance ? text.stateMaintenance : text.stateOnline);
+      } catch (_) {
+        indicator.className = 'status-indicator down';
+        document.getElementById('statusSummary').dataset.state = 'down';
+        document.getElementById('statusMain').textContent = text.down;
+        document.getElementById('statusDetail').textContent = text.downDetail;
+        document.getElementById('apiValue').textContent = text.unreachable;
+        document.getElementById('ffmpegValue').textContent = '—';
+        document.getElementById('sourceValue').textContent = '—';
+        document.getElementById('intakeValue').textContent = '—';
+        setTileState('apiTile', 'apiState', 'down', text.stateDown);
+        setTileState('ffmpegTile', 'ffmpegState', 'unknown', '—');
+        setTileState('sourceTile', 'sourceState', 'unknown', '—');
+        setTileState('intakeTile', 'intakeState', 'unknown', '—');
+      } finally {
+        clearTimeout(timeout);
+        document.getElementById('lastChecked').textContent = text.checked + new Date().toLocaleTimeString(text.locale, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        refreshButton.disabled = false;
+        requestInProgress = false;
+      }
+    }
+
+    let savedLanguage = 'tr';
+    try { savedLanguage = localStorage.getItem('zw_lang') || 'tr'; } catch (_) {}
+    setPageLang(savedLanguage === 'tr' ? 'tr' : 'en');
+    setInterval(checkStatus, 30000);
+  </script>
+  <div id="siteBottomNav" data-mode="info" data-active="status"></div>
+  <script src="site-shell.js?v=14.3"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title id="pgTitle">Güncellemeler — ZenithW</title>
+<meta name="description" id="pgDesc" content="ZenithW sürüm geçmişi ve güncelleme notları — yeni özellikler, hata düzeltmeleri ve iyileştirmeler.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://zenithw.space/updates">
+<meta name="theme-color" content="#0a0b0d">
+<link href="/fonts.css?v=1" rel="stylesheet">
+<link rel="stylesheet" href="/updates.4afebabda436.css?v=14.8">
+<link rel="stylesheet" href="/site-shell.css?v=14.4">
+<script src="/version.js?v=14.4"></script>
+</head>
+<body class="updates-page">
+<main class="upd-shell">
+  <nav class="upd-site-header" aria-label="Sayfa navigasyonu">
+    <a href="/" class="upd-brand">ZenithW<span>.</span></a>
+    <div class="upd-header-actions">
+      <div class="legal-lang-toggle" id="legalLangToggle">
+        <button type="button" data-lang="tr" onclick="setLegalLang('tr')">TR</button>
+        <button type="button" data-lang="en" onclick="setLegalLang('en')">EN</button>
+      </div>
+      <a href="/" class="upd-home-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span id="pgBack">ana sayfa</span></a>
+    </div>
+  </nav>
+
+  <section class="upd-hero" id="releaseArticle" tabindex="-1">
+      <div class="upd-top-row">
+        <span class="upd-ver-badge" id="updBadge">v14.4</span>
+        <span class="upd-top-date" id="updDate">8 eylül 2026</span>
+        <div class="upd-pick"><select id="verPicker" aria-label="Sürüm seç" onchange="jumpTo(this.value)"></select></div>
+      </div>
+      <h2 class="upd-post-title" id="updPostTitle"></h2>
+      <figure class="upd-cover" id="updCover" hidden><img id="updCoverImg" alt="" loading="eager" decoding="async"></figure>
+      <div class="upd-anma" id="updAnma"></div>
+  </section>
+
+    <article class="upd-article">
+      <div class="upd-intro" id="updIntro"></div>
+      <div id="updSections"></div>
+      <div class="upd-outro" id="updOutro"></div>
+      <div class="upd-signoff" id="updSignoff">~ ZenithW ekibi 🤍</div>
+      <nav class="upd-nav-row" id="updNavRow" aria-label="Sürüm gezinmesi"></nav>
+    </article>
+</main>
+
+<div id="siteBottomNav" data-active="updates"></div>
+<script src="/updates-core.99daf4ea6088.js?v=14.4"></script>
+<script src="/site-shell.js?v=14.3"></script>
+</body>
+</html>

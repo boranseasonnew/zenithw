@@ -1,0 +1,73 @@
+venv/
+.venv/
+.venv-security/
+__pycache__/
+.pytest_cache/
+*.pyc
+/desktop
+/mobile-next 
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+!*.env.example
+compose.cookies.yml
+private/
+**/cookies.txt
+**/cookies-*.txt
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.ppk
+id_rsa
+id_ed25519
+*.session
+*.token
+
+# Runtime output and local data
+downloads/
+backend/download/
+backend/downloads/
+tmp/
+temp/
+logs/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Dependency, coverage and tool caches
+node_modules/
+.pnpm-store/
+.coverage
+htmlcov/
+.cache/
+.signing/
+.mypy_cache/
+.ruff_cache/
+.wrangler/
+
+# Local editor, agent and operating-system files
+.vscode/
+.idea/
+.codex/
+.agents/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Windows' reserved null-device name can accidentally become a real file
+# when output redirection is used from PowerShell.
+NUL
+
+# Private working notes that are intentionally not published
+frontend/OPTIMIZATIONS.md
+backend/DEPLOYMENT.md
+
+# Packaged release artifacts (keep outside Git's file-size limit)
+ZenithW-Builds/
+

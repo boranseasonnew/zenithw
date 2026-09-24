@@ -1,0 +1,8 @@
+# Optional private browser-cookie mount for a self-hosted instance.
+# Copy this file to compose.cookies.yml, create private/cookies.txt yourself,
+# and start with: docker compose -f compose.yml -f compose.cookies.yml up -d
+# Never commit either the copied override file or the cookie export.
+services:
+  app:
+    volumes:
+      - ./private/cookies.txt:/app/backend/cookies.txt:ro

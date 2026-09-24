@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title id="pgTitle">Telif Bildirimi — ZenithW</title>
+  <meta name="description" id="pgDesc" content="ZenithW telif hakkı bildirim süreci ve hak sahiplerinin başvuru için sağlaması gereken bilgiler.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://zenithw.space/dmca">
+  <meta name="theme-color" content="#060606">
+  <link rel="icon" type="image/png" href="zenithw.png">
+  <link href="/fonts.css?v=1" rel="stylesheet">
+  <link rel="stylesheet" href="info.6c44eb6f52e7.css">
+  <link rel="stylesheet" href="site-shell.css?v=14.4">
+</head>
+<body class="info-page">
+  <main class="info-shell">
+    <nav class="info-nav" aria-label="Sayfa navigasyonu">
+      <a href="/" class="info-logo" aria-label="ZenithW ana sayfa">ZenithW<span>.</span></a>
+      <div class="info-actions">
+        <div class="lang-switch" id="langSwitch" aria-label="Dil seçimi">
+          <button type="button" data-lang="tr" onclick="setPageLang('tr')">TR</button>
+          <button type="button" data-lang="en" onclick="setPageLang('en')">EN</button>
+        </div>
+        <a href="/" class="info-back" id="pgBack">← ana sayfa</a>
+      </div>
+    </nav>
+    <header class="info-hero">
+      <div class="info-kicker" id="pgKicker">telif ve hak sahipleri</div>
+      <h1 id="pgH1">Açık, düzenli bir bildirim süreci.</h1>
+      <p class="info-lead" id="pgLead">Hak sahiplerinden gelen eksiksiz telif bildirimlerini inceler ve uygun olduğunda teknik önlem alırız.</p>
+      <p class="info-meta" id="pgUpdated">Son güncelleme: 17 Ağustos 2026</p>
+    </header>
+    <article class="info-card" id="pgBody"></article>
+    <footer class="info-footer" id="pgFooter"></footer>
+  </main>
+
+  <script>
+    const COPY = {
+      tr: {
+        title: 'Telif Bildirimi — ZenithW',
+        desc: 'ZenithW telif hakkı bildirim süreci ve hak sahiplerinin başvuru için sağlaması gereken bilgiler.',
+        back: '← ana sayfa', kicker: 'telif ve hak sahipleri',
+        h1: 'Açık, düzenli bir bildirim süreci.',
+        lead: 'Hak sahiplerinden gelen eksiksiz telif bildirimlerini inceler ve uygun olduğunda teknik önlem alırız.',
+        updated: 'Son güncelleme: 17 Ağustos 2026',
+        body: `
+          <section class="info-section">
+            <div class="notice"><span class="notice-mark">!</span><span><strong>ZenithW içerik platformu değildir.</strong> Video veya ses dosyalarını kalıcı olarak barındırmaz, kataloglamaz ya da yeniden yayımlamaz. Kaynak içerik genellikle YouTube, TikTok veya benzeri üçüncü taraf bir platformdadır.</span></div>
+          </section>
+          <section class="info-section">
+            <h2>Önce kaynak platform</h2>
+            <p>Asıl içerik üçüncü taraf bir platformda yayındaysa, kalıcı kaldırma talebini öncelikle o platforma iletmeniz en etkili yoldur. Bununla birlikte, belirli bir kaynağın ZenithW üzerinden işlenmesine itiraz ediyorsanız bildiriminizi ayrıca inceleyebiliriz.</p>
+          </section>
+          <section class="info-section">
+            <h2>Bildiriminizde bulunması gerekenler</h2>
+            <ol>
+              <li>Hak sahibinin veya yetkili temsilcinin adı ve güncel iletişim bilgileri.</li>
+              <li>Korunan eserin yeterli ve açık bir tanımı.</li>
+              <li>Şikâyete konu içeriğin tam kaynak URL'si; mümkünse her içerik için ayrı bağlantı.</li>
+              <li>Kullanımın hak sahibi, temsilcisi veya hukuk tarafından yetkilendirilmediğine ilişkin iyi niyet beyanı.</li>
+              <li>Bilgilerin doğru olduğuna ve hak sahibi ya da yetkili temsilci olduğunuza dair beyan.</li>
+              <li>Fiziksel veya elektronik imza.</li>
+            </ol>
+          </section>
+          <section class="info-section">
+            <h2>Bildirim gönderin</h2>
+            <p>Eksiksiz bildiriminizi aşağıdaki kanaldan iletebilirsiniz. Konu satırını hazır ekledik ki mail boşluğa düşüp kaybolmasın.</p>
+            <div class="cta-row"><a class="info-button primary" href="mailto:info@zenithw.space?subject=DMCA%20%2F%20Telif%20Hakk%C4%B1%20Bildirimi">telif bildirimi gönder</a></div>
+          </section>
+          <section class="info-section">
+            <h2>Yanlış veya kötü niyetli bildirimler</h2>
+            <p>Bilerek yanlış, yanıltıcı veya kötü niyetli bildirimlerden bildirimi gönderen kişi sorumludur. Eksik başvuruların değerlendirilebilmesi için ek bilgi talep edilebilir.</p>
+          </section>`,
+        footer: '<a href="/about">hakkında</a><a href="/privacy">gizlilik</a><a href="/terms">kullanım koşulları</a><a href="/status">durum</a>'
+      },
+      en: {
+        title: 'Copyright Notice — ZenithW',
+        desc: 'ZenithW copyright notice process and the information rights holders should provide with a report.',
+        back: '← home', kicker: 'copyright and rights holders',
+        h1: 'A clear, structured notice process.',
+        lead: 'We review complete copyright notices from rights holders and take appropriate technical action where applicable.',
+        updated: 'Last updated: August 17, 2026',
+        body: `
+          <section class="info-section">
+            <div class="notice"><span class="notice-mark">!</span><span><strong>ZenithW is not a content platform.</strong> It does not permanently host, catalogue, or republish video or audio files. The source content usually resides on a third-party platform such as YouTube or TikTok.</span></div>
+          </section>
+          <section class="info-section">
+            <h2>Contact the source platform first</h2>
+            <p>If the original content is published on a third-party platform, sending a permanent removal request to that platform is usually the most effective route. Still, if you object to a specific source being processed through ZenithW, we can review your notice as well.</p>
+          </section>
+          <section class="info-section">
+            <h2>What your notice should include</h2>
+            <ol>
+              <li>The current name and contact information of the rights holder or authorized representative.</li>
+              <li>A clear, sufficient description of the protected work.</li>
+              <li>The exact source URL of the material in question; use a separate link for each item where possible.</li>
+              <li>A good-faith statement that the use is not authorized by the rights holder, their agent, or the law.</li>
+              <li>A statement that the information is accurate and that you are the rights holder or authorized to act for them.</li>
+              <li>A physical or electronic signature.</li>
+            </ol>
+          </section>
+          <section class="info-section">
+            <h2>Send a notice</h2>
+            <p>Submit a complete notice through the channel below. The subject line is already included to help route your message correctly.</p>
+            <div class="cta-row"><a class="info-button primary" href="mailto:info@zenithw.space?subject=DMCA%20%2F%20Copyright%20Notice">send copyright notice</a></div>
+          </section>
+          <section class="info-section">
+            <h2>False or abusive notices</h2>
+            <p>The sender is responsible for knowingly false, misleading, or malicious notices. Additional information may be requested before an incomplete report can be assessed.</p>
+          </section>`,
+        footer: '<a href="/about">about</a><a href="/privacy">privacy</a><a href="/terms">terms</a><a href="/status">status</a>'
+      }
+    };
+  </script>
+  <div id="siteBottomNav" data-mode="info" data-active="terms"></div>
+  <script src="site-shell.js?v=14.3"></script>
+  <script src="info-page.412ae0f21fba.js"></script>
+</body>
+</html>

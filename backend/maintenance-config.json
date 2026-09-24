@@ -1,0 +1,7 @@
+{
+  "active": false,
+  "title": "Kısa bir pati molası",
+  "message": "Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız.",
+  "until": "",
+  "retryAfter": 900
+}

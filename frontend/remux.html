@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Remux — ZenithW</title>
+<meta name="description" content="Medya dosyalarının konteynerini kayıpsız olarak değiştirin.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" href="zenithw.png">
+<link href="/fonts.css?v=1" rel="stylesheet">
+<link rel="stylesheet" href="style.487d49f0164d.css">
+<link rel="stylesheet" href="site-shell.css?v=14.4">
+<link rel="stylesheet" href="premium-pages.css?v=1.0">
+<link rel="stylesheet" href="remux-studio.css?v=14.3">
+<link rel="stylesheet" href="media-guidance.css?v=14.4">
+<link rel="stylesheet" href="/local-media.css?v=1">
+</head>
+<body class="theme-default tool-page premium-tool-page remux-page">
+<main class="tool-page-main">
+  <a class="tool-page-brand" href="/">ZenithW<span>.</span></a>
+  <header class="premium-page-hero remux-hero">
+    <div class="premium-kicker"><span></span>kayıpsız medya aracı</div>
+    <h1>Konteyneri değiştir.<br><span>Kaliteyi olduğu gibi bırak.</span></h1>
+    <p>Uyumsuz veya sorunlu medya konteynerlerini yeniden kodlama yapmadan düzenle. Görüntü ve ses akışları korunur; işlem gereksiz kalite kaybı oluşturmadan tamamlanır.</p>
+    <div class="premium-proof-row" aria-label="Remux özellikleri">
+      <span><i></i>yeniden kodlama yok</span>
+      <span><i></i>codec verisi korunur</span>
+      <span><i></i>95 MB'a kadar</span>
+    </div>
+  </header>
+  <div class="remux-modal tool-modal tool-page-panel" aria-labelledby="remuxTitleTxt">
+    <header class="tool-modal-header">
+      <div class="tool-modal-heading">
+        <span class="tool-modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 3l4 4-4 4M3 7h18M7 21l-4-4 4-4M21 17H3"/></svg></span>
+        <div><strong id="remuxTitleTxt">remux</strong><small id="remuxModalSub">konteyneri kayıpsız onar</small></div>
+      </div>
+      <button type="button" class="tool-modal-close" aria-label="Remux penceresini kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </header>
+    <div class="tool-modal-body remux-workspace">
+      <div class="remux-drop-card">
+        <div class="dropzone" id="remuxDrop" onclick="document.getElementById('remuxFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleRemuxDrop(event)">
+          <div class="remux-drop-orbit" aria-hidden="true"></div>
+          <div class="tool-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3-3 3 3"/></svg></div>
+          <div class="drop-title" id="remuxDropTitle">dosya sürükle veya seç</div><div class="drop-sub" id="remuxDropSub">video ve ses formatları · en fazla 95 MB</div>
+          <span class="remux-file-cta">dosya seç</span>
+          <input class="visually-hidden-input" type="file" id="remuxFileInput" accept=".mp4,.webm,.mkv,.mov,.avi,.m4v,.3gp,.ts,.wmv,.mp3,.m4a,.aac,.opus,.ogg,.flac,.wav,.aiff,.wma,video/*,audio/*" onchange="handleRemuxFile(this)"/>
+        </div>
+      </div>
+      <aside class="remux-sidecar">
+        <div class="tool-error-card" id="toolError" role="alert" tabindex="-1" hidden>
+          <span class="tool-error-mark" aria-hidden="true">!</span>
+          <div><span class="tool-error-label" id="toolErrorLabel">NE YAPILABİLİR?</span><strong id="toolErrorTitle"></strong><p id="toolErrorText"></p></div>
+        </div>
+        <div class="remux-signal" aria-live="polite">
+          <span class="remux-signal-label" id="remuxSignalLabel">KAYIPSIZ YOL</span>
+          <div class="remux-signal-flow"><b id="remuxSourceType">DOSYA</b><i aria-hidden="true">→</i><b id="remuxTargetType">AYNI KONTEYNER</b></div>
+          <p id="remuxSignalText">Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.</p>
+        </div>
+        <div class="remux-flow-label">işlem akışı</div>
+        <ol class="remux-flow">
+          <li><b>01</b><div><strong>dosyayı analiz et</strong><span>akış ve konteyner yapısı okunur</span></div></li>
+          <li><b>02</b><div><strong>uygun konteynere taşı</strong><span>codec verisi yeniden kodlanmadan kopyalanır</span></div></li>
+          <li><b>03</b><div><strong>temiz dosyayı teslim et</strong><span>hazırlanan dosya doğrudan tarayıcıya gelir</span></div></li>
+        </ol>
+        <div class="remux-info">
+          <div class="remux-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><div id="remuxInfo1"><strong>remux ne yapar?</strong> dosya konteynerindeki sorunları düzeltir.</div></div>
+          <div class="remux-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div id="remuxInfo2"><strong>kayıpsız:</strong> codec verisini yeni konteynere kopyalar.</div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<input id="urlInput" type="url" hidden aria-hidden="true"><textarea id="urlTextarea" hidden aria-hidden="true"></textarea>
+<div id="siteBottomNav" data-active="remux"></div>
+<div class="toast" id="toast"><div class="toast-dot" id="toastDot"></div><span id="toastTxt"></span></div>
+<div class="overlay tone-neutral" id="saveOverlay" onclick="handleOverlay(event,'saveOverlay')">
+  <div class="save-modal">
+    <div class="handle"></div>
+    <div class="save-title"><span>📥</span><span id="saveTitleTxt">nasıl kaydetmek istersin?</span></div>
+    <div class="save-btns">
+      <button class="save-btn" onclick="saveAction('download')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="saveDlTxt">indir</span></button>
+      <button class="save-btn" onclick="saveAction('share')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span id="saveShareTxt">paylaş</span></button>
+      <button class="save-btn" onclick="saveAction('copy')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span id="saveCopyTxt">kopyala</span></button>
+    </div>
+    <div class="save-note" id="saveNoteTxt">tarayıcı pop-up'ları engelliyorsa "indir" butonunu kullanın.</div>
+    <button class="save-done" onclick="closeOverlay('saveOverlay')" id="saveDoneTxt">tamam</button>
+  </div>
+</div>
+<script src="/runtime-config.js"></script>
+<script src="/local-media.js?v=1"></script>
+<script src="app.d4596317c4a7.js?v=15.6"></script>
+<script src="site-shell.js?v=14.3"></script>
+</body>
+</html>

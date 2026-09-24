@@ -1,0 +1,35 @@
+[Unit]
+Description=ZenithW Backend
+After=network-online.target zenithw-pot.service
+Wants=network-online.target
+Requires=zenithw-pot.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/zenithw/backend
+EnvironmentFile=/etc/zenithw.env
+ExecStart=/home/ubuntu/zenithw/backend/.venv/bin/gunicorn --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker --workers 1 --worker-connections 1000 --timeout 660 --graceful-timeout 30 --bind 127.0.0.1:8000 app:app
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=45
+KillSignal=SIGTERM
+UMask=0077
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=full
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+ReadWritePaths=/home/ubuntu/zenithw/backend/downloads /home/ubuntu/zenithw/backend/cookies.txt
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

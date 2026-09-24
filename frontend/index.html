@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+<title>ZenithW - Media Tools</title>
+<meta name="description" content="ZenithW — YouTube, TikTok, İnstagram, X/Twitter için ücretsiz, reklamsız, filigransız video indirici.">
+<meta name="keywords" content="pornhub downloader, video downloader, pornhub video indir, youtube video indir, tiktok video indir, instagram video indir, twitter video indir, ücretsiz video indirici">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://zenithw.space/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ZenithW — Media Tools - Video Downloader">
+<meta property="og:description" content="YouTube, TikTok, İnstagram ve daha fazlasından ücretsiz video indir. reklamsız.">
+<meta property="og:url" content="https://zenithw.space/">
+<meta property="og:site_name" content="ZenithW">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZenithW — Media Tools">
+<meta name="twitter:description" content="YouTube, TikTok, İnstagram ve daha fazlasından ücretsiz, reklamsız video indir.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" href="zenithw.png">
+<link rel="apple-touch-icon" href="zenithw.png">
+<link rel="shortcut icon" href="zenithw.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ZenithW",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any (Web-based)",
+  "url": "https://zenithw.space/",
+  "description": "Pornhub, YouTube, TikTok, İnstagram, X/Twitter, Reddit, Pinterest, SoundCloud ve daha fazla platformdan ücretsiz video ve ses indirme aracı.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Pornhub video indirme",
+    "YouTube video ve ses indirme",
+    "TikTok filigransız video indirme",
+    "İnstagram video/reels indirme",
+    "Toplu (bulk) link indirme",
+    "Format dönüştürme"
+  ]
+}
+</script>
+<link href="/fonts.css?v=1" rel="stylesheet">
+  <link rel="stylesheet" href="style.487d49f0164d.css?v=15.8">
+<link rel="stylesheet" href="site-shell.css?v=14.5">
+<link rel="stylesheet" href="media-guidance.css?v=14.4">
+<link rel="stylesheet" href="desktop-promo.css?v=1">
+<script src="/version.js?v=14.4"></script>
+</head>
+<body class="home-page theme-default">
+<div class="page">
+  <div class="home-ambient" aria-hidden="true">
+    <svg viewBox="0 0 900 560" preserveAspectRatio="none">
+      <path d="M92 540C254 482 330 517 440 449S625 488 732 299 836 78 966 44"/>
+      <path d="M70 554C242 496 324 532 447 462S627 502 746 316 850 95 980 60"/>
+      <path d="M48 566C230 510 318 545 454 476S631 517 760 334 864 113 994 78"/>
+      <path d="M26 578C218 524 312 559 461 490S635 531 774 352 878 131 1008 96"/>
+      <path d="M4 590C206 538 306 573 468 504S639 545 788 370 892 149 1022 114"/>
+      <path d="M-18 602C194 552 300 587 475 518S643 559 802 388 906 167 1036 132"/>
+      <path d="M-40 614C182 566 294 601 482 532S647 573 816 406 920 185 1050 150"/>
+    </svg>
+  </div>
+  <div class="services-chip-wrap">
+    <button class="services-chip" id="servicesChip" type="button" onclick="toggleServices()" aria-expanded="false" aria-controls="servicesOverlay">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      <span id="servicesChipTxt">desteklenen servisler</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <div class="logo-wrap">
+    <span class="home-wordmark" aria-label="ZenithW">ZenithW<span>.</span></span>
+    <span class="home-status"><i aria-hidden="true"></i><span id="homeStatusTxt">hizmet aktif</span></span>
+  </div>
+  <div class="url-form">
+    <div class="url-field-wrap">
+      <div class="url-field">
+        <div class="radar-pulse-wrap"><div class="radar-ring" id="radarRing"></div></div>
+        <div class="url-spinner-wrap" id="urlSpinWrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--text3)"><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <input class="url-input" id="urlInput" data-i18n-ph="placeholder" type="url" placeholder="bir video linki yapıştır…" autocomplete="off" spellcheck="false" oninput="onInput()"/>
+        <textarea class="url-textarea" id="urlTextarea" data-i18n-ph="bulkPlaceholder" placeholder="linkleri her satıra bir tane olacak şekilde yapıştır... (Enter ile indir, Shift+Enter ile yeni satır)"></textarea>
+        <button class="url-clear" id="urlClear" onclick="clearUrl()">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+        </button>
+        <button class="btn-paste home-paste" onclick="pasteAndFetch()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span id="paste">yapıştır</span>
+        </button>
+        <button class="url-go-btn" onclick="fetchVideo()">
+          <span id="continueBtn">devam et</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <button class="url-help-btn" id="urlHelpBtn" onclick="openHelp()" aria-label="Yardım">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" stroke-linecap="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke-linecap="round" stroke-width="2.5"/></svg>
+      </button>
+      <!-- GitHub Mona Octocat peeking & holding top border of input box -->
+      <div class="url-cat-wrap" id="urlCatWrap" aria-hidden="true" hidden>
+        <div class="gh-speech-bubble" id="catBubble"></div>
+        <svg class="gh-octocat" viewBox="0 0 76 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Distinct Paws Gripping Input Box Top Border -->
+          <g class="gh-cat-paws">
+            <g class="gh-cat-paw-l">
+              <path d="M5.5 28V39.5C5.5 43.5 11.5 43.5 11.5 39.5V28Z" class="gh-cat-paw-fill"/>
+              <!-- Toe hooks curling forward over the ledge -->
+              <path d="M6.3 39.2C6.3 40.6 7.6 41.3 8.5 41.3" class="gh-cat-paw-toe"/>
+              <path d="M8.5 39.6C8.5 41 9.5 41.6 10.2 41.5" class="gh-cat-paw-toe"/>
+              <path d="M10.2 39C10.2 40.1 10.9 40.7 11.4 40.6" class="gh-cat-paw-toe"/>
+            </g>
+            <g class="gh-cat-paw-r">
+              <path d="M49.5 28V39.5C49.5 43.5 55.5 43.5 55.5 39.5V28Z" class="gh-cat-paw-fill"/>
+              <path d="M50.3 39.2C50.3 40.6 51.6 41.3 52.5 41.3" class="gh-cat-paw-toe"/>
+              <path d="M52.5 39.6C52.5 41 53.5 41.6 54.2 41.5" class="gh-cat-paw-toe"/>
+              <path d="M54.2 39C54.2 40.1 54.9 40.7 55.4 40.6" class="gh-cat-paw-toe"/>
+            </g>
+          </g>
+
+          <!-- Head Base Contour (Official Mona Shape) -->
+          <path d="M12 31C9 23 12 13 19 9C20 6 25 3 29 5C34 7 38 7 43 5C47 3 52 6 53 9C60 13 63 23 60 31C57 38 48 42 36 42C24 42 15 38 12 31Z" class="gh-cat-fill"/>
+          
+          <!-- Inner Ears (each twitches independently) -->
+          <polygon points="22,10 27,6 29,12" class="gh-cat-ear-in gh-cat-ear-l"/>
+          <polygon points="50,10 45,6 43,12" class="gh-cat-ear-in gh-cat-ear-r"/>
+
+          <!-- Face Inner Plate -->
+          <path d="M18 28C16 23 18 17 23 14C27 12 31 13 36 13C41 13 45 12 49 14C54 17 56 23 54 28C52 33 45 36 36 36C27 36 20 33 18 28Z" class="gh-cat-face"/>
+
+          <!-- Normal Eyes -->
+          <g class="gh-eyes-normal">
+            <ellipse cx="28" cy="23" rx="2.8" ry="3.8" class="gh-cat-eye"/>
+            <ellipse cx="44" cy="23" rx="2.8" ry="3.8" class="gh-cat-eye"/>
+            <g class="gh-cat-pupils">
+              <circle cx="29.2" cy="21.8" r="1" fill="#ffffff"/>
+              <circle cx="45.2" cy="21.8" r="1" fill="#ffffff"/>
+            </g>
+          </g>
+
+          <!-- Happy Eyes (Shows on Input Focus/Hover/Petting) -->
+          <g class="gh-eyes-happy">
+            <path d="M25 24C27 21 30 21 32 24" stroke-width="2.2" stroke-linecap="round" fill="none" class="gh-cat-happy-eye"/>
+            <path d="M41 24C43 21 46 21 48 24" stroke-width="2.2" stroke-linecap="round" fill="none" class="gh-cat-happy-eye"/>
+          </g>
+
+          <!-- Cute Nose & Smile -->
+          <polygon points="35,26.5 37,26.5 36,28" class="gh-cat-nose"/>
+          <path d="M33.5 29.5C35 30.8 37 30.8 38.5 29.5" stroke-width="1.4" stroke-linecap="round" fill="none" class="gh-cat-smile"/>
+
+          <!-- Whiskers -->
+          <path d="M14 24L5 22.5M14 27L4 27M14 29.5L6 32" class="gh-cat-whisker" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M58 24L67 22.5M58 27L68 27M58 29.5L66 32" class="gh-cat-whisker" stroke-width="1.3" stroke-linecap="round"/>
+
+          <!-- Floating Interactive "?" / "♥" Badge -->
+          <g class="gh-q-group">
+            <circle cx="64" cy="9" r="8.5" class="gh-q-bg"/>
+            <text x="64" y="12.8" text-anchor="middle" class="gh-q-txt">?</text>
+            <path d="M64 12.5 C62.2 10.8 59.5 9.8 59.5 7.8 C59.5 6.2 61.2 5.3 64 7.2 C66.8 5.3 68.5 6.2 68.5 7.8 C68.5 9.8 65.8 10.8 64 12.5 Z" class="gh-heart-path"/>
+          </g>
+
+          <!-- Floating Petting Hearts (Pops when petted/hovered) -->
+          <g class="gh-pet-hearts">
+            <path d="M22 6 C20.8 4.8 18.8 4.2 18.8 2.5 C18.8 1.2 20.2 0.5 22 2 C23.8 0.5 25.2 1.2 25.2 2.5 C25.2 4.2 23.2 4.8 22 6 Z" class="gh-pet-h1"/>
+            <path d="M36 3 C34.8 1.8 32.8 1.2 32.8 -0.5 C32.8 -1.8 34.2 -2.5 36 -1 C37.8 -2.5 39.2 -1.8 39.2 -0.5 C39.2 1.2 37.2 1.8 36 3 Z" class="gh-pet-h2"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="clip-hint" id="clipHint" onclick="useClipboardHint()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="clipHintTxt">panonda bir link var, yapıştırmak ister misin?</span>
+      <button class="clip-hint-close" onclick="event.stopPropagation();dismissClipboardHint()">✕</button>
+    </div>
+    <div class="clip-hint" id="queueResumeHint" onclick="resumeQueue()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="queueResumeTxt"></span>
+      <button class="clip-hint-close" onclick="event.stopPropagation();discardQueue()">✕</button>
+    </div>
+    <div class="mode-row">
+      <button class="mode-btn active" id="modeAuto" onclick="setMode('auto')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span id="modeAutoTxt">auto</span>
+      </button>
+      <button class="mode-btn" id="modeAudio" onclick="setMode('audio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span id="modeAudioTxt">audio</span>
+      </button>
+      <button class="mode-btn" id="modeMute" onclick="setMode('mute')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        <span id="modeMuteTxt">sessiz</span>
+      </button>
+      <button class="bulk-toggle" id="bulkToggle" onclick="toggleBulkMode()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg><span id="bulkToggleTxt">çoklu indirme</span></button>
+    </div>
+    <div class="playlist-card" id="playlistCard">
+      <div class="pl-header">
+        <div>
+          <div class="pl-title" id="plTitle">Playlist</div>
+          <div class="pl-meta" id="plMeta">0 video</div>
+        </div>
+        <div class="pl-actions">
+          <button class="pl-sel-btn" id="plSelAllBtn" onclick="toggleSelectAllPlaylist()">tümünü seç</button>
+        </div>
+      </div>
+      <div class="pl-list" id="plList"></div>
+      <button class="pl-dl-btn" id="plDlBtn" onclick="openPlaylistDlModal()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="plDlBtnTxt">seçilenleri indir (0)</span>
+      </button>
+    </div>
+    <div class="error-wrap" id="errorWrap"><div class="error-icon" id="errIcon">❌</div><div class="error-txt" id="errTxt"></div></div>
+    <div class="qr-wrap" id="qrWrap">
+      <div class="qr-title" id="qrTitle">TELEFONA AKTAR</div>
+      <div class="qr-canvas-wrap"><canvas id="qrCanvas" width="120" height="120"></canvas></div>
+      <div class="qr-hint" id="qrHint">QR kodu telefonunuzla tarayın</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUPPORTED SERVICES POPOVER -->
+<div class="overlay services-overlay" id="servicesOverlay" aria-hidden="true" inert onclick="handleOverlay(event,'servicesOverlay')">
+  <section class="services-popover" role="dialog" aria-modal="true" aria-labelledby="servicesTitleTxt">
+    <header class="services-popover-head">
+      <strong id="servicesTitleTxt">desteklenen servisler</strong>
+      <button type="button" onclick="closeOverlay('servicesOverlay')" aria-label="Servis listesini kapat">×</button>
+    </header>
+    <div class="services-tags">
+      <span class="services-tag">bilibili</span><span class="services-tag">bluesky</span><span class="services-tag">dailymotion</span><span class="services-tag has-logo facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z"/></svg>facebook</span><span class="services-tag has-logo youtube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 12s0-4.1-.5-6.1a3 3 0 0 0-2.1-2.1C18.4 3.3 12 3.3 12 3.3s-6.4 0-8.4.5a3 3 0 0 0-2.1 2.1C1 7.9 1 12 1 12s0 4.1.5 6.1a3 3 0 0 0 2.1 2.1c2 .5 8.4.5 8.4.5s6.4 0 8.4-.5a3 3 0 0 0 2.1-2.1C23 16.1 23 12 23 12Zm-13 3.5v-7l6 3.5-6 3.5Z"/></svg>youtube</span><span class="services-tag">pornhub</span><span class="services-tag">loom</span><span class="services-tag">ok.ru</span><span class="services-tag has-logo pinterest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-1.6 0-3.5.4-5l1.1-4.5s-.3-.7-.3-1.8c0-1.7 1-3 2.2-3 1 0 1.6.8 1.6 1.7 0 1-.7 2.6-1.1 4-.3 1.2.6 2.2 1.8 2.2 2.2 0 3.8-2.8 3.8-6.1 0-2.5-1.7-4.3-4.8-4.3-3.5 0-5.7 2.6-5.7 5.5 0 1 .3 1.8.8 2.4.2.2.2.3.1.6l-.3 1.2c-.1.4-.4.5-.7.3-1.7-.7-2.5-2.7-2.5-4.9C4.8 5.4 7.8 2 12 2Z"/></svg>pinterest</span><span class="services-tag has-logo reddit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.2 13 7.1a9 9 0 0 1 4 .9l2.2-1.6a1.6 1.6 0 1 1 1 2.8c.1.4.1.7.1 1.1 0 3.5-3.7 6.3-8.3 6.3s-8.3-2.8-8.3-6.3c0-3.5 3.7-6.3 8.3-6.3.2 0 .5 0 .7.1l1.2-3.3a.9.9 0 0 1 1.6.4Zm-7.1 8.5a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Zm9.2 0a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2ZM8.3 13.8c1.4 1 6 1 7.4 0 .2-.2.5 0 .4.3-.6 1.2-2 1.8-4.1 1.8s-3.5-.6-4.1-1.8c-.1-.3.2-.5.4-.3Z"/></svg>reddit</span><span class="services-tag">rutube</span><span class="services-tag">snapchat</span><span class="services-tag has-logo soundcloud"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M0 13.1c.3 0 .5.2.5.5v4.8c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-4.8c0-.3.2-.5.5-.5Zm2.1-1c.3 0 .5.2.5.5v6c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5Zm2.2-1.8c.3 0 .5.2.5.5v7.8c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-7.8c0-.3.2-.5.5-.5Zm2.2-1.1c.3 0 .5.2.5.5v8.9c0 .3-.2.5-.5.5s-.5-.2-.5-.5V9.7c0-.3.2-.5.5-.5Zm2.2-1.2c.3 0 .5.2.5.5v10.1c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.5c0-.3.2-.5.5-.5Zm2.2 1.8c.3 0 .5.2.5.5v8.3c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-8.3c0-.3.2-.5.5-.5Zm2.1-4.2c2.7 0 4.8 2.1 4.8 4.7v.3c1.7.3 3 1.8 3 3.6 0 2-1.6 3.6-3.6 3.6H14V5.6Z"/></svg>soundcloud</span><span class="services-tag">streamable</span><span class="services-tag has-logo tiktok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.8 3c.2 1.7 1.1 3 2.7 3.8v2.8a7.2 7.2 0 0 1-2.7-1V15a5.2 5.2 0 1 1-4.5-5.2v2.9a2.5 2.5 0 1 0 1.8 2.4V3h2.7Z"/></svg>tiktok</span><span class="services-tag">tumblr</span><span class="services-tag has-logo twitch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2h17v12l-5 5h-4l-3 3H6v-3H3V5l1-3Zm2 3v11h4v2l2-2h4l3-3V5H6Zm5 3h2v4h-2V8Zm5 0h2v4h-2V8Z"/></svg>twitch clips</span><span class="services-tag has-logo x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.7 6.5 22H3.4l7.3-8.4L3 2h6.5l4.5 5.9L18.9 2Zm-1.1 18h1.7L8.6 3.9H6.8L17.8 20Z"/></svg>twitter / x</span><span class="services-tag">vimeo</span><span class="services-tag">vk</span><span class="services-tag has-logo instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 2h9.6A5.2 5.2 0 0 1 22 7.2v9.6a5.2 5.2 0 0 1-5.2 5.2H7.2A5.2 5.2 0 0 1 2 16.8V7.2A5.2 5.2 0 0 1 7.2 2Zm-.2 2A3 3 0 0 0 4 7v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.2 1.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>instagram</span><span class="services-tag services-tag-more">500+ site</span>
+    </div>
+  </section>
+</div>
+
+<!-- SHARED BOTTOM NAVIGATION -->
+<div id="siteBottomNav" data-active="home"></div>
+
+<div class="yt-popup" id="ytPopup">
+  <span class="yt-popup-icon">📡</span>
+  <div class="yt-popup-title" id="ytErrTitle">youtube videosu bulunamadı</div>
+  <div class="yt-popup-txt" id="ytErrTxt">youtube bot engelleme aktif olabilir. birkaç dakika bekleyip tekrar deneyin.</div>
+</div>
+
+<!-- YOUTUBE APP HANDOFF -->
+<div class="overlay tone-cool" id="youtubeAppOverlay">
+  <section class="upd-modal youtube-app-modal" aria-labelledby="youtubeAppTitle" aria-describedby="youtubeAppBody">
+    <button class="modal-close-btn" id="youtubeAppClose" type="button" aria-label="Kapat">✕</button>
+    <div class="youtube-app-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M23 12s0-4.1-.5-6.1a3 3 0 0 0-2.1-2.1C18.4 3.3 12 3.3 12 3.3s-6.4 0-8.4.5a3 3 0 0 0-2.1 2.1C1 7.9 1 12 1 12s0 4.1.5 6.1a3 3 0 0 0 2.1 2.1c2 .5 8.4.5 8.4.5s6.4 0 8.4-.5a3 3 0 0 0 2.1-2.1C23 16.1 23 12 23 12Zm-13 3.5v-7l6 3.5-6 3.5Z"/></svg>
+    </div>
+    <span class="youtube-app-kicker" id="youtubeAppKicker">YOUTUBE · WEB</span>
+    <h2 id="youtubeAppTitle">Bu bağlantıya uygulamada devam et</h2>
+    <p id="youtubeAppBody">YouTube indirmeleri, web sunucularına uygulanan erişim kısıtlamaları nedeniyle geçici olarak kullanılamıyor. İndirmeyi kendi internet bağlantın üzerinden uygulamada deneyebilirsin.</p>
+    <div class="youtube-app-actions">
+      <a class="youtube-app-link primary" href="/pc-app.html" id="youtubeAppDesktop">Windows uygulaması <b>↗</b></a>
+      <a class="youtube-app-link" href="/app.html" id="youtubeAppMobile">Android uygulaması <b>↗</b></a>
+    </div>
+    <small id="youtubeAppNote">Uygulamalar cihazındaki bağlantıyı kullanır; YouTube erişimi yine videoya ve bölgeye göre değişebilir.</small>
+  </section>
+</div>
+
+<!-- DL MODAL -->
+<div class="overlay tone-neutral" id="dlOverlay" onclick="handleOverlay(event,'dlOverlay')">
+  <div class="modal-sheet dl-modal-sheet" role="dialog" aria-modal="true" aria-labelledby="dlAnalysisTitle">
+    <div class="handle"></div>
+    <div class="dl-header">
+      <div class="dl-video-info">
+        <div class="dl-thumb-wrap">
+          <div class="dl-thumb" id="dlThumb">🎬</div>
+          <span class="dl-duration-badge" id="dlDurationBadge" hidden></span>
+        </div>
+        <div class="dl-video-copy"><div class="dl-vtitle" id="dlVTitle"></div><div class="dl-vmeta" id="dlVMeta"></div></div>
+        <div class="dl-progress-copy" aria-live="polite">
+          <h2 id="dlProgressTitle">İndirmen hazırlanıyor</h2>
+          <p id="dlProgressMeta"></p>
+        </div>
+      </div>
+      <button class="dl-close" onclick="closeOverlay('dlOverlay')" aria-label="Kapat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="dl-body">
+      <div class="dl-analysis-copy">
+        <h2 id="dlAnalysisTitle">İndirmeye hazır</h2>
+        <p id="dlAnalysisDesc">Bağlantı analiz edildi. Tercihlerini Ayarlar’dan değiştirebilirsin.</p>
+      </div>
+      <section class="dl-plan-card" id="dlPlanCard" aria-live="polite">
+        <span class="dl-plan-label" id="dlPlanLabel">indirme planı</span>
+        <strong id="dlPlanTitle">standart</strong>
+        <p id="dlPlanText">1080p · H.264 · MP4</p>
+      </section>
+      <div class="dl-action-row">
+        <button class="dl-thumb-action" id="dlThumbAction" type="button" onclick="downloadThumbnail()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="dlThumbActionTxt">kapak görseli</span>
+        </button>
+        <a class="dl-settings-link" href="settings.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.12 2.12-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20.3h-3v-.08A1.7 1.7 0 0 0 10.68 18.66a1.7 1.7 0 0 0-1.88.34l-.06.06-2.12-2.12.06-.06A1.7 1.7 0 0 0 7.02 15a1.7 1.7 0 0 0-1.56-1.03H5.4v-3h.06A1.7 1.7 0 0 0 7.02 9.94a1.7 1.7 0 0 0-.34-1.88l-.06-.06L8.74 5.88l.06.06a1.7 1.7 0 0 0 1.88.34 1.7 1.7 0 0 0 1.03-1.56V4.65h3v.07a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06L19.8 8l-.06.06a1.7 1.7 0 0 0-.34 1.88 1.7 1.7 0 0 0 1.56 1.03h.07v3h-.07A1.7 1.7 0 0 0 19.4 15Z" stroke-linejoin="round"/></svg>
+          <span id="dlSettingsTxt">ayarlar</span>
+        </a>
+      </div>
+      <div class="dl-prog-wrap" id="dlProgWrap">
+        <div class="dl-prog-top">
+          <div class="dl-prog-icon" id="dlProgIcon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="dl-prog-info"><div class="dl-prog-label" id="dlProgLabel"></div><div class="dl-prog-speed" id="dlProgSpeed"></div></div>
+          <div class="dl-prog-pct" id="dlProgPct">0%</div>
+        </div>
+        <div class="dl-bar-track"><div class="dl-bar-fill" id="dlBarFill"></div></div>
+        <div class="dl-progress-scale">
+          <span id="dlProgCurrent">0 MB</span>
+          <span id="dlProgTotal"></span>
+        </div>
+      </div>
+      <button class="dl-btn" id="dlBtn" onclick="startDownload()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="dlBtnTxt">indir</span>
+      </button>
+      <div class="dl-progress-footer">
+        <button class="dl-cancel" id="dlCancel" onclick="cancelDownload()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+          <span id="dlCancelTxt">iptal</span>
+        </button>
+        <span class="dl-quality-badge" id="dlQualityBadge" hidden></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYLIST QUEUE MODAL -->
+<div class="overlay tone-neutral" id="plQueueOverlay" onclick="handleOverlay(event,'plQueueOverlay')">
+  <div class="upd-modal" style="max-width:420px;">
+    <div class="handle" style="margin:-6px auto 12px;"></div>
+    <button class="modal-close-btn" onclick="closePlaylistQueue()">✕</button>
+    <div class="upd-title" id="plQueueTitle">playlist indiriliyor</div>
+    <div class="pl-meta" id="plQueueProgress" style="margin-bottom:10px;">0 / 0</div>
+    <div id="plQueueList" style="max-height:50dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:10px;"></div>
+    <button class="action-btn" id="plQueueCancelBtn" onclick="cancelPlaylistQueue()" style="margin-top:16px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+      <span id="plQueueCancelTxt">durdur</span>
+    </button>
+  </div>
+</div>
+
+<!-- SAVE MODAL -->
+<div class="overlay tone-neutral" id="saveOverlay" onclick="handleOverlay(event,'saveOverlay')">
+  <div class="save-modal">
+    <div class="handle"></div>
+    <div class="save-title"><span>📥</span><span id="saveTitleTxt">nasıl kaydetmek istersin?</span></div>
+    <div class="save-btns">
+      <button class="save-btn" onclick="saveAction('download')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="saveDlTxt">indir</span></button>
+      <button class="save-btn" onclick="saveAction('share')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span id="saveShareTxt">paylaş</span></button>
+      <button class="save-btn" onclick="saveAction('copy')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span id="saveCopyTxt">kopyala</span></button>
+    </div>
+    <div class="save-note" id="saveNoteTxt">tarayıcı pop-up'ları engelliyorsa "indir" butonunu kullanın.</div>
+    <button class="save-done" onclick="closeOverlay('saveOverlay')" id="saveDoneTxt">tamam</button>
+  </div>
+</div>
+
+<!-- ONE-TIME DESKTOP APP REMINDER -->
+<section class="desktop-promo" id="desktopPromo" hidden role="dialog" aria-modal="false" aria-labelledby="desktopPromoTitle">
+  <div class="desktop-promo-card">
+    <button class="desktop-promo-close" type="button" onclick="closeDesktopPromo()" aria-label="Close">×</button>
+    <div class="desktop-promo-icon" aria-hidden="true"><span>Z</span></div>
+    <div class="desktop-promo-copy">
+      <span class="desktop-promo-kicker" id="desktopPromoKicker">ZENITHW APPS</span>
+      <h2 id="desktopPromoTitle">Daha iyi bir indirme deneyimi.</h2>
+      <p id="desktopPromoBody">Siteden indirme aktif. Daha akıcı ve yerel bir deneyim için ZenithW uygulamalarını dene.</p>
+    </div>
+    <div class="desktop-promo-actions">
+      <a class="desktop-promo-link desktop" href="/pc-app.html" id="desktopPromoDesktop">ZenithW Masaüstü <b>↗</b></a>
+      <a class="desktop-promo-link" href="/app.html" id="desktopPromoMobile">ZenithW Mobil <b>↗</b></a>
+    </div>
+    <label class="desktop-promo-never"><input id="desktopPromoNever" type="checkbox"><span id="desktopPromoNeverTxt">Bir daha gösterme</span></label>
+  </div>
+</section>
+
+<div class="toast" id="toast"><div class="toast-dot" id="toastDot"></div><span id="toastTxt"></span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"
+        integrity="sha512-Xm9qbB6Pu06k3PUwPj785dyTl6oHxgsv9nHp7ej7nCpAqGZT3OZpsELuCYX05DdonFpTlBpXMOxjavIAIUwr0w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="runtime-config.js?v=2"></script>
+<script src="app.d4596317c4a7.js?v=15.7"></script>
+<script src="site-shell.js?v=14.6"></script>
+</body>
+</html>

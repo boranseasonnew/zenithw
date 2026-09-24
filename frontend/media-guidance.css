@@ -1,0 +1,51 @@
+/* Focused guidance UI for download profiles and local media tools. */
+.settings-page .st-profile-section{padding-bottom:17px;background:linear-gradient(145deg,rgba(var(--accent-rgb),.065),rgba(255,255,255,.012) 58%);border:1px solid rgba(var(--accent-rgb),.17);border-radius:15px;}
+.settings-page .st-profile-section .st-section-label{padding:15px 15px 0;}
+.settings-page .st-profile-section .st-note{margin:10px 15px 0;}
+.download-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px 15px 0;}
+.download-profile-card{min-width:0;padding:11px 10px;border:1px solid var(--border);border-radius:11px;background:rgba(0,0,0,.14);color:var(--text);text-align:left;cursor:pointer;transition:border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease;}
+.download-profile-card:hover{border-color:rgba(var(--accent-rgb),.5);transform:translateY(-1px);}
+.download-profile-card.active{border-color:rgba(var(--accent-rgb),.78);background:linear-gradient(145deg,rgba(var(--accent-rgb),.21),rgba(var(--accent-rgb),.065));box-shadow:0 8px 20px rgba(var(--accent-rgb),.12);}
+.download-profile-card.is-quality{border-color:rgba(232,196,92,.28);}
+.download-profile-card.is-quality.active{border-color:rgba(232,196,92,.76);background:linear-gradient(145deg,rgba(232,196,92,.16),rgba(var(--accent-rgb),.075));}
+.download-profile-top{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:7px;}
+.download-profile-top strong{font-size:11px;font-weight:780;letter-spacing:-.01em;}
+.download-profile-top i{font-style:normal;color:var(--accent);font-size:8px;font-weight:800;letter-spacing:.08em;}
+.download-profile-card.is-quality .download-profile-top i{color:#e8c45c;}
+.download-profile-spec{display:block;overflow:hidden;color:var(--text2);font-size:8.5px;font-weight:680;line-height:1.35;text-overflow:ellipsis;white-space:nowrap;}
+.download-profile-card small{display:block;min-height:22px;margin-top:6px;color:var(--text3);font-size:8px;line-height:1.35;}
+.download-profile-status{min-height:15px;padding:8px 15px 0;color:var(--accent);font-size:8.5px;font-weight:720;}
+
+.dl-plan-card{position:relative;margin:2px 0 12px;padding:11px 13px;border:1px solid rgba(var(--accent-rgb),.23);border-radius:11px;background:linear-gradient(125deg,rgba(var(--accent-rgb),.1),rgba(255,255,255,.015));overflow:hidden;}
+.dl-plan-card:after{position:absolute;inset:auto -18px -32px auto;width:94px;height:94px;border:1px solid rgba(var(--accent-rgb),.18);border-radius:50%;content:"";pointer-events:none;}
+.dl-plan-label,.conversion-preflight-label,.tool-error-label{display:block;margin-bottom:4px;color:var(--accent);font-size:8px;font-weight:820;letter-spacing:.13em;}
+.dl-plan-card strong{display:block;color:var(--text);font-size:11px;font-weight:780;}
+.dl-plan-card p{margin:3px 0 0;color:var(--text3);font-size:9px;line-height:1.45;}
+
+.conversion-preflight{margin:13px 0 15px;padding:12px 13px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.018);}
+.conversion-preflight-flow{display:flex;align-items:center;gap:8px;min-width:0;}
+.conversion-preflight-flow b{overflow:hidden;color:var(--text2);font-size:10px;text-overflow:ellipsis;white-space:nowrap;}
+.conversion-preflight-flow b:first-child{max-width:calc(100% - 68px);}
+.conversion-preflight-flow b:last-child{color:var(--accent);}
+.conversion-preflight-flow i{color:var(--text3);font-style:normal;}
+.conversion-preflight p{margin:7px 0 0;color:var(--text3);font-size:9px;line-height:1.5;}
+
+.tool-error-card{display:flex;gap:10px;align-items:flex-start;margin:12px 0;padding:12px;border:1px solid rgba(237,66,69,.42);border-radius:12px;background:linear-gradient(135deg,rgba(237,66,69,.115),rgba(255,255,255,.012));outline:none;}
+.tool-error-mark{display:grid;place-items:center;flex:0 0 auto;width:22px;height:22px;border:1px solid rgba(237,66,69,.5);border-radius:50%;color:#ff8b8c;font-size:12px;font-weight:850;}
+.tool-error-card strong{display:block;color:var(--text);font-size:10px;font-weight:780;}
+.tool-error-card p{margin:4px 0 0;color:var(--text2);font-size:9px;line-height:1.5;}
+.tool-error-card .tool-error-label{color:#ff9697;}
+.remux-page .tool-error-card{margin:0 0 13px;}
+
+@media(max-width:600px){
+  .settings-page .st-profile-section{margin:0 -2px;}
+  .download-profile-grid{grid-template-columns:1fr;padding:10px 11px 0;gap:7px;}
+  .download-profile-card{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;align-items:center;padding:10px 11px;}
+  .download-profile-top{margin:0;}
+  .download-profile-spec{grid-column:1;grid-row:2;margin-top:2px;}
+  .download-profile-card small{grid-column:2;grid-row:1 / span 2;min-height:0;max-width:108px;margin:0;text-align:right;}
+  .download-profile-status{padding:7px 11px 0;}
+  .dl-plan-card{margin-bottom:10px;padding:10px 11px;}
+  .conversion-preflight{margin:11px 0 13px;padding:11px;}
+  .tool-error-card{margin:10px 0;padding:11px;}
+}

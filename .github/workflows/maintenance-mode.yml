@@ -1,0 +1,148 @@
+name: Bakım modu
+run-name: "Bakım modu · ${{ inputs.mode == 'enable' && 'AÇ' || 'KAPAT' }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Yapılacak işlem"
+        required: true
+        type: choice
+        options:
+          - enable
+          - disable
+      title:
+        description: "Bakım başlığı"
+        required: false
+        default: "Kısa bir pati molası"
+        type: string
+      message:
+        description: "Ziyaretçiye gösterilecek açıklama"
+        required: false
+        default: "Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız."
+        type: string
+      until:
+        description: "Tahmini bitiş (İstanbul saati, örn. 13:35)"
+        required: false
+        default: ""
+        type: string
+      retry_after:
+        description: "Tekrar deneme süresi, saniye"
+        required: false
+        default: "900"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zenithw-production-maintenance
+  cancel-in-progress: false
+
+jobs:
+  update-maintenance-mode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ana dalı al
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Bakım yapılandırmasını doğrula ve güncelle
+        env:
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_TITLE: ${{ inputs.title }}
+          INPUT_MESSAGE: ${{ inputs.message }}
+          INPUT_UNTIL: ${{ inputs.until }}
+          INPUT_RETRY_AFTER: ${{ inputs.retry_after }}
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const active = process.env.INPUT_MODE === 'enable';
+          const title = (process.env.INPUT_TITLE || 'Kısa bir pati molası').trim().slice(0, 80);
+          const message = (process.env.INPUT_MESSAGE || '').trim().slice(0, 240);
+          const rawUntil = (process.env.INPUT_UNTIL || '').trim().slice(0, 64);
+          const retryAfter = Number.parseInt(process.env.INPUT_RETRY_AFTER || '900', 10);
+
+          const istanbulParts = date => Object.fromEntries(
+            new Intl.DateTimeFormat('en-CA', {
+              timeZone: 'Europe/Istanbul',
+              year: 'numeric', month: '2-digit', day: '2-digit',
+              hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+            }).formatToParts(date).filter(part => part.type !== 'literal').map(part => [part.type, part.value]),
+          );
+
+          const normalizeUntil = value => {
+            if (!value) return '';
+            const clock = /^(\d{1,2}):(\d{2})$/.exec(value);
+            if (!clock) {
+              if (Number.isNaN(Date.parse(value))) {
+                throw new Error('Tahmini bitiş HH:MM veya geçerli bir ISO 8601 tarihi olmalı.');
+              }
+              return value;
+            }
+
+            const hour = Number(clock[1]);
+            const minute = Number(clock[2]);
+            if (hour > 23 || minute > 59) {
+              throw new Error('Saat 00:00 ile 23:59 arasında olmalı.');
+            }
+
+            const now = new Date();
+            const today = istanbulParts(now);
+            const hh = String(hour).padStart(2, '0');
+            const mm = String(minute).padStart(2, '0');
+            let target = new Date(`${today.year}-${today.month}-${today.day}T${hh}:${mm}:00+03:00`);
+            if (target <= now) target = new Date(target.getTime() + 24 * 60 * 60 * 1000);
+            const targetDay = istanbulParts(target);
+            return `${targetDay.year}-${targetDay.month}-${targetDay.day}T${hh}:${mm}:00+03:00`;
+          };
+
+          const until = normalizeUntil(rawUntil);
+
+          if (!['enable', 'disable'].includes(process.env.INPUT_MODE)) {
+            throw new Error('Geçersiz bakım işlemi.');
+          }
+          if (!title || !message) {
+            throw new Error('Başlık ve açıklama boş olamaz.');
+          }
+          if (!Number.isInteger(retryAfter) || retryAfter < 60 || retryAfter > 86400) {
+            throw new Error('Tekrar deneme süresi 60-86400 saniye arasında olmalı.');
+          }
+          const config = { active, title, message, until, retryAfter };
+          const serialized = `${JSON.stringify(config, null, 2)}\n`;
+          for (const path of ['backend/maintenance-config.json', 'frontend/maintenance-config.json']) {
+            fs.writeFileSync(path, serialized, 'utf8');
+          }
+          NODE
+
+      - name: İki platform yapılandırmasının aynı olduğunu doğrula
+        run: cmp --silent backend/maintenance-config.json frontend/maintenance-config.json
+
+      - name: Değişikliği ana dala gönder
+        env:
+          INPUT_MODE: ${{ inputs.mode }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backend/maintenance-config.json frontend/maintenance-config.json
+          if git diff --cached --quiet; then
+            echo "Yapılandırma zaten istenen durumda."
+            exit 0
+          fi
+          git commit -m "maintenance: ${INPUT_MODE} site"
+          git push origin HEAD:main
+
+      - name: Özet
+        env:
+          INPUT_MODE: ${{ inputs.mode }}
+        run: |
+          if [ "$INPUT_MODE" = "enable" ]; then
+            echo "### 🐈 ZenithW bakım modu açılıyor" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### ✅ ZenithW bakım modu kapatılıyor" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "Cloudflare Pages yeni commit'i otomatik dağıtacak; AWS backend sürümü ayrıca kontrollü şekilde güncellenir." >> "$GITHUB_STEP_SUMMARY"

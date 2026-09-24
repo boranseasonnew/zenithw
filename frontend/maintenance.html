@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#080a0f">
+  <title>ZenithW bakımda</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080a0f;
+      --panel: rgba(17, 20, 30, .78);
+      --panel-strong: #11151f;
+      --line: rgba(255, 255, 255, .09);
+      --text: #f7f8fb;
+      --muted: #9ba5b7;
+      --quiet: #687286;
+      --violet: #8b72ff;
+      --cyan: #52d4ff;
+      --green: #6ce5aa;
+      --amber: #ffc96b;
+      --shadow: 0 30px 90px rgba(0, 0, 0, .55);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(82, 212, 255, .12), transparent 29rem),
+        radial-gradient(circle at 82% 76%, rgba(139, 114, 255, .15), transparent 32rem),
+        linear-gradient(145deg, #07090d, #0a0d14 54%, #080a10);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: max(24px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: radial-gradient(rgba(255, 255, 255, .22) .55px, transparent .55px);
+      background-size: 18px 18px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    .shell {
+      position: relative;
+      width: min(920px, 100%);
+      display: grid;
+      grid-template-columns: minmax(280px, .92fr) minmax(320px, 1.08fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .04);
+      backdrop-filter: blur(24px) saturate(125%);
+    }
+
+    .scene {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-right: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(82, 212, 255, .13), transparent 45%),
+        linear-gradient(160deg, rgba(255, 255, 255, .025), rgba(255, 255, 255, 0));
+    }
+
+    .orb {
+      position: absolute;
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      border: 1px solid rgba(139, 114, 255, .16);
+      box-shadow: 0 0 80px rgba(82, 212, 255, .09), inset 0 0 80px rgba(139, 114, 255, .06);
+      animation: breathe 5s ease-in-out infinite;
+    }
+
+    .cat-art {
+      position: relative;
+      z-index: 1;
+      width: min(330px, 88%);
+      filter: drop-shadow(0 25px 30px rgba(0, 0, 0, .32));
+    }
+
+    .cat-tail {
+      transform-origin: 243px 270px;
+      animation: tail 3.6s ease-in-out infinite;
+    }
+
+    .cat-ear {
+      transform-origin: center;
+      animation: ear 4.8s ease-in-out infinite;
+    }
+
+    .cat-ear.right { animation-delay: -2.1s; }
+    .sleep-z { animation: floatZ 2.8s ease-in-out infinite; }
+    .sleep-z.two { animation-delay: -.9s; }
+    .sleep-z.three { animation-delay: -1.8s; }
+
+    .copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(34px, 6vw, 64px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      margin-bottom: 38px;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .brand-mark {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(139, 114, 255, .38);
+      border-radius: 10px;
+      color: #d9d2ff;
+      background: linear-gradient(145deg, rgba(139, 114, 255, .2), rgba(82, 212, 255, .08));
+      box-shadow: 0 8px 24px rgba(100, 80, 220, .18);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 15px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 0 rgba(108, 229, 170, .45);
+      animation: pulse 2s ease-out infinite;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 520px;
+      font-size: clamp(35px, 5vw, 56px);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+
+    .message {
+      margin: 22px 0 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .status-card {
+      margin-top: 30px;
+      padding: 14px 15px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .025);
+    }
+
+    .status-icon {
+      width: 35px;
+      height: 35px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: var(--amber);
+      background: rgba(255, 201, 107, .1);
+    }
+
+    .status-text { min-width: 0; }
+    .status-text strong { display: block; font-size: 12px; }
+    .status-text span { display: block; margin-top: 3px; color: var(--quiet); font-size: 11px; line-height: 1.4; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    button, a { font: inherit; }
+
+    .check-button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 17px;
+      border: 0;
+      border-radius: 12px;
+      color: #090b10;
+      background: linear-gradient(135deg, #a794ff, #5cd8ff);
+      box-shadow: 0 10px 28px rgba(95, 190, 255, .16);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      transition: transform .18s ease, filter .18s ease;
+    }
+
+    .check-button:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .check-button:active { transform: translateY(0); }
+    .check-button:disabled { cursor: wait; filter: grayscale(.35); opacity: .7; }
+
+    .status-link {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-link:hover { color: var(--text); }
+
+    .fine-print {
+      margin: 28px 0 0;
+      color: var(--quiet);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    @keyframes breathe { 50% { transform: scale(1.035); opacity: .78; } }
+    @keyframes tail { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(8deg); } }
+    @keyframes ear { 0%, 90%, 100% { transform: rotate(0); } 94% { transform: rotate(-7deg); } }
+    @keyframes floatZ { 0% { opacity: 0; transform: translate(0, 7px) scale(.85); } 45% { opacity: .8; } 100% { opacity: 0; transform: translate(10px, -19px) scale(1.05); } }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(108, 229, 170, 0); } 100% { box-shadow: 0 0 0 0 rgba(108, 229, 170, 0); } }
+
+    @media (max-width: 720px) {
+      body { align-items: start; }
+      .shell { grid-template-columns: 1fr; border-radius: 22px; }
+      .scene { min-height: 285px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .orb { width: 220px; height: 220px; }
+      .cat-art { width: 250px; }
+      .copy { padding: 34px 26px 38px; }
+      .brand { margin-bottom: 28px; }
+      h1 { font-size: clamp(36px, 12vw, 49px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="scene" aria-label="Sunucu üzerinde uyuyan bakım kedisi">
+      <div class="orb" aria-hidden="true"></div>
+      <svg class="cat-art" viewBox="0 0 360 360" role="img" aria-labelledby="catTitle catDesc">
+        <title id="catTitle">Bakım yapan uyuyan kedi</title>
+        <desc id="catDesc">Bir sunucu kasasının üzerinde kıvrılıp uyuyan sevimli kedi</desc>
+        <defs>
+          <linearGradient id="server" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#252b3a"/><stop offset="1" stop-color="#131722"/></linearGradient>
+          <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d6d9e3"/><stop offset="1" stop-color="#8f98ac"/></linearGradient>
+          <linearGradient id="furDark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9aa5b9"/><stop offset="1" stop-color="#6f788c"/></linearGradient>
+        </defs>
+        <ellipse cx="181" cy="303" rx="128" ry="21" fill="#030407" opacity=".44"/>
+        <rect x="57" y="226" width="246" height="72" rx="16" fill="url(#server)" stroke="#3a4254"/>
+        <rect x="72" y="241" width="216" height="18" rx="6" fill="#0b0e15" stroke="#30384a"/>
+        <circle cx="84" cy="250" r="3" fill="#6ce5aa"/><circle cx="96" cy="250" r="3" fill="#ffc96b"/><path d="M112 250h52" stroke="#30384a" stroke-width="3" stroke-linecap="round"/>
+        <rect x="72" y="267" width="216" height="17" rx="6" fill="#0b0e15" stroke="#30384a"/>
+        <circle cx="84" cy="275.5" r="3" fill="#52d4ff"/><path d="M99 275.5h65" stroke="#30384a" stroke-width="3" stroke-linecap="round"/>
+        <path class="cat-tail" d="M243 210c41 5 62 26 45 44-13 14-36 3-29-10 4-7 14-4 13 2" fill="none" stroke="url(#furDark)" stroke-width="20" stroke-linecap="round"/>
+        <path d="M103 204c7-35 40-58 80-56 38 2 64 23 67 58 1 12-9 25-24 26l-100 1c-17 0-27-14-23-29Z" fill="url(#fur)"/>
+        <path d="M114 192c-15-3-28 8-24 22 3 11 14 17 30 17" fill="url(#furDark)"/>
+        <g transform="translate(93 112)">
+          <path class="cat-ear" d="M30 34 37 3l24 25" fill="url(#furDark)" stroke="#9aa4b8" stroke-linejoin="round"/>
+          <path class="cat-ear right" d="m91 27 24-24 5 36" fill="url(#furDark)" stroke="#9aa4b8" stroke-linejoin="round"/>
+          <path d="M31 46c3-29 24-42 48-42 29 0 48 18 47 48-1 27-21 45-49 44-29-1-49-19-46-50Z" fill="url(#fur)"/>
+          <path d="M51 53c8 5 15 5 22 0M88 53c8 5 15 5 22 0" fill="none" stroke="#303646" stroke-width="4" stroke-linecap="round"/>
+          <path d="m77 65 6 0-3 4Z" fill="#755d68"/>
+          <path d="M80 69c-1 5-6 7-10 4M80 69c1 5 6 7 10 4" fill="none" stroke="#555d70" stroke-width="2.3" stroke-linecap="round"/>
+          <path d="M44 67 16 63M45 74 18 79M111 67l28-4M110 74l27 5" stroke="#737e92" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+        </g>
+        <g fill="#b9aeff" font-family="system-ui, sans-serif" font-weight="800">
+          <text class="sleep-z" x="260" y="142" font-size="18">z</text>
+          <text class="sleep-z two" x="279" y="119" font-size="23">z</text>
+          <text class="sleep-z three" x="301" y="89" font-size="29">Z</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="copy">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">Z</span>ZenithW</div>
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>Planlı bakım sürüyor</p>
+      <h1 id="maintenanceTitle">Kısa bir pati molası</h1>
+      <p class="message" id="maintenanceMessage">Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız.</p>
+
+      <div class="status-card" aria-live="polite">
+        <span class="status-icon" aria-hidden="true">◷</span>
+        <div class="status-text">
+          <strong id="statusHeading">Son kontroller yapılıyor</strong>
+          <span id="statusDetail">Bu sayfa açık kalabilir; hizmet döndüğünde otomatik yenilenecek.</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="check-button" id="checkButton" type="button">Şimdi kontrol et <span aria-hidden="true">↻</span></button>
+        <a class="status-link" href="/status">Sistem durumunu görüntüle →</a>
+      </div>
+      <p class="fine-print">Yeni indirme ve dönüştürme işleri bakım süresince güvenli biçimde duraklatıldı.</p>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const title = document.getElementById('maintenanceTitle');
+      const message = document.getElementById('maintenanceMessage');
+      const heading = document.getElementById('statusHeading');
+      const detail = document.getElementById('statusDetail');
+      const button = document.getElementById('checkButton');
+      const previewMode = location.pathname === '/maintenance' || location.pathname === '/maintenance.html';
+      let untilTimestamp = 0;
+      let countdownTimer = 0;
+
+      const renderCountdown = () => {
+        if (!untilTimestamp) return;
+        const remaining = untilTimestamp - Date.now();
+        if (remaining <= 0) {
+          detail.textContent = 'Tahmini süre doldu; ekip son kontrolleri tamamlıyor.';
+          return;
+        }
+        const minutes = Math.ceil(remaining / 60000);
+        detail.textContent = minutes < 60
+          ? `Tahmini dönüş: yaklaşık ${minutes} dakika.`
+          : `Tahmini dönüş: yaklaşık ${Math.ceil(minutes / 60)} saat.`;
+      };
+
+      const applyStatus = (status) => {
+        if (status.title) title.textContent = status.title;
+        if (status.message) message.textContent = status.message;
+        const parsedUntil = Date.parse(status.until || '');
+        untilTimestamp = Number.isFinite(parsedUntil) ? parsedUntil : 0;
+        clearInterval(countdownTimer);
+        if (untilTimestamp) {
+          renderCountdown();
+          countdownTimer = setInterval(renderCountdown, 30000);
+        }
+      };
+
+      const checkStatus = async (manual = false) => {
+        button.disabled = true;
+        if (manual) {
+          heading.textContent = 'Pati radarı kontrol ediyor…';
+          detail.textContent = 'Hizmet durumuna yeniden bakılıyor.';
+        }
+        try {
+          const response = await fetch('/maintenance-status', { cache: 'no-store' });
+          if (!response.ok) throw new Error('status unavailable');
+          const status = await response.json();
+          if (!status.active) {
+            if (previewMode) {
+              heading.textContent = 'Bakım modu şu anda kapalı';
+              detail.textContent = 'Bu yalnızca tasarım önizlemesi; ziyaretçiler normal siteyi görüyor.';
+              return;
+            }
+            heading.textContent = 'Hazırız, kapılar açılıyor!';
+            detail.textContent = 'ZenithW yeniden çevrimiçi. Sayfa yenileniyor…';
+            setTimeout(() => location.replace('/'), 900);
+            return;
+          }
+          applyStatus(status);
+          if (manual && !untilTimestamp) {
+            heading.textContent = 'Bakım hâlâ sürüyor';
+            detail.textContent = 'Kedi ekibi iş başında; otomatik olarak tekrar kontrol edeceğiz.';
+          }
+        } catch (_) {
+          heading.textContent = navigator.onLine ? 'Kontrol edilemedi' : 'Bağlantı çevrimdışı';
+          detail.textContent = 'Sorun değil; kısa süre sonra otomatik olarak tekrar deneyeceğiz.';
+        } finally {
+          button.disabled = false;
+        }
+      };
+
+      button.addEventListener('click', () => checkStatus(true));
+      window.addEventListener('online', () => checkStatus(false));
+      checkStatus(false);
+      setInterval(() => checkStatus(false), 20000);
+    })();
+  </script>
+</body>
+</html>

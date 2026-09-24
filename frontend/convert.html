@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Dönüştür — ZenithW</title>
+<meta name="description" content="Video ve ses dosyalarını farklı formatlara dönüştürün.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" href="zenithw.png">
+<link href="/fonts.css?v=1" rel="stylesheet">
+<link rel="stylesheet" href="style.487d49f0164d.css">
+<link rel="stylesheet" href="site-shell.css?v=14.5">
+<link rel="stylesheet" href="converter-studio.css?v=14.3">
+<link rel="stylesheet" href="media-guidance.css?v=14.4">
+<link rel="stylesheet" href="/local-media.css?v=1">
+</head>
+<body class="theme-default tool-page convert-page">
+<main class="tool-page-main">
+  <a class="tool-page-brand" href="/">ZenithW<span>.</span></a>
+  <section class="convert-hero" aria-labelledby="convertPageTitle">
+    <div class="convert-kicker" id="convHeroKicker">MEDYA ATÖLYESİ</div>
+    <h1 id="convertPageTitle">Dosyanı dönüştür.<br><span>Kalitesini koru.</span></h1>
+    <p id="convHeroLead">Video ve ses dosyalarını, sade bir akışla ihtiyacın olan formata çevir.</p>
+    <div class="convert-trust-row" aria-label="Dönüştürücü özellikleri">
+      <span><i aria-hidden="true"></i><b id="convTrustSize">95 MB'a kadar</b></span>
+      <span><i aria-hidden="true"></i><b id="convTrustFormats">19 çıkış formatı</b></span>
+      <span><i aria-hidden="true"></i><b id="convTrustEngine">FFmpeg motoru</b></span>
+    </div>
+  </section>
+  <div class="conv-modal tool-modal tool-page-panel" aria-labelledby="convTitleTxt">
+    <header class="tool-modal-header">
+      <div class="tool-modal-heading">
+        <span class="tool-modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 7h11M16 4l3 3-3 3M16 17H5M8 14l-3 3 3 3"/></svg></span>
+        <div><strong id="convTitleTxt">yeni dönüştürme</strong><small id="convModalSub">dosya, format, dönüştür — hepsi bu</small></div>
+      </div>
+      <div class="convert-stepper" aria-label="Dönüştürme adımları"><span class="active"><b>1</b><i id="convStepFile">dosya</i></span><em></em><span><b>2</b><i id="convStepFormat">format</i></span><em></em><span><b>3</b><i id="convStepConvert">dönüştür</i></span></div>
+      <button type="button" class="tool-modal-close" aria-label="Dönüştürme penceresini kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </header>
+    <div class="tool-modal-body">
+      <label class="dropzone convert-dropzone" id="convDrop" for="convFileInput" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleConvDrop(event)">
+        <span class="convert-drop-glow" aria-hidden="true"></span>
+        <div class="tool-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 13v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg></div>
+        <div class="drop-title" id="convDropTitle">dosyanı buraya bırak</div><div class="drop-sub" id="convDropSub">veya bilgisayarından seç · en fazla 95 MB</div>
+        <span class="convert-file-button" id="convChooseFile">dosya seç</span>
+        <input class="visually-hidden-input" type="file" id="convFileInput" accept="video/*,audio/*,.mp4,.webm,.mkv,.mov,.avi,.m4v,.3gp,.ts,.m2ts,.wmv,.mp3,.m4a,.aac,.opus,.ogg,.flac,.wav,.aiff,.aif,.wma" onchange="handleConvFile(this)"/>
+      </label>
+      <div class="tool-error-card" id="toolError" role="alert" tabindex="-1" hidden>
+        <span class="tool-error-mark" aria-hidden="true">!</span>
+        <div><span class="tool-error-label" id="toolErrorLabel">NE YAPILABİLİR?</span><strong id="toolErrorTitle"></strong><p id="toolErrorText"></p></div>
+      </div>
+      <div class="conv-progress" id="convProgress">
+        <div class="dl-prog-top">
+          <div class="dl-prog-icon" id="convProgIcon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></div>
+          <div class="dl-prog-info"><div class="dl-prog-label" id="convProgLabel">dönüştürülüyor...</div><div class="dl-prog-speed" id="convProgSub"></div></div>
+          <div class="dl-prog-pct" id="convProgPct">—</div>
+        </div>
+      </div>
+      <div class="conv-fmt-row conv-format-panel">
+        <div class="conv-fmt-head"><div><span class="conv-fmt-label" id="convFmtLabel">ÇIKIŞ FORMATINI SEÇ</span><small id="convFmtHint">hedef dosya türünü belirle</small></div><span class="conv-target-preview" id="convTargetPreview">MP3</span></div>
+        <div class="conv-format-group"><span class="conv-group-label" id="convVideoFormats">VİDEO</span><div class="conv-chips">
+          <button type="button" class="chip" data-v="mp4" aria-pressed="false" onclick="setConvFmt(this)">mp4</button><button type="button" class="chip" data-v="webm" aria-pressed="false" onclick="setConvFmt(this)">webm</button><button type="button" class="chip" data-v="mkv" aria-pressed="false" onclick="setConvFmt(this)">mkv</button><button type="button" class="chip" data-v="mov" aria-pressed="false" onclick="setConvFmt(this)">mov</button><button type="button" class="chip" data-v="avi" aria-pressed="false" onclick="setConvFmt(this)">avi</button><button type="button" class="chip" data-v="m4v" aria-pressed="false" onclick="setConvFmt(this)">m4v</button><button type="button" class="chip" data-v="3gp" aria-pressed="false" onclick="setConvFmt(this)">3gp</button><button type="button" class="chip" data-v="ts" aria-pressed="false" onclick="setConvFmt(this)">ts</button><button type="button" class="chip" data-v="wmv" aria-pressed="false" onclick="setConvFmt(this)">wmv</button>
+        </div></div>
+        <div class="conv-format-group"><span class="conv-group-label" id="convAudioFormats">SES</span><div class="conv-chips">
+          <button type="button" class="chip active" data-v="mp3" aria-pressed="true" onclick="setConvFmt(this)">mp3</button><button type="button" class="chip" data-v="m4a" aria-pressed="false" onclick="setConvFmt(this)">m4a</button><button type="button" class="chip" data-v="aac" aria-pressed="false" onclick="setConvFmt(this)">aac</button><button type="button" class="chip" data-v="opus" aria-pressed="false" onclick="setConvFmt(this)">opus</button><button type="button" class="chip" data-v="ogg" aria-pressed="false" onclick="setConvFmt(this)">ogg</button><button type="button" class="chip" data-v="flac" aria-pressed="false" onclick="setConvFmt(this)">flac</button><button type="button" class="chip" data-v="wav" aria-pressed="false" onclick="setConvFmt(this)">wav</button><button type="button" class="chip" data-v="aiff" aria-pressed="false" onclick="setConvFmt(this)">aiff</button><button type="button" class="chip" data-v="wma" aria-pressed="false" onclick="setConvFmt(this)">wma</button>
+        </div></div>
+        <div class="conv-format-advice" aria-live="polite">
+          <span class="conv-advice-mark" aria-hidden="true">✦</span>
+          <div><strong id="convAdviceTitle">akıllı ve yerel dönüşüm</strong><p id="convAdviceText">Önce akışlar seçtiğin konteynerle uyumluysa kayıpsız taşınır; uygun değilse FFmpeg güvenli yeniden kodlamaya geçer.</p></div>
+        </div>
+        </div>
+      </div>
+      <section class="conversion-preflight" id="convPreflight" hidden aria-live="polite">
+        <span class="conversion-preflight-label" id="convPreflightLabel">DÖNÜŞTÜRME ÖZETİ</span>
+        <div class="conversion-preflight-flow"><b id="convPreflightFile"></b><i aria-hidden="true">→</i><b id="convPreflightTarget"></b></div>
+        <p id="convPreflightText"></p>
+      </section>
+      <button class="action-btn convert-primary-btn" id="convBtn" onclick="startConvert()" disabled><span class="convert-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h11M16 4l3 3-3 3M16 17H5M8 14l-3 3 3 3"/></svg></span><span class="convert-btn-copy"><strong id="convBtnTxt">önce bir dosya seç</strong><small id="convBtnHint">dönüştürme seçiminin ardından başlar</small></span><span class="convert-btn-arrow" aria-hidden="true">→</span></button>
+    </div>
+  </div>
+</main>
+<input id="urlInput" type="url" hidden aria-hidden="true"><textarea id="urlTextarea" hidden aria-hidden="true"></textarea>
+<div id="siteBottomNav" data-active="convert"></div>
+<div class="toast" id="toast"><div class="toast-dot" id="toastDot"></div><span id="toastTxt"></span></div>
+<div class="overlay tone-neutral" id="saveOverlay" onclick="handleOverlay(event,'saveOverlay')">
+  <div class="save-modal">
+    <div class="handle"></div>
+    <div class="save-title"><span>📥</span><span id="saveTitleTxt">nasıl kaydetmek istersin?</span></div>
+    <div class="save-btns">
+      <button class="save-btn" onclick="saveAction('download')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="saveDlTxt">indir</span></button>
+      <button class="save-btn" onclick="saveAction('share')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span id="saveShareTxt">paylaş</span></button>
+      <button class="save-btn" onclick="saveAction('copy')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span id="saveCopyTxt">kopyala</span></button>
+    </div>
+    <div class="save-note" id="saveNoteTxt">tarayıcı pop-up'ları engelliyorsa "indir" butonunu kullanın.</div>
+    <button class="save-done" onclick="closeOverlay('saveOverlay')" id="saveDoneTxt">tamam</button>
+  </div>
+</div>
+<script src="/runtime-config.js"></script>
+<script src="/local-media.js?v=1"></script>
+<script src="app.d4596317c4a7.js?v=15.6"></script>
+<script src="site-shell.js?v=14.3"></script>
+</body>
+</html>

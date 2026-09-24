@@ -1,0 +1,11 @@
+{
+  "name": "zenithw-browser-media",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:media": "node scripts/build-local-media.mjs",
+    "test:media": "node --test tests/local-media.test.mjs"
+  },
+  "dependencies": { "mediabunny": "1.56.1" },
+  "devDependencies": { "esbuild": "0.25.12" }
+}

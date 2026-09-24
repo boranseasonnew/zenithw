@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+download/
+downloads/
+*.pyc
+.env
+cookies.txt
+backend/cookies.txt
+frontend/OPTIMIZATIONS.md
+backend/DEPLOYMENT.md
+backend/tests/
+/destkop
+/mobile-next
