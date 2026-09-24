@@ -2,10 +2,26 @@
 
 Bu repo için ön yüz `frontend/` ve `functions/` ile Cloudflare Pages'te;
 Flask/Socket.IO API ise mevcut AWS EC2 sunucusunda Nginx ve
-`zenithw-backend.service` ile çalışacak şekilde tanımlıdır. Repo içinde
-Cloudflare Pages proje adı, hesap ID'si, AWS hesap/bölge/instance ID'si veya
-Desktop installer yapılandırması yoktur. Bunlar doğrulanmadan production
-dağıtımı başlatılmaz.
+`zenithw-backend.service` ile çalışacak şekilde tanımlıdır. Desktop installer
+yapılandırması bu kaynak kopyasında yoktur.
+
+## 24 Eylül 2026 production envanteri (salt okunur doğrulama)
+
+| Hizmet | Mevcut hedef | Gözlenen durum |
+| --- | --- | --- |
+| Cloudflare Pages | Hesap `90451b70620888762baaeb767e692a8c`, proje `zenithw`, production dalı `main` | `zenithw.space` ve `zenithw.pages.dev`; GitHub `boranseason/zenithw` bağlantısı ve otomatik deployment açık; son production kaynak commit'i `ccbcee4a2c6903e7ce49ff09f1326de70d0d735e` |
+| AWS EC2 | Hesap `272115513551`, bölge `eu-north-1`, instance `i-0bf2df7600efaa37d` | `ZenithW backend`, IP `13.61.113.104`; `zenithw-backend.service` çalışıyor, `/home/ubuntu/zenithw` temiz `main` dalında `eddca41d3355c5c2f003d1fc05d997e9e692d107` |
+
+Cloudflare build komutu `exit 0`, çıktı dizini `frontend`, proje kök dizini repo
+köküdür. Yerel kaynak, EC2'deki backend dosyasıyla aynı değildir. Cloudflare
+commit'i EC2 Git deposunda yoktur. Bu sürüm farkları dağıtım sırasında
+karşılaştırılmalı; yalnızca commit hash'ine bakarak içerik eşitliği varsayılmamalı.
+Yerel bilgisayardan port 22 bağlantısı zaman aşımına uğradı; tarayıcıdaki EC2
+Instance Connect terminali çalışıyor. Yerel AWS CLI ve Wrangler kurulu değil;
+`npx --yes wrangler whoami` denemesi npm `ECONNRESET` ile sonuçlandı. Tarayıcı
+oturumu bu CLI'ları kendiliğinden yetkilendirmez. Aynı tarihte canlı
+`https://zenithw.space/` HTTP 200, `https://api.zenithw.space/health` HTTP 204
+yanıtı verdi. Bunlar deployment sonrası doğrulama için başlangıç durumudur.
 
 ## Ortak kapı
 
@@ -17,8 +33,8 @@ dağıtımı başlatılmaz.
    değerleri Git'e, komut satırına veya bu belgeye yazılmaz.
 4. `scripts/deploy-preflight.ps1` mevcut Pages projesini/production dalını,
    `aws sts get-caller-identity` sonucunu ve mevcut EC2 instance ID'sini
-   salt okunur olarak karşılaştırır. Gerçek değerler operatör tarafından
-   parametre olarak verilir. Git geçmişi ve GitHub entegrasyonu değiştirilmez.
+   salt okunur olarak karşılaştırır. Yukarıdaki doğrulanmış değerler parametre
+   olarak verilir. Git geçmişi ve GitHub entegrasyonu değiştirilmez.
 
 ## Cloudflare Pages
 
@@ -27,9 +43,9 @@ hesap ve production dalı doğrulandıktan ve production değişikliği ayrıca
 onaylandıktan sonra, repo kökünden şu komut çalıştırılır:
 
 ```powershell
-$env:CLOUDFLARE_ACCOUNT_ID = '<doğrulanan-hesap-id>'
-npx.cmd wrangler pages deploy frontend --project-name '<doğrulanan-proje>' --branch '<doğrulanan-production-dalı>'
-npx.cmd wrangler pages deployment list --project-name '<doğrulanan-proje>' --environment production
+$env:CLOUDFLARE_ACCOUNT_ID = '90451b70620888762baaeb767e692a8c'
+npx.cmd wrangler pages deploy frontend --project-name zenithw --branch main --commit-hash (git rev-parse HEAD)
+npx.cmd wrangler pages deployment list --project-name zenithw --environment production
 ```
 
 Komut repo kökünden çalışmalıdır; Wrangler kökteki `functions/` klasörünü de
@@ -40,11 +56,15 @@ veya secret değiştirme komutları kullanılmaz. Sonrasında `https://zenithw.s
 ## AWS EC2
 
 `aws sts get-caller-identity` ve `aws ec2 describe-instances --instance-ids
-<ID> --region <bölge>` ile hesap, instance, adres ve etiketler doğrulanır.
+i-0bf2df7600efaa37d --region eu-north-1` ile hesap, instance, adres ve
+etiketler yeniden doğrulanır.
 `ssh` ile önce salt okunur olarak `systemctl cat zenithw-backend`,
 `readlink -f /home/ubuntu/zenithw/backend/app.py` ve `systemctl status`
 kontrol edilir. EC2 için AWS'nin belgelediği SSH/SCP yöntemi kullanılabilir;
 bu sunucuda CodeDeploy veya SSM dağıtım kurulumu olduğuna dair kanıt yoktur.
+SSH erişimi sağlanmadan veya aynı güvenlikte doğrulanmış başka bir aktarım
+yolu kurulmadan backend dağıtımı başlatılmaz. EC2 Instance Connect tarayıcı
+terminali tek başına yerel dosyaları sunucuya taşımaz.
 
 Onaydan sonra yalnızca commitlenmiş backend dosyaları `git archive HEAD backend`
 ile arşivlenir ve SCP ile mevcut instance'a geçici dizine kopyalanır. Sunucuda
