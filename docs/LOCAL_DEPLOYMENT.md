@@ -16,12 +16,25 @@ Cloudflare build komutu `exit 0`, çıktı dizini `frontend`, proje kök dizini 
 köküdür. Yerel kaynak, EC2'deki backend dosyasıyla aynı değildir. Cloudflare
 commit'i EC2 Git deposunda yoktur. Bu sürüm farkları dağıtım sırasında
 karşılaştırılmalı; yalnızca commit hash'ine bakarak içerik eşitliği varsayılmamalı.
+Canlı `app.html` ile yerel dosya karşılaştırmasında mobil APK bağlantısı/metni
+farklıdır; canlı yanıta Cloudflare'ın eklediği challenge betiği de görünür.
+EC2'de takip edilen 23 backend dosyasının 15'inin SHA-256 özeti yerelden
+farklıdır; `app.py` ve requirements dosyaları da bu gruptadır. Bu farklar
+incelenmeden tüm `backend/` ağacı sunucunun üzerine kopyalanmaz.
 Yerel bilgisayardan port 22 bağlantısı zaman aşımına uğradı; tarayıcıdaki EC2
 Instance Connect terminali çalışıyor. Yerel AWS CLI ve Wrangler kurulu değil;
 `npx --yes wrangler whoami` denemesi npm `ECONNRESET` ile sonuçlandı. Tarayıcı
 oturumu bu CLI'ları kendiliğinden yetkilendirmez. Aynı tarihte canlı
 `https://zenithw.space/` HTTP 200, `https://api.zenithw.space/health` HTTP 204
 yanıtı verdi. Bunlar deployment sonrası doğrulama için başlangıç durumudur.
+Wrangler 4.138.0 geçici olarak çalıştırılabildi, ancak `whoami` sonucu
+yetkilendirilmemiş oturum gösterdi. EC2 güvenlik grubu `sg-0d4d60188a7cd7201`
+SSH/TCP 22 için yalnızca `13.48.4.200/30` aralığına izin veriyor. CloudShell'den
+de SSH erişimi engelli. SSM ajanı etkin olsa bile instance'da IAM profili yok,
+SSM managed instance listesinde görünmüyor; mevcut EC2 Instance Connect
+Endpoint da bulunmadı. Bu nedenle backend aktarımı için, onayla sınırlı ve
+işlem sonunda geri alınacak dar bir SSH kuralı veya eşdeğer onaylı bir erişim
+yolu gerekli. Güvenlik grubu kuralı otomatik olarak genişletilmez.
 
 ## Ortak kapı
 
