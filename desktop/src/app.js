@@ -84,7 +84,7 @@ async function start() {
   button.disabled = true;
   try {
     const result = await window.zenith.start({ url: $('#url').value, title: media.title, kind, format: kind === 'video' ? $('#format').value : '', audioFormat: kind === 'audio' ? $('#format').value : settings.audioFormat });
-    if (!jobs.has(result.id)) jobs.set(result.id, { id: result.id, title: media.title, percent: 0, detail: tr('preparing'), done: false, failed: false });
+    if (!jobs.has(result.id)) jobs.set(result.id, { id: result.id, title: media.title, percent: 0, detail: tr('preparing'), done: false, failed: false, createdAt: Date.now() });
     renderQueue(); view('queue'); toast(result.duplicate ? tr('started') : tr('started'));
   }
   catch (error) { toast(error?.message || tr('failed')); }
@@ -93,7 +93,11 @@ async function start() {
 function renderQueue() {
   const box = $('#queue-list'); $('#queue-count').textContent = jobs.size;
   if (!jobs.size) { box.innerHTML = `<div class="empty">${esc(tr('queueEmpty'))}</div>`; return; }
-  box.innerHTML = [...jobs.values()].map((job) => `<article class="queue-item ${job.done ? 'is-done' : ''}"><div class="queue-title"><span>${esc(job.title)}</span><div class="queue-actions">${job.done ? `<button class="dismiss" data-dismiss="${job.id}" title="Kayıt listesinden kaldır">×</button>` : `<button data-cancel="${job.id}" ${job.cancelling ? 'disabled' : ''}>${esc(job.cancelling ? jobState('cancelling') : tr('cancel'))}</button>`}</div></div><div class="track"><i style="width:${job.percent}%"></i></div><div class="queue-meta"><b>${job.percent}%</b><span>${esc(job.detail)}</span></div></article>`).join('');
+  const ordered = [...jobs.values()].sort((left, right) => {
+    if (left.done !== right.done) return left.done ? 1 : -1;
+    return (right.createdAt || 0) - (left.createdAt || 0);
+  });
+  box.innerHTML = ordered.map((job) => `<article class="queue-item ${job.done ? 'is-done' : 'is-active'}"><div class="queue-title"><span>${esc(job.title)}</span><div class="queue-actions">${job.done ? `<button class="dismiss" data-dismiss="${job.id}" title="Kayıt listesinden kaldır">×</button>` : `<button data-cancel="${job.id}" ${job.cancelling ? 'disabled' : ''}>${esc(job.cancelling ? jobState('cancelling') : tr('cancel'))}</button>`}</div></div><div class="track" aria-label="${job.percent}%"><i style="width:${job.percent}%"></i></div><div class="queue-meta"><b>${job.percent}%</b><span>${esc(job.detail)}</span></div></article>`).join('');
   document.querySelectorAll('[data-cancel]').forEach((button) => { button.onclick = async () => { const job = jobs.get(button.dataset.cancel); if (!job || job.done || job.cancelling) return; job.cancelling = true; job.detail = jobState('cancelling'); renderQueue(); if (!await window.zenith.cancel(job.id)) { job.cancelling = false; renderQueue(); } }; });
   document.querySelectorAll('[data-dismiss]').forEach((button) => { button.onclick = () => { jobs.delete(button.dataset.dismiss); persistQueue(); renderQueue(); }; });
   persistQueue();
