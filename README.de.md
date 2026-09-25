@@ -6,68 +6,338 @@
 
 Aktuelle Version: **v14.4**
 
-![ZenithW web interface](docs/assets/zenithw-preview.png)
+![ZenithW-Weboberfläche](docs/assets/zenithw-preview.png)
 
 ## ✨ Warum ZenithW?
 
-ZenithW hält Medienarbeit ruhig und nachvollziehbar: Link einfügen, prüfen, was die Quelle wirklich anbietet, eine sinnvolle Ausgabe wählen und die vorbereitete Datei speichern. Kein Konto, keine Erweiterung, keine Paywall und keine Werbung im Ablauf — nur praktische Werkzeuge und klare Grenzen.
+ZenithW hält Medienaufgaben bewusst einfach: Füge einen unterstützten Link ein, prüfe, was die Quelle tatsächlich anbietet, wähle die gewünschte Ausgabe und lade die vorbereitete Datei herunter.
 
-- **Ein fokussierter Arbeitsbereich** für Downloads, Audio-Extraktion, Konvertierung und Remux.
-- **Datenschutzfreundlich:** Verlauf bleibt im Browser, vorbereitete Dateien laufen ab.
-- **Ehrliche Einstellungen:** Ein Profil ist eine Präferenz, kein Versprechen für jedes Format jeder Quelle.
-- **Bereit zum Selbst-Hosting:** Docker Compose startet Oberfläche und API zusammen auf dem eigenen Rechner oder Server. 🐳
+Es gibt kein Kontosystem, keine Browser-Erweiterung, keine Paywall, kein Abo und keine Werbeschicht im Ablauf.
 
-## Funktionen
+Nur praktische Medienwerkzeuge, klare Einstellungen und ehrlich kommunizierte Grenzen.
 
-- Löst Medien von YouTube, TikTok, Instagram, X, Reddit und weiteren yt-dlp-kompatiblen Quellen auf.
-- Lädt Video, Audio, stumme Videos, Playlists und kleine Link-Sammlungen herunter.
-- Konvertiert mit FFmpeg und remuxt kompatible Streams ohne unnötige Neukodierung.
-- Unterstützt Untertitel, Metadaten, Vorschaubilder, SponsorBlock, Abbruch und Live-Fortschritt.
-- Speichert den Verlauf im Browser statt in einem serverseitigen Konto.
-- Bietet eine responsive, frameworkfreie Oberfläche auf Türkisch, Englisch, Französisch, Deutsch und Japanisch.
+- **Ein fokussierter Arbeitsbereich** für Downloads, Audio-Extraktion, Konvertierung und Remuxing.
+- **Datenschutzorientiert:** Der Verlauf bleibt im Browser und vorbereitete Dateien laufen automatisch ab.
+- **Ehrliche Einstellungen:** Ein Profil ist eine Präferenz und keine Garantie dafür, dass jede Quelle jedes Format anbietet.
+- **Keine Werbung:** ZenithW fügt dem Download-Ablauf keine Werbung hinzu.
+- **Self-Hosting-fähig:** Mit Docker Compose können Oberfläche und API auf dem eigenen Rechner oder Server betrieben werden. 🐳
 
-ZenithW folgt einem kurzen, nachvollziehbaren Ablauf: Füge einen unterstützten Link ein, prüfe Mediendetails und Optionen und bereite anschließend eine Datei für den direkten Browser-Download vor. Konto, Browser-Erweiterung und Desktop-Client sind nicht erforderlich. Die Oberfläche bleibt bewusst kompakt und zeigt dennoch die Entscheidungen, die für einen Medienauftrag wichtig sind.
+## Was kann ZenithW?
 
-## Download-Steuerung
+ZenithW arbeitet mit unterstützten, yt-dlp-kompatiblen Medienquellen.
 
-Der Startbildschirm unterstützt automatische Auswahl, Audio-Extraktion, stummes Video, Playlist-Verarbeitung und kleine Link-Sammlungen. Wenn eine Quelle mehrere Formate anbietet, lassen sich Container, Auflösung, Codec-Präferenz, Audio-Bitrate, Untertitel, Metadaten, Vorschaubild, Dateinamensmuster und SponsorBlock-Verhalten vor dem Start wählen.
+Der öffentliche Dienst unterstützt derzeit unter anderem:
 
-Die Einstellungen enthalten drei praktische Download-Profile:
+- TikTok
+- Instagram
+- X
+- Reddit
+- weitere kompatible Quellen, die von der aktiven yt-dlp-Integration unterstützt werden
 
-- **Minimal** bevorzugt kleinere, breit kompatible Dateien für schnelles Teilen und begrenzten Speicher.
-- **Standard** zielt auf ausgewogenes 1080p-H.264/MP4-Video und 192-kbps-Audio.
-- **Qualität** bevorzugt hochauflösendes AV1/WebM-Video mit Opus-Audio, sofern die Quelle es bereitstellt.
+ZenithW kann:
 
-Ein Profil ist ein Ausgangspunkt, keine Zusage für jeden Stream. Bei YouTube-Videoaufträgen erzwingt der Server unter Last eine Obergrenze von 720p und erlaubt bis zu 1080p nur im Leerlauf. Format-Fallbacks können die Grenze nicht unbemerkt überschreiten; die Dimensionen des gewählten Videostreams werden gegen das wirksame Limit geprüft. Audio-Downloads und andere Quellen behalten ihren eigenen Auswahlablauf.
+- Video und Audio herunterladen.
+- Audio aus Medien extrahieren.
+- Stummes Video herunterladen, sofern unterstützt.
+- Playlists und kleine Link-Sammlungen verarbeiten.
+- Dateien mit FFmpeg konvertieren.
+- Kompatible Audio- und Videostreams ohne unnötiges Re-Encoding remuxen.
+- Untertitel herunterladen.
+- Unterstützte Metadaten beibehalten.
+- Thumbnails herunterladen und einbetten.
+- SponsorBlock verwenden, sofern verfügbar.
+- Aktive Jobs abbrechen.
+- Live-Fortschritt anzeigen.
+- Den Download-Verlauf lokal im Browser statt in einem Serverkonto speichern.
+
+> **YouTube-Hinweis:** YouTube-Downloads sind im öffentlichen ZenithW-Dienst derzeit deaktiviert, weil vorgelagerte Zugriffsbeschränkungen Anfragen aus gehosteten Web- und Rechenzentrums-Infrastrukturen betreffen. Weitere Informationen findest du unter **YouTube-Verfügbarkeit**.
+
+Der Ablauf ist kurz und nachvollziehbar:
+
+1. Unterstützten Link einfügen.
+2. Mediendetails und verfügbare Formate prüfen.
+3. Ausgabe konfigurieren.
+4. Job starten.
+5. Vorbereitete Datei direkt im Browser herunterladen.
+
+Für die Webversion sind weder Konto noch Browser-Erweiterung oder Desktop-Client erforderlich.
+
+## Download-Einstellungen
+
+Die Hauptoberfläche unterstützt:
+
+- automatische Formatauswahl
+- Video-Downloads
+- Audio-Extraktion
+- stummes Video
+- Playlist-Verarbeitung
+- kleine Link-Sammlungen
+- Auflösungsauswahl
+- Container-Auswahl
+- Codec-Präferenzen
+- Audio-Bitrate
+- Untertiteloptionen
+- Metadaten-Einbettung
+- Thumbnail-Verarbeitung
+- Dateinamensvorlagen
+- SponsorBlock-Einstellungen
+
+Die verfügbaren Optionen hängen davon ab, was die Quellplattform tatsächlich bereitstellt.
+
+ZenithW erfindet keine Formate, die die Quelle nicht anbietet.
+
+### Download-Profile
+
+ZenithW bietet drei praktische Profile.
+
+#### Minimal
+
+Bevorzugt kleinere Dateien, schnellere Übertragungen, breite Kompatibilität und geringen Speicherbedarf.
+
+#### Standard
+
+Zielt auf ein ausgewogenes Verhältnis aus Qualität und Kompatibilität.
+
+Typisches Ziel:
+
+- 1080p
+- H.264
+- MP4
+- 192 kbps Audio
+
+Die tatsächliche Ausgabe hängt von den verfügbaren Streams ab.
+
+#### Quality
+
+Bevorzugt höherwertige Streams, wenn verfügbar.
+
+Mögliche Präferenzen:
+
+- hohe Auflösung
+- AV1
+- WebM
+- Opus-Audio
+
+Auch hier ist das Profil eine Präferenz und keine Garantie.
+
+Drittanbieter-Plattformen bestimmen, welche Streams tatsächlich verfügbar sind.
 
 ## Medienwerkzeuge
 
-ZenithW bietet zusätzlich zu Link-Downloads zwei Werkzeuge für lokale Dateien:
+ZenithW enthält neben Link-Downloads auch Werkzeuge für lokale Dateien.
 
-- **Konvertieren** lädt eine Datei für eine begrenzte FFmpeg-Konvertierung in ein ausdrücklich gewähltes Zielformat hoch.
-- **Remux** kopiert kompatible Audio- und Videostreams ohne Neukodierung in einen neuen Container. Das ist schneller und vermeidet unnötigen Qualitätsverlust, funktioniert aber nur bei kompatiblen Streams.
+### Convert
 
-Beide Werkzeuge zeigen ihren Verarbeitungszustand und geben eine kurzlebige vorbereitete Datei zurück, statt Uploads zu archivieren. Upload-Größe, Ausgabegröße, Dauer, Parallelität und Verarbeitungszeit sind serverseitig begrenzt.
+Convert lädt eine lokale Datei hoch und verarbeitet sie mit FFmpeg in das gewählte Zielformat.
 
-### Verarbeitung auf dem Gerät · Beta
+Nützlich, wenn eine Datei benötigt:
 
-Convert und Remux bieten **Server**, **Dieses Gerät bevorzugen** und **Nur dieses Gerät**. Die Beta kopiert kompatible Audio-/Videospuren ohne Neukodierung und kann Medien umverpacken oder kompatible Audiospuren extrahieren. Standard bleibt der Server. Nach einem lokalen Fehler ist eine ausdrückliche Upload-Bestätigung erforderlich; Nur dieses Gerät lädt niemals Dateien hoch. Grenzen: 64 MiB am Desktop, 24 MiB auf mobilen/speicherarmen Geräten und 30 Minuten. Untertitel, Kapitel und Anhänge bleiben nicht erhalten. Link-Downloads verwenden weiterhin das Backend. [Umfang, Grenzen und Build-Anleitung](docs/LOCAL_MEDIA.md) auf Englisch.
+- einen anderen Container
+- ein anderes Audioformat
+- bessere Gerätekompatibilität
+- ein einfacheres Ausgabeformat
+
+### Remux
+
+Remux kopiert kompatible Audio- und Videostreams in einen anderen Container, ohne sie neu zu codieren.
+
+Das kann deutlich schneller sein als eine vollständige Konvertierung und vermeidet unnötigen Qualitätsverlust.
+
+Remuxing funktioniert nur, wenn die Quellstreams mit dem Zielcontainer kompatibel sind.
+
+Convert und Remux:
+
+- zeigen den Verarbeitungsfortschritt
+- liefern temporär vorbereitete Dateien
+- dienen nicht als permanenter Cloud-Speicher
+- unterliegen serverseitigen Größen- und Verarbeitungslimits
+
+## Verarbeitung auf dem Gerät · Beta
+
+Convert und Remux enthalten experimentelle Modi für lokale Verarbeitung:
+
+- **Server**
+- **Prefer this device**
+- **Only this device**
+
+Die lokale Beta kann kompatible Medienstreams ohne Re-Encoding kopieren und kompatibles Audio direkt auf dem Gerät extrahieren.
+
+### Server
+
+Die Verarbeitung erfolgt auf dem ZenithW-Backend.
+
+Dies ist die Standardeinstellung.
+
+### Prefer this device
+
+ZenithW versucht die Verarbeitung zuerst auf dem aktuellen Gerät.
+
+Falls dies fehlschlägt, muss der Nutzer dem Upload zum Server ausdrücklich zustimmen.
+
+### Only this device
+
+Die Datei wird niemals auf den ZenithW-Server hochgeladen.
+
+Wenn das Gerät den Job nicht ausführen kann, schlägt er lokal fehl.
+
+### Aktuelle Grenzen
+
+- Desktop: bis zu **64 MiB**
+- Mobil / Geräte mit wenig Speicher: bis zu **24 MiB**
+- Maximale Mediendauer: **30 Minuten**
+
+Die aktuelle Beta erhält nicht:
+
+- Untertitel
+- Kapitel
+- Anhänge
+
+Link-basierte Downloads nutzen weiterhin das Backend.
+
+Siehe:
+
+[Dokumentation zur lokalen Medienverarbeitung](docs/LOCAL_MEDIA.md)
 
 ## YouTube-Verfügbarkeit
 
-YouTube-Downloads werden nach dem Best-Effort-Prinzip angeboten. YouTube kann zeitweise strengere Prüfungen anwenden oder Anfragen aus Rechenzentrums-IP-Bereichen blockieren, einschließlich Cloud-Servern wie AWS. Dann kann ein Ergebnis wie ein Download-Fehler aussehen, obwohl ZenithW und die Download-Pipeline normal funktionieren.
+YouTube-Downloads sind im **öffentlichen ZenithW-Dienst derzeit deaktiviert**.
 
-Keine Änderung innerhalb der Anwendung kann ununterbrochenen YouTube-Zugang garantieren, wenn der Upstream eine Server-IP einschränkt. Das bedeutet nicht, dass die YouTube-Unterstützung entfernt wurde. Downloads bleiben aktiviert, während wir die Lage beobachten und auf eine sinnvolle Verbesserung auf Upstream- oder Netzwerkebene warten.
+Dabei handelt es sich nicht um einen normalen ZenithW-Anwendungsfehler.
 
-ZenithW bündelt gleichzeitige Metadatenabfragen für denselben Link, verwendet einen kurzlebigen Cache, getrennte YouTube-Budgets pro Besucher und Host, unterdrückt doppelte Starts und pausiert nach echten HTTP-429-Antworten weitere Upstream-Versuche. Das reduziert unnötigen Traffic, kann aber YouTubes Zugriffsentscheidungen nicht außer Kraft setzen.
+YouTube kann Zugriffsbeschränkungen für Anfragen aus gehosteten Web-Infrastrukturen, Cloud-Servern und Rechenzentrums-IP-Bereichen anwenden.
 
-ZenithW kann nicht immer einen unterbrechungsfreien Download-Dienst bieten; YouTube-Verfügbarkeit ist nicht jederzeit garantiert. Privatsphäre-Einstellungen, regionale Einschränkungen, gelöschte Inhalte, Anmeldepflichten und Plattform-Limits liegen außerhalb der Kontrolle von ZenithW.
+Da das öffentliche ZenithW-Backend auf solcher Infrastruktur läuft, können seine Anfragen anders behandelt werden als Anfragen aus normalen privaten Netzwerken oder Browsern.
+
+Dadurch kann YouTube Anfragen ablehnen oder einschränken, obwohl:
+
+- ZenithW selbst korrekt funktioniert
+- yt-dlp betriebsbereit ist
+- FFmpeg verfügbar ist
+- das Backend gesund ist
+- die Medienpipeline normal funktioniert
+
+### Getestete Ansätze
+
+Mehrere anwendungsseitige Maßnahmen wurden getestet:
+
+- aktualisierte authentifizierte Cookies
+- automatische Cookie-Erneuerung
+- Cookie-Refresh-Dienste
+- PO-Token-Integration
+- PO-Token-Generierungsdienste
+- yt-dlp-Updates
+- Extractor-Updates
+- Session-Anpassungen
+- Request-Anpassungen
+
+Einige Methoden konnten einzelne Anfragen vorübergehend verbessern, aber keine davon bot eine ausreichend zuverlässige Grundlage für den öffentlichen Dienst.
+
+### Warum Cookies und PO Tokens nicht ausreichen
+
+Cookies und PO Tokens können bei bestimmten YouTube-Zugriffsbedingungen helfen, kontrollieren aber nicht alle Faktoren, die über die Annahme einer Anfrage entscheiden.
+
+YouTube kann zusätzlich bewerten:
+
+- Reputation von Cloud- oder Rechenzentrums-IPs
+- Herkunft der Anfrage
+- Kontostatus
+- Sitzungsstatus
+- Authentifizierungsanforderungen
+- plattformseitige Rate-Limits
+- Anti-Abuse-Systeme
+- regionale Einschränkungen
+- sich schnell änderndes Plattformverhalten
+
+Ein gültiges Cookie oder PO Token garantiert daher **keinen** erfolgreichen Zugriff von einem öffentlichen Cloud-Backend.
+
+ZenithW stellt diese Mechanismen nicht als universelle Umgehungsmethode dar.
+
+### Warum YouTube im öffentlichen Dienst deaktiviert wurde
+
+Wiederholte Anfragen über dieselbe gehostete Infrastruktur würden nur unnötige Fehler erzeugen, ohne ein zuverlässiges Nutzererlebnis zu bieten.
+
+Zudem könnte dies die gemeinsame Backend-IP weiter belasten, ohne die eigentliche Plattformbeschränkung zu lösen.
+
+Deshalb wurde YouTube auf der öffentlichen ZenithW-Website bewusst deaktiviert.
+
+### Wurde YouTube dauerhaft entfernt?
+
+Nein.
+
+Die YouTube-Unterstützung wurde **nicht dauerhaft aus dem ZenithW-Projekt entfernt**.
+
+Sie kann zum öffentlichen Dienst zurückkehren, wenn eine zuverlässige und wartbare Lösung verfügbar wird.
+
+Die aktuelle Einschränkung betrifft insbesondere die öffentlich gehostete ZenithW-Instanz.
+
+### Self-Hosted-Installationen
+
+Self-Hosted-Installationen verwenden ihre eigene:
+
+- IP-Adresse
+- Netzwerkverbindung
+- yt-dlp-Installation
+- Authentifizierung
+- Cookies
+- optionale Token-Konfiguration
+
+Deshalb kann sich das YouTube-Verhalten von dem des öffentlichen Dienstes unterscheiden.
+
+Self-Hosting garantiert den Zugriff auf YouTube ebenfalls nicht.
+
+Die Verfügbarkeit hängt weiterhin von den YouTube-Regeln und der Netzwerkumgebung ab.
+
+## Plattformverfügbarkeit
+
+Die Unterstützung externer Plattformen ist grundsätzlich best-effort.
+
+Ein Job kann aus Gründen außerhalb der Kontrolle von ZenithW scheitern:
+
+- gelöschte Medien
+- private Medien
+- Altersbeschränkungen
+- Login-Anforderungen
+- regionale Einschränkungen
+- nicht verfügbare Formate
+- Rate-Limits
+- Änderungen an API oder Website
+- Anti-Abuse-Systeme
+- Netzwerkbeschränkungen
+- entfernte Inhalte
+
+ZenithW versucht diese Grenzen klar zu melden, statt nicht verfügbare Ausgaben als erfolgreich darzustellen.
 
 ## Benutzererlebnis und Datenschutz
 
-ZenithW bietet ohne Benutzerkonto Live-Fortschritt, Abbruch, browserlokalen Verlauf, responsive Desktop- und Mobilnavigation sowie Sprachunterstützung. Der Server bereitet Dateien nur für das Übertragungsfenster vor. Vorbereitete Download-Links sind kurzlebig, an den anfragenden Client gebunden und werden nach Nutzung oder Ablauf entfernt.
+ZenithW hält die Oberfläche bewusst leichtgewichtig.
 
-Keine Funktion garantiert, dass eine Drittplattform ein bestimmtes Format bereitstellt oder jede Anfrage akzeptiert. ZenithW meldet solche Grenzen, statt nicht verfügbare Ausgaben als abgeschlossen darzustellen.
+Die Anwendung bietet:
+
+- Live-Fortschritt
+- Abbrechen
+- browserlokalen Verlauf
+- responsive Desktop-Navigation
+- responsive Mobile-Navigation
+- mehrere Sprachen
+- kein verpflichtendes Benutzerkonto
+
+Vorbereitete Dateien existieren nur für ein begrenztes Übertragungsfenster.
+
+Download-Links sind:
+
+- temporär
+- bei Bedarf an den anfragenden Client gebunden
+- nach Nutzung oder Ablauf automatisch entfernt
+
+ZenithW ist nicht als permanenter Online-Medienspeicher gedacht.
+
+### Browserlokaler Verlauf
+
+Der Download-Verlauf wird im Browser statt in einem ZenithW-Konto gespeichert.
+
+Dadurch bleibt grundlegender Komfort ohne Registrierung möglich.
+
+Das Löschen der Browserdaten kann auch diesen Verlauf löschen.
 
 ## Architektur
 
@@ -75,15 +345,30 @@ Keine Funktion garantiert, dass eine Drittplattform ein bestimmtes Format bereit
 |---|---|
 | Frontend | Vanilla HTML, CSS und JavaScript auf Cloudflare Pages |
 | Edge | Cloudflare DNS, Proxy, TLS und Origin-Verifizierung |
-| Backend | Flask, Gunicorn, gevent und Socket.IO auf Amazon EC2 (AWS) |
-| Medien | yt-dlp, FFmpeg, Deno/EJS und ein optionaler PO-Token-Anbieter |
-| Dienstverwaltung | Ubuntu, Nginx und systemd |
+| Backend | Flask, Gunicorn, gevent und Socket.IO auf Amazon EC2 |
+| Medien | yt-dlp, FFmpeg, Deno/EJS und optionale Token-Integrationen |
+| Service-Verwaltung | Ubuntu, Nginx und systemd |
 
-Das Backend läuft bewusst mit **einem Worker**. Auftragsstatus, Socket.IO-Räume und vorbereitete Dateien sind prozesslokal; zusätzliche Worker oder Replikate brauchen zuerst gemeinsame Koordination und Speicherung.
+Das Backend läuft absichtlich mit **einem Worker**.
 
-## 🐳 Selbst hosten mit Docker Compose
+Job-Status, Socket.IO-Räume und Besitz vorbereiteter Dateien sind prozesslokal.
 
-Docker Compose ist der schnellste Weg zu einer vollständigen Installation. Frontend, Reverse Proxy, API, FFmpeg und ein persistentes Download-Volume laufen zusammen. Die Standardinstallation bleibt bewusst bei **einem Backend-Worker**; das passt zum aktuellen prozesslokalen Modell für Jobs, Fortschritt, Abbruch und vorbereitete Dateien.
+Mehrere Worker oder Replikas erfordern zuvor gemeinsame Koordination und Speicher.
+
+## 🐳 Self-Hosting mit Docker Compose
+
+Der schnellste Weg zu einer vollständigen ZenithW-Instanz ist Docker Compose.
+
+Es startet:
+
+- Frontend
+- Reverse Proxy
+- API
+- FFmpeg
+- Download-Arbeitsbereich
+- persistenten temporären Speicher
+
+Die Standardinstallation verwendet bewusst **einen Backend-Worker**.
 
 ```bash
 git clone https://github.com/boranseason/zenithw.git
@@ -92,76 +377,214 @@ cp .env.example .env
 docker compose up -d --build
 ```
 
-Öffne `http://localhost:8080`. Wenn du einen anderen Port oder eine öffentliche Domain nutzt, ändere `ZENITHW_PORT` und `SELF_HOSTED_ORIGIN` gemeinsam in `.env` und starte danach `docker compose up -d` erneut.
+Danach öffnen:
 
-Das Docker-Volume `zenithw-downloads` hält temporäre Verarbeitungsdateien. Die normale Ablaufbereinigung von ZenithW entfernt sie weiterhin; das Volume verhindert vor allem, dass ein Container-Update ein aktives Übertragungsfenster unnötig unterbricht.
+```text
+http://localhost:8080
+```
 
-### Optionale private Cookies
+Wenn du einen anderen Port oder eine öffentliche Domain nutzt, passe in `.env` gemeinsam an:
 
-Einige Quellen können eine angemeldete Browsersitzung verlangen. Diese Option ist freiwillig und muss privat bleiben:
+- `ZENITHW_PORT`
+- `SELF_HOSTED_ORIGIN`
+
+Anschließend neu starten:
+
+```bash
+docker compose up -d
+```
+
+## Docker-Speicher
+
+Das Docker-Volume `zenithw-downloads` enthält temporäre Verarbeitungsdateien.
+
+Diese werden weiterhin durch ZenithWs normale Ablaufbereinigung entfernt.
+
+Das persistente Volume verhindert vor allem, dass Container-Updates ein aktives Übertragungsfenster sofort unterbrechen.
+
+Es ist nicht als permanenter Medienspeicher gedacht.
+
+## Optionale private Cookies
+
+Einige Quellen können eine angemeldete Browsersitzung verlangen.
+
+Eine private Cookie-Datei kann einer Self-Hosted-Installation optional bereitgestellt werden.
 
 ```bash
 mkdir -p private
-# Lege deinen eigenen Netscape-Export in private/cookies.txt ab.
+```
+
+Lege deinen Netscape-Export hier ab:
+
+```text
+private/cookies.txt
+```
+
+Dann:
+
+```bash
 cp compose.cookies.example.yml compose.cookies.yml
 docker compose -f compose.yml -f compose.cookies.yml up -d
 ```
 
-`private/cookies.txt` und `compose.cookies.yml` dürfen niemals committed oder geteilt werden. ZenithW funktioniert ohne diese Ergänzung; sie ist kein universeller Umweg um Plattformbeschränkungen.
+Folgende Dateien dürfen niemals in Git committed oder öffentlich geteilt werden:
 
-Für eine öffentliche Bereitstellung sollten HTTPS und eine Firewall oder ein Reverse Proxy vor Docker liegen. Cloudflare ist für die offizielle Bereitstellung nützlich, aber für Self-Hosting **nicht erforderlich**.
+```text
+private/cookies.txt
+compose.cookies.yml
+```
+
+Cookies sind optional und müssen privat bleiben.
+
+Sie sind **keine universelle Umgehung** von Plattformbeschränkungen.
+
+## Öffentliches Hosting
+
+Für öffentliches Hosting sollte vor dem Docker-Deployment HTTPS sowie eine geeignete Firewall oder ein Reverse Proxy eingesetzt werden.
+
+Cloudflare wird in der offiziellen ZenithW-Infrastruktur verwendet, ist aber für Self-Hosting nicht erforderlich.
 
 ## 🛠️ Lokale Entwicklung
 
-Voraussetzungen: Python 3.10+, FFmpeg und ein moderner Browser.
+### Voraussetzungen
+
+- Python 3.10+
+- FFmpeg
+- Moderner Browser
+
+Repository klonen:
 
 ```bash
 git clone https://github.com/boranseason/zenithw.git
 cd zenithw/backend
+```
+
+Virtuelle Umgebung erstellen:
+
+```bash
 python -m venv .venv
 ```
 
-Aktiviere die Umgebung und führe anschließend Folgendes aus:
+Aktiviere sie mit dem passenden Befehl für dein Betriebssystem.
+
+Installiere danach die gesperrten Abhängigkeiten:
 
 ```bash
 pip install --require-hashes -r requirements.lock
+```
+
+Backend starten:
+
+```bash
 python app.py
 ```
 
-Die API startet auf `http://localhost:5000`. Stelle `frontend/` mit einem statischen Dateiserver bereit. Aktiviere Entwicklungs-CORS nur für lokale Cross-Origin-Arbeit, niemals in Produktion.
+Die API läuft unter:
 
-## 🔐 Wichtige Punkte für Produktion
+```text
+http://localhost:5000
+```
 
-Für die Produktion werden starke private Werte für `SECRET_KEY` und `ORIGIN_SECRET` benötigt. Laufzeitlimits, vertrauenswürdige Proxys, Budgets für temporäre Dateien und Diagnosezugriff werden über die in `backend/app.py` dokumentierten Umgebungsvariablen konfiguriert.
+Serviere `frontend/` mit einem beliebigen statischen Dateiserver.
 
-- Halte Geheimnisse und exportierte Browserdaten aus Git heraus.
-- Halte den EC2-Origin hinter Cloudflare und prüfe den gemeinsamen Origin-Header.
-- Vertraue Besucher-Headern nur über die Cloudflare-zu-Nginx-Proxykette.
-- Halte Diagnosen privat und öffentliche Liveness-Antworten minimal.
-- Skaliere nicht über einen Worker hinaus, bevor Auftragsstatus, Socket.IO-Routing und vorbereitete Dateien sicher geteilt werden.
+Development-CORS sollte nur für lokale Cross-Origin-Entwicklung aktiviert werden.
 
-## Wichtige Endpunkte
+## 🔐 Production-Grundlagen
 
-| Endpunkt | Zweck |
+Production-Deployments benötigen starke private Werte für:
+
+```text
+SECRET_KEY
+ORIGIN_SECRET
+```
+
+Laufzeitlimits, temporäre Dateibudgets, Proxy-Vertrauen, Concurrency-Regeln und Diagnosezugriff werden über die im Backend dokumentierten Umgebungsvariablen konfiguriert.
+
+Wichtige Regeln:
+
+- Secrets nicht in Git speichern.
+- Exportierte Cookies nicht in Git speichern.
+- Private Browserdaten privat halten.
+- EC2-Origin hinter der vorgesehenen Proxy-Kette schützen.
+- Gemeinsames Origin-Secret validieren, sofern konfiguriert.
+- Besucher-Header nur über vertrauenswürdige Proxy-Infrastruktur akzeptieren.
+- Diagnosen privat halten.
+- Öffentliche Health-Antworten minimal halten.
+- Worker-Zahl nicht erhöhen, bevor gemeinsamer Job-Status und Dateikoordination vorhanden sind.
+
+## Wichtige Endpoints
+
+| Endpoint | Zweck |
 |---|---|
-| `POST /info` | Metadaten und Formate auflösen |
-| `POST /download` | Download- oder Extraktionsauftrag starten |
-| `POST /convert` | Eine hochgeladene Datei konvertieren oder remuxen |
-| `POST /cancel` | Einen aktiven Auftrag abbrechen |
-| `GET /files/<token>` | Eine kurzlebige vorbereitete Datei übertragen |
+| `POST /info` | Metadaten und verfügbare Formate auflösen |
+| `POST /download` | Download- oder Extraktionsjob starten |
+| `POST /convert` | Hochgeladene Datei konvertieren oder remuxen |
+| `POST /cancel` | Aktiven Job abbrechen |
+| `GET /files/<token>` | Temporär vorbereitete Datei übertragen |
 | `GET /health` | Minimale Liveness-Antwort |
 | `GET /ready` | Bereitschaft von Abhängigkeiten und Kapazität |
 
-## Sicherheit und verantwortungsvolle Nutzung
+## Sicherheit
 
-ZenithW validiert entfernte Ziele, blockiert private und Link-Local-Ziele, begrenzt Weiterleitungen und Medienwerkzeug-Protokolle, beschränkt Parallelität und Festplattennutzung und liefert vorbereitete Dateien über kurzlebige Tokens aus. Kein Internetdienst kann absolute Anonymität oder ununterbrochene Verfügbarkeit versprechen.
+ZenithW begrenzt Remote-Medienverarbeitung, statt beliebige Internet-Eingaben automatisch als vertrauenswürdig zu behandeln.
 
-Nutze ZenithW nur für Inhalte, die dir gehören, für deren Download du berechtigt bist oder die du rechtmäßig verwenden darfst. Bedingungen der Quellplattformen und Urheberrechtsregeln bleiben Verantwortung der Nutzer. ZenithW ist mit den unterstützten Plattformen nicht verbunden.
+Zu den Schutzmaßnahmen gehören:
 
-Melde reproduzierbare Fehler über [GitHub Issues](https://github.com/boranseason/zenithw/issues). Nenne in öffentlichen Meldungen niemals Geheimnisse, private Links oder personenbezogene Daten.
+- Validierung entfernter Ziele
+- Blockierung privater Ziele
+- Blockierung link-lokaler Ziele
+- Redirect-Beschränkungen
+- Einschränkungen für Medienprotokolle
+- Concurrency-Limits
+- Verarbeitungslimits
+- Speicherplatzlimits
+- Ablauf temporärer Dateien
+- kurzlebige Datei-Tokens
+- eingeschränkte Auslieferung vorbereiteter Dateien
+
+Kein internetbasierter Dienst kann absolute Anonymität, unbegrenzte Verfügbarkeit oder vollständigen Schutz vor Änderungen externer Plattformen garantieren.
+
+ZenithW versucht stattdessen, gespeicherte Daten zu minimieren und Umfang sowie Lebensdauer temporärer Verarbeitung zu begrenzen.
+
+## Verantwortungsvolle Nutzung
+
+Nutze ZenithW nur für Inhalte:
+
+- die dir gehören
+- die du herunterladen darfst
+- die du rechtmäßig verwenden darfst
+
+Nutzungsbedingungen externer Plattformen und geltendes Urheberrecht bleiben in der Verantwortung des Nutzers.
+
+ZenithW ist nicht mit YouTube, TikTok, Instagram, X, Reddit oder anderen unterstützten Plattformen verbunden.
+
+Plattformunterstützung bedeutet keine Partnerschaft, Empfehlung oder offizielle Integration.
+
+## Fehlerberichte
+
+Reproduzierbare Fehler können über folgende Seite gemeldet werden:
+
+[GitHub Issues](https://github.com/boranseason/zenithw/issues)
+
+Bei einer Meldung:
+
+- Problem klar beschreiben
+- reproduzierbare Schritte angeben, wenn möglich
+- betroffene ZenithW-Version nennen
+- hilfreiche Fehlermeldungen beifügen
+- private oder identifizierende Informationen entfernen
+
+Niemals öffentlich teilen:
+
+- Cookies
+- Passwörter
+- private URLs
+- Authentifizierungs-Tokens
+- API-Secrets
+- personenbezogene Daten
 
 ## Lizenz
 
-- ZenithW: AGPL-3.0-only
-- Drittanbieter-Abhängigkeiten: ihre jeweiligen Lizenzen
+- **ZenithW:** AGPL-3.0-only
+- **Drittanbieter-Abhängigkeiten:** jeweilige Lizenzen
 - Details: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
