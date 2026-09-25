@@ -123,12 +123,16 @@ async function ensureRelease(ver){
 
 const TX={
   tr:{title:'Güncellemeler — ZenithW',desc:'ZenithW sürüm geçmişi ve güncelleme notları — yeni özellikler, hata düzeltmeleri ve iyileştirmeler.',
-    back:'ana sayfa',latestLabel:'güncel',signoff:'~ ZenithW ekibi 🤍',selectLabel:'sürüm seç',newer:'yeni sürüm',older:'eski sürüm',navLabel:'Sürüm gezinmesi'},
+    back:'ana sayfa',latestLabel:'güncel',signoff:'ZenithW · sürüm notları',selectLabel:'sürüm seç',newer:'yeni sürüm',older:'eski sürüm',navLabel:'Sürüm gezinmesi'},
   en:{title:'Updates — ZenithW',desc:'ZenithW release history and changelog — new features, bug fixes, and improvements.',
-    back:'home',latestLabel:'latest',signoff:'~ the ZenithW team 🤍',selectLabel:'choose a release',newer:'newer',older:'older',navLabel:'Release navigation'}
+    back:'home',latestLabel:'latest',signoff:'ZenithW · release notes',selectLabel:'choose a release',newer:'newer',older:'older',navLabel:'Release navigation'}
 }
 
 let CUR_LANG='tr';
+const PAGE_COPY={
+  tr:{eyebrow:'ZENITHW / SÜRÜM NOTLARI',title:'Güncellemeler',lead:'Yeni özellikler, düzeltmeler ve küçük iyileştirmeler. Her sürümde neyin değiştiğini burada açıkça anlatıyoruz.'},
+  en:{eyebrow:'ZENITHW / RELEASE NOTES',title:'Updates',lead:'New features, fixes, and thoughtful improvements. A clear record of what changed in each release.'}
+};
 
 async function jumpTo(ver){
   try{await ensureRelease(ver);}catch(e){console.error('update archive load failed',e);return;}
@@ -189,6 +193,9 @@ function setLegalLang(l){
   document.getElementById('pgTitle').textContent=t.title;
   document.getElementById('pgDesc').setAttribute('content',t.desc);
   document.getElementById('pgBack').textContent=t.back;
+  document.getElementById('updEyebrow').textContent=PAGE_COPY[CUR_LANG].eyebrow;
+  document.getElementById('updPageTitle').textContent=PAGE_COPY[CUR_LANG].title;
+  document.getElementById('updPageLead').textContent=PAGE_COPY[CUR_LANG].lead;
   document.getElementById('verPicker').setAttribute('aria-label',t.selectLabel);
   document.getElementById('updNavRow').setAttribute('aria-label',t.navLabel);
   document.querySelectorAll('#legalLangToggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===CUR_LANG));
