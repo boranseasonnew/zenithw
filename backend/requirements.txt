@@ -14,7 +14,7 @@ curl-cffi==0.16.3
 yt-dlp==2026.08.19
 yt-dlp-ejs==0.8.0
 deno==2.8.3
-bgutil-ytdlp-pot-provider==1.3.1
+bgutil-ytdlp-pot-provider==2.0.0
 # yt-dlp[default] extra'sının parçaları: eksik olsalar da EJS/n-challenge
 # çalışır, ama brotli/mutagen/pycryptodomex/websockets olmadan yt-dlp bazı
 # durumlarda sessizce daha yavaş/eksik code path'lere düşüyor.
