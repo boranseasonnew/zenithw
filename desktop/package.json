@@ -1,0 +1,37 @@
+{
+  "name": "zenithw-desktop",
+  "version": "0.3.1",
+  "private": true,
+  "author": "ZenithW contributors",
+  "description": "ZenithW — local-first Windows media workspace",
+  "main": "src/main.cjs",
+  "scripts": {
+    "stage-tools": "node scripts/stage-tools.cjs",
+    "test": "node --test ../tests/desktop-security.test.cjs",
+    "pack": "npm run stage-tools && electron-builder --dir --win",
+    "dist": "npm run stage-tools && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "44.4.5",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.zenithw.desktop",
+    "productName": "ZenithW",
+    "asar": true,
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["src/**/*", "package.json"],
+    "extraResources": [{ "from": "resources/bin", "to": "bin", "filter": ["**/*"] }],
+    "win": { "target": ["nsis"], "icon": "build/icon.ico", "artifactName": "ZenithW-Setup.exe" },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ZenithW",
+      "uninstallDisplayName": "ZenithW Desktop",
+      "guid": "16d20f38-26d2-5893-986f-5d78a9190957"
+    }
+  }
+}

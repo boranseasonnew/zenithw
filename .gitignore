@@ -4,7 +4,9 @@ venv/
 __pycache__/
 .pytest_cache/
 *.pyc
-/desktop
+/desktop/node_modules/
+/desktop/dist/
+/desktop/resources/bin/
 /mobile-next 
 
 # Local secrets and credentials
