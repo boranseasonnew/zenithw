@@ -4,26 +4,353 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ZenithW Desktop — yerel, hızlı ve sade medya indirme uygulaması.">
+  <meta name="theme-color" content="#08090d">
   <title>ZenithW Desktop</title>
   <link rel="stylesheet" href="pc-app.css">
 </head>
 <body>
+  <div class="page-noise" aria-hidden="true"></div>
+
   <header class="topbar">
-    <a class="wordmark" href="/">ZENITH<span>W</span></a>
-    <div class="topbar-right"><span>DESKTOP</span><a href="https://github.com/boranseasonnew/zenithw/releases/" rel="noopener noreferrer">Windows için indir <b>↓</b></a></div>
+    <a class="wordmark" href="/" aria-label="ZenithW ana sayfa">ZENITH<span>W</span></a>
+
+    <div class="topbar-right">
+      <span class="desktop-label">DESKTOP APP</span>
+
+      <a
+        class="nav-download"
+        href="https://github.com/boranseasonnew/zenithw/releases/"
+        rel="noopener noreferrer"
+      >
+        Windows için indir
+        <b>↓</b>
+      </a>
+    </div>
   </header>
+
   <main>
     <section class="hero">
-      <div class="aurora"></div><div class="grid"></div>
-      <div class="hero-copy reveal"><p class="kicker">ZENITHW DESKTOP</p><h1>Kontrol sende.<br><em>Her pikselde.</em></h1><p>Bağlantıyı bırak. Kaliteyi seç. Dosyayı al.</p><a class="cta" href="https://github.com/boranseason/zenithw/releases/latest" rel="noopener noreferrer">Windows için indir <span>↓</span></a><small>Windows 10 / 11 · x64 · yt-dlp içinde</small></div>
-      <div class="app-frame reveal delay"><div class="app-top"><i></i><strong>ZenithW</strong><span>LOCAL ENGINE</span><b>— □ ×</b></div><div class="app-body"><aside><div class="zmark">Z</div><i class="on">↓</i><i>≋</i><i>◷</i><i class="bottom">⚙</i></aside><article><p>NEW DOWNLOAD</p><h2>Ne <strong>indiriyoruz?</strong></h2><div class="paste-box"><span>Bağlantıyı yapıştır</span><button>Devam <b>→</b></button></div><div class="mode"><span class="selected">▣ Video</span><span>♫ Ses</span><em>Panodan yapıştır</em></div><div class="quality"><p>KALİTE</p><button>4K <small>Ultra</small></button><button class="selected">1080p <small>Balanced</small></button><button>720p <small>Small</small></button></div></article></div></div>
+      <div class="hero-orb hero-orb-a"></div>
+      <div class="hero-orb hero-orb-b"></div>
+      <div class="grid"></div>
+
+      <div class="hero-copy reveal">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          ZENITHW DESKTOP
+        </div>
+
+        <h1>
+          Kontrol sende.<br>
+          <em>Dosya da sende.</em>
+        </h1>
+
+        <p class="hero-sub">
+          Bağlantıyı bırak. Formatı seç. İndirmeyi kendi bilgisayarından başlat.
+        </p>
+
+        <div class="hero-actions">
+          <a
+            class="cta primary"
+            href="https://github.com/boranseason/zenithw/releases/latest"
+            rel="noopener noreferrer"
+          >
+            Windows için indir
+            <span>↓</span>
+          </a>
+
+          <a class="cta secondary" href="#ozellikler">
+            Özellikleri gör
+            <span>↘</span>
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span>Windows 10 / 11</span>
+          <i></i>
+          <span>x64</span>
+          <i></i>
+          <span>yt-dlp + FFmpeg dahil</span>
+        </div>
+      </div>
+
+      <div class="app-frame reveal delay" aria-label="ZenithW Desktop arayüz önizlemesi">
+        <div class="frame-glow"></div>
+
+        <div class="app-top">
+          <div class="window-dots">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+
+          <strong>ZenithW</strong>
+          <span>LOCAL ENGINE</span>
+          <b>— □ ×</b>
+        </div>
+
+        <div class="app-body">
+          <aside>
+            <div class="zmark">Z</div>
+
+            <button class="side-button on" aria-label="İndir">↓</button>
+            <button class="side-button" aria-label="Kuyruk">≋</button>
+            <button class="side-button" aria-label="Geçmiş">◷</button>
+            <button class="side-button bottom" aria-label="Ayarlar">⚙</button>
+          </aside>
+
+          <article>
+            <div class="article-topline">
+              <p>NEW DOWNLOAD</p>
+              <span>LOCAL</span>
+            </div>
+
+            <h2>Ne <strong>indiriyoruz?</strong></h2>
+
+            <div class="paste-box">
+              <div class="paste-content">
+                <span class="paste-icon">⌘</span>
+                <span>Bağlantıyı yapıştır</span>
+              </div>
+
+              <button>
+                Devam
+                <b>→</b>
+              </button>
+            </div>
+
+            <div class="mode">
+              <span class="selected">▣ Video</span>
+              <span>♫ Ses</span>
+              <em>Panodan yapıştır</em>
+            </div>
+
+            <div class="quality-wrap">
+              <div class="quality-label">KALİTE</div>
+
+              <div class="quality">
+                <button>
+                  4K
+                  <small>Ultra</small>
+                </button>
+
+                <button class="selected">
+                  1080p
+                  <small>Balanced</small>
+                </button>
+
+                <button>
+                  720p
+                  <small>Small</small>
+                </button>
+              </div>
+            </div>
+
+            <div class="download-info">
+              <span>MP4 · H.264</span>
+              <span>60 FPS</span>
+              <span>≈ 128 MB</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="hero-fade"></div>
     </section>
-    <section class="statement panel reveal"><p class="kicker">LOCAL FIRST</p><h2>Arada kimse yok.</h2><p>ZenithW Desktop indirmeyi doğrudan bilgisayarından başlatır. Kendi bağlantın, kendi klasörün, kendi ayarların.</p><div class="specs"><span><b>01</b> Yerel motor</span><span><b>02</b> Kendi IP adresin</span><span><b>03</b> Reklamsız</span></div></section>
-    <section class="feature split reveal"><div><p class="kicker">FORMAT ENGINE</p><h2>İzleyeceğin gibi<br>indir.</h2><p>Video ya da ses. Formatı, çözünürlüğü ve çıktı tipini tek ekranda seç.</p></div><div class="format-console"><div class="console-top"><span>FORMAT</span><b>MP4 · H.264</b></div><div class="format-pills"><button>MP4</button><button class="active">WebM</button><button>MKV</button></div><div class="resolution"><span>2160p</span><span>1440p</span><span class="active">1080p</span><span>720p</span><span>480p</span></div><div class="range"><i></i></div><p>1080P · 60 FPS · 12.4 MB/s</p></div></section>
-    <section class="feature centered reveal"><p class="kicker">YOUR DEFAULTS</p><h2>Bir kez ayarla.<br><em>Hep senin gibi çalışsın.</em></h2><div class="setting-preview"><div><i>⌁</i><span><b>İndirme klasörü</b><small>Downloads / ZenithW</small></span><strong>Değiştir</strong></div><div><i>◉</i><span><b>Altyazılar</b><small>Otomatik ekle</small></span><label class="switch"><input type="checkbox" checked><i></i></label></div><div><i>◌</i><span><b>SponsorBlock</b><small>Reklam bölümlerini atla</small></span><label class="switch"><input type="checkbox"><i></i></label></div></div></section>
-    <section class="closing reveal"><div class="glow"></div><p class="kicker">ZENITHW DESKTOP</p><h2>İndirme, olması<br>gerektiği gibi.</h2><a class="cta" href="https://github.com/boranseason/zenithw/releases/latest" rel="noopener noreferrer">Windows için indir <span>↓</span></a><small>yt-dlp ve FFmpeg uygulamanın içinde gelir.</small></section>
+
+    <section class="trust-strip reveal">
+      <span>YEREL MOTOR</span>
+      <span>KENDİ IP ADRESİN</span>
+      <span>REKLAMSIZ</span>
+      <span>HESAPSIZ</span>
+    </section>
+
+    <section class="statement panel reveal" id="ozellikler">
+      <p class="kicker">LOCAL FIRST</p>
+
+      <h2>Arada kimse yok.</h2>
+
+      <p>
+        ZenithW Desktop indirmeyi doğrudan bilgisayarından başlatır.
+        Kendi bağlantın, kendi klasörün, kendi ayarların.
+      </p>
+
+      <div class="specs">
+        <article>
+          <b>01</b>
+          <h3>Yerel motor</h3>
+          <p>İşlem akışı doğrudan masaüstü uygulamasından başlar.</p>
+        </article>
+
+        <article>
+          <b>02</b>
+          <h3>Kendi IP adresin</h3>
+          <p>
+            İndirme, uzak bir indirme sunucusundan değil kendi bağlantından yapılır.
+          </p>
+        </article>
+
+        <article>
+          <b>03</b>
+          <h3>Reklamsız</h3>
+          <p>
+            Pop-up, reklam katmanı veya dikkat dağıtan fazlalık yok.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="feature split reveal">
+      <div class="feature-copy">
+        <p class="kicker">FORMAT ENGINE</p>
+
+        <h2>
+          İzleyeceğin gibi<br>
+          indir.
+        </h2>
+
+        <p>
+          Video ya da ses. Formatı, çözünürlüğü ve çıktı tipini tek ekranda seç.
+          Gereksiz menüler arasında kaybolma.
+        </p>
+
+        <div class="feature-tags">
+          <span>MP4</span>
+          <span>WebM</span>
+          <span>MKV</span>
+          <span>M4A</span>
+        </div>
+      </div>
+
+      <div class="format-console">
+        <div class="console-top">
+          <span>FORMAT ENGINE</span>
+          <b>MP4 · H.264</b>
+        </div>
+
+        <div class="format-pills">
+          <button>MP4</button>
+          <button class="active">WebM</button>
+          <button>MKV</button>
+        </div>
+
+        <div class="resolution">
+          <span>2160p</span>
+          <span>1440p</span>
+          <span class="active">1080p</span>
+          <span>720p</span>
+          <span>480p</span>
+        </div>
+
+        <div class="range">
+          <i></i>
+          <b></b>
+        </div>
+
+        <div class="console-stats">
+          <span>1080P</span>
+          <span>60 FPS</span>
+          <span>12.4 MB/s</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature centered reveal">
+      <p class="kicker">YOUR DEFAULTS</p>
+
+      <h2>
+        Bir kez ayarla.<br>
+        <em>Hep senin gibi çalışsın.</em>
+      </h2>
+
+      <p class="center-copy">
+        İndirme klasöründen altyazıya kadar günlük tercihlerini kaydet.
+      </p>
+
+      <div class="setting-preview">
+        <div>
+          <i>⌁</i>
+
+          <span>
+            <b>İndirme klasörü</b>
+            <small>Downloads / ZenithW</small>
+          </span>
+
+          <strong>Değiştir</strong>
+        </div>
+
+        <div>
+          <i>◉</i>
+
+          <span>
+            <b>Altyazılar</b>
+            <small>Otomatik ekle</small>
+          </span>
+
+          <label class="switch">
+            <input type="checkbox" checked>
+            <i></i>
+          </label>
+        </div>
+
+        <div>
+          <i>◌</i>
+
+          <span>
+            <b>SponsorBlock</b>
+            <small>Desteklenen bölümleri atla</small>
+          </span>
+
+          <label class="switch">
+            <input type="checkbox">
+            <i></i>
+          </label>
+        </div>
+
+        <div>
+          <i>↻</i>
+
+          <span>
+            <b>yt-dlp güncellemesi</b>
+            <small>Motoru uygulama içinden güncelle</small>
+          </span>
+
+          <strong>Nightly</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing reveal">
+      <div class="closing-ring"></div>
+      <div class="glow"></div>
+
+      <p class="kicker">ZENITHW DESKTOP</p>
+
+      <h2>
+        İndirme, olması<br>
+        gerektiği gibi.
+      </h2>
+
+      <p>Hızlı. Yerel. Fazlalıksız.</p>
+
+      <a
+        class="cta primary"
+        href="https://github.com/boranseason/zenithw/releases/latest"
+        rel="noopener noreferrer"
+      >
+        Windows için indir
+        <span>↓</span>
+      </a>
+
+      <small>yt-dlp ve FFmpeg uygulamanın içinde gelir.</small>
+    </section>
   </main>
-  <footer><span>© ZenithW</span><span>Yalnızca kullanma iznin olan içerikler için.</span></footer>
+
+  <footer>
+    <span>© ZenithW</span>
+    <span>Yalnızca kullanma iznin olan içerikler için.</span>
+  </footer>
+
   <script src="pc-app.js"></script>
 </body>
 </html>
