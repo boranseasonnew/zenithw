@@ -6,7 +6,7 @@ gevent-websocket==0.10.1
 gunicorn==23.0.0
 # yt-dlp'nin varsayılan HTTP handler bağımlılığıdır. Uygulama doğrudan import
 # etmese de extractor/ağ uyumluluğu için production paketinde tutulur.
-requests==2.33.0
+requests==2.34.2
 # Pornhub extractor'inin kullandigi browser/TLS impersonation istemcisi.
 # Yalnizca ilgili extractor cagrildiginda kullanilir; diger platformlarin
 # mevcut requests akisini degistirmez.
