@@ -379,7 +379,7 @@ The default installation intentionally keeps a **single backend worker**.
 This matches ZenithW's current job, progress, cancellation, and prepared-file model.
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
 docker compose up -d --build
@@ -469,7 +469,7 @@ A self-hosted deployment may use another trusted reverse proxy or network config
 Clone the repository:
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw/backend
 ```
 
@@ -580,7 +580,7 @@ Support for a platform does not imply endorsement, partnership, or official inte
 
 Reproducible bugs can be reported through:
 
-[GitHub Issues](https://github.com/boranseason/zenithw/issues)
+[GitHub Issues](https://github.com/boranseasonnew/zenithw/issues)
 
 When reporting an issue:
 

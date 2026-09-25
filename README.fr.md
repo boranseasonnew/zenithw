@@ -369,7 +369,7 @@ Il lance :
 L'installation par défaut conserve volontairement **un seul worker backend**.
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
 docker compose up -d --build
@@ -453,7 +453,7 @@ Cloudflare est utilisé par l'infrastructure officielle de ZenithW, mais n'est p
 Clonez le dépôt :
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw/backend
 ```
 
@@ -562,7 +562,7 @@ La prise en charge d'une plateforme n'implique aucun partenariat, soutien ou int
 
 Les bugs reproductibles peuvent être signalés via :
 
-[GitHub Issues](https://github.com/boranseason/zenithw/issues)
+[GitHub Issues](https://github.com/boranseasonnew/zenithw/issues)
 
 Lors d'un signalement :
 

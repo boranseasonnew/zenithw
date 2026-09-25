@@ -381,7 +381,7 @@ Varsayılan kurulum bilinçli olarak **tek backend worker** kullanır.
 Bu, ZenithW'nin mevcut iş, ilerleme, iptal ve hazırlanmış dosya modeliyle uyumludur.
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
 docker compose up -d --build
@@ -469,7 +469,7 @@ Self-host dağıtımı başka güvenilir reverse proxy veya ağ yapılandırmala
 Depoyu klonlayın:
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw/backend
 ```
 
@@ -580,7 +580,7 @@ Bir platformun desteklenmesi ortaklık, onay veya resmi entegrasyon anlamına ge
 
 Tekrarlanabilir hatalar şu adresten bildirilebilir:
 
-[GitHub Issues](https://github.com/boranseason/zenithw/issues)
+[GitHub Issues](https://github.com/boranseasonnew/zenithw/issues)
 
 Bir sorun bildirirken:
 

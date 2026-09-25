@@ -371,7 +371,7 @@ ZenithW は永続的なオンラインメディアストレージではありま
 既定構成では **1 backend worker** を維持します。
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
 docker compose up -d --build
@@ -455,7 +455,7 @@ Cookie は任意であり、必ず非公開で扱ってください。
 リポジトリを clone:
 
 ```bash
-git clone https://github.com/boranseason/zenithw.git
+git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw/backend
 ```
 
@@ -564,7 +564,7 @@ ZenithW は YouTube、TikTok、Instagram、X、Reddit その他の対応プラ�
 
 再現可能なバグは以下から報告できます。
 
-[GitHub Issues](https://github.com/boranseason/zenithw/issues)
+[GitHub Issues](https://github.com/boranseasonnew/zenithw/issues)
 
 報告時:
 
