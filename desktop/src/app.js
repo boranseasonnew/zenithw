@@ -15,7 +15,7 @@ function restoreQueue() {
       if (!job || typeof job.id !== 'string' || typeof job.title !== 'string') continue;
       // A process cannot survive an application restart. Preserve its record
       // honestly instead of suggesting it is still running.
-      jobs.set(job.id, { ...job, done: true, failed: !!job.failed, cancelled: !!job.cancelled, detail: job.detail || tr('failed') });
+      jobs.set(job.id, { ...job, percent: job.failed || job.cancelled ? Math.min(99, Number(job.percent) || 0) : Number(job.percent) || 0, done: true, failed: !!job.failed, cancelled: !!job.cancelled, detail: job.detail || tr('failed') });
     }
   } catch {}
 }
@@ -65,7 +65,7 @@ function renderFormats(list) {
   const preferred = Number(settings.videoQuality || 1080);
   const sorted = [...list].sort((a, b) => Math.abs(a.height - preferred) - Math.abs(b.height - preferred));
   const items = kind === 'audio' ? [{id:'mp3',height:'MP3',ext:'320 / 192 kbps'},{id:'m4a',height:'M4A',ext:'AAC'},{id:'opus',height:'OPUS',ext:'Efficient'},{id:'flac',height:'FLAC',ext:'Lossless'}] : sorted;
-  $('#quality-grid').innerHTML = items.slice(0, 8).map((format, index) => `<button class="quality ${index === 0 ? 'active' : ''}" data-id="${esc(format.id)}"><b>${esc(kind === 'audio' ? format.height : `${format.height}p`)}</b><span>${esc([format.ext, format.fps ? `${format.fps} FPS` : '', kind === 'video' ? size(format.size) : ''].filter(Boolean).join(' · '))}</span></button>`).join('');
+  $('#quality-grid').innerHTML = items.slice(0, 8).map((format, index) => `<button class="quality ${index === 0 ? 'active' : ''}" data-id="${esc(format.id)}" data-ext="${esc(format.ext)}"><b>${esc(kind === 'audio' ? format.height : `${format.height}p`)}</b><span>${esc([format.ext, format.fps ? `${format.fps} FPS` : '', kind === 'video' ? size(format.size) : ''].filter(Boolean).join(' · '))}</span></button>`).join('');
   $('#format').value = items[0]?.id || '';
   document.querySelectorAll('.quality').forEach((button) => { button.onclick = () => { document.querySelectorAll('.quality').forEach((item) => item.classList.toggle('active', item === button)); $('#format').value = button.dataset.id; }; });
 }
@@ -83,7 +83,7 @@ async function start() {
   starting = true;
   button.disabled = true;
   try {
-    const result = await window.zenith.start({ url: $('#url').value, title: media.title, kind, format: kind === 'video' ? $('#format').value : '', audioFormat: kind === 'audio' ? $('#format').value : settings.audioFormat });
+    const result = await window.zenith.start({ url: $('#url').value, title: media.title, kind, format: kind === 'video' ? $('#format').value : '', formatExt: kind === 'video' ? document.querySelector('.quality.active')?.dataset.ext || '' : '', audioFormat: kind === 'audio' ? $('#format').value : settings.audioFormat });
     if (!jobs.has(result.id)) jobs.set(result.id, { id: result.id, title: media.title, percent: 0, detail: tr('preparing'), done: false, failed: false, createdAt: Date.now() });
     renderQueue(); view('queue'); toast(result.duplicate ? tr('started') : tr('started'));
   }
@@ -124,6 +124,7 @@ async function saveField(element) {
   if (element.id === 'language') applyLanguage();
   if (element.id === 'reducedMotion') document.documentElement.classList.toggle('reduced-motion', !!value);
   if (element.id === 'cookieMode') updateCookieUi();
+  if (element.id === 'videoContainer' && media) await analyze();
   const state = $('#save-state'); state.textContent = tr('saved'); state.classList.add('flash'); setTimeout(() => state.classList.remove('flash'), 500);
 }
 
@@ -138,7 +139,7 @@ $('#update-ytdlp').onclick = async () => { const button = $('#update-ytdlp'); bu
 $('#open-cookie-login').onclick = async () => { try { settings = await window.zenith.settings.save({ cookieLoginUrl: $('#cookieLoginUrl').value }); await window.zenith.cookies.login(settings.cookieLoginUrl); toast(tr('loginOpened')); } catch (error) { toast(error?.message || String(error)); } };
 $('#clear-cookies').onclick = async () => { await window.zenith.cookies.clear(); settings = await window.zenith.settings.get(); toast(tr('cookiesCleared')); await refreshTools(); updateCookieUi(); };
 fields.forEach((id) => $(`#${id}`)?.addEventListener('change', (event) => saveField(event.target)));
-window.zenith.onDownload((event) => { const job = jobs.get(event.jobId); if (!job) return; if (event.type === 'progress') { job.percent = Math.max(job.percent, Math.min(100, Number(event.percent) || 0)); job.detail = event.detail; } if (event.type === 'cancelling') { job.cancelling = true; job.detail = event.detail || jobState('cancelling'); } if (event.type === 'complete' || event.type === 'failed' || event.type === 'cancelled') { job.done = true; job.cancelling = false; job.failed = event.type === 'failed'; job.cancelled = event.type === 'cancelled'; job.percent = event.type === 'complete' ? 100 : job.percent; job.detail = event.detail || (event.type === 'complete' ? tr('complete') : event.type === 'cancelled' ? jobState('cancelled') : tr('failed')); toast(event.type === 'complete' ? tr('complete') : event.type === 'cancelled' ? jobState('cancelled') : tr('failed')); } renderQueue(); });
+window.zenith.onDownload((event) => { const job = jobs.get(event.jobId); if (!job) return; if (event.type === 'progress') { job.percent = Math.max(job.percent, Math.min(99, Math.floor(Number(event.percent) || 0))); job.detail = event.detail; } if (event.type === 'cancelling') { job.cancelling = true; job.detail = event.detail || jobState('cancelling'); } if (event.type === 'complete' || event.type === 'failed' || event.type === 'cancelled') { job.done = true; job.cancelling = false; job.failed = event.type === 'failed'; job.cancelled = event.type === 'cancelled'; job.percent = event.type === 'complete' ? 100 : Math.min(job.percent, 99); job.detail = event.detail || (event.type === 'complete' ? tr('complete') : event.type === 'cancelled' ? jobState('cancelled') : tr('failed')); toast(event.type === 'complete' ? tr('complete') : event.type === 'cancelled' ? jobState('cancelled') : tr('failed')); } renderQueue(); });
 window.zenith.onCookiesUpdated(async (event) => { toast(event.message); await refreshTools(); settings = await window.zenith.settings.get(); $('#cookieMode').value = settings.cookieMode; updateCookieUi(); });
 window.zenith.onEngineUpdated(async (event) => { toast(event.error || `${tr('updated')}: ${event.version || ''}`); await refreshTools(); });
 restoreQueue();

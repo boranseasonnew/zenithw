@@ -4,6 +4,8 @@ const { randomUUID } = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
+const { createProgressTracker } = require('./progress.cjs');
+const { videoFormats } = require('./formats.cjs');
 
 const activeJobs = new Map();
 const COOKIE_PARTITION = 'persist:zenithw-login';
@@ -108,12 +110,6 @@ function createWindow() {
 function emit(job, type, payload) {
   if (mainWindow && !mainWindow.isDestroyed()) mainWindow.webContents.send('download:event', { jobId: job.id, type, ...payload });
 }
-function progressFromLine(line) {
-  const match = line.match(/\[download\]\s+(\d+(?:\.\d+)?)%/i);
-  if (!match) return null;
-  const percent = Math.min(100, Math.max(0, Number(match[1])));
-  return { percent, detail: line.slice((match.index || 0) + match[0].length).trim() || 'İndiriliyor…' };
-}
 function authArgs(current = settings) {
   if (current.cookieMode === 'session' && fs.existsSync(cookiePath())) return ['--cookies', cookiePath()];
   if (current.cookieMode === 'browser' && allowedBrowsers.has(current.cookieBrowser)) return ['--cookies-from-browser', current.cookieBrowser];
@@ -142,12 +138,24 @@ function downloadArgs(job, current, workDir) {
   args.push(current.playlist ? '--yes-playlist' : '--no-playlist');
   if (current.speedLimit) args.push('--limit-rate', String(current.speedLimit));
   args.push('--windows-filenames');
+  let outputContainer = '';
   if (job.kind === 'audio') args.push('-f', 'bestaudio/best', '-x', '--audio-format', job.audioFormat || current.audioFormat, '--audio-quality', `${current.audioQuality}K`);
-  else { const container = current.videoContainer || 'mp4'; args.push('-f', job.format || 'bv*+ba/b', '--merge-output-format', container, '--remux-video', container); }
+  else {
+    const requestedContainer = current.videoContainer || 'mp4';
+    // Stream-copying H.264 into WebM (or VP9 into an incompatible target) can
+    // fail after the whole download. Keep the selected source container if a
+    // format card from an older inspection no longer matches the setting.
+    const container = requestedContainer === 'mkv' || !job.formatExt || requestedContainer === job.formatExt
+      ? requestedContainer : job.formatExt;
+    outputContainer = container;
+    args.push('-f', job.format || 'bv*+ba/b', '--merge-output-format', container, '--remux-video', container);
+  }
   if (current.embedMetadata) args.push('--embed-metadata');
   if (current.embedChapters) args.push('--embed-chapters');
   // Keep thumbnail work private to the job; only the finished media is published.
-  if (current.embedThumbnail) args.push('--embed-thumbnail');
+  // yt-dlp cannot embed a thumbnail in a WebM file; requesting it marks an
+  // otherwise successful download as a postprocessing failure.
+  if (current.embedThumbnail && outputContainer !== 'webm') args.push('--embed-thumbnail');
   if (current.subtitles && job.kind !== 'audio') args.push('--write-subs', '--write-auto-subs', '--sub-langs', current.subtitleLang || 'tr,en', '--embed-subs');
   if (current.sponsorBlock && job.kind !== 'audio') args.push('--sponsorblock-remove', current.sponsorCategories || 'sponsor,selfpromo,interaction');
   if (current.downloadArchive) args.push('--download-archive', path.join(app.getPath('userData'), 'download-archive.txt'));
@@ -193,6 +201,24 @@ function publishMedia(workDir, destination, job) {
     fs.renameSync(source, target);
     return target;
   });
+}
+function preserveRecovery(workDir, jobId) {
+  if (!fs.existsSync(workDir)) return '';
+  try {
+    const hasMedia = fs.readdirSync(workDir, { withFileTypes: true }).some((entry) => {
+      if (!entry.isFile()) return false;
+      const file = path.join(workDir, entry.name);
+      return (mediaExtensions.has(path.extname(file).toLowerCase()) || entry.name.endsWith('.part')) && fs.statSync(file).size > 1024;
+    });
+    if (!hasMedia) return '';
+    const recovery = path.join(app.getPath('userData'), 'recovery', jobId);
+    fs.mkdirSync(path.dirname(recovery), { recursive: true });
+    fs.renameSync(workDir, recovery);
+    return recovery;
+  } catch {
+    // If moving fails, leave the original private job directory intact.
+    return workDir;
+  }
 }
 function jobKey(job) {
   return `${job.kind}|${job.format || job.audioFormat || ''}|${job.url}`.toLowerCase();
@@ -303,12 +329,12 @@ handleMain('media:inspect', async (_, rawUrl) => {
   try {
     const result = await runTool(requiredTool('yt-dlp.exe'), ['--no-playlist', '--dump-single-json', '--skip-download', ...baseArgs(), url], 90000, 16 * 1024 * 1024);
     const data = JSON.parse(result.stdout);
-    const formats = (data.formats || []).filter((format) => format.vcodec !== 'none' && format.height).sort((a, b) => (b.height - a.height) || ((b.fps || 0) - (a.fps || 0))).map((format) => ({ id: format.acodec && format.acodec !== 'none' ? format.format_id : `${format.format_id}+bestaudio/best`, height: format.height, ext: format.ext, fps: format.fps, codec: format.vcodec, size: format.filesize || format.filesize_approx || 0 })).filter((format, index, list) => list.findIndex((item) => item.height === format.height && item.ext === format.ext && item.fps === format.fps) === index).slice(0, 12);
+    const formats = videoFormats(data, settings.videoContainer);
     return { title: data.title, uploader: data.uploader || data.channel, duration: data.duration, thumbnail: data.thumbnail, formats };
   } catch (error) { throw new Error(`${msg('inspect')} ${error.message || ''}`.trim()); }
 });
 handleMain('download:start', (_, request) => {
-  const job = { id: randomUUID(), url: sanitizeUrl(request.url), kind: request.kind === 'audio' ? 'audio' : 'video', format: String(request.format || ''), audioFormat: String(request.audioFormat || 'mp3') };
+  const job = { id: randomUUID(), url: sanitizeUrl(request.url), kind: request.kind === 'audio' ? 'audio' : 'video', format: String(request.format || ''), formatExt: ['mp4', 'webm', 'mkv'].includes(request.formatExt) ? request.formatExt : '', audioFormat: String(request.audioFormat || 'mp3') };
   const key = jobKey(job);
   const existing = [...activeJobs.values()].find((item) => item.key === key);
   if (existing) return { id: existing.job.id, duplicate: true };
@@ -319,7 +345,8 @@ handleMain('download:start', (_, request) => {
   const record = { child, job, key, workDir, destination: current.downloadFolder, terminal: false, cancelled: false };
   activeJobs.set(job.id, record);
   emit(job, 'started', { title: request.title || job.url });
-  let tail = '', errorTail = '';
+  let stdoutTail = '', stderrTail = '', errorTail = '', archiveSkipped = false;
+  const trackProgress = createProgressTracker();
   const finishCancelled = () => {
     if (record.terminal) return;
     record.terminal = true;
@@ -330,11 +357,12 @@ handleMain('download:start', (_, request) => {
   const consumeOutput = (chunk, isError = false) => {
     const text = chunk.toString();
     if (isError) errorTail = `${errorTail}\n${text}`.slice(-6000);
-    tail += text;
-    const lines = tail.split(/\r?\n|\r/);
-    tail = lines.pop();
+    const lines = `${isError ? stderrTail : stdoutTail}${text}`.split(/\r?\n|\r/);
+    if (isError) stderrTail = lines.pop();
+    else stdoutTail = lines.pop();
     for (const line of lines) {
-      const progress = progressFromLine(line);
+      if (/has already been recorded in the archive/i.test(line)) archiveSkipped = true;
+      const progress = trackProgress(line);
       if (progress) emit(job, 'progress', progress);
     }
   };
@@ -348,13 +376,15 @@ handleMain('download:start', (_, request) => {
     activeJobs.delete(job.id);
     let published = [];
     try { published = publishMedia(workDir, record.destination, { ...job, playlist: current.playlist }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
-    fs.rmSync(workDir, { recursive: true, force: true });
+    const recoveryPath = published.length ? '' : preserveRecovery(workDir, job.id);
+    if (!recoveryPath) fs.rmSync(workDir, { recursive: true, force: true });
     if (published.length) {
       emit(job, 'complete', { detail: code === 0 ? 'Kaydedildi' : 'Medya kaydedildi; isteğe bağlı son işlem tamamlanamadı.', files: published.map((filePath) => path.basename(filePath)), warning: code !== 0 });
-    } else if (code === 0 && current.downloadArchive) {
+    } else if (code === 0 && archiveSkipped) {
       emit(job, 'complete', { detail: 'Daha önce indirildiği için tekrar atlandı.', skipped: true });
     } else {
-      const detail = errorTail.trim().split(/\r?\n/).filter(Boolean).pop()?.replace(/https?:\/\/\S+/g, '[URL]') || `yt-dlp: ${code}`;
+      const reason = errorTail.trim().split(/\r?\n/).filter(Boolean).pop()?.replace(/https?:\/\/\S+/g, '[URL]') || `yt-dlp: ${code}`;
+      const detail = recoveryPath ? `${reason} · Kurtarma dosyaları: ${recoveryPath}` : reason;
       emit(job, 'failed', { detail });
     }
   });
