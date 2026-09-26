@@ -4,7 +4,7 @@
 
 [Live app](https://zenithw.space) · [Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Current release: **v14.4**
+Current release: **v15.0**
 
 ![ZenithW web interface](docs/assets/zenithw-preview.png)
 

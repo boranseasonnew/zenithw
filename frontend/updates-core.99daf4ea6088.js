@@ -1,5 +1,27 @@
 const LATEST_UPDATE=
 {ver:ZW_VERSION.ver,latest:true,dateTr:ZW_VERSION.dateTr,dateEn:ZW_VERSION.dateEn,cover:null,
+titleTr:'Daha net sınırlar, daha temiz bir ZenithW',
+titleEn:'clearer boundaries, a cleaner ZenithW',
+introTr:[
+'v15.0, ZenithW web deneyiminde hangi kaynakların kullanılabildiğini daha açık gösteriyor. YouTube bağlantıları için web erişimi devre dışı; bu değişiklik yalnızca web hizmetiyle ilgilidir. Masaüstü uygulaması ayrı bir üründür.',
+'Hakkında ve Güncellemeler sayfaları daha okunabilir bir düzene kavuştu. Projenin güncel GitHub hesabı ve kaynak bağlantıları da yeni adreslere taşındı.'
+],
+introEn:[
+'v15.0 makes the boundaries of the ZenithW web experience clearer. YouTube access is disabled in the web service; this change concerns the website only. The Desktop app is a separate product.',
+'The About and Updates pages now have a more readable layout. Project links have also moved to the current GitHub account and repositories.'
+],
+sections:[
+{hTr:'YouTube web erişimi kapalı',hEn:'YouTube access is disabled on the web',pTr:'Web arayüzü üzerinden YouTube bağlantıları işlenmiyor. Diğer desteklenen kaynakların durumu ve masaüstü uygulamasının davranışı bu nottan ayrı değerlendirilmelidir.',pEn:'YouTube links are not processed through the web interface. Other supported sources and the Desktop app have separate behavior.'},
+{hTr:'GitHub bağlantıları güncellendi',hEn:'GitHub links now point to the current account',pTr:'Ana proje deposu <a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">boranseasonnew/zenithw</a>; Android uygulamasının deposu <a href="https://github.com/boranseasonnew/zenithw-android" target="_blank" rel="noopener noreferrer">boranseasonnew/zenithw-android</a>. Kaynak kodu ve sürüm dosyaları için bu adresleri kullanın.',pEn:'The main project repository is <a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">boranseasonnew/zenithw</a>; the Android app lives at <a href="https://github.com/boranseasonnew/zenithw-android" target="_blank" rel="noopener noreferrer">boranseasonnew/zenithw-android</a>. Use these addresses for source code and releases.'},
+{hTr:'Bilgi sayfaları yeniden düzenlendi',hEn:'information pages have been refined',pTr:'Hakkında bölümünde daha okunabilir metinler ve daha belirgin gezinme var. Emeği Geçenler sayfası katkı sunan insanları, açık kaynak araçlarını ve lisansları ayrı alanlarda anlatıyor. Güncellemeler sayfası ise daha sade bir siyah-gri sürüm günlüğüne dönüştü.',pEn:'The About section has more readable text and clearer navigation. Credits now separates people, open-source tools, and licenses. Updates has become a simpler black-and-gray release journal.'},
+{hTr:'Güvenlik sınırları güçlendirildi',hEn:'security boundaries are stronger',pTr:'Bağlantı doğrulaması, istek sınırları ve medya işleme akışındaki korumalar gözden geçirildi. Güvenlik yaklaşımının ayrıntıları kaynak kodda ve Hakkında bölümünde incelenebilir.',pEn:'Link validation, request limits, and safeguards around media processing have been reviewed. The security approach can be inspected in the source and About section.'}
+],
+outroTr:'v15.0, neyin çalıştığını ve nereye bakılması gerektiğini daha açık anlatan bir sürüm. Güncel kaynak ve sürüm bağlantıları yeni GitHub depolarında.',
+outroEn:'v15.0 makes supported behavior and project ownership easier to understand. Current source and release links are available in the new GitHub repositories.'
+};
+
+const UPDATE_V14_4=
+{ver:'v14.4',latest:false,dateTr:'8 eylül 2026',dateEn:'September 8, 2026',cover:null,
 titleTr:'YouTube daha akıllı, ilerleme daha net',
 titleEn:'smarter YouTube handling, clearer progress',
 introTr:[
@@ -91,8 +113,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;

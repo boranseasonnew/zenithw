@@ -76,6 +76,8 @@ body.updates-page::before{content:none}
 .upd-section h3{position:relative;margin:0 0 9px;color:#eeeded;font-size:16px;font-weight:630;line-height:1.4;letter-spacing:-.02em}
 .upd-section h3::before{content:counter(release-section,decimal-leading-zero);position:absolute;left:-66px;top:2px;color:#8e8e92;font:600 11px/1.5 var(--font-mono,"Geist Mono",monospace)}
 .upd-section p{max-width:700px;margin:0;color:#aaa9ac;font-size:13px;line-height:1.8}
+.upd-section p a{color:#e5e5e6;text-decoration-color:#77777a;text-underline-offset:3px}
+.upd-section p a:hover{color:#fff;text-decoration-color:#fff}
 .upd-outro{margin:30px 39px 0;padding:21px 24px;border:1px solid #37373b;border-radius:11px;color:#c9c8ca;background:#1d1d20;font-size:13px;line-height:1.8}
 .upd-signoff{margin:16px 40px 0;color:#88888c;font-size:11px}
 .upd-nav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:31px 39px 0;padding-top:24px;border-top:1px solid var(--upd-line)}
