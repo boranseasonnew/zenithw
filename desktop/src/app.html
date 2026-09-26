@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ZenithW</title><link rel="stylesheet" href="app.css"></head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <div class="logo" aria-label="ZenithW"><span>Z</span><b>ZenithW</b></div>
+    <nav>
+      <button class="nav active" data-view="home"><svg><use href="#i-down"/></svg><span data-i18n="navDownload">İndir</span></button>
+      <button class="nav" data-view="queue"><svg><use href="#i-list"/></svg><span data-i18n="navQueue">İndirmeler</span><em id="queue-count">0</em></button>
+      <button class="nav" data-view="history"><svg><use href="#i-clock"/></svg><span data-i18n="navHistory">Geçmiş</span></button>
+    </nav>
+    <button class="nav settings-nav" data-view="settings"><svg><use href="#i-settings"/></svg><span data-i18n="navSettings">Ayarlar</span></button>
+  </aside>
+  <main>
+    <header><div class="engine"><i></i><span id="engine-state">Yerel motor</span></div><button class="icon-button" id="open-folder" data-i18n-title="openFolder"><svg><use href="#i-folder"/></svg></button></header>
+    <section class="view active home" id="home">
+      <div class="ambient" aria-hidden="true"></div>
+      <div class="home-inner">
+        <div class="wordmark">ZenithW<span>.</span></div>
+        <div class="url-card">
+          <svg class="link-icon"><use href="#i-link"/></svg>
+          <input id="url" type="url" data-i18n-placeholder="urlPlaceholder" placeholder="video bağlantısını buraya bırak" autocomplete="off" spellcheck="false">
+          <button class="paste" id="paste" data-i18n="paste">Yapıştır</button>
+          <button class="continue" id="inspect"><span data-i18n="continue">Devam et</span> <b>→</b></button>
+        </div>
+        <div class="mode-row" role="group"><button class="mode active" data-kind="video"><svg><use href="#i-video"/></svg><span data-i18n="video">Video</span></button><button class="mode" data-kind="audio"><svg><use href="#i-music"/></svg><span data-i18n="audio">Ses</span></button></div>
+        <section class="result" id="media" hidden>
+          <div class="media-head"><img id="thumb" alt=""><div><span id="uploader"></span><h2 id="title"></h2><p id="duration"></p></div></div>
+          <div class="quality-head"><span data-i18n="quality">Kalite</span><small data-i18n="sourceOptions">Kaynakta bulunan seçenekler</small></div>
+          <input id="format" type="hidden"><div class="quality-grid" id="quality-grid"></div>
+          <button class="download" id="download"><svg><use href="#i-down"/></svg><span data-i18n="startDownload">İndirmeyi başlat</span></button>
+        </section>
+      </div>
+    </section>
+    <section class="view page" id="queue"><div class="page-head"><h1 data-i18n="navQueue">İndirmeler</h1><button class="soft" id="queue-folder" data-i18n="openFolder">Klasörü aç</button></div><div class="queue-list" id="queue-list"><div class="empty" data-i18n="queueEmpty">İndirme yok</div></div></section>
+    <section class="view page" id="history"><div class="page-head"><h1 data-i18n="navHistory">Geçmiş</h1></div><div class="empty" data-i18n="historyEmpty">Tamamlanan indirmeler burada görünür</div></section>
+    <section class="view page settings" id="settings">
+      <div class="page-head"><h1 data-i18n="navSettings">Ayarlar</h1><span class="save-state" id="save-state" data-i18n="saved">Kaydedildi</span></div>
+      <div class="settings-layout">
+        <nav class="settings-tabs">
+          <button class="active" data-tab="general-settings" data-i18n="tabGeneral">Genel</button>
+          <button data-tab="engine-settings" data-i18n="tabEngine">Motor</button>
+          <button data-tab="download-settings" data-i18n="tabDownload">İndirme</button>
+          <button data-tab="video-settings" data-i18n="video">Video</button>
+          <button data-tab="audio-settings" data-i18n="audio">Ses</button>
+          <button data-tab="content-settings" data-i18n="tabContent">İçerik</button>
+          <button data-tab="network-settings" data-i18n="tabNetwork">Bağlantı</button>
+          <button data-tab="auth-settings" data-i18n="tabAuth">Oturum</button>
+        </nav>
+        <div class="settings-content">
+          <section class="settings-panel active" id="general-settings">
+            <div class="setting"><div><b data-i18n="language">Dil</b><small data-i18n="languageHelp">Uygulamanın arayüz dili</small></div><select id="language"><option value="tr">Türkçe</option><option value="en">English</option><option value="ru">Русский</option><option value="de">Deutsch</option></select></div>
+            <div class="setting"><div><b data-i18n="reducedMotion">Azaltılmış hareket</b><small data-i18n="reducedMotionHelp">Arayüz geçişlerini azaltır</small></div><label class="switch"><input id="reducedMotion" type="checkbox"><i></i></label></div>
+          </section>
+          <section class="settings-panel" id="engine-settings">
+            <div class="engine-summary"><div><span>yt-dlp</span><b id="ytdlp-version">—</b></div><div><span>FFmpeg</span><b id="ffmpeg-version">—</b></div><div><span>aria2</span><b id="aria2-version">—</b></div></div>
+            <div class="setting"><div><b data-i18n="updateChannel">yt-dlp sürüm kanalı</b><small data-i18n="updateChannelHelp">Nightly daha hızlı site düzeltmeleri alır</small></div><select id="ytDlpChannel"><option value="nightly">Nightly</option><option value="stable">Stable</option></select></div>
+            <div class="setting"><div><b data-i18n="autoUpdate">Açılışta kontrol et</b><small data-i18n="autoUpdateHelp">Seçili kanaldan otomatik günceller</small></div><label class="switch"><input id="autoUpdateYtDlp" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="updateNow">Şimdi güncelle</b><small id="update-detail" data-i18n="updateNowHelp">İndirme yokken güvenle çalışır</small></div><button class="soft accent" id="update-ytdlp" data-i18n="update">Güncelle</button></div>
+          </section>
+          <section class="settings-panel" id="download-settings">
+            <div class="setting"><div><b data-i18n="downloadFolder">İndirme klasörü</b><small id="folder-value"></small></div><button class="soft" id="choose-folder" data-i18n="change">Değiştir</button></div>
+            <div class="setting"><div><b data-i18n="fileName">Dosya adı</b><small data-i18n="fileNameHelp">Kaydedilen dosyaların düzeni</small></div><select id="naming"><option value="%(title)s [%(id)s].%(ext)s">Başlık [ID]</option><option value="%(uploader)s - %(title)s.%(ext)s">Kanal - Başlık</option><option value="%(upload_date)s - %(title)s.%(ext)s">Tarih - Başlık</option></select></div>
+            <div class="setting"><div><b>Playlist</b><small data-i18n="playlistHelp">Tüm listeyi indirmeye izin ver</small></div><label class="switch"><input id="playlist" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="skipDuplicates">Tekrarları atla</b><small data-i18n="skipDuplicatesHelp">Daha önce indirilenleri arşivden denetler</small></div><label class="switch"><input id="downloadArchive" type="checkbox"><i></i></label></div>
+          </section>
+          <section class="settings-panel" id="video-settings">
+            <div class="setting"><div><b data-i18n="defaultQuality">Varsayılan kalite</b><small data-i18n="defaultQualityHelp">Analiz sonucunda önce gösterilir</small></div><select id="videoQuality"><option value="2160">2160p</option><option value="1440">1440p</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select></div>
+            <div class="setting"><div><b data-i18n="container">Konteyner</b><small data-i18n="containerHelp">Birleştirme sonrası dosya türü</small></div><select id="videoContainer"><option value="mp4">MP4</option><option value="mkv">MKV</option><option value="webm">WebM</option></select></div>
+            <div class="setting"><div><b data-i18n="codec">Codec tercihi</b><small data-i18n="codecHelp">Kalite sıralamasında kullanılır</small></div><select id="videoCodec"><option value="h264">H.264</option><option value="av1">AV1</option><option value="vp9">VP9</option></select></div>
+          </section>
+          <section class="settings-panel" id="audio-settings">
+            <div class="setting"><div><b data-i18n="audioFormat">Ses formatı</b><small data-i18n="audioFormatHelp">Ses indirmelerinde çıktı türü</small></div><select id="audioFormat"><option value="mp3">MP3</option><option value="m4a">M4A</option><option value="opus">Opus</option><option value="flac">FLAC</option><option value="wav">WAV</option></select></div>
+            <div class="setting"><div><b data-i18n="bitrate">Bit hızı</b><small data-i18n="bitrateHelp">Kayıplı ses çıktıları için</small></div><select id="audioQuality"><option value="128">128 kbps</option><option value="192">192 kbps</option><option value="256">256 kbps</option><option value="320">320 kbps</option></select></div>
+          </section>
+          <section class="settings-panel" id="content-settings">
+            <div class="setting"><div><b>Metadata</b><small data-i18n="metadataHelp">Başlık, sanatçı ve kaynak bilgisini göm</small></div><label class="switch"><input id="embedMetadata" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="thumbnail">Kapak görseli</b><small data-i18n="thumbnailHelp">Dosyaya küçük resmi göm</small></div><label class="switch"><input id="embedThumbnail" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="chapters">Bölümler</b><small data-i18n="chaptersHelp">Chapter bilgisini koru</small></div><label class="switch"><input id="embedChapters" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="subtitles">Altyazı</b><small data-i18n="subtitlesHelp">Bulunursa videoya göm</small></div><label class="switch"><input id="subtitles" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="subtitleLanguages">Altyazı dilleri</b><small data-i18n="subtitleLanguagesHelp">Virgülle ayır: tr,en</small></div><input class="small-input" id="subtitleLang" maxlength="40" placeholder="tr,en"></div>
+            <div class="setting"><div><b>SponsorBlock</b><small data-i18n="sponsorHelp">Seçili bölümleri videodan çıkar</small></div><label class="switch"><input id="sponsorBlock" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="sponsorCategories">Sponsor kategorileri</b><small>sponsor, selfpromo, interaction</small></div><input class="wide-input" id="sponsorCategories" maxlength="100"></div>
+          </section>
+          <section class="settings-panel" id="network-settings">
+            <div class="setting"><div><b data-i18n="ipMode">IP protokolü</b><small data-i18n="ipModeHelp">Otomatik, yalnızca IPv4 veya yalnızca IPv6</small></div><select id="ipMode"><option value="auto" data-i18n="automatic">Otomatik</option><option value="ipv4">IPv4</option><option value="ipv6">IPv6</option></select></div>
+            <div class="setting"><div><b>aria2</b><small data-i18n="aria2Help">Çok bağlantılı harici indirici; varsayılan kapalı</small></div><label class="switch"><input id="useAria2" type="checkbox"><i></i></label></div>
+            <div class="setting"><div><b data-i18n="aria2Connections">aria2 bağlantıları</b><small data-i18n="aria2ConnectionsHelp">1–16 bağlantı</small></div><input class="number" id="aria2Connections" type="number" min="1" max="16"></div>
+            <div class="setting"><div><b data-i18n="fragments">Eşzamanlı parçalar</b><small data-i18n="fragmentsHelp">DASH/HLS için 1–16</small></div><input class="number" id="concurrentFragments" type="number" min="1" max="16"></div>
+            <div class="setting"><div><b data-i18n="retries">Yeniden deneme</b><small data-i18n="retriesHelp">Geçici bağlantı hatalarında</small></div><input class="number" id="retries" type="number" min="1" max="30"></div>
+            <div class="setting"><div><b data-i18n="timeout">Bağlantı zaman aşımı</b><small data-i18n="timeoutHelp">5–120 saniye</small></div><input class="number" id="socketTimeout" type="number" min="5" max="120"></div>
+            <div class="setting"><div><b data-i18n="speedLimit">Hız sınırı</b><small data-i18n="speedLimitHelp">Boş bırak veya 5M, 800K yaz</small></div><input class="small-input" id="speedLimit" maxlength="12" data-i18n-placeholder="unlimited" placeholder="Sınırsız"></div>
+            <div class="setting"><div><b>Proxy</b><small>HTTP, HTTPS, SOCKS4 veya SOCKS5</small></div><input class="wide-input" id="proxyUrl" maxlength="240" placeholder="socks5://127.0.0.1:1080"></div>
+          </section>
+          <section class="settings-panel" id="auth-settings">
+            <div class="setting"><div><b data-i18n="cookieMode">Çerez kaynağı</b><small data-i18n="cookieModeHelp">Kapalı, uygulama oturumu veya tarayıcı</small></div><select id="cookieMode"><option value="none" data-i18n="disabled">Kapalı</option><option value="session" data-i18n="appSession">Uygulama oturumu</option><option value="browser" data-i18n="browser">Tarayıcı</option></select></div>
+            <div class="setting" id="browser-cookie-setting"><div><b data-i18n="browser">Tarayıcı</b><small data-i18n="browserHelp">yt-dlp çerezleri seçilen tarayıcıdan okur</small></div><select id="cookieBrowser"><option value="firefox">Firefox</option><option value="chrome">Chrome</option><option value="edge">Edge</option><option value="brave">Brave</option><option value="opera">Opera</option><option value="vivaldi">Vivaldi</option></select></div>
+            <div class="setting column"><div><b data-i18n="loginUrl">Oturum açma adresi</b><small data-i18n="loginUrlHelp">Adres uygulama içinde açılır; kapatınca çerezler yalnızca bilgisayarda saklanır</small></div><div class="input-action"><input id="cookieLoginUrl" type="url" value="https://www.youtube.com/"><button class="soft accent" id="open-cookie-login" data-i18n="openLogin">Oturumu aç</button></div></div>
+            <div class="setting"><div><b data-i18n="savedSession">Kaydedilen oturum</b><small id="cookie-status" data-i18n="noCookies">Henüz çerez yok</small></div><button class="soft danger" id="clear-cookies" data-i18n="clear">Temizle</button></div>
+            <p class="privacy-note" data-i18n="privacyNote">Şifreler okunmaz. Oturum çerezleri ZenithW sunucusuna gönderilmez ve sadece yerel yt-dlp işlemlerinde kullanılır.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div id="toast" role="status"></div>
+<svg class="symbols" aria-hidden="true"><symbol id="i-down" viewBox="0 0 24 24"><path d="M12 3v13m-6-5 6 6 6-6M5 21h14"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a7 7 0 0 0-1.8-1L14.4 3h-4.8l-.4 3a7 7 0 0 0-1.8 1L5 6.1 3 9.5 5.1 11a7 7 0 0 0 0 2L3 14.5 5 18l2.4-1a7 7 0 0 0 1.8 1l.4 3h4.8l.4-3a7 7 0 0 0 1.8-1l2.4 1 2-3.5-2.1-1.5a7 7 0 0 0 .1-1Z"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="15" height="14" rx="2"/><path d="m18 10 4-2v8l-4-2Z"/></symbol><symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 9l11-2"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol></svg>
+<script src="app.js"></script>
+</body></html>
