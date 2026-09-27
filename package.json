@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node scripts/build-updates.mjs && node scripts/build-local-media.mjs",
+    "lint": "node --check frontend/updates-core.99daf4ea6088.js && node --check scripts/build-updates.mjs",
+    "test:updates": "node --test tests/updates-static.test.mjs",
     "build:media": "node scripts/build-local-media.mjs",
     "test:media": "node --test tests/local-media.test.mjs"
   },

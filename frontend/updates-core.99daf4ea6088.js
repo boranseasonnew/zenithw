@@ -125,7 +125,7 @@ function loadUpdateArchive(){
   if(archivePromise)return archivePromise;
   archivePromise=new Promise((resolve,reject)=>{
     const s=document.createElement('script');
-    s.src='updates-archive.07c744021db2.js?v=14.3';
+    s.src='/updates-archive.07c744021db2.js?v=14.3';
     s.async=true;
     s.onload=()=>{
       if(Array.isArray(window.ZW_UPDATE_ARCHIVE)){UPDATES=[...CURRENT_RELEASES,...window.ZW_UPDATE_ARCHIVE];archiveLoaded=true;resolve(UPDATES);}
@@ -157,16 +157,13 @@ const PAGE_COPY={
 };
 
 async function jumpTo(ver){
-  try{await ensureRelease(ver);}catch(e){console.error('update archive load failed',e);return;}
-  history.pushState(null,'','#'+ver);
-  await render();
-  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.getElementById('releaseArticle').scrollIntoView({block:'start',behavior:reduce?'auto':'smooth'});
+  if(!UPDATE_VERSIONS.includes(ver))return;
+  location.assign(ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver);
 }
 
 async function render(){
   const t=TX[CUR_LANG];
-  const hash=decodeURIComponent((location.hash||'').replace('#',''));
+  const hash=decodeURIComponent((location.hash||'').replace('#','')) || location.pathname.match(/^\/updates\/(v[0-9.]+)\/?$/)?.[1] || '';
   if(hash&&hash!==LATEST_UPDATE.ver&&UPDATE_VERSIONS.includes(hash)&&findIndex(hash)===-1){
     try{await loadUpdateArchive();}catch(e){console.error('update archive load failed',e);}
   }
@@ -179,7 +176,7 @@ async function render(){
   document.getElementById('updDate').textContent=CUR_LANG==='tr'?u.dateTr:u.dateEn;
   document.getElementById('updPostTitle').textContent=CUR_LANG==='tr'?u.titleTr:u.titleEn;
   const cover=document.getElementById('updCover'),coverImg=document.getElementById('updCoverImg');
-  if(u.cover){cover.hidden=false;coverImg.src=u.cover;coverImg.alt=CUR_LANG==='tr'?(u.coverAltTr||'Güncelleme kapak görseli'):(u.coverAltEn||'Release cover image');}
+  if(u.cover){cover.hidden=false;coverImg.src='/'+u.cover.replace(/^\//,'');coverImg.alt=CUR_LANG==='tr'?(u.coverAltTr||'Güncelleme kapak görseli'):(u.coverAltEn||'Release cover image');}
   else{cover.hidden=true;coverImg.removeAttribute('src');coverImg.alt='';}
   document.getElementById('updAnma').innerHTML='';
 
@@ -200,9 +197,9 @@ async function render(){
   const newer=order>0?UPDATE_VERSIONS[order-1]:null;
   const older=order>=0&&order<UPDATE_VERSIONS.length-1?UPDATE_VERSIONS[order+1]:null;
   let nav='';
-  if(newer)nav+=`<button type="button" class="upd-nav-link" onclick="jumpTo('${newer}')"><span class="upd-nav-label">${t.newer}</span>← ${newer}</button>`;
+  if(newer)nav+=`<a class="upd-nav-link" href="/updates/${newer}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
-  if(older)nav+=`<button type="button" class="upd-nav-link next" onclick="jumpTo('${older}')"><span class="upd-nav-label">${t.older}</span>${older} →</button>`;
+  if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
   document.getElementById('updNavRow').innerHTML=nav;
   document.title=`${u.ver} — ${CUR_LANG==='tr'?u.titleTr:u.titleEn} — ZenithW`;
