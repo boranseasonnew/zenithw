@@ -1,12 +1,22 @@
 # ZenithW
 
-> Un espace média ciblé et sans publicité pour télécharger, convertir et remuxer les contenus que vous êtes autorisé à utiliser. ✨
+> Un espace de travail multimédia open source, sans publicité, pour télécharger, convertir et remuxer les contenus que vous êtes autorisé à utiliser. ✨
 
-[Application](https://zenithw.space) · [Statut](https://zenithw.space/status) · [Mises à jour](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
+[⬇ Télécharger pour Windows](https://github.com/boranseasonnew/zenithw/releases/latest) · [🌐 Ouvrir l'application web](https://zenithw.space) · [🐳 Auto-héberger](https://github.com/boranseasonnew/zenithw#self-host-with-docker-compose) · [💬 Discussions](https://github.com/boranseasonnew/zenithw/discussions)
 
-Version actuelle : **v14.4**
+[Statut](https://zenithw.space/status) · [Mises à jour](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
+
+**Web v15.0** · **ZenithW Desktop v0.3.4**
 
 ![Interface web ZenithW](docs/assets/zenithw-preview.png)
+
+**Tout le nécessaire, sans surcharge.**
+
+| 🔽 Télécharger | 🎚 Convertir et remuxer | 🖥 Application de bureau | 🔒 Sans compte |
+| --- | --- | --- | --- |
+| Enregistrez les vidéos, audios, sous-titres et métadonnées pris en charge. | Utilisez FFmpeg pour des changements de format pratiques sans réencodage inutile. | Gardez votre flux de travail sous Windows avec yt-dlp et FFmpeg inclus. | Ni publicité, ni abonnement, ni connexion obligatoire. |
+
+Collez un lien pris en charge, vérifiez les formats réellement proposés par la source, choisissez la sortie et lancez la tâche. Les détails techniques sont disponibles ci-dessous lorsque vous en avez besoin.
 
 ## ✨ Pourquoi ZenithW ?
 

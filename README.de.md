@@ -1,12 +1,22 @@
 # ZenithW
 
-> Ein fokussierter, werbefreier Medien-Arbeitsbereich zum Herunterladen, Konvertieren und Remuxen von Inhalten, die du verwenden darfst. ✨
+> Ein quelloffener, werbefreier Medienarbeitsbereich zum Herunterladen, Konvertieren und Remuxen von Inhalten, die Sie verwenden dürfen. ✨
 
-[Live-App](https://zenithw.space) · [Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [日本語](README.ja.md)
+[⬇ Für Windows herunterladen](https://github.com/boranseasonnew/zenithw/releases/latest) · [🌐 Web-App öffnen](https://zenithw.space) · [🐳 Selbst hosten](https://github.com/boranseasonnew/zenithw#self-host-with-docker-compose) · [💬 Diskussionen](https://github.com/boranseasonnew/zenithw/discussions)
 
-Aktuelle Version: **v14.4**
+[Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [日本語](README.ja.md)
+
+**Web v15.0** · **ZenithW Desktop v0.3.4**
 
 ![ZenithW-Weboberfläche](docs/assets/zenithw-preview.png)
+
+**Alles Nötige, ohne Ballast.**
+
+| 🔽 Herunterladen | 🎚 Konvertieren und remuxen | 🖥 Desktop-App | 🔒 Kein Konto |
+| --- | --- | --- | --- |
+| Speichern Sie unterstützte Videos, Audios, Untertitel und Metadaten. | Nutzen Sie FFmpeg für praktische Formatänderungen ohne unnötige Neukodierung. | Arbeiten Sie unter Windows mit integriertem yt-dlp und FFmpeg weiter. | Keine Werbeschicht, kein Abonnement und keine Pflichtanmeldung. |
+
+Fügen Sie einen unterstützten Link ein, prüfen Sie die tatsächlich verfügbaren Formate, wählen Sie die Ausgabe und starten Sie den Auftrag. Die technischen Details finden Sie unten, wenn Sie sie benötigen.
 
 ## ✨ Warum ZenithW?
 

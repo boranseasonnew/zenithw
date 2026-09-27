@@ -1,12 +1,22 @@
 # ZenithW
 
-> A focused, ad-free media workspace for downloading, converting, and remuxing content you are allowed to use. ✨
+> An open-source, ad-free media workspace for downloading, converting, and remuxing content you are allowed to use. ✨
 
-[Live app](https://zenithw.space) · [Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
+[⬇ Download for Windows](https://github.com/boranseasonnew/zenithw/releases/latest) · [🌐 Open web app](https://zenithw.space) · [🐳 Self-host](https://github.com/boranseasonnew/zenithw#self-host-with-docker-compose) · [💬 Discussions](https://github.com/boranseasonnew/zenithw/discussions)
 
-Current release: **v15.0**
+[Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
+
+**Web v15.0** · **ZenithW Desktop v0.3.4**
 
 ![ZenithW web interface](docs/assets/zenithw-preview.png)
+
+**Everything you need, without the clutter.**
+
+| 🔽 Download | 🎚 Convert & remux | 🖥 Desktop app | 🔒 No account |
+| --- | --- | --- | --- |
+| Save supported video, audio, subtitles, and metadata. | Use FFmpeg for practical format changes without unnecessary re-encoding. | Keep your workflow on Windows with bundled yt-dlp and FFmpeg. | No advertising layer, subscription, or mandatory sign-in. |
+
+Paste a supported link, review the formats the source actually provides, choose an output, and start the job. The technical details are below when you need them.
 
 ## ✨ Why ZenithW?
 

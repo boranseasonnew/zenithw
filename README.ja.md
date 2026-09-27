@@ -1,12 +1,22 @@
 # ZenithW
 
-> 利用する権利のあるコンテンツをダウンロード、変換、リマックスするための、広告のないシンプルなメディアワークスペースです。✨
+> 利用が許可されたコンテンツをダウンロード、変換、リマックスするための、広告なしのオープンソース・メディアワークスペースです。✨
 
-[Web アプリ](https://zenithw.space) · [ステータス](https://zenithw.space/status) · [更新情報](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
+[⬇ Windows 版をダウンロード](https://github.com/boranseasonnew/zenithw/releases/latest) · [🌐 Web アプリを開く](https://zenithw.space) · [🐳 セルフホスト](https://github.com/boranseasonnew/zenithw#self-host-with-docker-compose) · [💬 ディスカッション](https://github.com/boranseasonnew/zenithw/discussions)
 
-現在のリリース: **v14.4**
+[ステータス](https://zenithw.space/status) · [更新情報](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
+
+**Web v15.0** · **ZenithW Desktop v0.3.4**
 
 ![ZenithW web interface](docs/assets/zenithw-preview.png)
+
+**必要な機能を、余計なものなしで。**
+
+| 🔽 ダウンロード | 🎚 変換とリマックス | 🖥 デスクトップアプリ | 🔒 アカウント不要 |
+| --- | --- | --- | --- |
+| 対応する動画、音声、字幕、メタデータを保存できます。 | 不要な再エンコードを避け、FFmpeg で実用的な形式変換を行えます。 | yt-dlp と FFmpeg を同梱した Windows アプリで作業を続けられます。 | 広告、サブスクリプション、必須ログインはありません。 |
+
+対応するリンクを貼り付け、ソースが実際に提供する形式を確認し、出力を選んで処理を開始します。技術的な詳細は必要なときに以下で確認できます。
 
 ## ✨ ZenithW を選ぶ理由
 
