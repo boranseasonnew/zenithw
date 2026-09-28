@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://zenithw.space/</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://zenithw.space/</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://zenithw.space/app</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zenithw.space/convert</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://zenithw.space/remux</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -12,6 +12,11 @@
   <url><loc>https://zenithw.space/about/credit</loc><lastmod>2026-09-04</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://zenithw.space/status</loc><lastmod>2026-09-04</lastmod><changefreq>daily</changefreq><priority>0.4</priority></url>
   <url><loc>https://zenithw.space/dmca</loc><lastmod>2026-09-04</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://zenithw.space/pc-app</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://zenithw.space/support</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://zenithw.space/vs-y2mate</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://zenithw.space/vs-savefrom</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://zenithw.space/vs-cobalt-tools</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <!-- generated update versions -->
   <url><loc>https://zenithw.space/updates/v14.4</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://zenithw.space/updates/v14.3</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
