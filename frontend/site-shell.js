@@ -34,7 +34,6 @@
       host.innerHTML=`<nav class="bottom-bar info-bottom-bar" aria-label="ZenithW bilgi sayfaları">${infoItems.map(([name,href])=>`<a class="bar-btn ${active===name?'active':''}" href="${href}" aria-current="${active===name?'page':'false'}">${svg(name)}<span data-info-label="${name}"></span></a>`).join('')}</nav>`;
     }else{host.innerHTML=`
       <nav class="bottom-bar" aria-label="ZenithW">
-        <a class="nav-brand" href="/" aria-label="ZenithW ana sayfa"><svg viewBox="0 0 32 28" aria-hidden="true"><path d="M3 4l7 20 6-13 6 13 7-20"/><path d="M11 4l5 13L21 4"/></svg></a>
         <a class="bar-btn ${active==='home'?'active':''}" href="/" aria-current="${active==='home'?'page':'false'}">${svg('home')}<span id="bbSave"></span></a>
         <a class="bar-btn ${active==='remux'?'active':''}" href="/remux.html" aria-current="${active==='remux'?'page':'false'}">${svg('remux')}<span id="bbRemux"></span></a>
         <a class="bar-btn ${active==='settings'?'active':''}" href="/settings.html" aria-current="${active==='settings'?'page':'false'}">${svg('settings')}<span id="bbSettings"></span></a>
