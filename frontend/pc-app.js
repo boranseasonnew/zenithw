@@ -1,3 +1,9 @@
+const desktopRelease = typeof ZW_VERSION !== 'undefined' ? ZW_VERSION.desktop : null;
+if (desktopRelease) {
+  const downloadUrl = `${desktopRelease.repo}/releases/download/${desktopRelease.ver}/${desktopRelease.asset}`;
+  document.querySelectorAll('[data-desktop-download]').forEach((link) => { link.href = downloadUrl; });
+}
+
 const observer = new IntersectionObserver(
   (items) => {
     items.forEach((item) => {

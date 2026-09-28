@@ -8,7 +8,8 @@
     "test:updates": "node --test tests/updates-static.test.mjs",
     "test:about": "node --test tests/about-locales.test.mjs",
     "build:media": "node scripts/build-local-media.mjs",
-    "test:media": "node --test tests/local-media.test.mjs"
+    "test:media": "node --test tests/local-media.test.mjs",
+    "check:release-content": "node scripts/check-release-content.mjs"
   },
   "dependencies": { "mediabunny": "1.56.1" },
   "devDependencies": { "esbuild": "0.25.12" }
