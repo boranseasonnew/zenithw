@@ -39,10 +39,16 @@
 /cache-assets/updates-archive.834ee93b2c57.js
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/updates-core.1c982927fe55.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/updates-core.1d4d137b3dec.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/updates.a6d7da63ee50.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/updates.a9ce0355196e.css
   Cache-Control: public, max-age=31536000, immutable
 
 /compare.a0575b77ab4c.css

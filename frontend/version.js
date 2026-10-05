@@ -3,10 +3,10 @@
 // version.js?v=... sorgusunu da aynı sürüme yükselt; böylece CDN ve tarayıcılar
 // yeni içeriği hemen yeniden doğrular.
 const ZW_VERSION = {
-  ver: 'v15.0',
+  ver: 'v15.1',
   desktop: { ver: 'v0.3.4', repo: 'https://github.com/boranseasonnew/zenithw', asset: 'ZenithW-Setup.exe' },
-  dateTr: '26 eylül 2026',
-  dateEn: 'September 26, 2026',
-  dateFr: '26 septembre 2026',
-  dateDe: '26. September 2026'
+  dateTr: '5 ekim 2026',
+  dateEn: 'October 5, 2026',
+  dateFr: '5 octobre 2026',
+  dateDe: '5. Oktober 2026'
 };
