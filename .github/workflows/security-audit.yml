@@ -35,6 +35,11 @@ jobs:
           python -m pip install --disable-pip-version-check --require-hashes -r backend/requirements.lock
           python -m pip install --disable-pip-version-check bandit==1.8.6 pip-audit==2.9.0
 
+      - name: Verify Cloudflare cache outputs and boundaries
+        run: |
+          node scripts/build-cache-assets.mjs --check
+          node --test tests/cloudflare-cache.test.mjs
+
       - name: Backend testlerini çalıştır
         working-directory: backend
         run: python -m unittest discover -s tests -v

@@ -3,14 +3,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-updates.mjs && node scripts/build-local-media.mjs",
+    "build": "node scripts/build-updates.mjs && node scripts/build-local-media.mjs && node scripts/build-cache-assets.mjs",
     "lint": "node --check frontend/updates-core.99daf4ea6088.js && node --check frontend/about-locales.js && node --check frontend/info-page.412ae0f21fba.js && node --check scripts/build-updates.mjs",
     "test:updates": "node --test tests/updates-static.test.mjs",
     "test:about": "node --test tests/about-locales.test.mjs",
     "build:media": "node scripts/build-local-media.mjs",
     "test:media": "node --test tests/local-media.test.mjs",
-    "check:release-content": "node scripts/check-release-content.mjs"
+    "check:release-content": "node scripts/check-release-content.mjs",
+    "build:cache": "node scripts/build-cache-assets.mjs",
+    "check:cache": "node scripts/build-cache-assets.mjs --check",
+    "test:cache": "node --test tests/cloudflare-cache.test.mjs"
   },
-  "dependencies": { "mediabunny": "1.56.1" },
-  "devDependencies": { "esbuild": "0.25.12" }
+  "dependencies": {
+    "mediabunny": "1.56.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12"
+  }
 }

@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/cache-assets/*",
+    "/fonts/*",
+    "/vendor/*",
+    "/about-locales.js",
+    "/app.d4596317c4a7.js",
+    "/compare.a0575b77ab4c.css",
+    "/converter-studio.css",
+    "/desktop-promo.css",
+    "/favicon.ico",
+    "/fonts.css",
+    "/info-page.412ae0f21fba.js",
+    "/info.6c44eb6f52e7.css",
+    "/local-media.css",
+    "/local-media.js",
+    "/media-guidance.css",
+    "/pc-app.css",
+    "/pc-app.js",
+    "/premium-pages.css",
+    "/remux-studio.css",
+    "/robots.txt",
+    "/runtime-config.js",
+    "/site-shell.css",
+    "/site-shell.js",
+    "/sitemap.xml",
+    "/style.487d49f0164d.css",
+    "/updates-archive.07c744021db2.js",
+    "/updates-core.99daf4ea6088.js",
+    "/updates.4afebabda436.css",
+    "/version.js",
+    "/zenithw-promo-poster.png",
+    "/zenithw.png"
+  ]
+}

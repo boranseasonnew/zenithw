@@ -11,8 +11,7 @@ const fixtureDir = await mkdtemp(join(tmpdir(), 'zenithw-browser-test-'));
 try {
   const fixture = join(fixtureDir, 'source.mp4');
   execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=160x90:rate=15','-f','lavfi','-i','sine=frequency=440:sample_rate=44100','-t','2','-c:v','libx264','-c:a','aac',fixture]);
-  const headersFile = await readFile('frontend/_headers', 'utf8');
-  const csp = headersFile.match(/Content-Security-Policy: (.+)/)[1];
+  const { PAGES_CSP: csp } = await import('../shared/pages-security.mjs');
   const page = await browser.newPage();
   let uploads = 0;
   await page.route('**/*', async route => {
