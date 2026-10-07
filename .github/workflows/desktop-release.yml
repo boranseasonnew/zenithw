@@ -61,7 +61,7 @@ jobs:
 
       - name: Install desktop dependencies
         working-directory: desktop
-        run: npm install --no-audit --no-fund --package-lock=false
+        run: npm ci --no-audit --no-fund
 
       - name: Build portable and installer EXEs
         working-directory: desktop
