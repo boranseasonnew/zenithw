@@ -4,285 +4,133 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow, noarchive">
-  <meta name="theme-color" content="#080a0f">
+  <meta name="theme-color" content="#08090b">
+  <link rel="icon" href="/favicon.ico">
   <title>ZenithW bakımda</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #080a0f;
-      --panel: rgba(17, 20, 30, .78);
-      --panel-strong: #11151f;
-      --line: rgba(255, 255, 255, .09);
-      --text: #f7f8fb;
-      --muted: #9ba5b7;
-      --quiet: #687286;
-      --violet: #8b72ff;
-      --cyan: #52d4ff;
-      --green: #6ce5aa;
-      --amber: #ffc96b;
-      --shadow: 0 30px 90px rgba(0, 0, 0, .55);
+      --bg: #08090b;
+      --panel: #101216;
+      --line: rgba(255, 255, 255, .1);
+      --text: #f3f4f7;
+      --muted: #b2b7c2;
+      --quiet: #979eac;
+      --accent: #b8ddfa;
+      --amber: #f5cb82;
     }
-
     * { box-sizing: border-box; }
-
-    html, body { min-height: 100%; }
-
+    html { background: var(--bg); }
     body {
       margin: 0;
       min-height: 100vh;
       min-height: 100svh;
       display: grid;
       place-items: center;
-      overflow-x: hidden;
       color: var(--text);
-      background:
-        radial-gradient(circle at 18% 18%, rgba(82, 212, 255, .12), transparent 29rem),
-        radial-gradient(circle at 82% 76%, rgba(139, 114, 255, .15), transparent 32rem),
-        linear-gradient(145deg, #07090d, #0a0d14 54%, #080a10);
+      background: radial-gradient(ellipse at 72% 40%, rgba(114, 150, 195, .07), transparent 55%), var(--bg);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      padding: max(24px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      -webkit-font-smoothing: antialiased;
+      padding: max(28px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .22;
-      background-image: radial-gradient(rgba(255, 255, 255, .22) .55px, transparent .55px);
-      background-size: 18px 18px;
-      mask-image: linear-gradient(to bottom, black, transparent 80%);
-    }
-
-    .shell {
-      position: relative;
-      width: min(920px, 100%);
-      display: grid;
-      grid-template-columns: minmax(280px, .92fr) minmax(320px, 1.08fr);
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: var(--panel);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .04);
-      backdrop-filter: blur(24px) saturate(125%);
-    }
-
-    .scene {
-      position: relative;
-      min-height: 520px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border-right: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 50% 38%, rgba(82, 212, 255, .13), transparent 45%),
-        linear-gradient(160deg, rgba(255, 255, 255, .025), rgba(255, 255, 255, 0));
-    }
-
-    .orb {
-      position: absolute;
-      width: 290px;
-      height: 290px;
-      border-radius: 50%;
-      border: 1px solid rgba(139, 114, 255, .16);
-      box-shadow: 0 0 80px rgba(82, 212, 255, .09), inset 0 0 80px rgba(139, 114, 255, .06);
-      animation: breathe 5s ease-in-out infinite;
-    }
-
-    .cat-art {
-      position: relative;
-      z-index: 1;
-      width: min(330px, 88%);
-      filter: drop-shadow(0 25px 30px rgba(0, 0, 0, .32));
-    }
-
-    .cat-tail {
-      transform-origin: 243px 270px;
-      animation: tail 3.6s ease-in-out infinite;
-    }
-
-    .cat-ear {
-      transform-origin: center;
-      animation: ear 4.8s ease-in-out infinite;
-    }
-
-    .cat-ear.right { animation-delay: -2.1s; }
-    .sleep-z { animation: floatZ 2.8s ease-in-out infinite; }
-    .sleep-z.two { animation-delay: -.9s; }
-    .sleep-z.three { animation-delay: -1.8s; }
-
-    .copy {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(34px, 6vw, 64px);
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
-      margin-bottom: 38px;
-      color: var(--text);
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -.5px;
-    }
-
-    .brand-mark {
-      width: 31px;
-      height: 31px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(139, 114, 255, .38);
-      border-radius: 10px;
-      color: #d9d2ff;
-      background: linear-gradient(145deg, rgba(139, 114, 255, .2), rgba(82, 212, 255, .08));
-      box-shadow: 0 8px 24px rgba(100, 80, 220, .18);
-    }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0 0 15px;
-      color: var(--green);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 0 0 rgba(108, 229, 170, .45);
-      animation: pulse 2s ease-out infinite;
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 520px;
-      font-size: clamp(35px, 5vw, 56px);
-      line-height: .98;
-      letter-spacing: -.055em;
-    }
-
-    .message {
-      margin: 22px 0 0;
-      max-width: 520px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.75;
-    }
-
-    .status-card {
-      margin-top: 30px;
-      padding: 14px 15px;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, .025);
-    }
-
-    .status-icon {
-      width: 35px;
-      height: 35px;
-      flex: 0 0 auto;
-      display: grid;
-      place-items: center;
-      border-radius: 11px;
-      color: var(--amber);
-      background: rgba(255, 201, 107, .1);
-    }
-
+    .page-wrap { width: min(1080px, 100%); }
+    .page-header, .page-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .page-header { margin-bottom: 26px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-weight: 750; font-size: 1.1rem; letter-spacing: -.04em; text-decoration: none; }
+    .brand img { width: 38px; height: 38px; object-fit: contain; }
+    .header-note { color: var(--quiet); font-size: .75rem; }
+    .shell { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: var(--panel); box-shadow: 0 32px 90px rgba(0, 0, 0, .3); }
+    .copy { min-width: 0; padding: clamp(28px, 5vw, 58px); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 30px; padding: 8px 12px; border: 1px solid rgba(245, 203, 130, .22); border-radius: 100px; color: var(--amber); background: rgba(245, 203, 130, .055); font-size: .75rem; font-weight: 600; }
+    .pulse { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px rgba(245, 203, 130, .3); }
+    h1 { margin: 0; max-width: 10ch; font-size: clamp(2.4rem, 4.6vw, 3.75rem); line-height: 1.06; letter-spacing: -.055em; font-weight: 650; overflow-wrap: anywhere; text-wrap: balance; }
+    .intro { max-width: 42ch; margin: 22px 0 0; color: var(--muted); font-size: .9375rem; line-height: 1.75; }
+    .reason-card { margin-top: 30px; padding: 20px 22px; border: 1px solid rgba(245, 203, 130, .16); border-left: 3px solid var(--amber); border-radius: 4px 16px 16px 4px; background: linear-gradient(110deg, rgba(245, 203, 130, .055), rgba(245, 203, 130, .012)); }
+    .reason-heading { display: flex; align-items: center; gap: 9px; margin: 0 0 10px; color: var(--amber); font-size: .8125rem; font-weight: 600; }
+    .reason-heading svg { width: 16px; height: 16px; flex: 0 0 auto; }
+    .message { margin: 0; color: #d3d7df; font-size: .875rem; line-height: 1.75; overflow-wrap: anywhere; white-space: pre-line; }
+    .status-card { display: flex; align-items: flex-start; gap: 13px; margin-top: 24px; }
+    .status-icon { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 11px; color: var(--accent); background: rgba(184, 221, 250, .035); }
+    .status-icon svg { width: 17px; height: 17px; }
     .status-text { min-width: 0; }
-    .status-text strong { display: block; font-size: 12px; }
-    .status-text span { display: block; margin-top: 3px; color: var(--quiet); font-size: 11px; line-height: 1.4; }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
+    .status-text strong { display: block; font-size: .8125rem; line-height: 1.5; font-weight: 600; }
+    .status-text span { display: block; margin-top: 4px; color: var(--quiet); font-size: .75rem; line-height: 1.7; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     button, a { font: inherit; }
-
-    .check-button {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0 17px;
-      border: 0;
-      border-radius: 12px;
-      color: #090b10;
-      background: linear-gradient(135deg, #a794ff, #5cd8ff);
-      box-shadow: 0 10px 28px rgba(95, 190, 255, .16);
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 800;
-      transition: transform .18s ease, filter .18s ease;
-    }
-
-    .check-button:hover { filter: brightness(1.08); transform: translateY(-1px); }
-    .check-button:active { transform: translateY(0); }
-    .check-button:disabled { cursor: wait; filter: grayscale(.35); opacity: .7; }
-
-    .status-link {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .status-link:hover { color: var(--text); }
-
-    .fine-print {
-      margin: 28px 0 0;
-      color: var(--quiet);
-      font-size: 10px;
-      line-height: 1.6;
-    }
-
-    @keyframes breathe { 50% { transform: scale(1.035); opacity: .78; } }
-    @keyframes tail { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(8deg); } }
-    @keyframes ear { 0%, 90%, 100% { transform: rotate(0); } 94% { transform: rotate(-7deg); } }
-    @keyframes floatZ { 0% { opacity: 0; transform: translate(0, 7px) scale(.85); } 45% { opacity: .8; } 100% { opacity: 0; transform: translate(10px, -19px) scale(1.05); } }
-    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(108, 229, 170, 0); } 100% { box-shadow: 0 0 0 0 rgba(108, 229, 170, 0); } }
-
-    @media (max-width: 720px) {
-      body { align-items: start; }
+    .check-button, .status-link { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 17px; border-radius: 11px; font-size: .8125rem; font-weight: 650; text-decoration: none; transition: background .18s ease, border-color .18s ease; }
+    .check-button { border: 1px solid #ddeafb; color: #111820; background: #ddeafb; cursor: pointer; }
+    .check-button:hover { background: #f2f7ff; border-color: #f2f7ff; }
+    .check-button:disabled { cursor: wait; opacity: .65; }
+    .check-button svg, .status-link svg { width: 16px; height: 16px; flex: 0 0 auto; }
+    .status-link { border: 1px solid rgba(255, 255, 255, .25); color: #d4d9e2; background: rgba(255, 255, 255, .025); }
+    .status-link:hover { color: var(--text); background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .45); }
+    :where(a, button):focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    .scene { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 42px 28px; border-left: 1px solid var(--line); background: radial-gradient(circle at 50% 42%, rgba(151, 184, 230, .09), transparent 58%), #0d0f13; }
+    .scene::before { content: ""; position: absolute; inset: 0; opacity: .2; background-image: radial-gradient(#77839a .7px, transparent .7px); background-size: 22px 22px; mask-image: radial-gradient(ellipse at center, #000, transparent 70%); pointer-events: none; }
+    .illustration { position: relative; width: min(350px, 100%); aspect-ratio: 1; display: grid; place-items: center; }
+    .orb { position: absolute; width: 86%; aspect-ratio: 1; border: 1px solid rgba(184, 221, 250, .09); border-radius: 50%; box-shadow: 0 0 60px rgba(82, 140, 210, .035); }
+    .orb::before, .orb::after { content: ""; position: absolute; border: 1px solid rgba(184, 221, 250, .055); border-radius: 50%; }
+    .orb::before { inset: 18px; } .orb::after { inset: -20px; }
+    .cat-art { position: relative; width: 100%; filter: drop-shadow(0 20px 24px rgba(0, 0, 0, .35)); }
+    .scene-copy { position: relative; text-align: center; }
+    .scene-caption { margin: 0; color: #c9d5e6; font-size: .9375rem; font-weight: 550; letter-spacing: -.02em; }
+    .scene-note { margin: 9px 0 0; max-width: 27ch; color: var(--quiet); font-size: .75rem; line-height: 1.7; }
+    .scene-tag { position: relative; display: flex; align-items: center; gap: 7px; margin-top: 8px; color: var(--quiet); font-size: .6875rem; }
+    .scene-tag svg { width: 13px; height: 13px; color: var(--accent); }
+    .page-footer { margin-top: 22px; color: var(--quiet); font-size: .6875rem; line-height: 1.7; }
+    .fine-print { margin: 0; max-width: 65ch; }
+    .footer-signature { flex: 0 0 auto; color: #b4bac7; }
+    @media (max-width: 760px) {
       .shell { grid-template-columns: 1fr; border-radius: 22px; }
-      .scene { min-height: 285px; border-right: 0; border-bottom: 1px solid var(--line); }
-      .orb { width: 220px; height: 220px; }
-      .cat-art { width: 250px; }
-      .copy { padding: 34px 26px 38px; }
-      .brand { margin-bottom: 28px; }
-      h1 { font-size: clamp(36px, 12vw, 49px); }
+      .copy { padding: 32px 26px; }
+      h1 { max-width: 13ch; font-size: clamp(2.4rem, 8vw, 3.5rem); }
+      .eyebrow { margin-bottom: 24px; }
+      .scene { border-left: 0; border-top: 1px solid var(--line); padding: 20px 26px 30px; gap: 0; }
+      .illustration { width: 220px; }
+      .scene-tag { margin-top: 18px; }
+      .page-footer { align-items: flex-start; }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    @media (max-width: 420px) {
+      body { padding-left: 16px; padding-right: 16px; }
+      .header-note { font-size: .6875rem; }
+      .copy { padding: 28px 22px; }
+      .reason-card { padding: 17px; }
+      .actions { flex-direction: column; }
+      .page-footer { flex-direction: column; gap: 6px; }
     }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <section class="scene" aria-label="Sunucu üzerinde uyuyan bakım kedisi">
-      <div class="orb" aria-hidden="true"></div>
+  <div class="page-wrap">
+    <header class="page-header">
+      <a class="brand" href="/" aria-label="ZenithW ana sayfa"><img src="/zenithw.png" alt="" width="38" height="38">ZenithW</a>
+      <span class="header-note">Birazdan yeniden birlikteyiz.</span>
+    </header>
+    <main class="shell">
+      <section class="copy">
+        <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>Bakım devam ediyor</p>
+        <h1 id="maintenanceTitle">Kısa bir pati molası</h1>
+        <p class="intro">ZenithW'yi sizin için hazırlıyoruz. Kısa bir aradan sonra kaldığınız yerden devam edebilirsiniz.</p>
+        <section class="reason-card">
+          <h2 class="reason-heading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M14.7 6.3a5 5 0 0 0-6.4 6.4l-5.1 5.1a2.1 2.1 0 0 0 3 3l5.1-5.1a5 5 0 0 0 6.4-6.4l-3 3-3-3 3-3Z"/></svg>Bakım nedeni</h2>
+          <p class="message" id="maintenanceMessage">Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız.</p>
+        </section>
+        <div class="status-card" role="status" aria-atomic="true">
+          <span class="status-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div class="status-text">
+            <strong id="statusHeading">Güncel hizmet durumu</strong>
+            <span id="statusDetail">Bu sayfa açık kalabilir; hizmet döndüğünde otomatik yenilenecek.</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="check-button" id="checkButton" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 6.1A8.3 8.3 0 0 1 20 12M4 12a8.3 8.3 0 0 0 13.9 5.9"/></svg>Şimdi kontrol et</button>
+          <a class="status-link" href="/status">Sistem durumu<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+        </div>
+      </section>
+      <section class="scene">
+        <div class="illustration">
+          <div class="orb" aria-hidden="true"></div>
       <svg class="cat-art" viewBox="0 0 360 360" role="img" aria-labelledby="catTitle catDesc">
         <title id="catTitle">Bakım yapan uyuyan kedi</title>
         <desc id="catDesc">Bir sunucu kasasının üzerinde kıvrılıp uyuyan sevimli kedi</desc>
@@ -315,30 +163,19 @@
           <text class="sleep-z three" x="301" y="89" font-size="29">Z</text>
         </g>
       </svg>
-    </section>
-
-    <section class="copy">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">Z</span>ZenithW</div>
-      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>Planlı bakım sürüyor</p>
-      <h1 id="maintenanceTitle">Kısa bir pati molası</h1>
-      <p class="message" id="maintenanceMessage">Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız.</p>
-
-      <div class="status-card" aria-live="polite">
-        <span class="status-icon" aria-hidden="true">◷</span>
-        <div class="status-text">
-          <strong id="statusHeading">Son kontroller yapılıyor</strong>
-          <span id="statusDetail">Bu sayfa açık kalabilir; hizmet döndüğünde otomatik yenilenecek.</span>
         </div>
-      </div>
-
-      <div class="actions">
-        <button class="check-button" id="checkButton" type="button">Şimdi kontrol et <span aria-hidden="true">↻</span></button>
-        <a class="status-link" href="/status">Sistem durumunu görüntüle →</a>
-      </div>
-      <p class="fine-print">Yeni indirme ve dönüştürme işleri bakım süresince güvenli biçimde duraklatıldı.</p>
-    </section>
-  </main>
-
+        <div class="scene-copy">
+          <p class="scene-caption">Küçük bir mola. Daha iyi bir ZenithW.</p>
+          <p class="scene-note">Pati ekibi burada. Siz bir kahve alın, biz gerisini halledelim.</p>
+        </div>
+        <span class="scene-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>Hizmet durumu otomatik kontrol edilir</span>
+      </section>
+    </main>
+    <footer class="page-footer">
+      <p class="fine-print">Yeni indirme ve dönüştürme işleri bakım süresince geçici olarak duraklatıldı.</p>
+      <span class="footer-signature">ZenithW · Biraz sabır, bolca pati.</span>
+    </footer>
+  </div>
   <script>
     (() => {
       const title = document.getElementById('maintenanceTitle');
@@ -378,7 +215,7 @@
       const checkStatus = async (manual = false) => {
         button.disabled = true;
         if (manual) {
-          heading.textContent = 'Pati radarı kontrol ediyor…';
+          heading.textContent = 'Hizmet durumu kontrol ediliyor…';
           detail.textContent = 'Hizmet durumuna yeniden bakılıyor.';
         }
         try {
@@ -399,7 +236,7 @@
           applyStatus(status);
           if (manual && !untilTimestamp) {
             heading.textContent = 'Bakım hâlâ sürüyor';
-            detail.textContent = 'Kedi ekibi iş başında; otomatik olarak tekrar kontrol edeceğiz.';
+            detail.textContent = 'Çalışmalar devam ediyor; otomatik olarak tekrar kontrol edeceğiz.';
           }
         } catch (_) {
           heading.textContent = navigator.onLine ? 'Kontrol edilemedi' : 'Bağlantı çevrimdışı';

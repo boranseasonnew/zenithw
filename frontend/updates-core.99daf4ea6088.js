@@ -1,5 +1,63 @@
-const LATEST_UPDATE=
-{ver:ZW_VERSION.ver,latest:true,dateTr:ZW_VERSION.dateTr,dateEn:ZW_VERSION.dateEn,cover:null,
+const LATEST_UPDATE = {
+  "ver": ZW_VERSION.ver,
+  "latest": true,
+  "dateTr": ZW_VERSION.dateTr,
+  "dateEn": ZW_VERSION.dateEn,
+  "cover": null,
+  "titleTr": "Daha hafif, daha özenli bir ZenithW",
+  "titleEn": "A lighter, more polished ZenithW",
+  "introTr": [
+    "v15.1, ZenithW'ye daha sakin bir görünüm ve daha rahat bir okuma deneyimi getiriyor. Mat siyah ve gri yüzeyler, hafif şeffaf kartlar ve küçük hareketler yeni güncellemeler sayfasında bir araya geliyor.",
+    "Bakım ekranı yenilendi, site dosyalarının tekrar yüklenmesi iyileştirildi ve marka bilgileri daha tutarlı hale geldi. Bu sürümdeki dokunuşları aşağıda kısa kısa anlattık."
+  ],
+  "introEn": [
+    "v15.1 brings a calmer look and a more comfortable reading experience to ZenithW. Matte black and grey surfaces, subtly transparent cards and gentle motion come together on the new Updates page.",
+    "The maintenance screen has been refreshed, repeat loading of site files has been improved, and brand details are more consistent. Here is a short look at what changed."
+  ],
+  "sections": [
+    {
+      "hTr": "Güncellemeler, yeni bir görünümde",
+      "hEn": "A fresh look for Updates",
+      "pTr": "Sürüm notları artık daha okunaklı yazılar, ferah aralıklar ve hafif şeffaf kartlarla sunuluyor. Aşağı kaydırdıkça bölümler yumuşak bir geçişle beliriyor. Eski sürümlere dil seçimi ve sürüm menüsü üzerinden ulaşmaya devam edebilirsiniz.",
+      "pEn": "Release notes now use clearer typography, generous spacing and subtly transparent cards. Sections appear with a gentle transition as you scroll. Language controls and the version menu keep earlier releases within reach."
+    },
+    {
+      "hTr": "Tekrar ziyaretlerde daha az yük",
+      "hEn": "Less loading on repeat visits",
+      "pTr": "Değişmeyen site dosyaları daha verimli tekrar kullanılacak şekilde düzenlendi. Görünmeyen yazı bölümlerinin çizimi de ihtiyaç duyulana kadar erteleniyor. Amaç, hem sayfayı açarken hem uzun notları okurken cihazı daha az yormak.",
+      "pEn": "Unchanged site files are set up to be reused more efficiently. Offscreen text sections defer rendering until they are needed. The aim is to keep both page loading and longer reading sessions lighter on your device."
+    },
+    {
+      "hTr": "Bakım sırasında daha net bilgi",
+      "hEn": "Clearer information during maintenance",
+      "pTr": "Bakım ekranına gerçek ZenithW logosu, ayrı bir bakım nedeni kartı ve daha belirgin kontrol düğmeleri eklendi. Tahmini dönüş süresi varsa ekranda gösteriliyor. Sayfa hizmet durumunu otomatik kontrol etmeye devam ediyor; mobil düzen de daha rahat okunuyor.",
+      "pEn": "The maintenance screen now features the ZenithW logo, a dedicated reason card and clearer controls. An estimated return time is shown when available. Automatic status checks continue, and the mobile layout is easier to read."
+    },
+    {
+      "hTr": "Logo ve marka görünümü toparlandı",
+      "hEn": "More consistent branding",
+      "pTr": "Site simgesi ve marka bilgileri yeni logoyla uyumlu hale getirildi. Ana sayfa ile Windows uygulaması sayfasının başlıkları ve paylaşım bilgileri de elden geçirildi. Arama sonuçlarındaki görünüm, arama motorlarının yeniden ziyaretinden sonra güncellenebilir.",
+      "pEn": "The site icon and brand details have been aligned with the updated logo. Page titles and sharing information for the home page and Windows app page have also been refined. Search results may update after search engines revisit the pages."
+    },
+    {
+      "hTr": "İhtiyacınız olan sayfalara daha kolay ulaşın",
+      "hEn": "Useful pages are easier to find",
+      "pTr": "Destek, dönüştürme, remux ve uygulama sayfalarının bağlantıları daha görünür hale getirildi. Site haritası da mevcut sayfalarla güncellendi. Yeni gezinme düzeni, sürüm notlarını okurken ilgili bölüme geçmeyi kolaylaştırıyor.",
+      "pEn": "Links to support, conversion, remux and app pages are easier to discover. The sitemap has been updated to reflect the available pages. The new release navigation also makes it easier to jump to the section you need."
+    },
+    {
+      "hTr": "Web, Android ve Windows aynı hikâyede",
+      "hEn": "Web, Android and Windows in one story",
+      "pTr": "ZenithW'nin web deneyimini, Android uygulamasını ve Windows uygulamasını bir araya getiren kısa bir İngilizce tanıtım videosu hazırlandı. Bu, uygulamalara yeni bir sürüm numarası getirmiyor; ZenithW'yi daha açık ve bütünlüklü anlatan bir tanıtım.",
+      "pEn": "A short English promo video now brings together the ZenithW website, Android app and Windows app. It introduces the existing experiences together; their individual app version numbers remain the same."
+    }
+  ],
+  "outroTr": "v15.1 ile daha rahat okunabilen, daha hafif ve daha tutarlı bir ZenithW. Bir sonraki dokunuşta görüşürüz.",
+  "outroEn": "v15.1 makes ZenithW easier to read, lighter to use and more consistent. See you in the next update."
+};
+
+const UPDATE_V15_0=
+{ver:'v15.0',latest:false,dateTr:'26 eylül 2026',dateEn:'September 26, 2026',cover:null,
 titleTr:'Daha net sınırlar, daha temiz bir ZenithW',
 titleEn:'clearer boundaries, a cleaner ZenithW',
 introTr:[
@@ -113,8 +171,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;
@@ -145,9 +203,9 @@ async function ensureRelease(ver){
 
 const TX={
   tr:{title:'Güncellemeler — ZenithW',desc:'ZenithW sürüm geçmişi ve güncelleme notları — yeni özellikler, hata düzeltmeleri ve iyileştirmeler.',
-    back:'ana sayfa',latestLabel:'güncel',signoff:'ZenithW · sürüm notları',selectLabel:'sürüm seç',newer:'yeni sürüm',older:'eski sürüm',navLabel:'Sürüm gezinmesi'},
+    back:'ana sayfa',latestLabel:'güncel',signoff:'ZenithW · sürüm notları',selectLabel:'sürüm seç',newer:'yeni sürüm',older:'eski sürüm',navLabel:'Sürüm gezinmesi',contents:'Bu sürümde',contentsNav:'Güncelleme bölümleri',readHint:'Kaydır, yenilikleri keşfet',skip:'Güncelleme notlarına geç'},
   en:{title:'Updates — ZenithW',desc:'ZenithW release history and changelog — new features, bug fixes, and improvements.',
-    back:'home',latestLabel:'latest',signoff:'ZenithW · release notes',selectLabel:'choose a release',newer:'newer',older:'older',navLabel:'Release navigation'}
+    back:'home',latestLabel:'latest',signoff:'ZenithW · release notes',selectLabel:'choose a release',newer:'newer',older:'older',navLabel:'Release navigation',contents:'In this release',contentsNav:'Release sections',readHint:'Scroll to explore what changed',skip:'Skip to release notes'}
 }
 
 let CUR_LANG='tr';
@@ -156,14 +214,30 @@ const PAGE_COPY={
   en:{eyebrow:'ZENITHW / RELEASE NOTES',title:'Updates',lead:'New features, fixes, and thoughtful improvements. A clear record of what changed in each release.'}
 };
 
+// One observer, one short entrance per card. Text stays visible without JS.
+let releaseRevealObserver=null;
+function revealReleaseSections(){
+  releaseRevealObserver?.disconnect();
+  if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  releaseRevealObserver=new IntersectionObserver(entries=>{
+    for(const entry of entries){
+      if(!entry.isIntersecting)continue;
+      entry.target.classList.add('is-revealed');
+      releaseRevealObserver.unobserve(entry.target);
+    }
+  },{threshold:0.08,rootMargin:'0px 0px -24px 0px'});
+  document.querySelectorAll('#updSections .upd-section').forEach(section=>releaseRevealObserver.observe(section));
+}
+
 async function jumpTo(ver){
   if(!UPDATE_VERSIONS.includes(ver))return;
-  location.assign(ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver);
+  location.assign(ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver+'/');
 }
 
 async function render(){
   const t=TX[CUR_LANG];
-  const hash=decodeURIComponent((location.hash||'').replace('#','')) || location.pathname.match(/^\/updates\/(v[0-9.]+)\/?$/)?.[1] || '';
+  const hashCandidate=decodeURIComponent((location.hash||'').replace('#',''));
+  const hash=UPDATE_VERSIONS.includes(hashCandidate)?hashCandidate:(location.pathname.match(/^\/updates\/(v[0-9.]+)\/?$/)?.[1]||'');
   if(hash&&hash!==LATEST_UPDATE.ver&&UPDATE_VERSIONS.includes(hash)&&findIndex(hash)===-1){
     try{await loadUpdateArchive();}catch(e){console.error('update archive load failed',e);}
   }
@@ -182,11 +256,13 @@ async function render(){
 
   const intro=CUR_LANG==='tr'?u.introTr:u.introEn;
   document.getElementById('updIntro').innerHTML=intro.map(p=>`<p>${p}</p>`).join('');
-  document.getElementById('updSections').innerHTML=u.sections.map(s=>`
-    <div class="upd-section">
+  document.getElementById('updSections').innerHTML=u.sections.map((s,index)=>`
+    <section class="upd-section" id="release-section-${index+1}">
       <h3>${CUR_LANG==='tr'?s.hTr:s.hEn}</h3>
       <p>${CUR_LANG==='tr'?s.pTr:s.pEn}</p>
-    </div>`).join('');
+    </section>`).join('');
+  document.getElementById('updContents').innerHTML=u.sections.map((s,index)=>`<a href="#release-section-${index+1}"><span aria-hidden="true">${String(index+1).padStart(2,'0')}</span>${CUR_LANG==='tr'?s.hTr:s.hEn}</a>`).join('');
+  revealReleaseSections();
   document.getElementById('updOutro').textContent=CUR_LANG==='tr'?u.outroTr:u.outroEn;
   document.getElementById('updSignoff').textContent=t.signoff;
 
@@ -197,9 +273,9 @@ async function render(){
   const newer=order>0?UPDATE_VERSIONS[order-1]:null;
   const older=order>=0&&order<UPDATE_VERSIONS.length-1?UPDATE_VERSIONS[order+1]:null;
   let nav='';
-  if(newer)nav+=`<a class="upd-nav-link" href="/updates/${newer}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
+  if(newer)nav+=`<a class="upd-nav-link" href="${newer===LATEST_UPDATE.ver?'/updates':'/updates/'+newer+'/'}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
-  if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
+  if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}/"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
   document.getElementById('updNavRow').innerHTML=nav;
   document.title=`${u.ver} — ${CUR_LANG==='tr'?u.titleTr:u.titleEn} — ZenithW`;
@@ -212,18 +288,29 @@ function setLegalLang(l){
   document.getElementById('pgTitle').textContent=t.title;
   document.getElementById('pgDesc').setAttribute('content',t.desc);
   document.getElementById('pgBack').textContent=t.back;
+  document.querySelector('.upd-home-link').setAttribute('aria-label',t.back);
   document.getElementById('updEyebrow').textContent=PAGE_COPY[CUR_LANG].eyebrow;
   document.getElementById('updPageTitle').textContent=PAGE_COPY[CUR_LANG].title;
   document.getElementById('updPageLead').textContent=PAGE_COPY[CUR_LANG].lead;
+  document.getElementById('updContentsHeading').textContent=t.contents;
+  document.getElementById('updContents').setAttribute('aria-label',t.contentsNav);
+  document.getElementById('updReadHint').textContent=t.readHint;
+  document.getElementById('updSkip').textContent=t.skip;
   document.getElementById('verPicker').setAttribute('aria-label',t.selectLabel);
   document.getElementById('updNavRow').setAttribute('aria-label',t.navLabel);
-  document.querySelectorAll('#legalLangToggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===CUR_LANG));
+  document.querySelectorAll('#legalLangToggle button').forEach(b=>{
+    b.classList.toggle('active',b.dataset.lang===CUR_LANG);
+    b.setAttribute('aria-pressed',String(b.dataset.lang===CUR_LANG));
+  });
   try{localStorage.setItem('zw_lang',CUR_LANG);}catch(e){}
   render();
 }
 
 window.addEventListener('popstate',render);
-window.addEventListener('hashchange',render);
+window.addEventListener('hashchange',()=>{
+  const version=decodeURIComponent((location.hash||'').slice(1));
+  if(UPDATE_VERSIONS.includes(version))render();
+});
 
 (function(){
   let saved='tr';

@@ -2875,6 +2875,12 @@ def request_too_large(e):
 def prevent_api_indexing(response):
     """API uçlarının arama sonucu olarak dizine alınmasını engelle."""
     response.headers.setdefault("X-Robots-Tag", "noindex, nofollow")
+    # Every response on this service is API/job/transfer state, including errors.
+    # send_file's default no-cache permits storage, so replace it for token files.
+    response.headers["Cache-Control"] = "private, no-store, max-age=0"
+    response.headers["CDN-Cache-Control"] = "no-store"
+    response.headers["Cloudflare-CDN-Cache-Control"] = "no-store"
+    response.headers.pop("Expires", None)
     return response
 
 # ── /info ─────────────────────────────────────────────

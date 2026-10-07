@@ -7,8 +7,8 @@ const read = path => readFileSync(new URL(`../frontend/${path}`, import.meta.url
 test('release notes are present in the first HTML without JavaScript', () => {
   const latest = read('updates.html');
   const older = read('updates/v14.4/index.html');
-  assert.match(latest, /Daha net sınırlar, daha temiz bir ZenithW/);
-  assert.match(latest, /YouTube web erişimi kapalı/);
+  assert.match(latest, /Daha hafif, daha özenli bir ZenithW/);
+  assert.match(latest, /Tekrar ziyaretlerde daha az yük/);
   assert.match(older, /YouTube daha akıllı, ilerleme daha net/);
   assert.match(older, /Gerçek akış çözünürlüğü doğrulanıyor/);
   assert.match(older, /<link rel="canonical" href="https:\/\/zenithw\.space\/updates\/v14\.4">/);

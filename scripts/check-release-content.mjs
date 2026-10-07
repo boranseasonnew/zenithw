@@ -11,7 +11,7 @@ const index = readFileSync('frontend/index.html', 'utf8');
 
 assert.equal((pc.match(/data-desktop-download/g) || []).length, 3);
 assert.equal((pc.match(new RegExp(expectedUrl.replaceAll('.', '\\.'), 'g')) || []).length, 3);
-assert.match(pc, /<script src="version\.js\?v=15\.0"><\/script>/);
+assert.match(pc, /<script src="version\.js\?v=15\.1"><\/script>/);
 for (const file of ['README.md', 'README.tr.md', 'README.fr.md', 'README.de.md', 'README.ja.md']) {
   assert.match(readFileSync(file, 'utf8'), new RegExp(`ZenithW Desktop ${ver.replaceAll('.', '\\.')}`), file);
 }

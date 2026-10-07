@@ -7,22 +7,24 @@
 <meta name="description" id="pgDesc" content="ZenithW sürüm geçmişi ve güncelleme notları — yeni özellikler, hata düzeltmeleri ve iyileştirmeler.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://zenithw.space/updates">
-<meta name="theme-color" content="#09090a">
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="/favicon.ico">
 <link href="/fonts.css?v=1" rel="stylesheet">
 <link rel="stylesheet" href="/updates.4afebabda436.css?v=14.9">
 <link rel="stylesheet" href="/site-shell.css?v=14.4">
-<script src="/version.js?v=15.0"></script>
+<script src="/version.js?v=15.1"></script>
 </head>
 <body class="updates-page">
+<a class="upd-skip" id="updSkip" href="#releaseArticle">Güncelleme notlarına geç</a>
 <main class="upd-shell">
   <nav class="upd-site-header" aria-label="Sayfa navigasyonu">
-    <a href="/" class="upd-brand">ZenithW<span>.</span></a>
+    <a href="/" class="upd-brand" aria-label="ZenithW ana sayfa"><img src="/zenithw.png" alt="" width="34" height="34">ZenithW</a>
     <div class="upd-header-actions">
-      <div class="legal-lang-toggle" id="legalLangToggle">
+      <div class="legal-lang-toggle" id="legalLangToggle" role="group" aria-label="Language">
         <button type="button" data-lang="tr" onclick="setLegalLang('tr')">TR</button>
         <button type="button" data-lang="en" onclick="setLegalLang('en')">EN</button>
       </div>
-      <a href="/" class="upd-home-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span id="pgBack">ana sayfa</span></a>
+      <a href="/" class="upd-home-link" aria-label="Ana sayfa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span id="pgBack">ana sayfa</span></a>
     </div>
   </nav>
 
@@ -34,8 +36,8 @@
 
   <section class="upd-hero" id="releaseArticle" tabindex="-1">
       <div class="upd-top-row">
-        <span class="upd-ver-badge" id="updBadge">v15.0</span>
-        <span class="upd-top-date" id="updDate">8 eylül 2026</span>
+        <span class="upd-ver-badge" id="updBadge">v15.1</span>
+        <span class="upd-top-date" id="updDate">5 ekim 2026</span>
         <div class="upd-pick"><select id="verPicker" aria-label="Sürüm seç" onchange="jumpTo(this.value)"></select></div>
       </div>
       <h2 class="upd-post-title" id="updPostTitle"></h2>
@@ -43,6 +45,12 @@
       <div class="upd-anma" id="updAnma"></div>
   </section>
 
+    <div class="upd-reading-layout">
+    <aside class="upd-contents">
+      <p class="upd-contents-heading" id="updContentsHeading">Bu sürümde</p>
+      <nav id="updContents" aria-label="Güncelleme bölümleri"></nav>
+      <p class="upd-read-hint" id="updReadHint">Kaydır, yenilikleri keşfet</p>
+    </aside>
     <article class="upd-article">
       <div class="upd-intro" id="updIntro"></div>
       <div id="updSections"></div>
@@ -50,10 +58,11 @@
       <div class="upd-signoff" id="updSignoff">ZenithW · sürüm notları</div>
       <nav class="upd-nav-row" id="updNavRow" aria-label="Sürüm gezinmesi"></nav>
     </article>
+  </div>
 </main>
 
 <div id="siteBottomNav" data-active="updates"></div>
-<script src="/updates-core.99daf4ea6088.js?v=15.0.1"></script>
+<script src="/updates-core.99daf4ea6088.js?v=15.1"></script>
 <script src="/site-shell.js?v=14.3"></script>
 </body>
 </html>

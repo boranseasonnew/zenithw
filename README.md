@@ -4,9 +4,9 @@
 
 [⬇ Download for Windows](https://github.com/boranseasonnew/zenithw/releases/latest) · [🌐 Open web app](https://zenithw.space) · [🐳 Self-host](https://github.com/boranseasonnew/zenithw#self-host-with-docker-compose) · [💬 Discussions](https://github.com/boranseasonnew/zenithw/discussions)
 
-[Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
+[Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [Usage guides](https://zenithw.space/en/guides) · [Android app](https://zenithw.space/app) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-**Web v15.0** · **ZenithW Desktop v0.4.0**
+**Web v15.0** · **ZenithW Desktop v0.3.4**
 
 ![ZenithW web interface](docs/assets/zenithw-preview.png)
 
