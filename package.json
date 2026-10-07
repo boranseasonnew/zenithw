@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-updates.mjs && node scripts/build-local-media.mjs && node scripts/build-cache-assets.mjs",
+    "build": "node scripts/build-updates.mjs && node scripts/build-seo.mjs && node scripts/build-local-media.mjs && node scripts/build-cache-assets.mjs",
+    "build:seo": "node scripts/build-seo.mjs",
     "lint": "node --check frontend/updates-core.99daf4ea6088.js && node --check frontend/about-locales.js && node --check frontend/info-page.412ae0f21fba.js && node --check scripts/build-updates.mjs",
     "test:updates": "node --test tests/updates-static.test.mjs",
     "test:about": "node --test tests/about-locales.test.mjs",

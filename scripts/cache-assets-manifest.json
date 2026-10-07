@@ -12,8 +12,8 @@
     "sha256": "834ee93b2c57b82f6fcd6cdab7f1b51808af807af045a5bd9f2fb8d0f7f805c4"
   },
   "updates-core.99daf4ea6088.js": {
-    "url": "/cache-assets/updates-core.1c982927fe55.js",
-    "sha256": "1c982927fe554419d1c588a4778a12704c48c3816cd55dda3ee11bea8fdfe9d2"
+    "url": "/cache-assets/updates-core.274b1db6639b.js",
+    "sha256": "274b1db6639b186af042e753c233fbe86f6ccb514095fe760db1e6513af88432"
   },
   "updates.4afebabda436.css": {
     "url": "/cache-assets/updates.a9ce0355196e.css",
@@ -38,5 +38,9 @@
   "fonts.css": {
     "url": "/cache-assets/fonts.4ed1cddfa4da.css",
     "sha256": "4ed1cddfa4da9bc3b5df15681c417d333898bca233baffe5c0a98551235710a4"
+  },
+  "guides.css": {
+    "url": "/cache-assets/guides.8e81aba3443d.css",
+    "sha256": "8e81aba3443d8483e0dcf9c674019993d3f2323a9fe3d345f2a51afdeb1a4225"
   }
 }

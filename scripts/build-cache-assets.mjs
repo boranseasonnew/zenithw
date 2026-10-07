@@ -18,7 +18,7 @@ const sources = [
   'updates-core.99daf4ea6088.js', 'updates-archive.07c744021db2.js',
   'updates.4afebabda436.css', 'info.6c44eb6f52e7.css',
   'info-page.412ae0f21fba.js', 'compare.a0575b77ab4c.css',
-  'fonts.css', 'fonts/GeistMono-Variable.woff2',
+  'fonts.css', 'fonts/GeistMono-Variable.woff2', 'guides.css',
 ];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const walk = directory => readdirSync(directory, { withFileTypes: true }).flatMap(entry => {

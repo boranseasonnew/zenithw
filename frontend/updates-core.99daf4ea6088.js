@@ -231,7 +231,7 @@ function revealReleaseSections(){
 
 async function jumpTo(ver){
   if(!UPDATE_VERSIONS.includes(ver))return;
-  location.assign(ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver);
+  location.assign(ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver+'/');
 }
 
 async function render(){
@@ -273,9 +273,9 @@ async function render(){
   const newer=order>0?UPDATE_VERSIONS[order-1]:null;
   const older=order>=0&&order<UPDATE_VERSIONS.length-1?UPDATE_VERSIONS[order+1]:null;
   let nav='';
-  if(newer)nav+=`<a class="upd-nav-link" href="${newer===LATEST_UPDATE.ver?'/updates':'/updates/'+newer}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
+  if(newer)nav+=`<a class="upd-nav-link" href="${newer===LATEST_UPDATE.ver?'/updates':'/updates/'+newer+'/'}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
-  if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
+  if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}/"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
   document.getElementById('updNavRow').innerHTML=nav;
   document.title=`${u.ver} — ${CUR_LANG==='tr'?u.titleTr:u.titleEn} — ZenithW`;

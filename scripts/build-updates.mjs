@@ -28,11 +28,11 @@ const template = readFileSync(new URL('./updates-template.html', import.meta.url
 const render = (release, index) => {
   const title = `${release.ver} — ${release.titleTr} — ZenithW`;
   const description = `ZenithW ${release.ver}: ${release.titleTr}. ${release.introTr[0]}`.slice(0, 220);
-  const canonical = index === 0 ? 'https://zenithw.space/updates' : `https://zenithw.space/updates/${release.ver}`;
+  const canonical = index === 0 ? 'https://zenithw.space/updates' : `https://zenithw.space/updates/${release.ver}/`;
   const intro = release.introTr.map(paragraph => `<p>${paragraph}</p>`).join('\n');
   const sections = release.sections.map((section, sectionIndex) => `<section class="upd-section" id="release-section-${sectionIndex + 1}"><h3>${escape(section.hTr)}</h3><p>${section.pTr}</p></section>`).join('\n');
-  const newer = index > 0 ? `<a class="upd-nav-link" href="${index === 1 ? '/updates' : '/updates/' + versions[index - 1]}"><span class="upd-nav-label">yeni sürüm</span>← ${versions[index - 1]}</a>` : '<span aria-hidden="true"></span>';
-  const older = index < versions.length - 1 ? `<a class="upd-nav-link next" href="/updates/${versions[index + 1]}"><span class="upd-nav-label">eski sürüm</span>${versions[index + 1]} →</a>` : '<span aria-hidden="true"></span>';
+  const newer = index > 0 ? `<a class="upd-nav-link" href="${index === 1 ? '/updates' : '/updates/' + versions[index - 1] + '/'}"><span class="upd-nav-label">yeni sürüm</span>← ${versions[index - 1]}</a>` : '<span aria-hidden="true"></span>';
+  const older = index < versions.length - 1 ? `<a class="upd-nav-link next" href="/updates/${versions[index + 1]}/"><span class="upd-nav-label">eski sürüm</span>${versions[index + 1]} →</a>` : '<span aria-hidden="true"></span>';
   return template
     .replace(/<title id="pgTitle">.*?<\/title>/, `<title id="pgTitle">${escape(title)}</title>`)
     .replace(/<meta name="description" id="pgDesc" content="[^"]*">/, `<meta name="description" id="pgDesc" content="${escape(description)}">`)
@@ -54,7 +54,8 @@ releases.forEach((release, index) => {
   write(`updates/${release.ver}/index.html`, html);
 });
 let sitemap = read('sitemap.xml').replace(/\s*<!-- generated update versions -->[\s\S]*?<!-- end generated update versions -->/, '');
-const entries = versions.slice(1).map(version => `  <url><loc>https://zenithw.space/updates/${version}</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>`).join('\n');
+sitemap = sitemap.replace(/\s*<url><loc>https:\/\/zenithw\.space\/updates\/v[0-9.]+\/?<\/loc>[\s\S]*?<\/url>/g, '');
+const entries = versions.slice(1).map(version => `  <url><loc>https://zenithw.space/updates/${version}/</loc></url>`).join('\n');
 sitemap = sitemap.replace('</urlset>', `  <!-- generated update versions -->\n${entries}\n  <!-- end generated update versions -->\n</urlset>`);
 write('sitemap.xml', sitemap);
 console.log(`Generated ${releases.length} update pages`);

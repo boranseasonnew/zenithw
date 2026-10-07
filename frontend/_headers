@@ -27,6 +27,9 @@
 /cache-assets/fonts.4ed1cddfa4da.css
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/guides.8e81aba3443d.css
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/info-page.a3e72fe763fa.js
   Cache-Control: public, max-age=31536000, immutable
 
@@ -43,6 +46,9 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/updates-core.1d4d137b3dec.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/updates-core.274b1db6639b.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/updates.a6d7da63ee50.css
@@ -71,6 +77,9 @@
 
 /fonts/OFL.txt
   Cache-Control: public, max-age=86400, s-maxage=604800, must-revalidate
+
+/guides.css
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /info-page.412ae0f21fba.js
   Cache-Control: public, max-age=3600, must-revalidate
