@@ -4,9 +4,9 @@
 #
 #    pip-compile --cert=None --client-cert=None --generate-hashes --index-url=None --no-index --output-file=backend/requirements.lock --pip-args=None backend/requirements.txt
 #
-bgutil-ytdlp-pot-provider==1.3.1 \
-    --hash=sha256:130635912e2450757438f72068b900076ac1a62d9f26a00afbe6f2ab258e8b25 \
-    --hash=sha256:e62b21f9b2e4479d59af87a8900387c34892e8d7fdb223f266749a90e0be22de
+bgutil-ytdlp-pot-provider==2.0.1 \
+    --hash=sha256:8038cd744a5e2e12a56eab4a5319d0edd31e9f1e4beff5cb13487a19cb755310 \
+    --hash=sha256:ff6c2e85443e0777e2483e4a5ef2084ca745a1dd3cc07cf355ddd3a77bd882e8
     # via -r backend/requirements.txt
 bidict==0.24.1 \
     --hash=sha256:4dca6c17f0b01700e9f24359daa5ebabf7be022d99f4cb2a257b6af2a5076c88 \
