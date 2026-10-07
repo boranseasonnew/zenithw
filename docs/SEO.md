@@ -115,3 +115,38 @@ in a relevant community is more valuable than unrelated link drops.
 - [Cloudflare Pages routing and 404 behavior](https://developers.cloudflare.com/pages/configuration/serving-pages/)
 
 - [Cloudflare www redirect and DNS setup](https://developers.cloudflare.com/pages/how-to/www-redirect/)
+
+## Other search engines and IndexNow (7 October 2026)
+
+The homepage was submitted through Brave's official refetch form, which returned
+Success. Brave runs an independent index: Google or Bing submissions are not
+proof of Brave indexing. No indexing or ranking date is promised.
+
+The Bing Webmaster Tools property was verified using a DNS-only CNAME:
+`d6137e7058838f47ca81b0be7659c149.zenithw.space` -> `verify.bing.com`.
+The 87-entry sitemap was submitted; Bing initially showed Processing and zero
+discovered URLs, which is not an error or an indexing confirmation.
+
+`scripts/indexnow.json` contains a public site-verification key and the 27 newly
+updated canonical pages selected for notification. Old release archives are
+discoverable in the sitemap but are not included in this initial notification.
+The matching root text file is included in Pages output. The existing cache
+generator excludes that exact static file from the maintenance Function so that
+domain validation remains available during maintenance. No API, tokens, query
+strings, downloads, settings or user history are submitted.
+
+Preview a notification with `python3 scripts/submit_indexnow.py`. After publishing
+the changed pages and key file, explicitly notify with
+`python3 scripts/submit_indexnow.py --submit`.
+For a later edit, use `--path /guides --path /app --submit` with only the changed
+canonical paths. Notifications are not run on builds or repeated by a scheduler.
+The tool checks the published key before posting to the official IndexNow API.
+HTTP 200 means received; 202 means received with key validation pending.
+Neither response guarantees indexing. DuckDuckGo obtains many traditional web
+results from Bing, so improving Bing discovery can help that route too.
+
+Sources:
+- https://search.brave.com/help/brave-search-crawler
+- https://search.brave.com/submit-url
+- https://www.indexnow.org/documentation
+- https://duckduckgo.com/duckduckgo-help-pages/results/sources
