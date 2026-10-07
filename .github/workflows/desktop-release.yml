@@ -1,0 +1,113 @@
+name: Windows desktop release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: desktop-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-release:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install free build tools
+        shell: pwsh
+        run: |
+          choco install yt-dlp ffmpeg aria2 -y --no-progress
+          if ($LASTEXITCODE -ne 0) { throw "Could not install the required free media tools" }
+          $lib = Join-Path $env:ChocolateyInstall "lib"
+          $found = @{}
+          foreach ($name in @("yt-dlp.exe", "ffmpeg.exe", "ffprobe.exe", "aria2c.exe")) {
+            $match = Get-ChildItem -Path $lib -Recurse -File -Filter $name -ErrorAction SilentlyContinue |
+              Sort-Object Length -Descending |
+              Select-Object -First 1
+            if (-not $match) { throw "Could not find the actual $name binary installed by Chocolatey" }
+            $found[$name] = $match.FullName
+          }
+          $stage = Join-Path $env:RUNNER_TEMP "zenith-tools"
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+          foreach ($name in $found.Keys) { Copy-Item -LiteralPath $found[$name] -Destination (Join-Path $stage $name) }
+          "ZENITHW_TOOL_SOURCE=$stage" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Set release version
+        shell: pwsh
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          if ($env:TAG_NAME -notmatch '^v(?<version>\d+\.\d+\.\d+)$') { throw "Expected a version tag such as v4.0.0" }
+          $version = $Matches.version
+          $packagePath = "desktop/package.json"
+          $package = Get-Content -Raw $packagePath | ConvertFrom-Json
+          $package.version = $version
+          $package.build.win.artifactName = "Zenith-$version-Windows-Setup.exe"
+          $package.build.portable.artifactName = "Zenith-$version-Windows.exe"
+          $package.build.nsis.uninstallDisplayName = "Zenith $version"
+          $package | ConvertTo-Json -Depth 100 | Set-Content -Encoding utf8 $packagePath
+          "ZENITH_RELEASE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Install desktop dependencies
+        working-directory: desktop
+        run: npm install --no-audit --no-fund --package-lock=false
+
+      - name: Build portable and installer EXEs
+        working-directory: desktop
+        run: |
+          npm run portable
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run dist
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Prepare release files
+        shell: pwsh
+        run: |
+          $assets = @(
+            "desktop/dist/Zenith-$env:ZENITH_RELEASE_VERSION-Windows.exe",
+            "desktop/dist/Zenith-$env:ZENITH_RELEASE_VERSION-Windows-Setup.exe"
+          )
+          foreach ($asset in $assets) {
+            if (-not (Test-Path -LiteralPath $asset)) { throw "Expected build output is missing: $asset" }
+          }
+          $lines = foreach ($asset in $assets) {
+            $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $asset).Hash.ToLowerInvariant()
+            "$hash  $(Split-Path -Leaf $asset)"
+          }
+          $lines | Set-Content -Encoding ascii "desktop/dist/SHA256SUMS.txt"
+
+      - name: Upload EXEs and publish the GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          $assets = @(
+            "desktop/dist/Zenith-$env:ZENITH_RELEASE_VERSION-Windows.exe",
+            "desktop/dist/Zenith-$env:ZENITH_RELEASE_VERSION-Windows-Setup.exe",
+            "desktop/dist/SHA256SUMS.txt"
+          )
+          $releaseJson = gh release view $env:TAG_NAME --json isDraft 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $env:TAG_NAME @assets --clobber
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            $release = $releaseJson | ConvertFrom-Json
+            if ($release.isDraft) {
+              gh release edit $env:TAG_NAME --draft=false
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          } else {
+            gh release create $env:TAG_NAME @assets --title "Zenith Desktop $env:ZENITH_RELEASE_VERSION" --generate-notes
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
