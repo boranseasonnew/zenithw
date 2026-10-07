@@ -9,8 +9,8 @@ mean the site ranks sixth for broad video-downloader searches. The query
 report contained very little useful non-brand traffic.
 
 The indexing report last updated 4 October showed 13 indexed URLs and 79
-excluded URLs. Sixty-one were discovered but not yet indexed, mostly release
-archives. Redirected aliases and the separate API origin do not need to be
+excluded URLs. Sixty-one were discovered but not yet indexed. The count suggests that many
+are release archives, but individual examples in this category were not audited. Redirected aliases and the separate API origin do not need to be
 indexed. The old `/info` URL was the one reported 404; there is no matching
 public page in this repository, so it is not redirected to unrelated content.
 
@@ -59,12 +59,40 @@ No fabricated ratings, testimonials, keyword stuffing, bought links or automated
 directory submissions are used. Visible FAQs help readers; Google retired FAQ
 rich results in May 2026, so they are not treated as a rich-result opportunity.
 
+## Publication and Google submission
+
+Commit `3c170012d77e39971922b8bd81955150e768c7f5` was pushed to main on 7 October.
+Cloudflare production deployment `114d4b92-7fda-42b0-ad64-223d4c81a712` succeeded.
+The live homepage and Turkish/English guides returned 200; a missing route
+returned the new 404. The sitemap returned 200 with 87 canonical entries.
+The new content-hashed guide stylesheet returned `CF-Cache-Status: HIT` and
+`Cache-Control: public, max-age=31536000, immutable`. API health remained 204
+with private/no-store headers.
+
+Search Console confirmed that the updated sitemap was submitted successfully
+on 7 October. Its last processed count still showed 76 URLs, dated 5 October;
+the new 87-entry count will appear only after Google processes the update.
+Google's live inspection found `/guides` available for indexing and detected
+one valid breadcrumb item. The indexing request was accepted. Requests for `/en/guides`, `/app` and
+the updated homepage were also accepted. The homepage was already indexed;
+the other inspected pages were not yet indexed. A request does not mean a new
+page has already been indexed.
+
+The `www.zenithw.space` hostname had no DNS answer at publication time.
+The canonical apex domain worked normally. A proxied A record for `www` was created using Cloudflare's documented redirect-only
+address `192.0.2.1`. Single Redirect rule `77ed6ca106ec4e5f8c2b123447c6cb7e`
+only matches `http.host eq "www.zenithw.space"`; it redirects permanently to
+`concat("https://zenithw.space", http.request.uri.path)` and preserves the query
+string. Public DNS returned the new Cloudflare addresses. Both HTTP and HTTPS
+requests returned 301 to the correct path and query, using the published DNS
+address while the local resolver still had its earlier negative cache.
+The apex, API and mail records were not changed.
+
 ## Free follow-up work
 
-After the updated deployment is live, submit `https://zenithw.space/sitemap.xml`
-in the existing Search Console property. Inspect the homepage and representative
-guide/app pages, and request indexing where appropriate. A submission is a
-request for crawling, not proof of indexing or ranking.
+The updated sitemap and the four priority page requests have been submitted.
+Let Google process them before repeating requests. A submission is a request
+for crawling, not proof of indexing or ranking.
 
 Use Search Console's query/page reports to check relevant impressions and clicks
 after Google has recrawled. Track guide traffic separately from release notes.
@@ -85,3 +113,5 @@ in a relevant community is more valuable than unrelated link drops.
 - [Software application structured data](https://developers.google.com/search/docs/appearance/structured-data/software-app)
 - [Google documentation updates, including retired FAQ rich results](https://developers.google.com/search/updates)
 - [Cloudflare Pages routing and 404 behavior](https://developers.cloudflare.com/pages/configuration/serving-pages/)
+
+- [Cloudflare www redirect and DNS setup](https://developers.cloudflare.com/pages/how-to/www-redirect/)
