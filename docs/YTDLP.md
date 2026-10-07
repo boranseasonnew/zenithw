@@ -9,8 +9,8 @@ values match the existing lock entry. No yt-dlp upgrade is necessary today.
 
 The pinned `yt-dlp-ejs==0.8.0` is also current and is exactly the EJS version
 required by yt-dlp's default extra. The pinned requests, websockets and curl-cffi
-versions satisfy this release's declared ranges. Deno `2.8.3` exceeds the
-documented 2.0 runtime minimum; a newer Deno exists, but it is a separate runtime
+versions satisfy this release's declared ranges. Deno `2.8.3` exceeds EJS's
+documented 2.3.0 runtime minimum; a newer Deno exists, but it is a separate runtime
 upgrade and was not bundled into this targeted change. Nightly yt-dlp builds
 exist, but no diagnosed extraction failure here requires changing release channel.
 
