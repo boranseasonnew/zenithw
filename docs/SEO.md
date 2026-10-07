@@ -150,3 +150,9 @@ Sources:
 - https://search.brave.com/submit-url
 - https://www.indexnow.org/documentation
 - https://duckduckgo.com/duckduckgo-help-pages/results/sources
+
+The published key file returned 200 with the expected content. The initial
+notification of 27 updated public pages returned **HTTP 202** on 7 October 2026.
+Key validation is pending at the participating service; this is not proof that
+any of the pages have been indexed. Do not repeat the same submission just to
+change its status.

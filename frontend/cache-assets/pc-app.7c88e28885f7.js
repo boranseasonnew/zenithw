@@ -1,9 +1,9 @@
 (() => {
   'use strict';
   const previews = {
-    workspace: ['/desktop-preview/workspace.png', 'Zenith Desktop indirmeler ve geçmiş', 'Zenith Desktop downloads and history'],
-    settings: ['/desktop-preview/settings.png', 'Zenith Desktop ayarları', 'Zenith Desktop settings'],
-    setup: ['/desktop-preview/setup.png', 'Zenith Desktop ilk açılış', 'Zenith Desktop setup']
+    workspace: ['/cache-assets/workspace.989ccacf2862.png', 'ZenithW Desktop indirmeler ve geçmiş', 'ZenithW Desktop downloads and history'],
+    settings: ['/cache-assets/settings.33ee340439ab.png', 'ZenithW Desktop ayarları', 'ZenithW Desktop settings'],
+    setup: ['/cache-assets/setup.b07d68cf347e.png', 'ZenithW Desktop ilk açılış', 'ZenithW Desktop setup']
   };
   document.querySelectorAll('[data-preview]').forEach(button => {
     button.addEventListener('click', () => {

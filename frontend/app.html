@@ -3,78 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title id="pgTitle">ZenithW Android: Ücretsiz Video İndirme Uygulaması</title>
-<meta name="description" id="pgDesc" content="ZenithW Android uygulamasını resmi indirme bağlantısından edin. Video ve ses indirme seçeneklerini cihazının internet bağlantısıyla kullan.">
+<title id="pgTitle">Zenith Android — Video ve Ses İndirme Uygulaması</title>
+<meta name="description" id="pgDesc" content="Zenith Android 2.0: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://zenithw.space/app">
-<meta name="theme-color" content="#0a0a0a">
-<link href="/cache-assets/fonts.4ed1cddfa4da.css" rel="stylesheet">
-<link rel="stylesheet" href="/cache-assets/style.0a44b1a04019.css">
-<script src="/version.js?v=15.1"></script>
-<style>
-.legal-page{max-width:720px;margin:0 auto;padding:40px 20px 80px;width:100%;box-sizing:border-box;}
-.legal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;gap:10px;flex-wrap:wrap;}
-.legal-logo{font-size:20px;font-weight:700;letter-spacing:-1px;color:var(--text);text-decoration:none;}
-.legal-logo span{color:var(--accent);}
-.legal-back{font-size:11px;font-weight:600;color:var(--text2);text-decoration:none;background:var(--chip-bg,var(--surface));border:1px solid var(--border);border-radius:20px;padding:7px 14px;transition:all .15s;}
-.legal-back:hover{color:var(--text);border-color:var(--border2);}
-.legal-body{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 26px;backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);}
-.legal-lang-toggle{display:flex;gap:4px;background:var(--chip-bg);border:1px solid var(--border);border-radius:20px;padding:3px;}
-.legal-lang-toggle button{border:none;background:transparent;color:var(--text3);font-family:var(--font);font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:16px;cursor:pointer;transition:all .15s;}
-.legal-lang-toggle button.active{background:var(--text);color:var(--bg);}
-@media(hover:none) and (pointer:coarse){.legal-body{backdrop-filter:none;-webkit-backdrop-filter:none;}}
+<meta name="theme-color" content="#151516">
 
-.app-hero{text-align:center;margin-bottom:28px;}
-.app-icon{width:84px;height:84px;border-radius:22px;margin:0 auto 16px;background:linear-gradient(135deg,rgba(var(--accent-rgb),0.35),rgba(168,139,250,0.15) 45%,var(--surface2) 80%);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(var(--accent-rgb),0.18);}
-.app-icon svg{width:38px;height:38px;color:var(--accent);}
-.app-hero h1{font-size:23px;font-weight:800;letter-spacing:-.5px;color:var(--text);margin:0 0 8px;}
-.app-hero h1 span{color:var(--accent);}
-.app-hero p{font-size:13.5px;line-height:1.8;color:var(--text2);margin:0 auto;max-width:480px;}
-
-.app-badges{display:flex;justify-content:center;gap:8px;margin:16px 0 22px;flex-wrap:wrap;}
-.app-badge{font-size:10.5px;font-weight:700;color:var(--text2);background:var(--chip-bg);border:1px solid var(--border);border-radius:20px;padding:6px 12px;}
-
-.app-dl-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:34px;}
-.app-dl-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--btn-bg);border:none;border-radius:14px;padding:16px 30px;color:var(--btn-color);font-size:14.5px;font-weight:800;font-family:var(--font);cursor:pointer;text-decoration:none;transition:opacity .15s,transform .1s;box-shadow:0 10px 30px rgba(var(--accent-rgb),0.22);}
-.app-dl-btn:hover{opacity:.9;transform:translateY(-1px);}
-.app-dl-btn svg{width:18px;height:18px;}
-.app-dl-meta{font-size:11px;color:var(--text3);}
-.app-dl-meta a{color:var(--text2);text-decoration:underline;}
-
-.app-why{font-size:15px;font-weight:800;color:var(--text);margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-
-.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:30px;}
-@media(max-width:520px){.app-grid{grid-template-columns:1fr;}}
-.app-feat{background:var(--chip-bg);border:1px solid var(--border);border-radius:14px;padding:16px;}
-.app-feat-icon{width:34px;height:34px;border-radius:10px;background:rgba(var(--accent-rgb),0.14);display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:10px;}
-.app-feat-icon svg{width:17px;height:17px;}
-.app-feat h3{font-size:12.5px;font-weight:700;color:var(--text);margin:0 0 5px;}
-.app-feat p{font-size:11.5px;line-height:1.6;color:var(--text2);margin:0;}
-
-.app-source{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;}
-.app-source svg{width:22px;height:22px;color:var(--text2);flex-shrink:0;margin-top:1px;}
-.app-source h3{font-size:12.5px;font-weight:700;color:var(--text);margin:0 0 5px;}
-.app-source p{font-size:11.5px;line-height:1.7;color:var(--text2);margin:0;}
-.app-source a{color:var(--accent);text-decoration:none;font-weight:600;}
-.app-source a:hover{text-decoration:underline;}
-
-.app-note{font-size:11px;color:var(--text3);text-align:center;margin-top:24px;line-height:1.7;}
-</style>
-<link rel="stylesheet" href="/cache-assets/guides.8e81aba3443d.css">
 
 <link rel="icon" href="/favicon.ico">
 <!-- generated SEO metadata -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="ZenithW Android: Ücretsiz Video İndirme Uygulaması">
-<meta property="og:description" content="ZenithW Android uygulamasını resmi indirme bağlantısından edin. Video ve ses indirme seçeneklerini cihazının internet bağlantısıyla kullan.">
+<meta property="og:title" content="Zenith Android — Video ve Ses İndirme Uygulaması">
+<meta property="og:description" content="Zenith Android 2.0: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.">
 <meta property="og:url" content="https://zenithw.space/app">
 <meta property="og:site_name" content="ZenithW">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:image" content="https://zenithw.space/zenithw.png">
 <meta property="og:image:alt" content="ZenithW">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZenithW Android: Ücretsiz Video İndirme Uygulaması">
-<meta name="twitter:description" content="ZenithW Android uygulamasını resmi indirme bağlantısından edin. Video ve ses indirme seçeneklerini cihazının internet bağlantısıyla kullan.">
+<meta name="twitter:title" content="Zenith Android — Video ve Ses İndirme Uygulaması">
+<meta name="twitter:description" content="Zenith Android 2.0: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.">
 <meta name="twitter:image" content="https://zenithw.space/zenithw.png">
 <script type="application/ld+json">
 {
@@ -112,8 +60,8 @@
       "@type": "WebPage",
       "@id": "https://zenithw.space/app#webpage",
       "url": "https://zenithw.space/app",
-      "name": "ZenithW Android: Ücretsiz Video İndirme Uygulaması",
-      "description": "ZenithW Android uygulamasını resmi indirme bağlantısından edin. Video ve ses indirme seçeneklerini cihazının internet bağlantısıyla kullan.",
+      "name": "Zenith Android — Video ve Ses İndirme Uygulaması",
+      "description": "Zenith Android 2.0: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.",
       "inLanguage": "tr",
       "isPartOf": {
         "@id": "https://zenithw.space/#website"
@@ -135,7 +83,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "ZenithW Android: Ücretsiz Video İndirme Uygulaması",
+          "name": "Zenith Android — Video ve Ses İndirme Uygulaması",
           "item": "https://zenithw.space/app"
         }
       ]
@@ -143,9 +91,9 @@
     {
       "@type": "SoftwareApplication",
       "@id": "https://zenithw.space/app#app",
-      "name": "ZenithW Android",
+      "name": "Zenith Android",
       "url": "https://zenithw.space/app",
-      "description": "ZenithW Android uygulamasını resmi indirme bağlantısından edin. Video ve ses indirme seçeneklerini cihazının internet bağlantısıyla kullan.",
+      "description": "Zenith Android 2.0: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Android",
       "isAccessibleForFree": true,
@@ -162,122 +110,21 @@
 }
 </script>
 <!-- end generated SEO metadata -->
+<link rel="stylesheet" href="/cache-assets/pc-app.94b3db21e2e0.css">
 </head>
-<body>
-<div class="legal-page">
-  <div class="legal-nav">
-    <a href="/" class="legal-logo">ZenithW<span>.</span></a>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="legal-lang-toggle" id="legalLangToggle">
-        <button data-lang="tr" onclick="setLang('tr')">TR</button>
-        <button data-lang="en" onclick="setLang('en')">EN</button>
-      </div>
-      <a href="/" class="legal-back" id="pgBack">← ana sayfa</a>
-    </div>
-  </div>
-
-  <div class="legal-body" style="max-width:640px;margin:0 auto;padding:32px 26px 40px;">
-
-    <div class="app-hero">
-      <div class="app-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
-      <h1 id="hTitle">ZenithW artık <span>cebinde</span></h1>
-      <p id="hDesc">Android için resmi ZenithW mobil uygulamasını indirin — tarayıcıya gerek yok, reklam yok, filigran yok. Aynı hızlı yt-dlp motoru şimdi telefonunda.</p>
-      <div class="app-badges" id="hBadges">
-        <span class="app-badge">%100 ücretsiz</span>
-        <span class="app-badge">açık kaynak</span>
-        <span class="app-badge">reklamsız</span>
-        <span class="app-badge">Android</span>
-      </div>
-    </div>
-
-    <div class="app-dl-wrap">
-      <a class="app-dl-btn" href="https://github.com/boranseasonnew/zenithw-android/releases/download/android-app/ZenithW-Mobile-1.3.1.apk" id="dlBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span id="dlBtnTxt">APK'yı İndir</span>
-      </a>
-      <div class="app-dl-meta" id="dlMeta">v1.3.1 · ~212 MiB · <a href="https://github.com/boranseasonnew/zenithw-android" target="_blank" rel="noopener">GitHub'da görüntüle</a></div>
-    </div>
-
-    <h2 class="app-why" id="whyTitle">neden ZenithW mobil'i tavsiye ediyoruz</h2>
-    <div class="app-grid" id="featGrid"></div>
-
-    <div class="app-source">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <div>
-        <h3 id="srcTitle">açık kaynak</h3>
-        <p id="srcDesc">Uygulamanın tüm kaynak kodu GitHub'da herkese açık. İsteyen inceleyip katkıda bulunabilir. APK dosyasını doğrudan yukarıdaki linkten, kaynak kodunu da <a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener">depodan</a> inceleyebilirsiniz.</p>
-      </div>
-    </div>
-
-    <div class="app-note" id="noteTxt">Android cihazınızda "bilinmeyen kaynaklardan yükleme" iznini açmanız gerekebilir, çünkü uygulama Play Store yerine doğrudan indirme bağlantısıyla dağıtılıyor.</div>
-
-  </div>
-</div>
-
-<script>
-const TX={
-  tr:{back:'← ana sayfa',hTitle:'ZenithW artık <span>cebinde</span>',
-    hDesc:'Android için resmi ZenithW mobil uygulamasını indirin — tarayıcıya gerek yok, reklam yok, filigran yok. Aynı hızlı yt-dlp motoru şimdi telefonunda.',
-    badges:['%100 ücretsiz','açık kaynak','reklamsız','Android'],
-    dlBtnTxt:"APK'yı İndir",dlMeta:'v1.3.1 · ~212 MiB · <a href="https://github.com/boranseasonnew/zenithw-android" target="_blank" rel="noopener">GitHub\'da görüntüle</a>',
-    whyTitle:'neden ZenithW mobil\'i tavsiye ediyoruz',
-    srcTitle:'açık kaynak',
-    srcDesc:'Uygulamanın tüm kaynak kodu GitHub\'da herkese açık. İsteyen inceleyip katkıda bulunabilir. APK dosyasını doğrudan yukarıdaki linkten, kaynak kodunu da <a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener">depodan</a> inceleyebilirsiniz.',
-    noteTxt:'Android cihazınızda "bilinmeyen kaynaklardan yükleme" iznini açmanız gerekebilir, çünkü uygulama Play Store yerine doğrudan indirme bağlantısıyla dağıtılıyor.',
-    feats:[
-      {t:'kendi IP adresinizle indirme',d:'İndirmeler bizim sunucularımız yerine doğrudan kendi bağlantınız üzerinden, yt-dlp motoruyla yapılır. Bu da daha fazla gizlilik ve daha az kısıtlama demek.'},
-      {t:'SponsorBlock desteği',d:'YouTube videolarındaki sponsor bölümleri, giriş/çıkış kısımları otomatik olarak atlanır ya da indirmeden çıkarılır.'},
-      {t:'altyazı indirme',d:'Videoyla birlikte otomatik veya manuel altyazıları da diliyorsanız ayrı dosya olarak indirebilirsiniz.'},
-      {t:'aria2 hız motoru',d:'Klasik indirme yerine çoklu bağlantı destekli aria2 motoru kullanılır — büyük dosyalarda gözle görülür hız farkı.'},
-      {t:'cookie ekleme',d:'Giriş gerektiren veya yaş kısıtlı içerikler için kendi çerezlerinizi ekleyip o hesap üzerinden indirme yapabilirsiniz.'},
-      {t:'%0 hata, kapak fotoğrafı indirme',d:'İndirmeler kararlı ve hatasız çalışacak şekilde optimize edildi; videonun kapak fotoğrafını da tek tıkla ayrıca indirebilirsiniz.'}
-    ]},
-  en:{back:'← home',hTitle:'ZenithW is now <span>in your pocket</span>',
-    hDesc:'Download the official ZenithW app for Android — no browser needed, no ads, no watermarks. The same fast yt-dlp engine, now on your phone.',
-    badges:['100% free','open source','ad-free','Android'],
-    dlBtnTxt:'Download APK',dlMeta:'v1.3.1 · ~212 MiB · <a href="https://github.com/boranseasonnew/zenithw-android" target="_blank" rel="noopener">View on GitHub</a>',
-    whyTitle:'why we recommend the ZenithW app',
-    srcTitle:'open source',
-    srcDesc:'The app\'s entire source code is public on GitHub. Anyone can review it or contribute. Grab the APK from the link above, and review the source in the <a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener">repository</a>.',
-    noteTxt:'You may need to enable "install from unknown sources" on your Android device, since the app is distributed through a direct download link rather than the Play Store.',
-    feats:[
-      {t:'downloads via your own IP',d:'Downloads run through your own connection with the yt-dlp engine instead of our servers — more privacy, fewer restrictions.'},
-      {t:'SponsorBlock support',d:'Sponsor segments and intros/outros on YouTube videos are automatically skipped or stripped from the download.'},
-      {t:'subtitle downloads',d:'Grab auto-generated or manual subtitles as a separate file alongside the video, if you want them.'},
-      {t:'aria2 speed engine',d:'Uses the multi-connection aria2 download engine instead of a basic downloader — a noticeable speed boost on large files.'},
-      {t:'cookie support',d:'Add your own cookies for login-gated or age-restricted content and download through that account.'},
-      {t:'0% error rate, thumbnail downloads',d:'Downloads are tuned to be stable and error-free, and you can also grab the video\'s thumbnail separately with one tap.'}
-    ]}
-};
-function setLang(l){
-  const t=TX[l]||TX.tr;
-  document.documentElement.lang=l;
-  document.getElementById('pgBack').textContent=t.back;
-  document.getElementById('hTitle').innerHTML=t.hTitle;
-  document.getElementById('hDesc').textContent=t.hDesc;
-  document.getElementById('hBadges').innerHTML=t.badges.map(b=>`<span class="app-badge">${b}</span>`).join('');
-  document.getElementById('dlBtnTxt').textContent=t.dlBtnTxt;
-  document.getElementById('dlMeta').innerHTML=t.dlMeta;
-  document.getElementById('whyTitle').textContent=t.whyTitle;
-  document.getElementById('srcTitle').textContent=t.srcTitle;
-  document.getElementById('srcDesc').innerHTML=t.srcDesc;
-  document.getElementById('noteTxt').textContent=t.noteTxt;
-  document.getElementById('featGrid').innerHTML=t.feats.map(f=>`
-    <div class="app-feat">
-      <div class="app-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h3>${f.t}</h3><p>${f.d}</p>
-    </div>`).join('');
-  document.querySelectorAll('#legalLangToggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
-  try{localStorage.setItem('zw_lang',l);}catch(e){}
-}
-(function(){
-  let saved='tr';
-  try{saved=localStorage.getItem('zw_lang')||'tr';}catch(e){}
-  if(saved!=='tr')saved='en';
-  setLang(saved);
-})();
-</script>
+<body class="mobile-page">
+<a class="skip-link" href="#main"><span data-en="Skip to content" >İçeriğe geç</span></a>
+<header class="site-header"><a class="wordmark" href="/" aria-label="ZenithW"><img src="/zenithw.png" width="34" height="34" alt=""><span>ZenithW</span></a><nav aria-label="Sayfa bağlantıları" data-en-aria="Page links"><a href="#ozellikler"><span data-en="Features" >Özellikler</span></a><a href="/pc-app">Windows</a><a href="/updates"><span data-en="Updates" >Güncellemeler</span></a><a href="/support"><span data-en="Support" >Destek</span></a></nav></header>
+<div class="ambient" aria-hidden="true"></div>
+<main id="main">
+<section class="hero android-hero"><div class="hero-copy"><p class="platform-label"><span class="platform-dot" aria-hidden="true"></span>Android · 2.0 Stable</p><h1>Zenith<br>Android</h1><p data-en="Video and audio downloads on your phone." class="lead">Video ve ses indirme, telefonunda.</p><p data-en="Paste a link, choose a quality, and save your file. A simpler download screen with controls close to your thumb." class="description">Bağlantını yapıştır, kaliteyi seç ve dosyanı kaydet. Daha rahat kullanılan indirme ekranı, altta kolay erişilen kontroller.</p><a class="download-button" href="https://github.com/boranseasonnew/zenithw-android/releases/latest" rel="noopener noreferrer"><span data-en="Download for Android" >Android için indir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></a><p data-en="Opens the latest APK release on GitHub." class="download-meta">En son APK sürümü GitHub’da açılır.</p><div class="hero-links"><a href="#ozellikler"><span data-en="Explore the features" >Özellikleri incele</span> ↓</a><a href="https://github.com/boranseasonnew/zenithw-android/releases"><span data-en="All releases" >Tüm sürümler</span> ↗</a></div><p data-en="Zenith 2.0. Choose the APK for your device on the latest published release page." class="preview-note">Zenith 2.0. Yayımlanan en son sürüm sayfasından cihazına uygun APK’yı seç.</p></div><figure class="phone-preview"><div class="phone-frame"><div class="phone-top"><span>9:41</span><span>••• ▰</span></div><div class="phone-brand"><img src="/zenithw.png" width="35" height="35" alt=""><b>Zenith</b></div><div class="phone-content"><h2 data-en="New download" >Yeni indirme</h2><div class="phone-url"><span>↗</span><span data-en="Paste a link…" >Bir bağlantı yapıştır…</span></div><div class="phone-tools"><span data-en="Paste" >Yapıştır</span><span data-en="Clear" >Temizle</span></div><div class="phone-continue"><span data-en="Continue" >Devam et</span> →</div><div class="phone-divider"></div><div class="phone-row"><span data-en="Quality" >Kalite</span><b>1080p</b></div><div class="phone-chips"><b>MP4</b><span>MKV</span><span>WebM</span></div><div class="phone-row"><span data-en="Subtitles" >Altyazı</span><span>+</span></div><div class="phone-row"><span data-en="Advanced options" >Gelişmiş seçenekler</span><span>+</span></div></div><div class="phone-nav"><span data-en="Download" >İndir</span><span data-en="History" >Geçmiş</span><span data-en="Settings" >Ayarlar</span></div></div><figcaption><span data-en="Android 2.0 interface" >Android 2.0 arayüzü</span></figcaption></figure></section>
+<section class="intro-section" id="ozellikler"><div data-reveal><h2 data-en="From a link to a file." >Bağlantıdan dosyaya.</h2></div><div data-reveal><p data-en="ZenithW downloads through your phone’s connection. Choose format and quality first; open subtitle and other preferences when needed." >ZenithW, indirmeyi telefonunun bağlantısıyla yapar. Önce format ve kaliteyi seçersin; altyazı ve diğer tercihler gerektiğinde açılır.</p><div class="format-line"><span>MP4</span><span>WebM</span><span>MP3</span><span>FLAC</span></div></div></section>
+<section class="mobile-features"><article data-reveal><span class="section-number">01</span><h2 data-en="Easier with one hand." >Tek elle daha rahat.</h2><p data-en="A clearer link field, larger selections, and a download button at the bottom. Settings open one category at a time." >Daha iyi bağlantı alanı, büyük seçimler ve ekranın altında erişilebilir indirme düğmesi. Ayar kategorileri tek tek açılır; seçimlerin sonraki indirmede hazır gelir.</p></article><article data-reveal><span class="section-number">02</span><h2 data-en="Sessions and subtitles." >Oturum ve altyazılar.</h2><p data-en="Add a cookie file or use a saved session. Choose automatic or manual subtitles when the source supports them." >Cookie dosyanı ekle veya kaydedilen oturumunu kullan. Kaynak destekliyorsa otomatik ya da manuel altyazıları seç.</p></article><article data-reveal><span class="section-number">03</span><h2 data-en="Keep the engine current." >Motorun güncel kalsın.</h2><p data-en="A yt-dlp update check at startup. Separate preferences for aria2, speed limits, and download scheduling." >Açılışta yt-dlp güncelleme kontrolü. aria2, hız sınırı ve indirme zamanı için ayrı tercihler.</p></article></section>
+<section class="detail-section settings-showcase"><div class="detail-copy" data-reveal><span class="section-number" data-en="SETTINGS">AYARLAR</span><h2 data-en="A place for every preference.">Her ayar kendi yerinde.</h2><p data-en="Open a category, choose a preset, and you’re done. Your next download remembers it.">Kategoriyi aç, hazır seçeneğe dokun, bitir. Bir sonraki indirmede tercihin hazır.</p><ul><li><span data-en="Engine, browser sessions, SponsorBlock, and Aria2">Motor, tarayıcı oturumları, SponsorBlock ve Aria2</span></li><li><span data-en="Subtitle languages, playlists, and saved profiles">Altyazı dilleri, listeler ve hazır profiller</span></li><li><span data-en="A readable live activity log">Okunabilir işlem günlüğü</span></li></ul></div><div class="settings-card" data-reveal><div class="settings-card-head"><img src="/zenithw.png" width="40" height="40" alt=""><div><b data-en="Settings">Ayarlar</b><small>Zenith 2.0</small></div><span>↗</span></div><div class="settings-tile"><span>↻</span><div><b data-en="Download engine">İndirme motoru</b><small data-en="Automatic updates">Otomatik güncelleme</small></div><i>›</i></div><div class="settings-tile"><span>◎</span><div><b data-en="Browser sessions">Tarayıcı oturumları</b><small data-en="Saved on your device">Cihazında saklanır</small></div><i>›</i></div><div class="settings-tile"><span>✦</span><div><b>SponsorBlock</b><small data-en="Your choice of segments">Seçtiğin bölümler</small></div><i>›</i></div><div class="settings-tile"><span>⌁</span><div><b>Aria2c</b><small data-en="Connections and speed">Bağlantılar ve hız</small></div><i>›</i></div><div class="terminal-line"><span>12:04:08</span> ENGINE <b data-en="Ready">Hazır</b><i>▌</i></div></div></section>
+<section class="apk-section"><div data-reveal><h2 data-en="Choose the APK for your phone." >Telefonuna uygun APK’yı seç.</h2><p data-en="Find every file and the release notes on the release page." >Sürüm sayfasında tüm dosyaları ve notları bulabilirsin.</p></div><div class="architecture-list" data-reveal><div><b>ARM64</b><span data-en="For most modern Android phones." >Çoğu güncel Android telefon için.</span></div><div><b>ARM32</b><span data-en="For older 32-bit Android devices." >Eski, 32-bit Android cihazlar için.</span></div><div><b>x86_64</b><span data-en="For compatible x86_64 devices and emulators." >Uyumlu x86_64 cihazlar ve emülatörler için.</span></div></div></section>
+<section class="download-section" data-reveal><div><h2 data-en="Get the Android app." >Android sürümünü indir.</h2><p data-en="APK files directly from GitHub." >APK dosyaları doğrudan GitHub’dan.</p></div><a class="download-button compact" href="https://github.com/boranseasonnew/zenithw-android/releases/latest" rel="noopener noreferrer"><span data-en="Download for Android" >Android için indir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></a></section>
+<nav class="guide-entry" aria-label="Rehberler" data-en-aria="Guides"><a href="/guides" data-en-href="/en/guides"><span data-en="Read the guides" >Kullanım rehberleri</span> ↗</a><a href="/"><span data-en="Open web downloader" >Web indiricisini aç</span> ↗</a></nav>
+</main><footer class="site-footer"><span>© ZenithW</span><nav><a href="/about/privacy"><span data-en="Privacy" >Gizlilik</span></a><a href="/about/terms"><span data-en="Terms" >Koşullar</span></a><a href="https://github.com/boranseasonnew/zenithw" rel="noopener noreferrer">GitHub ↗</a></nav><p data-en="For your own content or content you have permission to use." >Kendi içeriğin veya kullanma iznin olan içerikler için.</p></footer>
+<script src="/cache-assets/app-pages.846a01737927.js" defer></script>
 </body>
 </html>
