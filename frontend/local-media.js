@@ -9,7 +9,7 @@
     ja: ['処理する場所 · ベータ', 'サーバー', 'この端末を優先', 'この端末のみ', '互換性のある音声・動画トラックのみ。再エンコードは行いません。字幕・チャプター・添付データは保持されません。リンクはサーバーで処理します。モバイル24 MB、PC 64 MB、最大30分。', 'この端末で準備中…', 'この端末で処理中…', '完了 — この端末で処理しました', 'このファイル・形式・ブラウザには対応していません。ファイルは送信されていません。', 'このファイルを送信してサーバーで処理', 'キャンセル', 'キャンセルしました — 送信していません', '時間制限に達しました。送信していません。'],
   };
   let panel, select, status, progress, cancel, retry, active = false;
-  const text = index => (words[document.documentElement.lang] || words.en)[index];
+  const text = index => (window.ZWLanguage?ZWLanguage.copy(words):(words[document.documentElement.lang] || words.en))[index];
   function render() {
     panel.querySelector('label').textContent = text(0);
     [...select.options].forEach((option, i) => option.textContent = text(i + 1));

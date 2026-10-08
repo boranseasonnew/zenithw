@@ -13,7 +13,7 @@
       image.src = preview[0];
       image.dataset.trAlt = preview[1];
       image.dataset.enAlt = preview[2];
-      image.alt = preview[document.documentElement.lang === 'en' ? 2 : 1];
+      image.alt = window.ZWLanguage?ZWLanguage.translate(preview[2]):preview[document.documentElement.lang === 'en' ? 2 : 1];
       document.querySelectorAll('[data-preview]').forEach(other => {
         other.classList.toggle('selected', other === button);
         other.setAttribute('aria-pressed', String(other === button));

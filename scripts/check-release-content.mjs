@@ -9,9 +9,10 @@ const pc = readFileSync('frontend/pc-app.html', 'utf8');
 const app = readFileSync('frontend/app.d4596317c4a7.js', 'utf8');
 const index = readFileSync('frontend/index.html', 'utf8');
 
-assert.equal((pc.match(/data-desktop-download/g) || []).length, 3);
-assert.equal((pc.match(new RegExp(expectedUrl.replaceAll('.', '\\.'), 'g')) || []).length, 3);
-assert.match(pc, /<script src="version\.js\?v=15\.1"><\/script>/);
+const latestUrl=`${repo}/releases/latest`;
+assert.equal(pc.split(latestUrl).length-1,2,'Both Windows download buttons open the official latest release');
+assert.ok(pc.includes(`Desktop ${ver.slice(1,-2)}`),'App page advertises the current desktop generation');
+assert.ok(expectedUrl.includes('/releases/download/v4.0.0/Zenith-4.0.0-Windows-Setup.exe'));
 for (const file of ['README.md', 'README.tr.md', 'README.fr.md', 'README.de.md', 'README.ja.md']) {
   assert.match(readFileSync(file, 'utf8'), new RegExp(`ZenithW Desktop ${ver.replaceAll('.', '\\.')}`), file);
 }

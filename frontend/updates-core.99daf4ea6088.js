@@ -1,8 +1,53 @@
 const LATEST_UPDATE = {
-  "ver": ZW_VERSION.ver,
+  "ver": "v15.2",
   "latest": true,
-  "dateTr": ZW_VERSION.dateTr,
-  "dateEn": ZW_VERSION.dateEn,
+  "dateTr": "8 ekim 2026",
+  "dateEn": "October 8, 2026",
+  "cover": null,
+  "titleTr": "Yeni uygulamalar, yeni sayfalar ve daha fazla dil",
+  "titleEn": "Updated apps, refreshed pages and more languages",
+  "introTr": [
+    "v15.2 ile Windows ve Android uygulamalarının indirme sayfaları yenilendi. Web sürümündeki güvenlik önlemleri güçlendirildi; güncel uygulamalara aşağıdaki bağlantılardan ulaşabilirsin.",
+    "Rusça, Vietnamca, sadeleştirilmiş Çince ve Japonca eklendi. Dil seçimi artık güncellemeler, rehberler ve bilgi sayfalarında da geçerli."
+  ],
+  "introEn": [
+    "v15.2 refreshes the Windows and Android app download pages and strengthens web security measures. Follow the links below to get the updated apps.",
+    "Russian, Vietnamese, Simplified Chinese and Japanese are now available. Your language choice also carries through Updates, guides and information pages."
+  ],
+  "sections": [
+    {
+      "hTr": "Yenilenen uygulama sayfaları",
+      "hEn": "Refreshed app pages",
+      "pTr": "Windows ve Android tanıtım sayfalarının tasarımı yenilendi. Özellikleri ve cihazına uygun indirme seçeneklerini daha rahat inceleyebilirsin. <a href=\"/pc-app.html\">Windows uygulama sayfası</a> · <a href=\"/app.html\">Android uygulama sayfası</a>.",
+      "pEn": "The Windows and Android app pages have refreshed designs, making it easier to explore features and downloads for your device. <a href=\"/pc-app.html\">Windows app page</a> · <a href=\"/app.html\">Android app page</a>."
+    },
+    {
+      "hTr": "Web güvenliği",
+      "hEn": "Web security",
+      "pTr": "Web sürümünde güvenlik önlemleri güçlendirildi. Bağlantı, içerik ve dosya işleme kontrolleriyle indirme akışı daha kontrollü hale getirildi.",
+      "pEn": "Security measures have been strengthened in the web version. Link, content and file-processing checks keep the download flow under tighter control."
+    },
+    {
+      "hTr": "Güncel Windows ve Android uygulamaları",
+      "hEn": "Updated Windows and Android apps",
+      "pTr": "Zenith Windows 4.0 ve Android 2.1 yayımlandı. Android 2.1; Nightly motor güncellemesi düzeltmesini, kaydedilen tercihleri ve sade indirme ekranını içeriyor. Kurulum dosyalarına <a href=\"/pc-app.html\">Windows</a> ve <a href=\"/app.html\">Android</a> sayfalarından ulaşabilirsin.",
+      "pEn": "Zenith Windows 4.0 and Android 2.1 are available. Android 2.1 includes the Nightly engine update fix, saved preferences and a minimal download screen. Get the installers from the <a href=\"/pc-app.html\">Windows</a> and <a href=\"/app.html\">Android</a> pages."
+    },
+    {
+      "hTr": "Sekiz dil, tüm sayfalarda",
+      "hEn": "Eight languages across the site",
+      "pTr": "Türkçe, İngilizce, Fransızca ve Almancanın yanına Rusça, Vietnamca, sadeleştirilmiş Çince ve Japonca eklendi. Menülerin yanında güncelleme notları, rehberler, tanıtım ve bilgi sayfaları da çevrildi. Seçtiğin dil sayfalar arasında korunur.",
+      "pEn": "Russian, Vietnamese, Simplified Chinese and Japanese join Turkish, English, French and German. Release notes, guides, app pages and information pages are translated alongside the menus. Your selected language is kept as you move between pages."
+    }
+  ],
+  "outroTr": "Güncel uygulamaları indirmek için Windows veya Android sayfasını açabilirsin.",
+  "outroEn": "Open the Windows or Android page to download the updated app."
+};
+const UPDATE_V15_1 = {
+  "ver": "v15.1",
+  "latest": false,
+  "dateTr": "5 ekim 2026",
+  "dateEn": "October 5, 2026",
   "cover": null,
   "titleTr": "Daha hafif, daha özenli bir ZenithW",
   "titleEn": "A lighter, more polished ZenithW",
@@ -171,8 +216,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;
@@ -235,7 +280,7 @@ async function jumpTo(ver){
 }
 
 async function render(){
-  const t=TX[CUR_LANG];
+  const t=window.ZWLanguage?ZWLanguage.copy(TX,CUR_LANG):TX[CUR_LANG];
   const hashCandidate=decodeURIComponent((location.hash||'').replace('#',''));
   const hash=UPDATE_VERSIONS.includes(hashCandidate)?hashCandidate:(location.pathname.match(/^\/updates\/(v[0-9.]+)\/?$/)?.[1]||'');
   if(hash&&hash!==LATEST_UPDATE.ver&&UPDATE_VERSIONS.includes(hash)&&findIndex(hash)===-1){
@@ -247,23 +292,23 @@ async function render(){
 
   document.getElementById('updBadge').textContent=u.ver;
   document.getElementById('updBadge').classList.toggle('is-latest',!!u.latest);
-  document.getElementById('updDate').textContent=CUR_LANG==='tr'?u.dateTr:u.dateEn;
-  document.getElementById('updPostTitle').textContent=CUR_LANG==='tr'?u.titleTr:u.titleEn;
+  document.getElementById('updDate').textContent=releaseText(u.dateTr,u.dateEn);
+  document.getElementById('updPostTitle').textContent=releaseText(u.titleTr,u.titleEn);
   const cover=document.getElementById('updCover'),coverImg=document.getElementById('updCoverImg');
-  if(u.cover){cover.hidden=false;coverImg.src='/'+u.cover.replace(/^\//,'');coverImg.alt=CUR_LANG==='tr'?(u.coverAltTr||'Güncelleme kapak görseli'):(u.coverAltEn||'Release cover image');}
+  if(u.cover){cover.hidden=false;coverImg.src='/'+u.cover.replace(/^\//,'');coverImg.alt=releaseText(u.coverAltTr||'Güncelleme kapak görseli',u.coverAltEn||'Release cover image');}
   else{cover.hidden=true;coverImg.removeAttribute('src');coverImg.alt='';}
   document.getElementById('updAnma').innerHTML='';
 
-  const intro=CUR_LANG==='tr'?u.introTr:u.introEn;
+  const intro=releaseText(u.introTr,u.introEn);
   document.getElementById('updIntro').innerHTML=intro.map(p=>`<p>${p}</p>`).join('');
   document.getElementById('updSections').innerHTML=u.sections.map((s,index)=>`
     <section class="upd-section" id="release-section-${index+1}">
-      <h3>${CUR_LANG==='tr'?s.hTr:s.hEn}</h3>
-      <p>${CUR_LANG==='tr'?s.pTr:s.pEn}</p>
+      <h3>${releaseText(s.hTr,s.hEn)}</h3>
+      <p>${releaseText(s.pTr,s.pEn)}</p>
     </section>`).join('');
-  document.getElementById('updContents').innerHTML=u.sections.map((s,index)=>`<a href="#release-section-${index+1}"><span aria-hidden="true">${String(index+1).padStart(2,'0')}</span>${CUR_LANG==='tr'?s.hTr:s.hEn}</a>`).join('');
+  document.getElementById('updContents').innerHTML=u.sections.map((s,index)=>`<a href="#release-section-${index+1}"><span aria-hidden="true">${String(index+1).padStart(2,'0')}</span>${releaseText(s.hTr,s.hEn)}</a>`).join('');
   revealReleaseSections();
-  document.getElementById('updOutro').textContent=CUR_LANG==='tr'?u.outroTr:u.outroEn;
+  document.getElementById('updOutro').textContent=releaseText(u.outroTr,u.outroEn);
   document.getElementById('updSignoff').textContent=t.signoff;
 
   const picker=document.getElementById('verPicker');
@@ -278,20 +323,22 @@ async function render(){
   if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}/"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
   document.getElementById('updNavRow').innerHTML=nav;
-  document.title=`${u.ver} — ${CUR_LANG==='tr'?u.titleTr:u.titleEn} — ZenithW`;
+  document.title=`${u.ver} — ${releaseText(u.titleTr,u.titleEn)} — ZenithW`;
 }
 
 function setLegalLang(l){
-  const t=TX[l]||TX.en;
-  CUR_LANG=TX[l]?l:'en';
+  if(window.ZWLanguage&&ZWLanguage.current!==l){ZWLanguage.use(l);return;}
+  CUR_LANG=window.ZWLanguage?l:(TX[l]?l:'en');
+  const t=window.ZWLanguage?ZWLanguage.copy(TX,l):(TX[l]||TX.en);
+  const header=window.ZWLanguage?ZWLanguage.copy(PAGE_COPY,l):PAGE_COPY[CUR_LANG];
   document.documentElement.lang=CUR_LANG;
   document.getElementById('pgTitle').textContent=t.title;
   document.getElementById('pgDesc').setAttribute('content',t.desc);
   document.getElementById('pgBack').textContent=t.back;
   document.querySelector('.upd-home-link').setAttribute('aria-label',t.back);
-  document.getElementById('updEyebrow').textContent=PAGE_COPY[CUR_LANG].eyebrow;
-  document.getElementById('updPageTitle').textContent=PAGE_COPY[CUR_LANG].title;
-  document.getElementById('updPageLead').textContent=PAGE_COPY[CUR_LANG].lead;
+  document.getElementById('updEyebrow').textContent=header.eyebrow;
+  document.getElementById('updPageTitle').textContent=header.title;
+  document.getElementById('updPageLead').textContent=header.lead;
   document.getElementById('updContentsHeading').textContent=t.contents;
   document.getElementById('updContents').setAttribute('aria-label',t.contentsNav);
   document.getElementById('updReadHint').textContent=t.readHint;
@@ -315,6 +362,9 @@ window.addEventListener('hashchange',()=>{
 (function(){
   let saved='tr';
   try{saved=localStorage.getItem('zw_lang')||'tr';}catch(e){}
-  if(saved!=='tr')saved='en';
+  if(window.ZWLanguage)saved=ZWLanguage.current;else if(saved!=='tr')saved='en';
   setLegalLang(saved);
 })();
+
+function releaseText(tr,en){return window.ZWLanguage?ZWLanguage.copy({tr,en},CUR_LANG):(CUR_LANG==='tr'?tr:en);}
+if(window.ZWLanguage)ZWLanguage.onChange(setLegalLang);

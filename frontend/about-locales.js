@@ -1,7 +1,7 @@
-(function () {
+(function applyAboutLocale() {
   const requested = (navigator.languages || [navigator.language || 'en'])
     .map(value => String(value).toLowerCase().split('-')[0]);
-  const language = requested.find(value => ['tr', 'en', 'fr', 'de'].includes(value)) || 'en';
+  const language = window.ZWLanguage?.current || requested.find(value => ['tr', 'en', 'fr', 'de'].includes(value)) || 'en';
   const nav = {
     tr: { about: 'ZenithW nedir?', community: 'topluluk & destek', privacy: 'gizlilik & veri', terms: 'kullanım & etik', credits: 'emeği geçenler & lisanslar', sections: 'Hakkında bölümleri' },
     en: { about: 'What is ZenithW?', community: 'community & support', privacy: 'privacy & data', terms: 'usage & ethics', credits: 'contributors & licenses', sections: 'About sections' },
@@ -11,6 +11,7 @@
 
   window.ZW_ABOUT_LOCALE = language;
   window.ZW_ABOUT_NAV = nav;
+  if(window.ZWLanguage)window.ZW_ABOUT_NAV[language]=ZWLanguage.copy(nav,language);
   document.documentElement.lang = language;
 
   function section(title, body) {
@@ -80,7 +81,7 @@
       de: { title: 'Mitwirkende und Lizenzen — ZenithW', desc: 'Menschen, die ZenithW getestet haben, eingesetzte Open-Source-Werkzeuge und Lizenzinformationen.', kicker: 'ZENITHW / MITWIRKENDE', h1: 'Wer hat daran mitgewirkt?', lead: 'Hinter ZenithW stehen Menschen, die frühe Versionen getestet haben, Open-Source-Projekte und Entwickelnde, die kleine Probleme geduldig lösen. Diese Seite würdigt jede konkrete Mitwirkung.', intro: ['EIN KURZES DANKESCHÖN', 'Menschen, die auf nicht funktionierende Links, falsch gespeicherte Dateien oder eine zu enge Handyansicht hingewiesen haben, haben das Projekt geprägt. Mitwirkung kann Code bedeuten oder ein Problem klar zu zeigen.'], people: ['MENSCHEN', 'Die ersten Testenden', 'Als ZenithW noch ein grober Entwurf war, zeigten sie auf verschiedenen Geräten und Verbindungen, was funktionierte, was nicht und welche Schritte unklar waren.'], roles: ['Projektentwicklung und erste Tests', 'Tests früher Versionen', 'Nutzungs- und Fehlerfeedback', 'Nutzungs- und Fehlerfeedback', 'Nutzungs- und Fehlerfeedback'], tools: ['OPEN SOURCE', 'Werkzeuge, die das Produkt möglich machen', 'Was in der Oberfläche wie eine Aktion aussieht, beruht auf jahrelanger Arbeit vieler Projekte. Diese Werkzeuge sind zentral für Entwicklung und Medienverarbeitung von ZenithW.'], toolLabels: ['01 / QUELLE', '02 / MEDIEN', '03 / ANWENDUNG', '04 / FORTSCHRITT'], toolDescriptions: ['Löst unterstützte Medienquellen auf und findet verfügbare Streams, Formate und Qualitätsoptionen.', 'Führt Video- und Audiostreams zusammen und übernimmt bei Bedarf Remuxen oder Konvertieren.', 'Stellt die Anwendungsschicht für Anfragen, Downloads und Dateiauslieferung bereit.', 'Überträgt Aufgabenstatus und Fortschritt in Echtzeit an die Oberfläche.'], footnote: 'Cloudflare wird für Auslieferung und Zugriff genutzt, AWS stellt die Verarbeitungsinfrastruktur bereit. Diese Unternehmen sind keine Sponsoren oder Partner von ZenithW.', license: ['LIZENZEN', 'Offener Code, klare Bedingungen', 'Der ZenithW-Quellcode steht unter AGPL-3.0-only. Du kannst ihn einsehen und unter den Lizenzbedingungen beitragen. Abhängigkeiten behalten ihre eigenen Lizenzen.', 'ZENITHW-QUELLCODE', 'Volltext und Bedingungen stehen in der Lizenzdatei des Repositories.', 'SCHRIFTART', 'Verwendet unter der SIL Open Font License 1.1.'], buttons: ['Lizenz lesen ↗', 'Quellcode ansehen ↗'], footer: ['Über ZenithW', 'Datenschutz', 'Bedingungen', 'Status'] }
     }
   };
-  const staticCopy = staticPages[page]?.[language];
+  const staticCopy = window.ZWLanguage && staticPages[page] ? ZWLanguage.copy(staticPages[page],language) : staticPages[page]?.[language];
   if (staticCopy) {
     document.title = staticCopy.title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', staticCopy.desc);
@@ -109,4 +110,5 @@
     }
     setText('.info-footer a', staticCopy.footer);
   }
+  if(window.ZWLanguage&&!window.ZW_ABOUT_LANGUAGE_BOUND){window.ZW_ABOUT_LANGUAGE_BOUND=true;ZWLanguage.onChange(applyAboutLocale);}
 })();

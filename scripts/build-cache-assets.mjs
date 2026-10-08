@@ -14,6 +14,7 @@ execFileSync(process.platform === 'win32' ? 'python' : 'python3',
 // Keep the checked-in source URLs available for old pages and development.
 // Only generated, content-hashed copies receive immutable response headers.
 const sources = [
+  'site-language.js', 'site-language.css', ...['tr','en','fr','de','ru','vi','zh','ja'].map(lang=>'locales/'+lang+'.json'),
   'app.d4596317c4a7.js', 'style.487d49f0164d.css',
   'updates-core.99daf4ea6088.js', 'updates-archive.07c744021db2.js',
   'updates.4afebabda436.css', 'info.6c44eb6f52e7.css',
@@ -94,7 +95,7 @@ if (existsSync(output)) {
 const assetExtensions = new Set(['.js', '.css', '.woff', '.woff2', '.ttf', '.otf', '.ico', '.png', '.jpg', '.jpeg', '.webp', '.avif', '.svg', '.txt', '.xml']);
 const ordinary = walk(frontend)
   .map(path => '/' + relative(frontend, path).replaceAll('\\', '/'))
-  .filter(url => !url.startsWith('/cache-assets/') && assetExtensions.has(extname(url)))
+  .filter(url => !url.startsWith('/cache-assets/') && (assetExtensions.has(extname(url)) || (url.startsWith('/locales/') && extname(url)==='.json')))
   .sort();
 const noStore = new Set(['/runtime-config.js']);
 const revalidate = new Set(['/version.js']);

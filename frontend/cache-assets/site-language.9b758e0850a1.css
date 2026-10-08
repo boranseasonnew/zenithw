@@ -1,0 +1,7 @@
+.site-language-select{font:inherit;font-size:.75rem;color:inherit;background:var(--surface,#161616);border:1px solid #555;border-radius:8px;padding:.45rem .6rem;max-width:11rem;min-height:36px;flex-shrink:0;color-scheme:dark}
+.site-language-select:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.site-language-select option{background:#161616;color:#f4f4f4}
+.site-language-bar{display:flex;justify-content:flex-end;padding:.75rem 1rem;position:relative;z-index:2}
+html[lang=zh],html[lang=ja]{word-break:normal;line-break:auto}
+html[lang=zh] body,html[lang=ja] body{font-family:var(--font-sans,system-ui),"Microsoft YaHei","Yu Gothic","Noto Sans CJK SC",sans-serif}
+@media(max-width:640px){.site-header{flex-wrap:wrap;gap:.65rem}.site-header nav{flex-wrap:wrap;gap:.75rem}.site-language-select{max-width:9.5rem}.info-nav,.upd-site-header{flex-wrap:wrap;gap:.6rem}}
