@@ -1,12 +1,16 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const required = ['yt-dlp.exe', 'ffmpeg.exe', 'ffprobe.exe', 'aria2c.exe'];
+const required = ['yt-dlp.exe', 'ffmpeg.exe', 'ffprobe.exe', 'aria2c.exe', 'deno.exe'];
 const source = process.env.ZENITHW_TOOL_SOURCE
-  || path.join(process.env.LOCALAPPDATA || '', 'Programs', 'ZenithW', 'resources', 'bin');
+  || path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Zenith', 'resources', 'bin');
 const destination = path.join(__dirname, '..', 'resources', 'bin');
 
 const hasAll = (folder) => required.every((name) => fs.existsSync(path.join(folder, name)));
+if (!process.env.ZENITHW_TOOL_SOURCE && hasAll(destination)) {
+  console.log(`Reusing complete embedded tools from ${destination}`);
+  process.exit(0);
+}
 if (!fs.existsSync(source)) {
   if (hasAll(destination)) {
     console.log(`Reusing previously staged embedded tools from ${destination}`);

@@ -41,6 +41,19 @@ jobs:
           $stage = Join-Path $env:RUNNER_TEMP "zenith-tools"
           New-Item -ItemType Directory -Force -Path $stage | Out-Null
           foreach ($name in $found.Keys) { Copy-Item -LiteralPath $found[$name] -Destination (Join-Path $stage $name) }
+          # The official yt-dlp EXE includes EJS; bundle its sandboxed JS runtime too.
+          $denoTag = 'v2.9.7'
+          $denoName = 'deno-x86_64-pc-windows-msvc.zip'
+          $release = Invoke-RestMethod "https://api.github.com/repos/denoland/deno/releases/tags/$denoTag"
+          $asset = $release.assets | Where-Object name -eq $denoName
+          if ($asset.digest -notmatch '^sha256:(?<sha>[a-f0-9]{64})$') { throw "Deno asset digest is missing" }
+          $expected = $Matches.sha
+          $archive = Join-Path $env:RUNNER_TEMP $denoName
+          Invoke-WebRequest $asset.browser_download_url -OutFile $archive
+          if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) { throw "Deno checksum mismatch" }
+          Expand-Archive -LiteralPath $archive -DestinationPath $stage -Force
+          & (Join-Path $stage 'deno.exe') --version
+          if ($LASTEXITCODE -ne 0) { throw "Deno cannot start" }
           "ZENITHW_TOOL_SOURCE=$stage" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Set release version
@@ -55,7 +68,7 @@ jobs:
           $package.version = $version
           $package.build.win.artifactName = "Zenith-$version-Windows-Setup.exe"
           $package.build.portable.artifactName = "Zenith-$version-Windows.exe"
-          $package.build.nsis.uninstallDisplayName = "Zenith $version"
+          $package.build.nsis.uninstallDisplayName = "ZenithW $version"
           $json = $package | ConvertTo-Json -Depth 100
           [IO.File]::WriteAllText($packagePath, $json, [Text.UTF8Encoding]::new($false))
           "ZENITH_RELEASE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
@@ -67,6 +80,10 @@ jobs:
       - name: Build portable and installer EXEs
         working-directory: desktop
         run: |
+          npm run stage-tools
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           npm run portable
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           npm run dist
@@ -109,6 +126,8 @@ jobs:
               if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
             }
           } else {
-            gh release create $env:TAG_NAME @assets --title "Zenith Desktop $env:ZENITH_RELEASE_VERSION" --generate-notes
+            $notes = "desktop/releases/$env:ZENITH_RELEASE_VERSION.md"
+            if (-not (Test-Path $notes)) { throw "Missing translated release notes: $notes" }
+            gh release create $env:TAG_NAME @assets --title "ZenithW Desktop $env:ZENITH_RELEASE_VERSION" --notes-file $notes
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
