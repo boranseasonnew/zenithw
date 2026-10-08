@@ -2,7 +2,7 @@
   'use strict';
   const descriptions = {
     desktop: ['Zenith Windows uygulaması: yerel video ve ses indirme, format seçenekleri, 4.0 arayüzü ve hazır ayar profilleri.', 'Zenith for Windows: local video and audio downloads, format options, and Desktop 4.0 with preset settings.'],
-    android: ['Zenith Android 2.0: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.', 'Zenith Android 2.0: video and audio downloads, accessible controls, and official APK releases.']
+    android: ['Zenith Android 2.1: video ve ses indirme, kolay kullanılan kontroller ve resmi APK sürümleri.', 'Zenith Android 2.1: video and audio downloads, accessible controls, and official APK releases.']
   };
   const titles = {
     desktop: ['Zenith Desktop — Windows Video ve Ses İndirici', 'Zenith Desktop — Video and Audio Downloader for Windows'],
@@ -10,30 +10,32 @@
   };
   const platform = document.body.classList.contains('mobile-page') ? 'android' : 'desktop';
   function applyLanguage() {
-    // The preferred browser/phone language wins; unrelated saved site settings do not override it.
+    // A saved language follows visitors across application and information pages.
     const preferred = (navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
-    const language = preferred.startsWith('tr') ? 'tr' : 'en';
-    const english = language === 'en';
+    const language = window.ZWLanguage?.current || (preferred.startsWith('tr') ? 'tr' : 'en');
+    const english = language !== 'tr';
+    const localize = value => window.ZWLanguage ? ZWLanguage.translate(value,language) : value;
     document.documentElement.lang = language;
     document.querySelectorAll('[data-en]').forEach(node => {
       node.dataset.tr ??= node.textContent;
-      node.textContent = english ? node.dataset.en : node.dataset.tr;
+      node.textContent = english ? localize(node.dataset.en) : node.dataset.tr;
     });
     for (const [key, attribute] of [['Alt', 'alt'], ['Aria', 'aria-label'], ['Href', 'href']]) {
       document.querySelectorAll('[data-en-' + key.toLowerCase() + ']').forEach(node => {
         node.dataset['tr' + key] ??= node.getAttribute(attribute) || '';
-        node.setAttribute(attribute, english ? node.dataset['en' + key] : node.dataset['tr' + key]);
+        node.setAttribute(attribute, english ? (key==='Href'?node.dataset['en'+key]:localize(node.dataset['en'+key])) : node.dataset['tr' + key]);
       });
     }
-    document.title = titles[platform][english ? 1 : 0];
+    document.title = localize(titles[platform][english ? 1 : 0]);
     for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
-      document.querySelector(selector)?.setAttribute('content', descriptions[platform][english ? 1 : 0]);
+      document.querySelector(selector)?.setAttribute('content', localize(descriptions[platform][english ? 1 : 0]));
     }
     for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
       document.querySelector(selector)?.setAttribute('content', document.title);
     }
-    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', english ? 'en_US' : 'tr_TR');
+    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', window.ZWLanguage ? ZWLanguage.locales[language].replace('-','_') : (english ? 'en_US' : 'tr_TR'));
   }
+  if(window.ZWLanguage)ZWLanguage.onChange(applyLanguage);
   applyLanguage();
   window.addEventListener('languagechange', applyLanguage);
 

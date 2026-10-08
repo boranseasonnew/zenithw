@@ -6,7 +6,7 @@
 
 [Durum](https://zenithw.space/status) · [Güncellemeler](https://zenithw.space/updates) · [English](README.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-**Web v15.1** · **ZenithW Desktop v0.4.0**
+**Web v15.2** · **ZenithW Desktop v4.0.0**
 
 ![ZenithW web arayüzü](docs/assets/zenithw-preview.png)
 

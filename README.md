@@ -6,7 +6,7 @@
 
 [Status](https://zenithw.space/status) · [Updates](https://zenithw.space/updates) · [Usage guides](https://zenithw.space/en/guides) · [Android app](https://zenithw.space/app) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-**Web v15.1** · **ZenithW Desktop v0.4.0**
+**Web v15.2** · **ZenithW Desktop v4.0.0**
 
 ![ZenithW web interface](docs/assets/zenithw-preview.png)
 

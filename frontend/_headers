@@ -24,10 +24,16 @@
 /cache-assets/GeistMono-Variable.afaacc4c5fbb.woff2
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/app-pages.11a0a76e8541.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/app-pages.3c5128732b13.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/app-pages.846a01737927.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/app.3e949c710b02.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/app.92a2eed5ae77.js
@@ -36,10 +42,22 @@
 /cache-assets/compare.a0575b77ab4c.css
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/de.b079cc9af2b9.json
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/en.d3618424cefe.json
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/fonts.4ed1cddfa4da.css
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/fr.de0ecba6a736.json
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/guides.8e81aba3443d.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/info-page.91c864ca5131.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/info-page.a3e72fe763fa.js
@@ -48,7 +66,13 @@
 /cache-assets/info.51fddf091785.css
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/ja.1ff04cce2b6f.json
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/pc-app.07763c18c6a5.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/pc-app.761106a3358d.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/pc-app.7c88e28885f7.js
@@ -66,6 +90,9 @@
 /cache-assets/quick-options.81896bec3af4.png
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/ru.01068225411d.json
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/settings.33ee340439ab.png
   Cache-Control: public, max-age=31536000, immutable
 
@@ -78,10 +105,22 @@
 /cache-assets/setup.b07d68cf347e.png
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/site-language.9b758e0850a1.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/site-language.eb5509a0a82c.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/style.0a44b1a04019.css
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/tr.0ba797242463.json
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/updates-archive.834ee93b2c57.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/updates-core.0e60c5d484ed.js
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/updates-core.1c982927fe55.js
@@ -99,10 +138,16 @@
 /cache-assets/updates.a9ce0355196e.css
   Cache-Control: public, max-age=31536000, immutable
 
+/cache-assets/vi.4415d5ad4306.json
+  Cache-Control: public, max-age=31536000, immutable
+
 /cache-assets/workspace.989ccacf2862.png
   Cache-Control: public, max-age=31536000, immutable
 
 /cache-assets/workspace.ed6a7db72c0d.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/cache-assets/zh.e8634e143023.json
   Cache-Control: public, max-age=31536000, immutable
 
 /compare.a0575b77ab4c.css
@@ -153,6 +198,30 @@
 /local-media.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+/locales/de.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/en.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/fr.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/ja.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/ru.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/tr.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/vi.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/locales/zh.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /media-guidance.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -175,6 +244,12 @@
   Cache-Control: no-store, max-age=0, must-revalidate
   CDN-Cache-Control: no-store
   Cloudflare-CDN-Cache-Control: no-store
+
+/site-language.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/site-language.js
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /site-shell.css
   Cache-Control: public, max-age=3600, must-revalidate

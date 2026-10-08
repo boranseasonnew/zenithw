@@ -41,10 +41,11 @@ test('French and German browser preferences select translated About copy', () =>
   assert.match(german.copy.de.body, /Datenminimierung/);
 });
 
-test('About pages use automatic browser language without a manual switch', () => {
+test('About pages load shared language preferences alongside curated translations', () => {
   for (const file of aboutFiles) {
     const html = readFrontend(file);
     assert.match(html, /about-locales\.js/, file);
+    assert.match(html, /site-language\.(?:[a-f0-9]{12}\.)?js/, file);
     assert.doesNotMatch(html, /langSwitch|setPageLang\('/, file);
   }
   assert.match(source, /navigator\.languages/);

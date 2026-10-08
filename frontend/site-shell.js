@@ -8,6 +8,7 @@
     de:{home:'start',history:'verlauf',updates:'updates',convert:'konvertieren',more:'mehr',remux:'remux',settings:'einstellungen',about:'über uns',support:'unterstützen',privacy:'datenschutz',terms:'bedingungen',credits:'danksagungen',status:'status'}
   };
   function currentLang(){
+    if(window.ZWLanguage)return ZWLanguage.current;
     try{const saved=localStorage.getItem('zw_lang');if(labels[saved])return saved;}catch(e){}
     const browser=(navigator.language||'tr').slice(0,2).toLowerCase();
     return labels[browser]?browser:'tr';
@@ -49,8 +50,9 @@
         <a class="more-item ${active==='about'?'active':''}" href="/about">${svg('about')}<span id="moreItemAbout"></span></a>
       </div>`;}
   }
+  if(window.ZWLanguage)ZWLanguage.onChange(applyShellLanguage);
   function applyShellLanguage(){
-    const lang=currentLang(),copy=labels[lang];
+    const lang=currentLang(),copy=window.ZWLanguage?ZWLanguage.copy(labels,lang):(labels[lang]||labels.en);
     const map={bbSave:'home',bbRemux:'remux',bbSettings:'settings',bbSupport:'support',bbUpdates:'updates',bbHistoryMobile:'history',bbConvertMobile:'convert',bbAboutMobile:'about',moreItemHistory:'history',moreItemConvert:'convert',moreItemAbout:'about'};
     Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=copy[key];});
     document.querySelectorAll('[data-info-label]').forEach(el=>{el.textContent=copy[el.dataset.infoLabel]||el.dataset.infoLabel;});
@@ -84,13 +86,13 @@
         '/about/credit':'Mitwirkende & Lizenzen'
       }
     };
-    const aboutLabels=aboutNav[lang]||aboutNav.en;
+    const aboutLabels=window.ZWLanguage?ZWLanguage.copy(aboutNav,lang):(aboutNav[lang]||aboutNav.en);
     document.querySelectorAll('.about-section-nav a').forEach(link=>{
       const labelText=aboutLabels[new URL(link.href,location.href).pathname];
       const label=link.querySelector('b');
       if(labelText&&label)label.textContent=labelText;
     });
-    document.querySelectorAll('.about-section-nav').forEach(nav=>nav.setAttribute('aria-label',lang==='tr'?'Hakkında bölümleri':lang==='fr'?'Sections à propos':lang==='de'?'Über-uns-Bereiche':'About sections'));
+    document.querySelectorAll('.about-section-nav').forEach(nav=>nav.setAttribute('aria-label',window.ZWLanguage?ZWLanguage.translate('About sections'):(lang==='tr'?'Hakkında bölümleri':lang==='fr'?'Sections à propos':lang==='de'?'Über-uns-Bereiche':'About sections')));
     if(window.matchMedia('(max-width:900px)').matches){requestAnimationFrame(()=>document.querySelector('.bottom-bar .bar-btn.active')?.scrollIntoView({behavior:'auto',block:'nearest',inline:'center'}));}
     updateTimeGreeting();
   }
@@ -137,7 +139,7 @@
   function greetingPeriod(hour){return hour>=2&&hour<5?'deepNight':hour>=5&&hour<11?'morning':hour>=11&&hour<17?'noon':hour>=17&&hour<22?'evening':'lateNight';}
   function greetingTier(){const roll=Math.random();return roll<.01?'legendary':roll<.08?'epic':roll<.28?'rare':'common';}
   function chooseGreeting(lang,period){
-    if(lang!=='tr'){const pool=translatedGreetings[lang][period];return{text:pool[Math.floor(Math.random()*pool.length)],tier:'common'};}
+    if(lang!=='tr'){const pool=(translatedGreetings[lang]||translatedGreetings.en)[period];return{text:window.ZWLanguage?ZWLanguage.translate(pool[Math.floor(Math.random()*pool.length)]):pool[Math.floor(Math.random()*pool.length)],tier:'common'};}
     const tier=greetingTier(),pool=trGreetingDecks[period][tier];let text=pool[Math.floor(Math.random()*pool.length)];
     try{const key='zw_last_greeting_tr',last=localStorage.getItem(key);for(let i=0;text===last&&i<5;i++)text=pool[Math.floor(Math.random()*pool.length)];localStorage.setItem(key,text);}catch(e){}
     return{text,tier};
@@ -145,7 +147,7 @@
   function updateTimeGreeting(force){
     const title=document.getElementById('timeGreeting');if(!title)return;
     if(document.body.classList.contains('home-page')){
-      const text=currentLang()==='tr'?'linkini yapıştır':'paste a link';
+      const text=currentLang()==='tr'?'linkini yapıştır':(window.ZWLanguage?ZWLanguage.translate('paste a link'):'paste a link');
       title.replaceChildren(document.createTextNode(text),Object.assign(document.createElement('span'),{textContent:'.'}));
       return;
     }
