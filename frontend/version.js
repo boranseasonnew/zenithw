@@ -4,7 +4,7 @@
 // yeni içeriği hemen yeniden doğrular.
 const ZW_VERSION = {
   ver: 'v15.2',
-  desktop: { ver: 'v4.0.0', repo: 'https://github.com/boranseasonnew/zenithw', asset: 'Zenith-4.0.0-Windows-Setup.exe' },
+  desktop: { ver: 'v4.0.1', repo: 'https://github.com/boranseasonnew/zenithw', asset: 'Zenith-4.0.1-Windows-Setup.exe' },
   dateTr: '8 ekim 2026',
   dateEn: 'October 8, 2026',
   dateFr: '8 octobre 2026',

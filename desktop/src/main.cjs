@@ -6,6 +6,7 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { createProgressTracker } = require('./progress.cjs');
 const { videoFormats } = require('./formats.cjs');
+const { retryDownload, redactDiagnostic } = require('./download-retry.cjs');
 
 const engineCopy = require('./engine-copy.json');
 const local = text => engineCopy[text]?.[Math.max(0,['tr','en','ru','de'].indexOf(settings?.language||'en'))] || text;
@@ -167,7 +168,7 @@ async function toolVersion(name, args = ['--version']) {
 function createWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, 'brand.png'), width: 1220, height: 790, minWidth: 780, minHeight: 540, autoHideMenuBar: true,
-    backgroundColor: '#090a0c', title: 'Zenith 4.0', titleBarStyle: 'hidden', titleBarOverlay: { color: '#17181b', symbolColor: '#bfc2ca', height: 44 },
+    backgroundColor: '#090a0c', title: 'Zenith 4.0.1', titleBarStyle: 'hidden', titleBarOverlay: { color: '#17181b', symbolColor: '#bfc2ca', height: 44 },
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true }
   });
   const appHtml = path.join(__dirname, 'app.html');
@@ -207,7 +208,8 @@ function aria2Args(current = settings) {
   const connections = bounded(current.aria2Connections, 1, 16, 8);
   return ['--downloader', `http,ftp:${requiredTool('aria2c.exe')}`, '--downloader', 'dash,m3u8:native', '--downloader-args', `aria2c:-x ${connections} -s ${connections} -j 1 --file-allocation=none --summary-interval=1 --connect-timeout=20 --timeout=30 --max-tries=3`];
 }
-const baseArgs = (current = settings) => ['--ignore-config', '--ffmpeg-location', requiredTool('ffmpeg.exe'), ...networkArgs(current)];
+const baseArgs = (current = settings) => ['--ignore-config', '--ffmpeg-location', requiredTool('ffmpeg.exe'),
+  '--js-runtimes', `deno:${requiredTool('deno.exe')}`, ...networkArgs(current)];
 function downloadArgs(job, current, workDir) {
   const output = path.join(workDir, current.playlist && current.playlistFolder ? '%(playlist_title,playlist_id|Playlist)s' : '', (current.playlist && current.playlistNumber ? '%(playlist_index)03d - ' : '') + sanitizeNaming(current.naming));
   const args = ['--newline', ...baseArgs(current), '--paths', workDir, '--paths', `temp:${workDir}`, '-o', output,
@@ -345,7 +347,7 @@ function preserveRecovery(workDir, jobId) {
   if (!fs.existsSync(workDir)) return '';
   try {
     const hasMedia = jobFiles(workDir).some(file => (mediaExtensions.has(path.extname(file).toLowerCase()) || file.endsWith('.part')) && fs.statSync(file).size > 1024);
-    if (!hasMedia) return '';
+    if (!hasMedia && !fs.existsSync(path.join(workDir, 'failure.json'))) return '';
     const recovery = path.join(app.getPath('userData'), 'recovery', jobId);
     fs.mkdirSync(path.dirname(recovery), { recursive: true });
     fs.renameSync(workDir, recovery);
@@ -563,60 +565,82 @@ handleMain('download:start', async (_, request) => {
     emit(job, record.cancelled ? 'cancelled' : 'failed', { detail: error.message });
     return { id: job.id };
   }
-  const child = spawn(requiredTool('yt-dlp.exe'), args, { windowsHide: true });
-  record.child = child;
-  let stdoutTail = '', stderrTail = '', errorTail = '', archiveSkipped = false;
-  const trackProgress = createProgressTracker();
-  const finishCancelled = () => {
-    if (record.terminal) return;
-    record.terminal = true;
-    activeJobs.delete(job.id);
-    fs.rmSync(workDir, { recursive: true, force: true });
-    emit(job, 'cancelled', { detail: 'İptal edildi.' });
+  let attempt = 0, transportSettings = current, refreshed = false;
+  const attempts = [];
+  const launch = () => {
+    const child = spawn(requiredTool('yt-dlp.exe'), args, { windowsHide: true });
+    record.child = child;
+    let stdoutTail = '', stderrTail = '', errorTail = '', archiveSkipped = false;
+    const trackProgress = createProgressTracker();
+    const finishCancelled = () => {
+      if (record.terminal) return;
+      record.terminal = true;
+      activeJobs.delete(job.id);
+      fs.rmSync(workDir, { recursive: true, force: true });
+      emit(job, 'cancelled', { detail: 'İptal edildi.' });
+    };
+    const consumeOutput = (chunk, isError = false) => {
+      const text = chunk.toString();
+      if (isError) errorTail = `${errorTail}\n${text}`.slice(-6000);
+      const lines = `${isError ? stderrTail : stdoutTail}${text}`.split(/\r?\n|\r/);
+      if (isError) stderrTail = lines.pop();
+      else stdoutTail = lines.pop();
+      for (const line of lines) {
+        if (/has already been recorded in the archive/i.test(line)) archiveSkipped = true;
+        const progress = trackProgress(line);
+        if (progress) emit(job, 'progress', progress);
+      }
+    };
+    child.stdout.on('data', (chunk) => consumeOutput(chunk));
+    child.stderr.on('data', (chunk) => consumeOutput(chunk, true));
+    child.on('error', (error) => { if (record.cancelled) return finishCancelled(); if (record.terminal) return; record.terminal = true; activeJobs.delete(job.id); fs.rmSync(workDir, { recursive: true, force: true }); emit(job, 'failed', { detail: error.message }); });
+    child.on('close', async (code) => {
+      if (record.terminal) return;
+      if (record.cancelled) return finishCancelled();
+      attempts.push({ downloader: transportSettings.useAria2 ? 'aria2' : 'native', code, detail: redactDiagnostic(errorTail) });
+      const retry = retryDownload({ attempt, code, error: errorTail + stdoutTail, useAria2: transportSettings.useAria2, refreshed });
+      if (retry) {
+        attempt += 1;
+        refreshed = retry.refreshed;
+        transportSettings = { ...current, useAria2: retry.useAria2 };
+        // Re-extract the original page and validate fresh media URLs before resuming.
+        // Never reuse cached signed URLs or change the user's authentication settings.
+        args = downloadArgs(job, transportSettings, workDir);
+        args.splice(args.length - 1, 0, '--check-formats');
+        emit(job, 'progress', { percent: 0, detail: local(retry.reason === 'aria2' ? 'Aria2 başarısız; normal indirme deneniyor…' : 'İndirme bağlantısı yenileniyor…') });
+        launch();
+        return;
+      }
+      record.terminal = true;
+      let published = [];
+      try { published = publishMedia(workDir, record.destination, { ...job, playlist: current.playlist, playlistFolder: current.playlistFolder, splitChapters: current.splitChapters, keepOriginal: current.keepOriginal }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
+      if (!published.length && code !== 0) {
+        writePrivate(path.join(workDir, 'failure.json'), { version: app.getVersion(), createdAt: new Date().toISOString(), attempts });
+      }
+      const recoveryPath = published.length ? '' : preserveRecovery(workDir, job.id);
+      if (!recoveryPath) {
+        if (current.keepFragments && fs.readdirSync(workDir).length) {
+          const retained = path.join(app.getPath('userData'), 'fragments', job.id);
+          fs.mkdirSync(path.dirname(retained), { recursive: true });
+          fs.renameSync(workDir, retained);
+        } else fs.rmSync(workDir, { recursive: true, force: true });
+      }
+      if (published.length) {
+        const afterWarning = await runScript('after', current, record, published).catch(() => 'Dosya kaydedildi; son script kesildi.');
+        const warning = code !== 0 || !!scriptWarning || !!afterWarning;
+        remember(job, { files: published, warning });
+        emit(job, 'complete', { detail: afterWarning || scriptWarning || (code === 0 ? 'Kaydedildi' : 'Medya kaydedildi; isteğe bağlı son işlem tamamlanamadı.'), files: published.map((filePath) => path.basename(filePath)), warning });
+      } else if (code === 0 && archiveSkipped) {
+        emit(job, 'complete', { detail: 'Daha önce indirildiği için tekrar atlandı.', skipped: true });
+      } else {
+        const reason = errorTail.trim().split(/\r?\n/).filter(Boolean).pop()?.replace(/https?:\/\/\S+/g, '[URL]') || `yt-dlp: ${code}`;
+        const detail = recoveryPath ? `${reason} · Kurtarma dosyaları: ${recoveryPath}` : reason;
+        emit(job, 'failed', { detail });
+      }
+      activeJobs.delete(job.id);
+    });
   };
-  const consumeOutput = (chunk, isError = false) => {
-    const text = chunk.toString();
-    if (isError) errorTail = `${errorTail}\n${text}`.slice(-6000);
-    const lines = `${isError ? stderrTail : stdoutTail}${text}`.split(/\r?\n|\r/);
-    if (isError) stderrTail = lines.pop();
-    else stdoutTail = lines.pop();
-    for (const line of lines) {
-      if (/has already been recorded in the archive/i.test(line)) archiveSkipped = true;
-      const progress = trackProgress(line);
-      if (progress) emit(job, 'progress', progress);
-    }
-  };
-  child.stdout.on('data', (chunk) => consumeOutput(chunk));
-  child.stderr.on('data', (chunk) => consumeOutput(chunk, true));
-  child.on('error', (error) => { if (record.cancelled) return finishCancelled(); if (record.terminal) return; record.terminal = true; activeJobs.delete(job.id); fs.rmSync(workDir, { recursive: true, force: true }); emit(job, 'failed', { detail: error.message }); });
-  child.on('close', async (code) => {
-    if (record.terminal) return;
-    if (record.cancelled) return finishCancelled();
-    record.terminal = true;
-    let published = [];
-    try { published = publishMedia(workDir, record.destination, { ...job, playlist: current.playlist, playlistFolder: current.playlistFolder, splitChapters: current.splitChapters, keepOriginal: current.keepOriginal }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
-    const recoveryPath = published.length ? '' : preserveRecovery(workDir, job.id);
-    if (!recoveryPath) {
-      if (current.keepFragments && fs.readdirSync(workDir).length) {
-        const retained = path.join(app.getPath('userData'), 'fragments', job.id);
-        fs.mkdirSync(path.dirname(retained), { recursive: true });
-        fs.renameSync(workDir, retained);
-      } else fs.rmSync(workDir, { recursive: true, force: true });
-    }
-    if (published.length) {
-      const afterWarning = await runScript('after', current, record, published).catch(() => 'Dosya kaydedildi; son script kesildi.');
-      const warning = code !== 0 || !!scriptWarning || !!afterWarning;
-      remember(job, { files: published, warning });
-      emit(job, 'complete', { detail: afterWarning || scriptWarning || (code === 0 ? 'Kaydedildi' : 'Medya kaydedildi; isteğe bağlı son işlem tamamlanamadı.'), files: published.map((filePath) => path.basename(filePath)), warning });
-    } else if (code === 0 && archiveSkipped) {
-      emit(job, 'complete', { detail: 'Daha önce indirildiği için tekrar atlandı.', skipped: true });
-    } else {
-      const reason = errorTail.trim().split(/\r?\n/).filter(Boolean).pop()?.replace(/https?:\/\/\S+/g, '[URL]') || `yt-dlp: ${code}`;
-      const detail = recoveryPath ? `${reason} · Kurtarma dosyaları: ${recoveryPath}` : reason;
-      emit(job, 'failed', { detail });
-    }
-    activeJobs.delete(job.id);
-  });
+  launch();
   return { id: job.id };
 });
 handleMain('download:cancel', (_, jobId) => {

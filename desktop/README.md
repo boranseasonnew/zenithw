@@ -1,4 +1,4 @@
-# Zenith Desktop 4.0
+# Zenith Desktop 4.0.1
 
 ZenithW'nin kurulu 0.3.4 sürümündeki kendi Electron kaynakları kurtarılarak oluşturulan Windows uygulaması. Stacher'ın düzeni ve erişilebilir seçenekleri incelendi; Stacher kodu, ikonları veya görselleri kullanılmadı.
 
@@ -47,7 +47,9 @@ npm run dist   # Zenith 4.0 kurulum ve doğrudan açılan EXE
 npm run portable # yalnızca doğrudan açılan EXE
 ```
 
-`stage-tools` varsayılan olarak mevcut `%LOCALAPPDATA%/Programs/ZenithW/resources/bin` klasöründen yt-dlp, FFmpeg, FFprobe ve aria2 dosyalarını kopyalar. Başka bir araç klasörü için `ZENITHW_TOOL_SOURCE` ortam değişkenini belirtin. Kaynak klasör değiştirilmez. Yalnızca EXE'yi taşımak yeterli değildir; unpacked çıktısının bütün dosyaları gerekir.
+`stage-tools`, eksiksiz bir yerel araç paketi varsa onu kullanır; aksi halde `%LOCALAPPDATA%/Programs/Zenith/resources/bin` klasöründen yt-dlp, FFmpeg, FFprobe, aria2 ve Deno dosyalarını kopyalar. Başka bir araç klasörü için `ZENITHW_TOOL_SOURCE` ortam değişkenini belirtin. Kaynak klasör değiştirilmez. Yalnızca unpacked EXE'yi taşımak yeterli değildir; unpacked çıktısının bütün dosyaları gerekir.
+
+4.0.1, YouTube için Deno çalışma ortamını paketler. Aria2 aktarım hatasında normal indirmeye geçer; 403/410 hatasında sayfayı yeniden çözerek bir kez daha dener. Kalite, cookie ve proxy seçimleri korunur. Başarısız denemeler, özel bağlantıları ve oturum başlıkları çıkarılmış `failure.json` kaydıyla kurtarma klasöründe tutulur. Kurulum kısayolu Windows araması için `ZenithW` adını kullanır.
 
 Araçlar mevcut kurulumdan alındığından paketleme işlemi bunların sürümünü kendiliğinden değiştirmez. Uygulamanın motor ayarlarından yt-dlp güncellemesi yapılabilir. Dağıtım lisans bilgileri `LICENSE` ve `THIRD_PARTY_NOTICES.md` dosyalarındadır.
 

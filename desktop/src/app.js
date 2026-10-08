@@ -50,7 +50,7 @@ fields.forEach(id=>{const n=$('#'+id);if(!n)return;n.onchange=guarded(async()=>{
 async function refreshTools(){
  tools=await api.tools();$('#ytdlp-version').textContent=tools.ytDlpVersion||'—';$('#ffmpeg-version').textContent=tools.ffmpegVersion||'—';$('#aria2-version').textContent=tools.aria2Version||'—';
  $('#engine-state').innerHTML='<i></i>'+esc(native?(tools.ytDlp&&tools.ffmpeg?t('Yerel motor hazır','Local engine ready'):t('Motor eksik','Engine missing')):t('Arayüz önizlemesi','Interface preview'));
- $('#status-version').textContent=tools.ytDlpVersion?'yt-dlp '+tools.ytDlpVersion:'Zenith 4.0';
+ $('#status-version').textContent=tools.ytDlpVersion?'yt-dlp '+tools.ytDlpVersion:'Zenith 4.0.1';
  $('#cookie-status').textContent=tools.sessionCookies?t('Yerel cookie dosyası hazır','Local cookie file ready'):tools.cookieCount?tools.cookieCount+' cookie':t('Henüz çerez yok','No cookies yet');
 }
 async function analyze(keepTrim=false){
