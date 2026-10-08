@@ -1,0 +1,3 @@
+# Preserve the bytes used by content hashes on Windows and Linux.
+frontend/cache-assets/** -text
+frontend/locales/*.json text eol=lf
