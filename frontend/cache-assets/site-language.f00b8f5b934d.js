@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const names = {tr:'Türkçe',en:'English',fr:'Français',de:'Deutsch',ru:'Русский',vi:'Tiếng Việt',zh:'中文（简体）',ja:'日本語'};
-  const files = {tr:'/locales/tr.json',en:'/locales/en.json',fr:'/locales/fr.json',de:'/locales/de.json',ru:'/locales/ru.json',vi:'/locales/vi.json',zh:'/locales/zh.json',ja:'/locales/ja.json'};
+  const files = {tr:'/cache-assets/tr.25e9eb079012.json',en:'/cache-assets/en.fafd9fc34032.json',fr:'/cache-assets/fr.3d9174fd53e3.json',de:'/cache-assets/de.4f316c09b055.json',ru:'/cache-assets/ru.152af1b9419b.json',vi:'/cache-assets/vi.3a086f0e4040.json',zh:'/cache-assets/zh.c9b57472252b.json',ja:'/cache-assets/ja.2f2c99f6f63f.json'};
   const locales = {tr:'tr-TR',en:'en-US',fr:'fr-FR',de:'de-DE',ru:'ru-RU',vi:'vi-VN',zh:'zh-CN',ja:'ja-JP'};
   const normalize = value => String(value || '').toLowerCase().split(/[-_]/)[0];
   let saved;

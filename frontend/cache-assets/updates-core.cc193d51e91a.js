@@ -228,7 +228,7 @@ function loadUpdateArchive(){
   if(archivePromise)return archivePromise;
   archivePromise=new Promise((resolve,reject)=>{
     const s=document.createElement('script');
-    s.src='/updates-archive.07c744021db2.js?v=14.3';
+    s.src='/cache-assets/updates-archive.834ee93b2c57.js';
     s.async=true;
     s.onload=()=>{
       if(Array.isArray(window.ZW_UPDATE_ARCHIVE)){UPDATES=[...CURRENT_RELEASES,...window.ZW_UPDATE_ARCHIVE];archiveLoaded=true;resolve(UPDATES);}
