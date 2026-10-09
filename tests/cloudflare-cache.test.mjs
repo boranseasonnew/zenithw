@@ -38,15 +38,17 @@ test('only verified content-hashed copies are immutable; ordinary assets have bo
     const actual = createHash('sha256').update(bytes).digest('hex');
     assert.equal(actual, entry.sha256, source);
     assert.ok(entry.url.includes('.' + actual.slice(0, 12) + '.'), source);
-    assert.equal(headers.get(entry.url)['cache-control'], 'public, max-age=31536000, immutable');
+    assert.equal(headers.get('/cache-assets/*')['cache-control'], 'public, max-age=31536000, immutable');
     assert.ok(!headers.get('/' + source)['cache-control'].includes('immutable'));
     assert.ok(excluded(entry.url));
   }
   for (const [url, values] of headers) {
     if (values['cache-control']?.includes('immutable')) {
-      assert.ok(url.startsWith('/cache-assets/'));
-      const bytes = readFileSync(join(root, 'frontend', url));
-      assert.ok(url.includes('.' + createHash('sha256').update(bytes).digest('hex').slice(0, 12) + '.'));
+      assert.equal(url, '/cache-assets/*');
+      for (const file of walk(join(root, 'frontend/cache-assets'))) {
+        const bytes = readFileSync(file);
+        assert.ok(file.includes('.' + createHash('sha256').update(bytes).digest('hex').slice(0, 12) + '.'));
+      }
     }
   }
   for (const url of ['/favicon.ico', '/zenithw.png', '/site-shell.js', '/vendor/local-media-worker.js']) {
@@ -183,5 +185,7 @@ test('source/dependency changes rotate URLs and retain old hashed copies for cac
     assert.ok(html.includes(updated['fonts.css'].url));
     assert.ok(!html.includes(manifest['fonts.css'].url));
     execFileSync(process.execPath, [join(fixture, 'scripts/build-cache-assets.mjs'), '--check'], { cwd: fixture, stdio: 'pipe' });
+    writeFileSync(join(fixture, 'frontend/cache-assets/unverified.js'), 'not fingerprinted');
+    assert.throws(() => execFileSync(process.execPath, [join(fixture, 'scripts/build-cache-assets.mjs')], { cwd: fixture, stdio: 'pipe' }), /Unsafe file in the immutable output directory/);
   } finally { rmSync(fixture, { recursive: true, force: true }); }
 });

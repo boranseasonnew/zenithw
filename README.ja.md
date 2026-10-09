@@ -6,7 +6,7 @@
 
 [ステータス](https://zenithw.space/status) · [更新情報](https://zenithw.space/updates) · [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
 
-**Web v15.2** · **ZenithW Desktop v4.0.1**
+**Web v15.2** · **ZenithW Desktop v4.1.0**
 
 ![ZenithW web interface](docs/assets/zenithw-preview.png)
 
