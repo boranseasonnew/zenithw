@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain, shell, session } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, shell, session, Tray, Menu, Notification, powerSaveBlocker } = require('electron');
 const { spawn, execFileSync } = require('node:child_process');
 const { randomUUID } = require('node:crypto');
 const fs = require('node:fs');
@@ -19,6 +19,31 @@ const COOKIE_PARTITION = 'persist:zenithw-login';
 let updating = false;
 const historyPath = () => path.join(app.getPath('userData'), 'history.json');
 let history = [];
+let tray = null, sleepBlocker = null;
+function resetSessionHistory() {
+  history = [];
+  // Retire the previous persistent list, without touching downloaded media.
+  fs.rmSync(historyPath(), { force: true });
+}
+function syncSleepBlocker() {
+  const required = settings?.preventSleep && activeJobs.size > 0;
+  if (required && sleepBlocker === null && powerSaveBlocker) sleepBlocker = powerSaveBlocker.start('prevent-app-suspension');
+  if (!required && sleepBlocker !== null) { powerSaveBlocker.stop(sleepBlocker); sleepBlocker = null; }
+}
+function releaseJob(id) { activeJobs.delete(id); syncSleepBlocker(); }
+function showMainWindow() { if (mainWindow && !mainWindow.isDestroyed()) { mainWindow.show(); mainWindow.restore(); mainWindow.focus(); } }
+function syncTray() {
+  if (!settings?.trayEnabled && tray) { tray.destroy(); tray = null; }
+  if (settings?.trayEnabled && !tray && Tray) {
+    tray = new Tray(path.join(__dirname, 'brand.png'));
+    tray.setToolTip('Zenith');
+    tray.on('double-click', showMainWindow);
+  }
+  if (tray) tray.setContextMenu(Menu.buildFromTemplate([
+    { label: local('Uygulamayı aç'), click: showMainWindow },
+    { type: 'separator' }, { label: local('Çıkış'), click: () => app.quit() }
+  ]));
+}
 const profilesPath = () => path.join(app.getPath('userData'), 'profiles.json');
 let profiles = [];
 let scriptFiles = {};
@@ -32,7 +57,6 @@ function readArray(file, limit) {
 }
 function remember(job, result) {
   history = [{ id: job.id, title: job.title, thumbnail: job.thumbnail, kind: job.kind, createdAt: Date.now(), ...result }, ...history].slice(0, 300);
-  writePrivate(historyPath(), history);
 }
 
 const allowedBrowsers = new Set(['chrome', 'edge', 'firefox', 'brave', 'opera', 'vivaldi']);
@@ -53,6 +77,9 @@ const defaults = {
   playlistReverse: false, playlistPolicy: 'stop', breakOnExisting: false, sponsorAction: 'remove',
   playlistRandom: false, playlistFolder: false, playlistNumber: false, lazyPlaylist: false,
   scriptBeforeEnabled: false, scriptAfterEnabled: false, scriptTimeout: 60, scriptPolicy: 'stop',
+  theme: 'dark', accentColor: 'rose', maxDownloads: 3, systemNotifications: false, preventSleep: false, trayEnabled: false,
+  forceOverwrites: false, restrictFilenames: false, remuxVideo: '', recodeVideo: '', formatSort: '',
+  sponsorApi: 'https://sponsor.ajay.app', sponsorMarkCategories: '', concatPlaylist: 'never', promptPlaylist: false,
   onboardingComplete: false, settingsVersion: 3
 };
 let settings;
@@ -84,10 +111,13 @@ function validatedSettings(next) {
     cookieMode: ['none','session','browser'], cookieBrowser: [...allowedBrowsers], videoContainer: ['mp4','webm','mkv','mov','avi','flv'],
     videoCodec: ['h264','vp9','av1','auto'], audioFormat: ['mp3','m4a','opus','flac','wav','aac','vorbis','alac'], unavailableFragments: ['skip','abort'],
     fixupPolicy: ['detect_or_warn','warn','never'], subtitleFormat: ['best','srt','vtt','ass'],
-    playlistPolicy: ['stop','continue'], sponsorAction: ['remove','mark'], scriptPolicy: ['stop','continue'] };
+    playlistPolicy: ['stop','continue'], sponsorAction: ['remove','mark'], scriptPolicy: ['stop','continue'],
+    theme: ['dark','light','system'], accentColor: ['rose','blue','violet'], concatPlaylist: ['never','always','multi_video'],
+    remuxVideo: ['','mp4','mkv','webm','mov','avi','flv'], recodeVideo: ['','mp4','mkv','webm','mov','avi','flv'],
+    formatSort: ['','res,fps','vcodec:h264,acodec:m4a','vcodec:av1','+size,+br'] };
   const numbers = { retries: [1,30], fragmentRetries: [1,30], fileAccessRetries: [1,30], concurrentFragments: [1,16],
     aria2Connections: [1,16], socketTimeout: [5,120], videoQuality: [144,8640], audioQuality: [32,512],
-    extractorRetries: [1,30], sleepRequests: [0,120], sleepInterval: [0,300], maxSleepInterval: [0,300], sleepSubtitles: [0,120], scriptTimeout: [5,300] };
+    extractorRetries: [1,30], sleepRequests: [0,120], sleepInterval: [0,300], maxSleepInterval: [0,300], sleepSubtitles: [0,120], scriptTimeout: [5,300], maxDownloads: [1,8] };
   for (const [key, value] of Object.entries(next)) {
     if (!(key in defaults)) continue;
     if (enums[key]) { if (!enums[key].includes(value)) throw new Error(`Invalid ${key}.`); clean[key] = value; }
@@ -102,6 +132,8 @@ function validatedSettings(next) {
   for (const key of ['speedLimit', 'throttleRate']) if (clean[key] && !/^\d+(?:\.\d+)?[KMGTP]?$/i.test(clean[key])) throw new Error('Use a rate such as 800K or 5M.');
   if (clean.playlistItems && !/^[\d,:-]+$/.test(clean.playlistItems)) throw new Error('Playlist selection: 1,3,5-10');
   const merged = { ...settings, ...clean };
+  if (merged.remuxVideo && merged.recodeVideo) throw new Error(local('Tek bir dönüştürme yöntemi seçin.'));
+  if (merged.lazyPlaylist && merged.concatPlaylist !== 'never') throw new Error(local('Liste birleştirme için beklemeden başlatmayı kapatın.'));
   if (merged.playlistReverse && merged.playlistRandom) throw new Error(local('Ters ve karışık sıra birlikte seçilemez.'));
   if (merged.lazyPlaylist && (merged.playlistReverse || merged.playlistRandom)) throw new Error(local('Listeyi beklemeden başlatmak için normal sıra seçin.'));
   for (const key of ['cookieLoginUrl','refererUrl']) if (clean[key]) clean[key] = sanitizeUrl(clean[key]);
@@ -109,6 +141,8 @@ function validatedSettings(next) {
   if (clean.subtitleLang && !/^[a-zA-Z0-9,*._-]+$/.test(clean.subtitleLang)) throw new Error('Invalid subtitle languages.');
   const categories = new Set(['sponsor','intro','outro','selfpromo','preview','filler','interaction','music_offtopic']);
   if (clean.sponsorCategories && !clean.sponsorCategories.split(',').every(v => categories.has(v.trim()))) throw new Error('Invalid SponsorBlock categories.');
+  if (clean.sponsorMarkCategories && !clean.sponsorMarkCategories.split(',').every(v => categories.has(v.trim()))) throw new Error('Invalid SponsorBlock categories.');
+  if (clean.sponsorApi) { clean.sponsorApi = sanitizeUrl(clean.sponsorApi); if (new URL(clean.sponsorApi).protocol !== 'https:') throw new Error('SponsorBlock requires HTTPS.'); }
   if (clean.extractorArgs && !/^[a-zA-Z0-9_.-]+:.+$/.test(clean.extractorArgs)) throw new Error('Use extractor:option=value.');
   if ((clean.maxSleepInterval ?? settings.maxSleepInterval) && (clean.maxSleepInterval ?? settings.maxSleepInterval) < (clean.sleepInterval ?? settings.sleepInterval)) throw new Error(local('En fazla bekleme değeri daha küçük olamaz.'));
   return clean;
@@ -116,6 +150,7 @@ function validatedSettings(next) {
 function saveSettings(next) {
   settings = { ...settings, ...validatedSettings(next), settingsVersion: 3 };
   writePrivate(configPath(), settings);
+  syncTray(); syncSleepBlocker();
   return settings;
 }
 
@@ -180,9 +215,17 @@ function createWindow() {
   mainWindow.webContents.session.setPermissionRequestHandler((_contents, permission, callback) => callback(permission === 'clipboard-read'));
   mainWindow.webContents.session.setPermissionCheckHandler((_contents, permission) => permission === 'clipboard-read');
   mainWindow.loadFile(appHtml);
+  mainWindow.on('minimize', () => { if (tray) mainWindow.hide(); });
+  mainWindow.on('closed', () => { mainWindow = null; });
 }
 function emit(job, type, payload) {
   if (mainWindow && !mainWindow.isDestroyed()) mainWindow.webContents.send('download:event', { jobId: job.id, type, ...payload, ...(payload.detail ? {detail:local(payload.detail)} : {}) });
+  if (settings?.systemNotifications && ['complete','failed'].includes(type) && Notification?.isSupported()) {
+    try {
+      const notification = new Notification({ title: type === 'complete' ? local('İndirme tamamlandı') : local('İndirme başarısız'), body: job.title, icon: path.join(__dirname, 'brand.png') });
+      notification.on('click', showMainWindow); notification.show();
+    } catch { /* OS notification availability must not affect the download. */ }
+  }
 }
 function authArgs(current = settings) {
   if (current.cookieMode === 'session' && fs.existsSync(cookiePath())) return ['--cookies', cookiePath()];
@@ -219,6 +262,9 @@ function downloadArgs(job, current, workDir) {
   if (current.speedLimit) args.push('--limit-rate', String(current.speedLimit));
   args.push('--windows-filenames', current.unavailableFragments === 'abort' ? '--abort-on-unavailable-fragments' : '--skip-unavailable-fragments');
   if (current.keepFragments) args.push('--keep-fragments');
+  if (current.restrictFilenames) args.push('--restrict-filenames');
+  if (current.forceOverwrites) args.push('--force-overwrites');
+  if (current.formatSort) args.push('--format-sort', current.formatSort);
   if (current.throttleRate) args.push('--throttled-rate', current.throttleRate);
   if (current.playlist && current.playlistItems) args.push('--playlist-items', current.playlistItems);
   if (current.playlist) {
@@ -227,6 +273,7 @@ function downloadArgs(job, current, workDir) {
     if (current.lazyPlaylist) args.push('--lazy-playlist');
     args.push(current.playlistPolicy === 'continue' ? '--ignore-errors' : '--abort-on-error');
     if (current.breakOnExisting) args.push('--break-on-existing');
+    if (current.concatPlaylist !== 'never') args.push('--concat-playlist', current.concatPlaylist, '-o', 'pl_video:%(playlist_title,playlist_id|Playlist)s.%(ext)s');
   }
   if (current.sleepInterval) args.push('--sleep-interval', String(current.sleepInterval));
   if (current.maxSleepInterval && current.sleepInterval) args.push('--max-sleep-interval', String(current.maxSleepInterval));
@@ -244,7 +291,7 @@ function downloadArgs(job, current, workDir) {
   let outputContainer = '';
   if (job.kind === 'audio') args.push('-f', 'bestaudio/best', '-x', '--audio-format', job.audioFormat || current.audioFormat, '--audio-quality', `${current.audioQuality}K`);
   else {
-    const container = current.videoContainer || 'mp4';
+    const container = current.recodeVideo || current.remuxVideo || current.videoContainer || 'mp4';
     outputContainer = container;
     const height = job.videoQuality || current.videoQuality;
     const cap = Number(height) >= 8640 ? '' : `[height<=?${height}]`;
@@ -253,7 +300,7 @@ function downloadArgs(job, current, workDir) {
     args.push('-f', current.playlist ? compatible : job.format || compatible,
       '--merge-output-format', container === 'webm' && job.formatExt !== 'webm' ? 'mkv' : ['mp4','mkv','webm'].includes(container) ? container : 'mkv');
     // Legacy containers need actual conversion, not a renamed extension.
-    args.push(['avi','flv','webm'].includes(container) ? '--recode-video' : '--remux-video', container);
+    args.push(current.recodeVideo || (!current.remuxVideo && ['avi','flv','webm'].includes(container)) ? '--recode-video' : '--remux-video', container);
 
   }
   if (current.embedMetadata) args.push('--embed-metadata');
@@ -273,8 +320,12 @@ function downloadArgs(job, current, workDir) {
     if (current.embedSubtitles && ['mp4','mkv','webm','mov'].includes(outputContainer)) args.push('--embed-subs');
     if (current.subtitleFormat !== 'best') args.push('--convert-subs', current.subtitleFormat);
   }
-  if (current.sponsorBlock && job.kind !== 'audio') args.push(current.sponsorAction === 'mark' ? '--sponsorblock-mark' : '--sponsorblock-remove', current.sponsorCategories || 'sponsor,selfpromo,interaction');
-  if (current.downloadArchive && !job.trim) args.push('--download-archive', path.join(app.getPath('userData'), 'download-archive.txt'));
+  if (current.sponsorBlock && job.kind !== 'audio') {
+    args.push('--sponsorblock-api', current.sponsorApi);
+    args.push(current.sponsorAction === 'mark' ? '--sponsorblock-mark' : '--sponsorblock-remove', current.sponsorCategories || 'sponsor,selfpromo,interaction');
+    if (current.sponsorMarkCategories && current.sponsorAction !== 'mark') args.push('--sponsorblock-mark', current.sponsorMarkCategories);
+  }
+  if (current.downloadArchive && !job.trim && !current.forceOverwrites) args.push('--download-archive', path.join(app.getPath('userData'), 'download-archive.txt'));
   args.push(job.url);
   return args;
 }
@@ -322,11 +373,13 @@ function publishMedia(workDir, destination, job) {
     const targetFolder = job.playlistFolder && relativeFolder ? path.join(destination, relativeFolder) : destination;
     if (path.relative(destination, targetFolder).startsWith('..')) throw new Error('Invalid playlist folder.');
     fs.mkdirSync(targetFolder, { recursive: true });
-    const target = uniqueDestination(targetFolder, path.basename(source));
+    const target = job.forceOverwrites ? path.join(targetFolder, path.basename(source)) : uniqueDestination(targetFolder, path.basename(source));
     try { fs.renameSync(source, target); }
     catch (error) {
       if (error.code !== 'EXDEV') throw error;
-      fs.copyFileSync(source, target, fs.constants.COPYFILE_EXCL);
+      const staged = target + '.zenith-' + randomUUID() + '.tmp';
+      try { fs.copyFileSync(source, staged, fs.constants.COPYFILE_EXCL); fs.renameSync(staged, target); }
+      finally { fs.rmSync(staged, { force: true }); }
       fs.unlinkSync(source);
     }
     // Unsupported cover containers receive a matching JPG sidecar. If an
@@ -338,7 +391,7 @@ function publishMedia(workDir, destination, job) {
     for (const entry of fs.readdirSync(sourceFolder, { withFileTypes: true })) {
       if (!entry.isFile() || !entry.name.startsWith(originalStem + '.') || !sidecarExtensions.has(path.extname(entry.name).toLowerCase())) continue;
       const suffix = entry.name.slice(originalStem.length);
-      fs.copyFileSync(path.join(sourceFolder, entry.name), uniqueDestination(targetFolder, targetStem + suffix));
+      fs.copyFileSync(path.join(sourceFolder, entry.name), job.forceOverwrites ? path.join(targetFolder, targetStem + suffix) : uniqueDestination(targetFolder, targetStem + suffix));
     }
     return target;
   });
@@ -438,14 +491,16 @@ function openLogin(rawUrl) {
 
 app.whenReady().then(() => {
   settings = readSettings();
-  history = readArray(historyPath(), 300);
+  resetSessionHistory();
   profiles = readArray(profilesPath(), 12);
   try { scriptFiles = JSON.parse(fs.readFileSync(scriptPath(), 'utf8')); } catch {}
   createWindow();
+  syncTray();
   if (settings.autoUpdateYtDlp) setTimeout(() => performUpdate(settings.ytDlpChannel).then((result) => mainWindow?.webContents.send('engine:updated', result)).catch((error) => mainWindow?.webContents.send('engine:updated', { error: error.message })), 1600);
   app.on('activate', () => { if (!BrowserWindow.getAllWindows().length) createWindow(); });
 });
 app.on('before-quit', () => {
+  if (sleepBlocker !== null) { powerSaveBlocker.stop(sleepBlocker); sleepBlocker = null; }
   for (const record of activeJobs.values()) {
     record.cancelled = true;
     try {
@@ -527,10 +582,10 @@ handleMain('media:inspect', async (_, rawUrl) => {
 });
 handleMain('download:start', async (_, request) => {
   if (updating) throw new Error('yt-dlp is updating. Please wait.');
-  if (activeJobs.size >= 3) throw new Error(local('En fazla 3 eşzamanlı indirme.'));
+  if (activeJobs.size >= settings.maxDownloads) throw new Error(local('Eşzamanlı indirme sınırı doldu.'));
   if (!request || typeof request !== 'object') throw new Error('Invalid download request.');
   if (request.format && !/^[a-zA-Z0-9_+./<>=*\[\]-]{1,300}$/.test(request.format)) throw new Error('Invalid format.');
-  if (request.audioFormat && !['mp3','m4a','opus','flac','wav'].includes(request.audioFormat)) throw new Error('Invalid audio format.');
+  if (request.audioFormat && !['mp3','m4a','opus','flac','wav','aac','vorbis','alac'].includes(request.audioFormat)) throw new Error('Invalid audio format.');
   let trim = null;
   if (request.trim) {
     const start = Number(request.trim.start);
@@ -545,6 +600,7 @@ handleMain('download:start', async (_, request) => {
   if (existing) return { id: existing.job.id, duplicate: true };
   job.videoQuality = bounded(request.videoQuality, 144, 8640, settings.videoQuality);
   const current = { ...settings };
+  if (request.playlistItems !== undefined) { if (typeof request.playlistItems !== 'string' || !/^[\d,:-]{1,1024}$/.test(request.playlistItems)) throw new Error('Invalid playlist items.'); current.playlistItems = request.playlistItems; }
   requiredTool('yt-dlp.exe'); requiredTool('ffmpeg.exe'); requiredTool('ffprobe.exe');
   const workDir = path.join(app.getPath('temp'), 'ZenithW', job.id);
   fs.mkdirSync(workDir, { recursive: true });
@@ -553,13 +609,14 @@ handleMain('download:start', async (_, request) => {
   catch (error) { fs.rmSync(workDir, { recursive: true, force: true }); throw error; }
   const record = { child: null, job, key, workDir, scripts: { ...scriptFiles }, destination: current.downloadFolder, terminal: false, cancelled: false };
   activeJobs.set(job.id, record);
+  syncSleepBlocker();
   emit(job, 'started', { title: request.title || job.url });
   let scriptWarning = '';
   try {
     scriptWarning = await runScript('before', current, record);
     if (record.cancelled) throw new Error(local('İptal edildi.'));
   } catch (error) {
-    activeJobs.delete(job.id);
+    releaseJob(job.id);
     record.terminal = true;
     fs.rmSync(workDir, { recursive: true, force: true });
     emit(job, record.cancelled ? 'cancelled' : 'failed', { detail: error.message });
@@ -575,7 +632,7 @@ handleMain('download:start', async (_, request) => {
     const finishCancelled = () => {
       if (record.terminal) return;
       record.terminal = true;
-      activeJobs.delete(job.id);
+      releaseJob(job.id);
       fs.rmSync(workDir, { recursive: true, force: true });
       emit(job, 'cancelled', { detail: 'İptal edildi.' });
     };
@@ -593,7 +650,7 @@ handleMain('download:start', async (_, request) => {
     };
     child.stdout.on('data', (chunk) => consumeOutput(chunk));
     child.stderr.on('data', (chunk) => consumeOutput(chunk, true));
-    child.on('error', (error) => { if (record.cancelled) return finishCancelled(); if (record.terminal) return; record.terminal = true; activeJobs.delete(job.id); fs.rmSync(workDir, { recursive: true, force: true }); emit(job, 'failed', { detail: error.message }); });
+    child.on('error', (error) => { if (record.cancelled) return finishCancelled(); if (record.terminal) return; record.terminal = true; releaseJob(job.id); fs.rmSync(workDir, { recursive: true, force: true }); emit(job, 'failed', { detail: error.message }); });
     child.on('close', async (code) => {
       if (record.terminal) return;
       if (record.cancelled) return finishCancelled();
@@ -615,7 +672,7 @@ handleMain('download:start', async (_, request) => {
       }
       record.terminal = true;
       let published = [];
-      try { published = publishMedia(workDir, record.destination, { ...job, playlist: current.playlist, playlistFolder: current.playlistFolder, splitChapters: current.splitChapters, keepOriginal: current.keepOriginal }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
+      try { published = publishMedia(workDir, record.destination, { ...job, playlist: current.playlist, playlistFolder: current.playlistFolder, splitChapters: current.splitChapters, keepOriginal: current.keepOriginal, forceOverwrites: current.forceOverwrites }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
       if (!published.length && code !== 0) {
         writePrivate(path.join(workDir, 'failure.json'), { version: app.getVersion(), createdAt: new Date().toISOString(), attempts });
       }
@@ -639,7 +696,7 @@ handleMain('download:start', async (_, request) => {
         const detail = recoveryPath ? `${reason} · Kurtarma dosyaları: ${recoveryPath}` : reason;
         emit(job, 'failed', { detail });
       }
-      activeJobs.delete(job.id);
+      releaseJob(job.id);
     });
   };
   launch();
@@ -660,6 +717,17 @@ handleMain('download:cancel', (_, jobId) => {
 });
 handleMain('folder:open', () => shell.openPath(settings.downloadFolder));
 handleMain('history:get', () => history.map(item => ({ ...item, files: (item.files || []).map(file => path.basename(file)) })));
+handleMain('history:remove', (_, id) => {
+  if (activeJobs.has(id)) return false;
+  history = history.filter(item => item.id !== id);
+  return true;
+});
+handleMain('media:playlist', async (_, rawUrl) => {
+  const url = sanitizeUrl(rawUrl);
+  const result = await runTool(requiredTool('yt-dlp.exe'), [...baseArgs(), '--yes-playlist', '--flat-playlist', '--playlist-end', '200', '--dump-single-json', url], 90000, 16 * 1024 * 1024);
+  const data = JSON.parse(result.stdout);
+  return { title: String(data.title || '').slice(0,300), entries: (Array.isArray(data.entries) ? data.entries : []).slice(0,200).map((entry,index) => ({ index: Number.isSafeInteger(entry?.playlist_index) && entry.playlist_index > 0 ? entry.playlist_index : index+1, title: String(entry?.title || entry?.id || index+1).slice(0,300) })) };
+});
 handleMain('history:open', (_, id, reveal) => {
   const item = history.find(item => item.id === id);
   const file = item?.files?.[0];

@@ -3,9 +3,11 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const paths={link:'M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l2-2',paste:'M9 5H6v17h14V5h-5M9 3h6v4H9z',arrow:'M5 12h14m-5-5 5 5-5 5',download:'M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5',close:'m6 6 12 12M18 6 6 18',grid:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',list:'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',folder:'M3 7V5h6l2 2h10v13H3z',search:'M21 21l-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0',trim:'M4 3v13a4 4 0 0 0 4 4h13M3 4h13a4 4 0 0 1 4 4v13M8 8h8v8H8z',cookie:'M20 12a4 4 0 0 1-4-4 4 4 0 0 1-4-4c-5 0-9 4-9 9s4 9 9 9 9-4 9-9M8 12h.01M12 17h.01M7 17h.01',settings:'m9 3-.5 3-3 1-2-1.5-2 3L4 11v3l-2.5 2.5 2 3 3-1 2 1 .5 2.5h5l.5-2.5 2-1 3 1 2-3L19 14v-3l2.5-2.5-2-3-2 1.5-3-1L14 3zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0',chevron:'m9 5 7 7-7 7'};
 Object.assign(paths,{subtitles:'M3 6h18v12H3zM10 10H7v4h3M17 10h-3v4h3',code:'m8 6-6 6 6 6m8-12 6 6-6 6'});
+Object.assign(paths,{sponsor:'M12 3 3 7v6c0 5 9 9 9 9s9-4 9-9V7zM8 12l3 3 5-6',retry:'M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M18 17a7 7 0 0 1-12 1l-2-3'});
 const icon=name=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+(paths[name]||paths.link)+'"/></svg>';
 $$('[data-icon]').forEach(n=>n.innerHTML=icon(n.dataset.icon));
 const native=!!window.zenith, jobs=new Map(), QUEUE_KEY='zenith.desktop.queue.v4';
+try { localStorage.removeItem(QUEUE_KEY); } catch {}
 let settings={},tools={},media=null,mediaUrl='',kind='video',selection=null,tab='downloads',history=[],inspectId=0,starting=false,welcomeStep=0,pendingTrim=false,saveChain=Promise.resolve();
 const t=(a,b)=>localText(a,settings.language||'tr',b);
 const tr=key=>words[key]?.[Math.max(0,['tr','en','ru','de'].indexOf(settings.language||'tr'))]||words[key]?.[0]||key;
@@ -17,13 +19,29 @@ const bytes=n=>n?(n/1048576).toFixed(n>104857600?0:1)+' MB':'';
 function normalize(raw){const v=raw.trim();if(!v)throw Error(t('Bir bağlantı gir.','Enter a link.'));const u=new URL(/^[a-z][a-z0-9+.-]*:\/\//i.test(v)?v:'https://'+v);if(!['https:','http:'].includes(u.protocol)||u.username||u.password)throw Error(t('Geçerli bir bağlantı gir.','Enter a valid link.'));return u.href;}
 const previewSettings={downloadFolder:'Downloads / Zenith',naming:'%(title)s [%(id)s].%(ext)s',language:'tr',videoQuality:'1080',videoContainer:'mp4',audioFormat:'mp3',audioQuality:'192',cookieMode:'none',cookieBrowser:'firefox',cookieLoginUrl:'https://www.youtube.com/',ytDlpChannel:'nightly',embedMetadata:true,embedChapters:true,advancedMode:false,onboardingComplete:true};
 Object.assign(previewSettings,{videoCodec:'h264',subtitleLang:'tr,en',sponsorCategories:'sponsor,selfpromo,interaction',downloadArchive:true,concurrentFragments:4,retries:10,fragmentRetries:10,fileAccessRetries:3,aria2Connections:8,socketTimeout:20,speedLimit:'',throttleRate:'',proxyUrl:'',unavailableFragments:'skip',userAgent:'',refererUrl:'',playlistItems:'',extractorRetries:3,extractorArgs:'',sleepRequests:0,sleepInterval:0,maxSleepInterval:0,sleepSubtitles:0,fixupPolicy:'detect_or_warn',autoSubtitles:true,embedSubtitles:true,subtitleFormat:'best',playlistPolicy:'stop',sponsorAction:'remove',playlistRandom:false,playlistFolder:false,playlistNumber:false,lazyPlaylist:false,scriptBeforeEnabled:false,scriptAfterEnabled:false,scriptTimeout:60,scriptPolicy:'stop'});
+Object.assign(previewSettings,{theme:'dark',accentColor:'rose',maxDownloads:3,sponsorApi:'https://sponsor.ajay.app',concatPlaylist:'never',remuxVideo:'',recodeVideo:'',formatSort:'',sponsorMarkCategories:''});
 const api=window.zenith||{settings:{get:async()=>previewSettings,save:async v=>Object.assign(previewSettings,v)},history:{get:async()=>[]},profiles:{list:async()=>[]},tools:async()=>({}),onDownload:()=>{},onCookiesUpdated:()=>{},onEngineUpdated:()=>{}};
 const requireNative=()=>{if(!native)throw Error(t('Bu işlem masaüstü uygulamasında kullanılabilir.','Available in the desktop app.'));};
+let selectedPlaylistItems=null, playlistResolver=null;
+async function choosePlaylist(){
+ const result=await api.playlist(mediaUrl);
+ if(!result.entries.length)throw Error(t('Seçilecek liste öğesi bulunamadı.','No playlist entries were found.'));
+ $('#playlist-note').textContent=result.title+' · '+t('İlk 200 öğe gösterilir.','Up to the first 200 entries are shown.');
+ $('#playlist-entries').innerHTML=result.entries.map(entry=>'<label class="playlist-entry"><input type="checkbox" value="'+Number(entry.index)+'" checked><span>'+Number(entry.index)+'. '+esc(entry.title)+'</span></label>').join('');
+ updatePlaylistCount();$('#playlist-dialog').showModal();return new Promise(resolve=>{playlistResolver=resolve;});
+}
+function updatePlaylistCount(){const count=$$('#playlist-entries input:checked').length;$('#playlist-count').textContent=count+' '+t('video seçildi','videos selected');$('#playlist-confirm').disabled=count===0;}
+$('#playlist-entries').addEventListener('change',updatePlaylistCount);
+$('#playlist-all').onclick=()=>{$$('#playlist-entries input').forEach(n=>n.checked=true);updatePlaylistCount();};
+$('#playlist-none').onclick=()=>{$$('#playlist-entries input').forEach(n=>n.checked=false);updatePlaylistCount();};
+$('#playlist-confirm').onclick=()=>{const selected=$$('#playlist-entries input:checked').map(n=>n.value).join(',');if(!selected)return;const resolve=playlistResolver;playlistResolver=null;$('#playlist-dialog').close();resolve?.(selected);};
+$('#playlist-dialog').addEventListener('close',()=>{if(playlistResolver){playlistResolver(null);playlistResolver=null;}});
 function shortFolder(){return String(settings.downloadFolder||'Zenith').replaceAll('\\','/').split('/').filter(Boolean).slice(-2).join(' / ');}
 function syncSettings(){
  $$('.settings-panel input[id],.settings-panel select[id]').forEach(n=>{if(!(n.id in settings))return;n.type==='checkbox'?n.checked=!!settings[n.id]:n.value=settings[n.id]??'';});
  $$('[data-i18n]').forEach(n=>n.textContent=tr(n.dataset.i18n));document.documentElement.lang=settings.language||'tr';localizeUi(document.body,settings.language||'tr');
  document.documentElement.classList.toggle('reduced-motion',!!settings.reducedMotion);document.body.classList.toggle('advanced-mode',!!settings.advancedMode);document.body.classList.toggle('hide-help',!!settings.hideHelp);
+ document.documentElement.dataset.theme=settings.theme||'dark';document.documentElement.dataset.accent=settings.accentColor||'rose';
  $('#folder-label').textContent=$('#media-folder').textContent=shortFolder();$('#folder-value').textContent=settings.downloadFolder;
  $('#quick-options').textContent=String(settings.videoContainer||'mp4').toUpperCase()+' · '+(settings.videoQuality||1080)+'p';$('#download-container').value=settings.videoContainer||'mp4';
  $('#browser-cookie-setting').classList.toggle('hidden-setting',settings.cookieMode!=='browser');
@@ -31,7 +49,11 @@ function syncSettings(){
  $$('.setting').forEach((row,i)=>{const label=row.querySelector('b'),field=row.querySelector('input,select');if(label&&field){label.id||='label-'+i;field.setAttribute('aria-labelledby',label.id);}});
  syncQuickIndicators();if(media)renderFormats();
 }
-async function save(values){saveChain=saveChain.catch(()=>{}).then(async()=>{settings=await api.settings.save(values);syncSettings();});return saveChain;}
+async function save(values){
+ if(values.remuxVideo)values={...values,recodeVideo:''};if(values.recodeVideo)values={...values,remuxVideo:''};
+ if(values.concatPlaylist&&values.concatPlaylist!=='never')values={...values,lazyPlaylist:false};if(values.lazyPlaylist)values={...values,concatPlaylist:'never'};
+ saveChain=saveChain.catch(()=>{}).then(async()=>{settings=await api.settings.save(values);syncSettings();});return saveChain;
+}
 function openSettings(id='general-settings'){
  if($('#url-options').matches(':popover-open'))$('#url-options').hidePopover();
  $('#settings-search').value='';$$('.settings-tabs button').forEach(n=>n.classList.toggle('active',n.dataset.tab===id));$$('.settings-panel').forEach(n=>{n.classList.toggle('active',n.id===id);n.hidden=false;});$$('.setting').forEach(n=>n.hidden=false);
@@ -46,14 +68,16 @@ $('#settings-search').oninput=()=>{
 const fields=['language','reducedMotion','ytDlpChannel','autoUpdateYtDlp','naming','playlist','downloadArchive','videoQuality','videoContainer','videoCodec','audioFormat','audioQuality','embedThumbnail','embedMetadata','embedChapters','subtitles','subtitleLang','sponsorBlock','sponsorCategories','ipMode','useAria2','aria2Connections','concurrentFragments','retries','fragmentRetries','fileAccessRetries','socketTimeout','speedLimit','throttleRate','proxyUrl','cookieMode','cookieBrowser','cookieLoginUrl','advancedMode','hideHelp','accurateTrim','keepFragments','unavailableFragments','userAgent','refererUrl','playlistItems'];
 fields.push('playlistRandom','playlistFolder','playlistNumber','lazyPlaylist','scriptBeforeEnabled','scriptAfterEnabled','scriptTimeout','scriptPolicy');
 fields.push('extractorRetries','extractorArgs','sleepRequests','sleepInterval','maxSleepInterval','sleepSubtitles','splitChapters','keepOriginal','fixupPolicy','writeInfoJson','writeDescription','writeThumbnail','autoSubtitles','embedSubtitles','subtitleFormat','playlistReverse','playlistPolicy','breakOnExisting','sponsorAction');
+fields.push('theme','accentColor','maxDownloads','systemNotifications','preventSleep','trayEnabled','forceOverwrites','restrictFilenames','remuxVideo','recodeVideo','formatSort','sponsorApi','sponsorMarkCategories','concatPlaylist','promptPlaylist');
 fields.forEach(id=>{const n=$('#'+id);if(!n)return;n.onchange=guarded(async()=>{try{await save({[id]:n.type==='checkbox'?n.checked:n.type==='number'?Number(n.value):n.value});$('#save-state').textContent=t('Kaydedildi','Saved');$('#save-state').classList.add('flash');setTimeout(()=>$('#save-state').classList.remove('flash'),800);if(['videoContainer','videoCodec'].includes(id)&&media)await analyze(true);}catch(e){syncSettings();throw e;}});});
 async function refreshTools(){
  tools=await api.tools();$('#ytdlp-version').textContent=tools.ytDlpVersion||'—';$('#ffmpeg-version').textContent=tools.ffmpegVersion||'—';$('#aria2-version').textContent=tools.aria2Version||'—';
  $('#engine-state').innerHTML='<i></i>'+esc(native?(tools.ytDlp&&tools.ffmpeg?t('Yerel motor hazır','Local engine ready'):t('Motor eksik','Engine missing')):t('Arayüz önizlemesi','Interface preview'));
- $('#status-version').textContent=tools.ytDlpVersion?'yt-dlp '+tools.ytDlpVersion:'Zenith 4.0.2';
+ $('#status-version').textContent=tools.ytDlpVersion?'yt-dlp '+tools.ytDlpVersion:'Zenith 4.1.0';
  $('#cookie-status').textContent=tools.sessionCookies?t('Yerel cookie dosyası hazır','Local cookie file ready'):tools.cookieCount?tools.cookieCount+' cookie':t('Henüz çerez yok','No cookies yet');
 }
 async function analyze(keepTrim=false){
+ selectedPlaylistItems=null;
  requireNative();const url=normalize($('#url').value);$('#url').value=url;const id=++inspectId,button=$('#inspect');button.disabled=true;$('#command-note').textContent=t('Bağlantı hazırlanıyor…','Preparing link…');
  try{const result=await api.inspect(url);if(id!==inspectId||normalize($('#url').value)!==url)return;
  media=result;mediaUrl=url;kind=$('#quick-kind').value;$('#media-heading').textContent=result.title||t('Medya','Media');$('#uploader').textContent=result.uploader||'';$('#media-duration').textContent=result.duration?time(result.duration):'';$('#thumb').src=/^https:\/\//.test(result.thumbnail||'')?result.thumbnail:'brand.png';$('#media-error').hidden=true;
@@ -82,24 +106,38 @@ function updateTrim(){try{const trim=trimValue(),total=media?.duration||1,start=
 async function start(){
  requireNative();if(!media||starting)return;
  if(normalize($('#url').value)!==mediaUrl)throw Error(t('Bağlantı değişti. Tekrar hazırla.','Link changed. Prepare it again.'));
+ if(settings.playlist&&settings.promptPlaylist&&media.isPlaylist&&selectedPlaylistItems===null){starting=true;$('#download').disabled=true;try{const items=await choosePlaylist();if(items===null)return;selectedPlaylistItems=items;}finally{starting=false;$('#download').disabled=false;}}
  const trim=trimValue();starting=true;$('#download').disabled=true;$('#media-error').hidden=true;
- try{const result=await api.start({url:mediaUrl,title:media.title,thumbnail:media.thumbnail,kind,videoQuality:selection?.height||settings.videoQuality,format:kind==='video'&&!settings.playlist?selection?.id:'',formatExt:kind==='video'?selection?.ext:'',audioFormat:kind==='audio'?selection?.id:settings.audioFormat,trim});
+ try{const result=await api.start({url:mediaUrl,title:media.title,thumbnail:media.thumbnail,kind,videoQuality:selection?.height||settings.videoQuality,format:kind==='video'&&!settings.playlist?selection?.id:'',formatExt:kind==='video'?selection?.ext:'',audioFormat:kind==='audio'?selection?.id:settings.audioFormat,trim,...(selectedPlaylistItems!==null?{playlistItems:selectedPlaylistItems}:{})});
  if(!jobs.has(result.id))jobs.set(result.id,{id:result.id,title:media.title,thumbnail:media.thumbnail,kind,percent:0,createdAt:Date.now(),detail:t('Hazırlanıyor','Preparing')});else Object.assign(jobs.get(result.id),{thumbnail:media.thumbnail,kind});
- $('#media-dialog').close();switchTab('downloads');renderJobs();persistJobs();
+ jobs.get(result.id).url=mediaUrl;$('#media-dialog').close();switchTab('downloads');renderJobs();persistJobs();
  }catch(e){$('#media-error').textContent=errorText(e);$('#media-error').hidden=false;}finally{starting=false;$('#download').disabled=false;}
 }
-function persistJobs(){try{localStorage.setItem(QUEUE_KEY,JSON.stringify([...jobs.values()].slice(-80)));}catch{}}
-function restoreJobs(){try{const saved=JSON.parse(localStorage.getItem(QUEUE_KEY)||'[]');if(Array.isArray(saved))saved.slice(-80).forEach(j=>{if(j&&typeof j.id==='string'&&typeof j.title==='string')jobs.set(j.id,{...j,done:true,failed:j.failed||!j.done,detail:!j.done?t('Uygulama kapatıldığında durdu','Stopped when the app closed'):j.detail});});}catch{}}
+function persistJobs(){try{sessionStorage.setItem(QUEUE_KEY,JSON.stringify([...jobs.values()].slice(-80)));}catch{}}
+function restoreJobs(){try{const saved=JSON.parse(sessionStorage.getItem(QUEUE_KEY)||'[]');if(Array.isArray(saved))saved.slice(-80).forEach(j=>{if(j&&typeof j.id==='string'&&typeof j.title==='string')jobs.set(j.id,{...j,done:true,failed:j.failed||!j.done,detail:!j.done?t('Uygulama kapatıldığında durdu','Stopped when the app closed'):j.detail});});}catch{}}
 function switchTab(value){tab=value;$('#downloads-tab').setAttribute('aria-selected',value==='downloads');$('#history-tab').setAttribute('aria-selected',value==='history');$('#job-list').setAttribute('aria-labelledby',value==='downloads'?'downloads-tab':'history-tab');renderJobs();}
 function renderJobs(){
  $('#queue-count').textContent=[...jobs.values()].filter(j=>!j.done).length;$('#history-count').textContent=history.length;
  const query=$('#search').value.trim().toLocaleLowerCase();
  const items=(tab==='history'?history.map(h=>({...h,done:true,percent:100,detail:h.warning?t('İsteğe bağlı işlem tamamlanamadı','Optional processing incomplete'):t('Kaydedildi','Saved')})):[...jobs.values()].reverse()).filter(j=>j.title?.toLocaleLowerCase().includes(query));
  $('#empty-state').hidden=items.length>0;$('#empty-state h1').textContent=query?t('Sonuç yok','No results'):tab==='history'?t('Geçmişin burada','Your history lives here'):t('Henüz indirme yok','No downloads yet');$('#empty-state p').textContent=tab==='history'?t('Tamamlanan dosyalar burada görünür.','Completed files appear here.'):t('Bağlantını yukarıya yapıştır.','Paste a link above.');
- $('#job-list').innerHTML=items.map(j=>'<article class="job" data-job="'+esc(j.id)+'"><img class="job-cover" src="'+esc(/^https:\/\//.test(j.thumbnail||'')?j.thumbnail:'brand.png')+'" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="job-body"><h3>'+esc(j.title)+'</h3><div class="progress"><progress max="100" value="'+Math.max(0,Math.min(100,j.percent||0))+'"></progress><span class="percent">'+Math.floor(j.percent||0)+'%</span></div><p class="detail">'+esc(j.detail||t('Hazırlanıyor','Preparing'))+'</p><span class="job-meta">'+esc(new Date(j.createdAt||Date.now()).toLocaleDateString(settings.language||'tr'))+'</span></div><div class="job-actions">'+(!j.done?'<button data-cancel="'+esc(j.id)+'">'+esc(t('İptal','Cancel'))+'</button>':history.some(h=>h.id===j.id)?'<button data-open="'+esc(j.id)+'">'+esc(t('Aç','Open'))+'</button><button data-reveal="'+esc(j.id)+'">'+esc(t('Klasör','Folder'))+'</button>':'')+'</div></article>').join('');
- $$('[data-cancel]').forEach(n=>n.onclick=guarded(()=>api.cancel(n.dataset.cancel)));$$('[data-open]').forEach(n=>n.onclick=guarded(()=>api.history.open(n.dataset.open,false)));$$('[data-reveal]').forEach(n=>n.onclick=guarded(()=>api.history.open(n.dataset.reveal,true)));
+ const action=(key,id,label,glyph)=>'<button data-'+key+'="'+esc(id)+'" aria-label="'+esc(t(label,label))+'" title="'+esc(t(label,label))+'">'+icon(glyph)+'</button>';
+ $('#job-list').innerHTML=items.map(j=>{
+  const status=j.failed?t('İndirme başarısız','Download failed'):j.done?t('Kaydedildi','Saved'):t('İndiriliyor','Downloading');
+  let actions=!j.done?action('cancel',j.id,'İptal','close'):'';
+  if(j.failed&&j.url)actions+=action('retry',j.id,'Tekrar dene','retry');
+  if(history.some(h=>h.id===j.id))actions+=action('open',j.id,'Aç','arrow')+action('reveal',j.id,'Klasör','folder');
+  if(j.done)actions+=action('remove',j.id,'Kaydı kaldır','close');
+  return '<article class="job '+(j.failed?'failed':'')+'" data-job="'+esc(j.id)+'"><span class="job-state">'+esc(status)+'</span><img class="job-cover" src="'+esc(/^https:\/\//.test(j.thumbnail||'')?j.thumbnail:'brand.png')+'" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="job-body"><h3>'+esc(j.title)+'</h3><div class="progress"><progress max="100" value="'+Math.max(0,Math.min(100,j.percent||0))+'"></progress><span class="percent">'+Math.floor(j.percent||0)+'%</span></div><p class="detail">'+esc(j.detail||t('Hazırlanıyor','Preparing'))+'</p></div><div class="job-actions">'+actions+'</div></article>';
+ }).join('');
+ $$('[data-cancel]').forEach(n=>n.onclick=guarded(()=>api.cancel(n.dataset.cancel)));
+ $$('[data-open]').forEach(n=>n.onclick=guarded(()=>api.history.open(n.dataset.open,false)));
+ $$('[data-reveal]').forEach(n=>n.onclick=guarded(()=>api.history.open(n.dataset.reveal,true)));
+ $$('[data-remove]').forEach(n=>n.onclick=guarded(async()=>{requireNative();if(await api.history.remove(n.dataset.remove)){jobs.delete(n.dataset.remove);await refreshHistory();persistJobs();}}));
+ $$('[data-retry]').forEach(n=>n.onclick=guarded(async()=>{const job=jobs.get(n.dataset.retry);if(job?.url){$('#url').value=job.url;await analyze();}}));
  $('#status-summary').textContent=[...jobs.values()].some(j=>!j.done)?t('İndiriliyor','Downloading'):t('Hazır','Ready');
 }
+
 function paintProgress(j){if(tab!=='downloads')return;const row=$$('.job').find(n=>n.dataset.job===j.id);if(!row)return;row.querySelector('progress').value=j.percent||0;row.querySelector('.percent').textContent=Math.floor(j.percent||0)+'%';row.querySelector('.detail').textContent=j.detail||'';}
 async function refreshHistory(){history=await api.history.get();renderJobs();}
 async function refreshProfiles(){const profiles=await api.profiles.list();$('#profiles-list').innerHTML=profiles.map(p=>'<div class="profile-item"><span>'+esc(p.name)+'</span><button class="soft" data-profile="'+esc(p.id)+'">'+esc(t('Kullan','Use'))+'</button></div>').join('');$$('[data-profile]').forEach(n=>n.onclick=guarded(async()=>{requireNative();settings=await api.profiles.load(n.dataset.profile);$('#active-profile').textContent=profiles.find(p=>p.id===n.dataset.profile)?.name||t('Varsayılan','Default');syncSettings();toast(t('Profil seçildi','Profile selected'));}));}
@@ -136,10 +174,10 @@ api.onDownload(async e=>{
 api.onCookiesUpdated(guarded(async e=>{toast(e.message);settings=await api.settings.get();syncSettings();await refreshTools();}));api.onEngineUpdated(guarded(async e=>{toast(e.error||t('yt-dlp güncellendi','yt-dlp updated'));await refreshTools();}));
 document.addEventListener('keydown',e=>{const editable=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);if(e.ctrlKey&&e.key===','){e.preventDefault();openSettings();}if(e.ctrlKey&&e.key.toLowerCase()==='l'){e.preventDefault();$('#url').focus();$('#url').select();}if(e.ctrlKey&&e.key.toLowerCase()==='v'&&!editable&&!$('dialog[open]')){e.preventDefault();$('#paste').click();}});
 let quickSection='',selectedScripts={},preTrim={enabled:false,start:'00:00',end:''};
-const quickMap={format:['Format ve kalite','video-settings'],subtitles:['Altyazı','subtitles-settings'],auth:['Oturum','auth-settings'],playlist:['Playlist','playlist-settings'],scripts:['Scripts','scripts-settings'],trim:['Video kırpma','postprocess-settings']};
+const quickMap={format:['Format ve kalite','video-settings'],subtitles:['Altyazı','subtitles-settings'],auth:['Oturum','auth-settings'],sponsor:['SponsorBlock','sponsor-settings'],playlist:['Playlist','playlist-settings'],scripts:['Scripts','scripts-settings'],trim:['Video kırpma','postprocess-settings']};
 function syncQuickIndicators(){
  $('#quick-format').textContent=$('#quick-kind').value==='audio'?'Yalnızca ses':Number(settings.videoQuality)>=8640?'En yüksek':(settings.videoQuality||1080)+'p';
- const flags={subtitles:settings.subtitles,playlist:settings.playlist,auth:settings.cookieMode!=='none',scripts:settings.scriptBeforeEnabled||settings.scriptAfterEnabled};
+ const flags={subtitles:settings.subtitles,playlist:settings.playlist,auth:settings.cookieMode!=='none',sponsor:settings.sponsorBlock,scripts:settings.scriptBeforeEnabled||settings.scriptAfterEnabled};
  $$('[data-quick]').forEach(n=>n.setAttribute('aria-pressed',String(!!flags[n.dataset.quick])));
  $('#trim-quick').setAttribute('aria-pressed',String(preTrim.enabled));
 }
@@ -159,6 +197,7 @@ function renderQuick(){
   html='<div class="setting"><div><b>Yalnızca ses indir</b><small>Videodan ses çıkar; tercihlerin korunur.</small></div><label class="switch"><input id="quick-audio" type="checkbox" aria-label="Yalnızca ses indir" '+($('#quick-kind').value==='audio'?'checked':'')+'></label></div>';
   html+=$('#quick-kind').value==='audio'?quickSelect('audioFormat','Ses dosyası',[['mp3','MP3'],['m4a','M4A'],['opus','Opus'],['flac','FLAC'],['wav','WAV'],['aac','AAC'],['vorbis','OGG'],['alac','ALAC']]):quickSelect('videoQuality','İndirme kalitesi',[[8640,'En yüksek kalite'],[2160,'4K · 2160p'],[1440,'2K · 1440p'],[1080,'Full HD · 1080p'],[720,'HD · 720p'],[480,'480p']])+quickSelect('videoContainer','Dosya türü',[['mp4','MP4'],['mkv','MKV'],['webm','WebM'],['mov','MOV'],['avi','AVI'],['flv','FLV']]);
  }else if(quickSection==='subtitles')html=quickToggle('subtitles','Altyazıları indir','Kapalı olduğunda altyazı tercihlerin korunur.')+quickToggle('autoSubtitles','Otomatik altyazıları da ekle')+quickToggle('embedSubtitles','Dosyaya göm');
+ else if(quickSection==='sponsor')html=quickToggle('sponsorBlock','SponsorBlock')+quickSelect('sponsorAction','Seçili bölümler',[['remove','Videodan çıkar'],['mark','Bölüm olarak işaretle']])+quickSelect('sponsorCategories','Sponsor kategorileri',[['sponsor','Sponsor'],['sponsor,selfpromo,interaction','Sponsor + tanıtım'],['sponsor,selfpromo,interaction,intro,outro,preview,filler','Tüm bölümler']]);
  else if(quickSection==='auth')html=quickSelect('cookieMode','Cookie kaynağı',[['none','Kapalı'],['session','Yerel oturum / dosya'],['browser','Tarayıcı']])+(settings.cookieMode==='browser'?quickSelect('cookieBrowser','Tarayıcı',[['firefox','Firefox'],['chrome','Chrome'],['edge','Edge'],['brave','Brave']]):'<p class="privacy-note">Oturum açma ve cookie dosyası için ayrıntılı ayarlara geç.</p>');
  else if(quickSection==='playlist')html=quickToggle('playlist','Playlist indir','Bağlantı bir liste içeriyorsa seçili videoları indirir.')+quickSelect('playlistItems','Liste aralığı',[['','Tümü'],['1:5','İlk 5'],['1:10','İlk 10'],['1:25','İlk 25'],['1:50','İlk 50'],['1:100','İlk 100']])+quickToggle('playlistFolder','Ayrı klasöre kaydet')+quickToggle('playlistNumber','Sıra numarası ekle');
  else if(quickSection==='scripts')html=quickToggle('scriptBeforeEnabled','İndirmeden önce çalıştır',selectedScripts.before?'Seçili yerel .ps1 dosyası':'Önce ayrıntılı ayarlardan dosya seç.')+quickToggle('scriptAfterEnabled','Kaydedildikten sonra çalıştır',selectedScripts.after?'Seçili yerel .ps1 dosyası':'Önce ayrıntılı ayarlardan dosya seç.');
