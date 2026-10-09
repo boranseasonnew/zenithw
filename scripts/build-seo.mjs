@@ -52,7 +52,7 @@ function guidePage(lang, guide) {
 <body class="reader-body">
 <a class="guide-skip" href="#main">${lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}</a>
 <div class="guide-shell">
-<header class="guide-header"><a class="guide-brand" href="/" aria-label="ZenithW"><img src="/zenithw.png" width="28" height="28" alt="">ZenithW</a><nav aria-label="${lang === 'tr' ? 'Sayfa bağlantıları' : 'Page links'}"><a href="${guideRoot(lang)}">${lang === 'tr' ? 'Rehberler' : 'Guides'}</a><a href="${alternate}" lang="${lang === 'tr' ? 'en' : 'tr'}" hreflang="${lang === 'tr' ? 'en' : 'tr'}">${lang === 'tr' ? 'English' : 'Türkçe'}</a><a class="guide-open" href="/">${lang === 'tr' ? 'İndiriciyi aç' : 'Open downloader'} <span aria-hidden="true">↗</span></a></nav></header>
+<header class="guide-header"><a class="guide-brand" href="/" aria-label="ZenithW"><img src="/zenithw.png" width="28" height="28" alt="">ZenithW</a><nav aria-label="${lang === 'tr' ? 'Sayfa bağlantıları' : 'Page links'}"><a href="${guideRoot(lang)}">${lang === 'tr' ? 'Rehberler' : 'Guides'}</a><a class="guide-open" href="/">${lang === 'tr' ? 'İndiriciyi aç' : 'Open downloader'} <span aria-hidden="true">↗</span></a></nav></header>
 <main id="main"><nav class="guide-breadcrumb" aria-label="${lang === 'tr' ? 'İçerik yolu' : 'Breadcrumb'}"><a href="/">${lang === 'tr' ? 'Ana sayfa' : 'Home'}</a><span aria-hidden="true">/</span>${hub ? `<span>${lang === 'tr' ? 'Rehberler' : 'Guides'}</span>` : `<a href="${guideRoot(lang)}">${lang === 'tr' ? 'Rehberler' : 'Guides'}</a>`}</nav>
 <header class="guide-hero"><span class="guide-kicker">ZENITHW / ${lang === 'tr' ? 'KULLANIM REHBERLERİ' : 'PRACTICAL GUIDES'}</span><h1>${escape(heading)}</h1><p>${escape(lead)}</p>${hub ? '' : `<p class="guide-byline">${lang === 'tr' ? 'ZenithW ekibi · Güncellendi' : 'ZenithW team · Updated'} <time datetime="${GUIDE_DATE}">${lang === 'tr' ? '7 Ekim 2026' : 'October 7, 2026'}</time></p>`}</header>
 ${article}
@@ -70,9 +70,10 @@ for (const lang of ['tr', 'en']) {
   guides.forEach(guide => write(`${guideUrl(lang, guide.slug).slice(1)}.html`, guidePage(lang, guide)));
 }
 
-// Render the existing Turkish copy at build time; runtime language selection remains available.
+// About is authoritative static markup translated by the shared language catalog.
+// Older legal pages still render their trusted Turkish COPY at build time.
 // Only trusted checked-in COPY declarations are evaluated, with no browser or network API.
-for (const path of ['about.html', 'privacy.html', 'terms.html', 'dmca.html', 'about/privacy.html', 'about/terms.html']) {
+for (const path of ['privacy.html', 'terms.html', 'dmca.html']) {
   let source = read(path);
   const declaration = [...source.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].find(match => /const COPY\s*=/.test(match[1]));
   if (!declaration) throw new Error(`Missing trusted COPY declaration: ${path}`);
@@ -96,7 +97,6 @@ const homeBlock = `<!-- generated discovery content -->
   <section class="discovery-how"><h2>Nasıl kullanılır?</h2><ol class="guide-steps"><li>Profil adresi yerine kaydetmek istediğin paylaşımın bağlantısını kopyala.</li><li>Bağlantıyı yapıştırıp devam et. Video ve ses için otomatik, yalnızca ses için ses modunu kullan.</li><li>İndirme planını kontrol et ve indir. Kullanılabilir kalite, kaynak paylaşımın sunduğu akışlara bağlıdır.</li></ol></section>
   <div class="discovery-heading"><h2>İlk bağlantından son dosyana.</h2><a href="/guides">Tüm rehberler ↗</a></div>
   ${cards('tr')}
-  <a class="discovery-english" href="/en/guides" lang="en" hreflang="en">Read the guides in English →</a>
   <section class="discovery-faq"><h2>Sık sorulan sorular</h2>
     <details><summary>ZenithW ücretsiz mi, hesap gerekiyor mu?</summary><p>Web araçları ücretsizdir ve ZenithW hesabı açmanı gerektirmez. Kaynak platformun erişim kısıtları yine geçerlidir.</p></details>
     <details><summary>YouTube bağlantıları webde çalışıyor mu?</summary><p>YouTube indirmeleri şu anda web sürümünde kapalıdır. <a href="/app">Android</a> veya <a href="/pc-app">Windows</a> uygulamasında cihaz bağlantın üzerinden deneyebilirsin. Erişim yine videoya ve kaynak koşullarına bağlıdır.</p></details>
@@ -125,7 +125,7 @@ for (const file of walk(frontend).filter(file => file.endsWith('.html'))) {
   const path = relative(frontend, file).replaceAll('\\', '/');
   let source = read(path).replace(/href="\/(app|pc-app|convert|remux|support)\.html"/g, 'href="/$1"');
   if (['convert.html', 'remux.html', 'app.html', 'pc-app.html', 'support.html', 'about.html'].includes(path) && !source.includes('class="guide-entry"')) {
-    source = source.replace('</main>', '<nav class="guide-entry" aria-label="Kullanım rehberleri"><a href="/guides">Kullanım rehberleri ↗</a><a href="/en/guides" lang="en">Guides in English ↗</a></nav>\n</main>');
+    source = source.replace('</main>', '<nav class="guide-entry" aria-label="Kullanım rehberleri"><a href="/guides">Kullanım rehberleri ↗</a></nav>\n</main>');
     if (!source.includes('href="/guides.css"') && !source.includes('/cache-assets/guides.')) source = source.replace('</head>', '<link rel="stylesheet" href="/guides.css">\n</head>');
   }
   write(path, source);

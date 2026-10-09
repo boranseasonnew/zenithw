@@ -12,9 +12,6 @@
 /167845b79089edc80bec2cdad1b9c9ee.txt
   Cache-Control: public, max-age=3600, must-revalidate
 
-/about-locales.js
-  Cache-Control: public, max-age=3600, must-revalidate
-
 /app-pages.js
   Cache-Control: public, max-age=3600, must-revalidate
 

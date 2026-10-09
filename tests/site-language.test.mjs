@@ -41,13 +41,13 @@ test('All release titles, introductions and sections have translations in eight 
   }
 });
 
-function runtime(saved='ru'){
+function runtime(saved='ru', {settings=true, browser=['ja-JP']}={}){
   const pending=[], writes=[];
   const select={value:'',setAttribute(){},removeAttribute(){},hasAttribute:()=>false,replaceChildren(){}};
-  const document={readyState:'complete',documentElement:{},querySelectorAll:()=>[],getElementById:()=>select,
-    createElement:()=>({}),querySelector:()=>null};
+  const document={readyState:'complete',documentElement:{},querySelectorAll:()=>[],getElementById:()=>settings?select:null,
+    createElement:tag=>{assert.equal(tag,'option');return {};},querySelector:()=>null};
   const window={dispatchEvent(){}};
-  const context=vm.createContext({window,document,navigator:{languages:['ja-JP']},console:{error(){}},
+  const context=vm.createContext({window,document,navigator:{languages:browser},console:{error(){}},
     CustomEvent:class{},localStorage:{getItem:()=>saved,setItem:(key,value)=>writes.push([key,value])},
     fetch:url=>new Promise(resolve=>pending.push({url,resolve}))});
   vm.runInContext(read('site-language.js'),context);
@@ -72,4 +72,14 @@ test('A slow earlier selection cannot replace a newer language choice',async()=>
   state.complete(2);await latest;state.complete(1);await earlier;
   assert.equal(state.api.current,'ja');
   assert.deepEqual(state.writes,[['zw_lang','ja']]);
+});
+
+test('Pages without a Settings selector detect browser language without saving a preference',async()=>{
+  for(const [browser,expected] of [[['es-ES','de-DE'],'de'],[['vi-VN'],'vi'],[['ko-KR'],'en']]){
+    const state=runtime(null,{settings:false,browser});
+    state.complete(0);await state.api.ready;
+    assert.equal(state.api.current,expected);
+    assert.equal(state.document.documentElement.lang,expected);
+    assert.deepEqual(state.writes,[]);
+  }
 });
