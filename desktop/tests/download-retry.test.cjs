@@ -2,10 +2,13 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { retryDownload, redactDiagnostic } = require('../src/download-retry.cjs');
 
-test('aria2 transport failure switches to native and refreshes only once', () => {
+test('aria2 transport failure switches to native, then permits one clean range recovery', () => {
   assert.deepEqual(retryDownload({ attempt: 0, code: 1, error: 'ERROR: aria2c exited with code 22', useAria2: true }),
     { useAria2: false, refreshed: true, reason: 'aria2' });
-  assert.equal(retryDownload({ attempt: 1, code: 1, error: 'HTTP Error 403: Forbidden', useAria2: false, refreshed: true }), null);
+  assert.deepEqual(retryDownload({ attempt: 1, code: 1, error: 'HTTP Error 403: Forbidden', useAria2: false, refreshed: true }),
+    { useAria2: false, refreshed: true, restarted: true, reason: 'range' });
+  assert.equal(retryDownload({ attempt: 2, code: 1, error: 'HTTP Error 403: Forbidden', useAria2: false, refreshed: true, restarted: true }), null);
+  assert.equal(retryDownload({ attempt: 1, code: 1, error: 'HTTP Error 403: Forbidden', useAria2: false, refreshed: true, restarted: true }), null);
 });
 test('expired native media URLs are re-extracted without an unbounded retry', () => {
   assert.equal(retryDownload({ attempt: 0, code: 1, error: 'HTTP Error 403: Forbidden', useAria2: false }).reason, 'expired');

@@ -1,6 +1,6 @@
 {
   "name": "zenithw-desktop",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "private": true,
   "author": "ZenithW contributors",
   "description": "Zenith — Windows media workspace",
@@ -46,7 +46,7 @@
         "portable"
       ],
       "icon": "build/icon.ico",
-      "artifactName": "Zenith-4.0.1-Windows-Setup.exe"
+      "artifactName": "Zenith-4.1.0-Windows-Setup.exe"
     },
     "nsis": {
       "oneClick": false,
@@ -55,11 +55,11 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "ZenithW",
-      "uninstallDisplayName": "ZenithW 4.0.1",
+      "uninstallDisplayName": "ZenithW 4.1.0",
       "guid": "b488ee39-dfc6-4cad-9cf7-16e068d552e3"
     },
     "portable": {
-      "artifactName": "Zenith-4.0.1-Windows.exe",
+      "artifactName": "Zenith-4.1.0-Windows.exe",
       "requestExecutionLevel": "user"
     }
   }

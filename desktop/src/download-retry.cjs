@@ -1,11 +1,16 @@
 // Retry transport failures without changing cookies, proxy, or the selected quality.
-function retryDownload({ attempt, code, error, useAria2, refreshed }) {
+function retryDownload({ attempt, code, error, useAria2, refreshed, restarted }) {
   if (code === 0 || attempt >= 2) return null;
   if (useAria2 && /aria2c exited with code \d+/i.test(error)) {
     return { useAria2: false, refreshed: true, reason: 'aria2' };
   }
   if (!refreshed && /(?:HTTP Error|HTTP status|status=)\s*(?:403|410)\b/i.test(error)) {
     return { useAria2: false, refreshed: true, reason: 'expired' };
+  }
+  // A freshly extracted URL may still reject a range resumed from the failed
+  // transport. Allow one clean native download, with bounded HTTP chunks.
+  if (!restarted && /(?:HTTP Error|HTTP status|status=)\s*(?:403|410)\b/i.test(error)) {
+    return { useAria2: false, refreshed: true, restarted: true, reason: 'range' };
   }
   return null;
 }
