@@ -1,0 +1,41 @@
+{
+  "productName": "ZenithW Desktop",
+  "version": "4.1.0",
+  "architecture": "x64",
+  "price": "Free",
+  "categorySuggestion": "Photo & video",
+  "website": "https://zenithw.space/pc-app",
+  "support": "https://github.com/boranseasonnew/zenithw/issues",
+  "privacyPolicy": "https://github.com/boranseasonnew/zenithw/blob/main/desktop/store/privacy.md",
+  "license": "AGPL-3.0-only; third-party components retain their upstream licenses",
+  "listings": {
+    "tr-TR": {
+      "shortDescription": "Video ve ses bağlantılarını Windows'ta sade bir arayüzle indir.",
+      "description": "ZenithW; desteklenen kaynaklardaki video ve ses bağlantıları için ücretsiz, açık kaynak bir Windows aracıdır. Format ve kalite seç, indirmeleri sıraya al, altyazı ve metadata seçeneklerini düzenle. İşlemler cihazında yt-dlp ve FFmpeg ile yürütülür. Çerez oturumu, proxy, oynatma listesi ve SponsorBlock ayarları isteğe bağlıdır. Ayarlar sonraki açılışlarda korunur; geçmiş her uygulama açılışında temizlenir. Yalnızca indirme ve kullanma hakkına sahip olduğun içerikler için kullan. Kullanılabilir kaynaklar ve formatlar kaynağın erişim koşullarına bağlıdır.",
+      "features": ["Video ve ses için format ve kalite seçimi", "Liste ve kart görünümü, indirme kuyruğu", "Altyazı, metadata, oynatma listesi ve SponsorBlock seçenekleri", "İsteğe bağlı çerez oturumu ve proxy", "Kararlı veya Nightly yt-dlp motoru", "Türkçe, İngilizce, Almanca ve Rusça arayüz"],
+      "releaseNotes": "İndirme kurtarma akışı iyileştirildi. Yeni ayar bölümleri ve kompakt kart görünümü eklendi. Geçmiş yeni oturumda temizlenir; tercihler korunur. Store'da motor güncellemesi kullanıcı klasöründe çalışır.",
+      "keywords": ["video", "ses", "medya", "indirme", "altyazı"]
+    },
+    "en-US": {
+      "shortDescription": "Download video and audio links with a simple Windows interface.",
+      "description": "ZenithW is a free, open-source Windows tool for video and audio links from supported sources. Choose formats and quality, queue downloads, and configure subtitles and metadata. Processing runs on your device using yt-dlp and FFmpeg. Cookie sessions, proxy, playlist and SponsorBlock settings are optional. Preferences survive restarts; history clears when a new app session starts. Use only content you have the right to download and use. Available sources and formats depend on the source's access conditions.",
+      "features": ["Video and audio format and quality selection", "List and card views with a download queue", "Subtitle, metadata, playlist and SponsorBlock options", "Optional cookie session and proxy", "Stable or Nightly yt-dlp engine", "Turkish, English, German and Russian interface"],
+      "releaseNotes": "Improved download recovery. Added settings sections and a compact card view. History clears in a new session while preferences remain. The Store edition updates its engine in a writable user folder.",
+      "keywords": ["video", "audio", "media", "download", "subtitles"]
+    },
+    "de-DE": {
+      "shortDescription": "Video- und Audiolinks mit einer einfachen Windows-Oberfläche herunterladen.",
+      "description": "ZenithW ist ein kostenloses, quelloffenes Windows-Werkzeug für Video- und Audiolinks aus unterstützten Quellen. Wählen Sie Format und Qualität, verwalten Sie die Warteschlange und stellen Sie Untertitel und Metadaten ein. Die Verarbeitung erfolgt auf Ihrem Gerät mit yt-dlp und FFmpeg. Cookie-Sitzungen, Proxy, Wiedergabelisten und SponsorBlock sind optional. Einstellungen bleiben nach einem Neustart erhalten; der Verlauf wird beim Start einer neuen Sitzung gelöscht. Verwenden Sie nur Inhalte, die Sie herunterladen und nutzen dürfen. Verfügbare Quellen und Formate hängen von den Zugangsbedingungen der Quelle ab.",
+      "features": ["Format- und Qualitätsauswahl für Video und Audio", "Listen- und Kartenansicht mit Warteschlange", "Untertitel, Metadaten, Wiedergabelisten und SponsorBlock", "Optionale Cookie-Sitzung und Proxy", "Stabile oder Nightly-Version von yt-dlp", "Türkische, englische, deutsche und russische Oberfläche"],
+      "releaseNotes": "Verbesserte Wiederherstellung fehlgeschlagener Downloads. Neue Einstellungsbereiche und kompakte Kartenansicht. Der Verlauf wird beim Sitzungsstart gelöscht; Einstellungen bleiben erhalten. Die Store-Ausgabe aktualisiert den Motor im beschreibbaren Benutzerordner.",
+      "keywords": ["Video", "Audio", "Medien", "Download", "Untertitel"]
+    },
+    "ru-RU": {
+      "shortDescription": "Скачивайте видео и аудио по ссылкам через простой интерфейс Windows.",
+      "description": "ZenithW — бесплатный инструмент для Windows с открытым исходным кодом, работающий с видео- и аудиоссылками из поддерживаемых источников. Выбирайте формат и качество, управляйте очередью, настраивайте субтитры и метаданные. Обработка выполняется на вашем устройстве с помощью yt-dlp и FFmpeg. Сеансы с cookies, прокси, плейлисты и SponsorBlock используются по желанию. Настройки сохраняются после перезапуска; история очищается при запуске нового сеанса приложения. Скачивайте только контент, который вы вправе скачивать и использовать. Доступность источников и форматов зависит от условий доступа к источнику.",
+      "features": ["Выбор формата и качества видео и аудио", "Списки, карточки и очередь скачивания", "Субтитры, метаданные, плейлисты и SponsorBlock", "Необязательные cookies и прокси", "Стабильный или Nightly-движок yt-dlp", "Турецкий, английский, немецкий и русский интерфейс"],
+      "releaseNotes": "Улучшено восстановление скачивания после ошибок. Добавлены разделы настроек и компактные карточки. История очищается в новом сеансе, настройки сохраняются. Версия для Store обновляет движок в доступной для записи папке пользователя.",
+      "keywords": ["видео", "аудио", "медиа", "скачивание", "субтитры"]
+    }
+  }
+}
