@@ -1,39 +1,39 @@
 {
   "locales/tr.json": {
-    "url": "/cache-assets/tr.0ba797242463.json",
-    "sha256": "0ba797242463cd45015620553956ede925ee909e8ce3f8481d996f90e3a4bc7e"
+    "url": "/cache-assets/tr.905186bf701c.json",
+    "sha256": "905186bf701c19f1bb87ace49c66649a2b45c4d0b86e5f39346bd867b19e2530"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.d3618424cefe.json",
-    "sha256": "d3618424cefed9a9d96829901be171de9289719cb698276cb1baab71dbd369ee"
+    "url": "/cache-assets/en.5ca3d8e58a0d.json",
+    "sha256": "5ca3d8e58a0d86d87460dc8c1798a55ebce2e53d91c28dfcd28c781c17bd3756"
   },
   "locales/fr.json": {
-    "url": "/cache-assets/fr.de0ecba6a736.json",
-    "sha256": "de0ecba6a736ffda727454f1d36c980546d7b91219e73d04449b0ca2182172f6"
+    "url": "/cache-assets/fr.417ddfb29d1f.json",
+    "sha256": "417ddfb29d1f6fb3935bd0a94f7baa95ef6f13e56f2f17902780b881b0a3afd4"
   },
   "locales/de.json": {
-    "url": "/cache-assets/de.b079cc9af2b9.json",
-    "sha256": "b079cc9af2b928b317155ead6f73ad6dd1635c5b39f5dcf05d4f3a57e5dbef2d"
+    "url": "/cache-assets/de.5d68428bdb02.json",
+    "sha256": "5d68428bdb024f662c15e0832e055b25481ddb2f35fa20ef556d90d8803a437b"
   },
   "locales/ru.json": {
-    "url": "/cache-assets/ru.01068225411d.json",
-    "sha256": "01068225411d16c9825c7cf87188c852ac22ef5c6e755fbab6a1d1bc52fbe44f"
+    "url": "/cache-assets/ru.49656efa53ee.json",
+    "sha256": "49656efa53eecd89c980893b58170e8bbb69439a4317bc9d63ec7e04115e18ed"
   },
   "locales/vi.json": {
-    "url": "/cache-assets/vi.4415d5ad4306.json",
-    "sha256": "4415d5ad4306da8c372fb0d5b430f703dbffc19b343ab424aa4bac82584fab3b"
+    "url": "/cache-assets/vi.79b76c56bf6d.json",
+    "sha256": "79b76c56bf6d25c0e1f20637ac8f25edfa9c37c88933ff6f517995de09a77c01"
   },
   "locales/zh.json": {
-    "url": "/cache-assets/zh.e8634e143023.json",
-    "sha256": "e8634e143023f145658b69b0ed9438e793fdef788277695d85babe6b02178e5d"
+    "url": "/cache-assets/zh.8244c2c766d7.json",
+    "sha256": "8244c2c766d7a5c5d71a1e58c7155e95d4835ccb53b262eec1fec0c7281147ec"
   },
   "locales/ja.json": {
-    "url": "/cache-assets/ja.1ff04cce2b6f.json",
-    "sha256": "1ff04cce2b6f601040b19b72a31e437901c5df14d46bcb9e52df6b8ea2263aaf"
+    "url": "/cache-assets/ja.db0d5b3f7136.json",
+    "sha256": "db0d5b3f71365075ca8c9af7069cf29bc57474983d06c300bfd91c00d93f1a7c"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.eb5509a0a82c.js",
-    "sha256": "eb5509a0a82cef9ea54b8b271666ea6850d71003afa83a885d4208e9ded6d4b5"
+    "url": "/cache-assets/site-language.9eeb2c11c265.js",
+    "sha256": "9eeb2c11c265bb1d7dd90eaa58ad27c213e5ca9e29c6f5eb81cb8c8ec70dff42"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.9b758e0850a1.css",

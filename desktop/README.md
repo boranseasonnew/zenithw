@@ -1,4 +1,4 @@
-# Zenith Desktop 4.0.1
+# Zenith Desktop 4.1.0
 
 ZenithW'nin kurulu 0.3.4 sürümündeki kendi Electron kaynakları kurtarılarak oluşturulan Windows uygulaması. Stacher'ın düzeni ve erişilebilir seçenekleri incelendi; Stacher kodu, ikonları veya görselleri kullanılmadı.
 
@@ -60,3 +60,7 @@ Kaynak: kurulu ZenithW'nin `resources/app.asar` dosyası.
 SHA-256: `1745f5a2bb387bb4ca6737d12fd4bf2d228e006207fd5830b568819d0541d079`.
 
 Orijinal kurtarma kopyası, Git dışında `ZenithW-Builds/Desktop-source-recovered` klasöründe saklanır. Özel ayarlar, oturum dosyaları, indirme geçmişi ve kurulu uygulama verileri kaynak paketine dahil edilmez.
+
+## 4.1.0
+
+Kategorili ayarlar, açık/koyu/sistem teması, vurgu renkleri, bildirimler, sistem tepsisi ve indirme sırasında uyku koruması eklendi. Eşzamanlı indirme sınırı, dosya adı, üzerine yazma, remux/recode, format sıralaması, liste içinden video seçimi, liste birleştirme ve ayrı SponsorBlock işaretleme ayarları motorla bağlantılıdır. Geçmiş uygulama yeniden açıldığında temizlenir; dosyalar ve ayarlar korunur.

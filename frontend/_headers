@@ -21,135 +21,6 @@
 /app.d4596317c4a7.js
   Cache-Control: public, max-age=3600, must-revalidate
 
-/cache-assets/GeistMono-Variable.afaacc4c5fbb.woff2
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/app-pages.11a0a76e8541.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/app-pages.3c5128732b13.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/app-pages.846a01737927.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/app.3e949c710b02.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/app.92a2eed5ae77.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/compare.a0575b77ab4c.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/de.b079cc9af2b9.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/en.d3618424cefe.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/fonts.4ed1cddfa4da.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/fr.de0ecba6a736.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/guides.8e81aba3443d.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/info-page.91c864ca5131.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/info-page.a3e72fe763fa.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/info.51fddf091785.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/ja.1ff04cce2b6f.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/pc-app.07763c18c6a5.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/pc-app.761106a3358d.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/pc-app.7c88e28885f7.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/pc-app.94b3db21e2e0.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/pc-app.ee6f672aa28f.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/quick-options.3685d3025bcb.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/quick-options.81896bec3af4.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/ru.01068225411d.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/settings.33ee340439ab.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/settings.b7e8ef229d29.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/setup.54a8e8c46b20.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/setup.b07d68cf347e.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/site-language.9b758e0850a1.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/site-language.eb5509a0a82c.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/style.0a44b1a04019.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/tr.0ba797242463.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates-archive.834ee93b2c57.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates-core.0e60c5d484ed.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates-core.1c982927fe55.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates-core.1d4d137b3dec.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates-core.274b1db6639b.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates.a6d7da63ee50.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/updates.a9ce0355196e.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/vi.4415d5ad4306.json
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/workspace.989ccacf2862.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/workspace.ed6a7db72c0d.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/cache-assets/zh.e8634e143023.json
-  Cache-Control: public, max-age=31536000, immutable
-
 /compare.a0575b77ab4c.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -288,6 +159,9 @@
 
 /zenithw.png
   Cache-Control: public, max-age=3600, must-revalidate
+
+/cache-assets/*
+  Cache-Control: public, max-age=31536000, immutable
 
 /maintenance
   Cache-Control: no-store, max-age=0, must-revalidate
