@@ -168,7 +168,7 @@ async function toolVersion(name, args = ['--version']) {
 function createWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, 'brand.png'), width: 1220, height: 790, minWidth: 780, minHeight: 540, autoHideMenuBar: true,
-    backgroundColor: '#090a0c', title: 'Zenith 4.0.1', titleBarStyle: 'hidden', titleBarOverlay: { color: '#17181b', symbolColor: '#bfc2ca', height: 44 },
+    backgroundColor: '#090a0c', title: `Zenith ${app.getVersion()}`, titleBarStyle: 'hidden', titleBarOverlay: { color: '#17181b', symbolColor: '#bfc2ca', height: 44 },
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true }
   });
   const appHtml = path.join(__dirname, 'app.html');
@@ -565,7 +565,7 @@ handleMain('download:start', async (_, request) => {
     emit(job, record.cancelled ? 'cancelled' : 'failed', { detail: error.message });
     return { id: job.id };
   }
-  let attempt = 0, transportSettings = current, refreshed = false;
+  let attempt = 0, transportSettings = current, refreshed = false, restarted = false;
   const attempts = [];
   const launch = () => {
     const child = spawn(requiredTool('yt-dlp.exe'), args, { windowsHide: true });
@@ -597,16 +597,18 @@ handleMain('download:start', async (_, request) => {
     child.on('close', async (code) => {
       if (record.terminal) return;
       if (record.cancelled) return finishCancelled();
-      attempts.push({ downloader: transportSettings.useAria2 ? 'aria2' : 'native', code, detail: redactDiagnostic(errorTail) });
-      const retry = retryDownload({ attempt, code, error: errorTail + stdoutTail, useAria2: transportSettings.useAria2, refreshed });
+      attempts.push({ downloader: transportSettings.useAria2 ? 'aria2' : 'native', restarted, code, detail: redactDiagnostic(errorTail) });
+      const retry = retryDownload({ attempt, code, error: errorTail + stdoutTail, useAria2: transportSettings.useAria2, refreshed, restarted });
       if (retry) {
         attempt += 1;
         refreshed = retry.refreshed;
+        restarted = !!retry.restarted;
         transportSettings = { ...current, useAria2: retry.useAria2 };
         // Re-extract the original page and validate fresh media URLs before resuming.
         // Never reuse cached signed URLs or change the user's authentication settings.
         args = downloadArgs(job, transportSettings, workDir);
         args.splice(args.length - 1, 0, '--check-formats');
+        if (restarted) args.splice(args.length - 1, 0, '--no-continue', '--http-chunk-size', '1M');
         emit(job, 'progress', { percent: 0, detail: local(retry.reason === 'aria2' ? 'Aria2 başarısız; normal indirme deneniyor…' : 'İndirme bağlantısı yenileniyor…') });
         launch();
         return;

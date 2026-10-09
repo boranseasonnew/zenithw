@@ -9,7 +9,7 @@ function loadMain({ directory, childProcess = require('node:child_process'), onE
   const handlers = new Map();
   const electron = {
     app: { isPackaged: false, setPath: (key, value) => { paths[key] = value; }, getPath: key => paths[key],
-      setAppUserModelId() {}, getVersion: () => '4.0.1', getLocale: () => 'en', whenReady: () => ({ then() {} }), on() {} },
+      setAppUserModelId() {}, getVersion: () => require('../package.json').version, getLocale: () => 'en', whenReady: () => ({ then() {} }), on() {} },
     ipcMain: { handle: (key, handler) => handlers.set(key, handler) }, session: {}, BrowserWindow: {}, dialog: {}, shell: {}
   };
   const localRequire = createRequire(main);

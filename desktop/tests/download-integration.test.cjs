@@ -26,17 +26,23 @@ test('real job flow retries aria2 with fresh native arguments and retains settin
   assert.ok(fs.existsSync(path.resolve(__dirname, '../resources/bin/deno.exe')));
   await api.invoke('download:start', { url: 'https://video.test/watch', title: 'Test', kind: 'video', format: '299+140/best' });
   await done;
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   assert.ok(calls[0].includes('--downloader'));
   assert.ok(!calls[1].includes('--downloader'));
   assert.ok(calls[1].includes('--check-formats'));
+  assert.ok(!calls[1].includes('--no-continue'));
+  assert.ok(!calls[2].includes('--downloader'));
+  assert.ok(calls[2].includes('--check-formats'));
+  assert.ok(calls[2].includes('--no-continue'));
+  assert.equal(calls[2][calls[2].indexOf('--http-chunk-size') + 1], '1M');
   assert.equal(calls[0].at(-1), calls[1].at(-1));
   assert.equal(api.invoke('settings:get').useAria2, true);
   assert.equal(api.activeJobs.size, 0);
   const recovery = events.find(event => event.type === 'failed').detail.split('Kurtarma dosyaları: ')[1];
   const report = fs.readFileSync(path.join(recovery, 'failure.json'), 'utf8');
   assert.doesNotMatch(report, /sig=private/);
-  assert.equal(JSON.parse(report).attempts.length, 2);
+  assert.equal(JSON.parse(report).attempts.length, 3);
+  assert.equal(JSON.parse(report).attempts[2].restarted, true);
   assert.equal(events.filter(event => event.type === 'failed').length, 1);
 });
 
