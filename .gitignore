@@ -73,3 +73,6 @@ backend/DEPLOYMENT.md
 # Packaged release artifacts (keep outside Git's file-size limit)
 ZenithW-Builds/
 
+
+# Account-specific Microsoft Store package identity
+desktop/store/identity.json

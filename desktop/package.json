@@ -11,7 +11,8 @@
     "dist": "npm run stage-tools && electron-builder --win nsis",
     "start": "npm run stage-tools && electron .",
     "portable": "npm run stage-tools && electron-builder --win portable",
-    "test": "node --test tests/*.test.cjs"
+    "test": "node --test tests/*.test.cjs",
+    "store": "node scripts/build-store.cjs"
   },
   "devDependencies": {
     "electron": "44.7.0",

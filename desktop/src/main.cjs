@@ -156,7 +156,10 @@ function saveSettings(next) {
 
 function resource(name) {
   const base = app.isPackaged ? process.resourcesPath : path.join(__dirname, '..', 'resources');
-  return path.join(base, 'bin', name);
+  const bundledPath = path.join(base, 'bin', name);
+  return name === 'yt-dlp.exe'
+    ? require('./store-engine.cjs').storeEnginePath(bundledPath, app.getPath('userData'), process.windowsStore)
+    : bundledPath;
 }
 function requiredTool(name) {
   const tool = resource(name);
