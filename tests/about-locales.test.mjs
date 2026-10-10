@@ -26,12 +26,12 @@ test('Every About section uses the current static copy and translates in all eig
       const window={dispatchEvent(){}};
       vm.runInNewContext(read('site-language.js'),{window,document,navigator:{languages:[`${language}-XX`]},CustomEvent:class{},localStorage:{getItem:()=>null},fetch:async()=>({ok:true,json:async()=>catalog}),console});
       await window.ZWLanguage.ready;
-      assert.equal(document.documentElement.lang,language);
+      assert.equal(document.documentElement.lang,language==='zh'?'zh-CN':language);
       fields.forEach((field,index)=>{
         for(const [key,original] of Object.entries(field)){
           const translated=catalog[original.trim()];
           assert.ok(translated,`${file} ${language}: ${original}`);
-          const actual=key.startsWith('text:')?elements[index].childNodes[Number(key.slice(5))].textContent:elements[index].attributes[key];
+          const actual=key==='html'?elements[index].innerHTML:key.startsWith('text:')?elements[index].childNodes[Number(key.slice(5))].textContent:elements[index].attributes[key];
           assert.equal(actual.trim(),translated,`${file} ${language}: ${key}`);
         }
       });

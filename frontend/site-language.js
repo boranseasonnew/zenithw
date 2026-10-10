@@ -5,9 +5,36 @@
   const files = {tr:'/locales/tr.json',en:'/locales/en.json',fr:'/locales/fr.json',de:'/locales/de.json',ru:'/locales/ru.json',vi:'/locales/vi.json',zh:'/locales/zh.json',ja:'/locales/ja.json'};
   const locales = {tr:'tr-TR',en:'en-US',fr:'fr-FR',de:'de-DE',ru:'ru-RU',vi:'vi-VN',zh:'zh-CN',ja:'ja-JP'};
   const normalize = value => String(value || '').toLowerCase().split(/[-_]/)[0];
+  /* generated localized routes */
+  const localizedRoutes = new Set(["/", "/about", "/about/community", "/about/credit", "/convert", "/downloads", "/guides", "/guides/convert-vs-remux", "/guides/instagram-reels-download", "/guides/tiktok-video-download", "/guides/youtube-web-and-apps", "/remux", "/support", "/updates", "/updates/v10.0/", "/updates/v10.1/", "/updates/v10.2/", "/updates/v10.3/", "/updates/v10.4/", "/updates/v10.5/", "/updates/v10.6/", "/updates/v10.7/", "/updates/v10.8/", "/updates/v10.9/", "/updates/v11.0/", "/updates/v11.1/", "/updates/v11.2/", "/updates/v11.3/", "/updates/v11.4/", "/updates/v11.5/", "/updates/v11.6/", "/updates/v11.7/", "/updates/v12.0/", "/updates/v12.1/", "/updates/v12.2/", "/updates/v12.3/", "/updates/v12.4/", "/updates/v12.5/", "/updates/v12.6/", "/updates/v12.7/", "/updates/v12.8/", "/updates/v12.9/", "/updates/v13.0/", "/updates/v13.1/", "/updates/v13.2/", "/updates/v13.3/", "/updates/v13.4/", "/updates/v13.5/", "/updates/v13.6/", "/updates/v13.7/", "/updates/v13.8/", "/updates/v14.0/", "/updates/v14.1/", "/updates/v14.2/", "/updates/v14.3/", "/updates/v14.4/", "/updates/v15.0/", "/updates/v15.1/", "/updates/v4.0/", "/updates/v5.0/", "/updates/v5.1/", "/updates/v5.2/", "/updates/v5.3/", "/updates/v5.4/", "/updates/v5.5/", "/updates/v5.6/", "/updates/v6.0/", "/updates/v6.1/", "/updates/v7.0/", "/updates/v7.1/", "/updates/v7.2/", "/updates/v7.3/", "/updates/v8.0/", "/updates/v8.1/", "/updates/v9.0/"]);
+  const location = window.location;
+  const requestedReturn = location && new URLSearchParams(location.search || '').get('return');
+  const prefix = /^\/(en|de|fr|ru|vi|zh|ja)(?:\/|$)/.exec(requestedReturn || location?.pathname || '')?.[1];
+  const basePath = value => (String(value).replace(/^\/(en|de|fr|ru|vi|zh|ja)(?=\/|$)/,'').replace(/\.html$/,'') || '/');
+  function path(value, language = current) {
+    if (!names[language] || !String(value).startsWith('/') || String(value).startsWith('//')) return value;
+    const parts=/^([^?#]*)(.*)$/.exec(String(value));
+    const pathname=parts[1], suffix=parts[2];
+    let route=basePath(pathname), anchor='';
+    if (['/app','/pc-app'].includes(route)) { anchor=route==='/app'?'#android':'#windows'; route='/downloads'; }
+    if (!localizedRoutes.has(route)) return value;
+    return (language==='tr'?route:'/'+language+(route==='/'?'/':route))+(anchor || suffix);
+  }
+  function navigation() {
+    if (!location) return;
+    document.querySelectorAll('a[href]').forEach(link => {
+      const original=link.getAttribute('href');
+      if (!original?.startsWith('/') || original.startsWith('//')) return;
+      let destination=path(original);
+      if (/^\/settings(?:\.html)?$/.test(original) && localizedRoutes.has(basePath(location.pathname))) {
+        destination='/settings?return='+encodeURIComponent(location.pathname+(location.hash||''));
+      }
+      if (destination!==original) link.setAttribute('href',destination);
+    });
+  }
   let saved;
   try { saved = localStorage.getItem('zw_lang'); } catch {}
-  let current = names[saved] ? saved : ((navigator.languages || [navigator.language]).map(normalize).find(value => names[value]) || 'en');
+  let current = prefix || (names[saved] ? saved : ((navigator.languages || [navigator.language]).map(normalize).find(value => names[value]) || 'en'));
   let revision = 0;
   const catalogs = new Map(), requests = new Map(), listeners = new Set();
   function translate(value, language = current) {
@@ -29,7 +56,11 @@
     document.querySelectorAll('[data-l10n]').forEach(element => {
       const fields = JSON.parse(element.getAttribute('data-l10n'));
       for (const [field, original] of Object.entries(fields)) {
-        if (field.startsWith('text:')) {
+        if (field==='html') {
+          // Only checked-in, reviewed site copy can carry this marker.
+          const translated=translate(original);
+          if (element.innerHTML!==translated) element.innerHTML=translated;
+        } else if (field.startsWith('text:')) {
           const node = element.childNodes[Number(field.slice(5))];
           if (node?.nodeType === 3) node.textContent = translate(original);
         } else element.setAttribute(field, translate(original));
@@ -41,10 +72,12 @@
     });
   }
   function notify() {
-    document.documentElement.lang = current;
+    document.documentElement.lang = current==='zh'?'zh-CN':current;
     applyStatic();
     listeners.forEach(listener => listener(current));
     window.dispatchEvent(new CustomEvent('zw-language-ready', {detail:current}));
+    document.documentElement.lang = current==='zh'?'zh-CN':current;
+    navigation();
   }
   async function load(language) {
     if (!requests.has(language)) requests.set(language, fetch(files[language]).then(response => {
@@ -62,6 +95,12 @@
       if (ticket !== revision) return;
       current = language;
       try { localStorage.setItem('zw_lang',current); } catch {}
+      const returnRoute = location && new URLSearchParams(location.search || '').get('return');
+      const sourceRoute = returnRoute || document.documentElement.getAttribute?.('data-localized-route');
+      if (location && sourceRoute && localizedRoutes.has(basePath(sourceRoute.split(/[?#]/)[0]))) {
+        const destination=path(sourceRoute,language);
+        if (destination!==location.pathname+(location.search||'')+(location.hash||'')) { location.assign(destination); return; }
+      }
       notify();
     } catch (error) {
       // Leave the last readable language and preference intact so a retry can recover.
@@ -81,6 +120,14 @@
   }
   const domReady = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded',resolve,{once:true})) : Promise.resolve();
   const ready = Promise.all([domReady.then(selector),load(current)]).then(notify).catch(error => console.error(error));
-  window.ZWLanguage = {names,locales,ready,translate,copy,use,get current(){return current;},onChange(listener){listeners.add(listener);return ()=>listeners.delete(listener);}};
-  document.documentElement.lang=current;
+  window.ZWLanguage = {names,locales,ready,translate,copy,use,path,navigation,get current(){return current;},onChange(listener){listeners.add(listener);return ()=>listeners.delete(listener);}};
+  document.documentElement.lang=current==='zh'?'zh-CN':current;
+  domReady.then(() => {
+    if (typeof MutationObserver==='undefined' || !document.body) return;
+    let pending=false;
+    new MutationObserver(() => {
+      if (pending) return;
+      pending=true;queueMicrotask(()=>{pending=false;navigation();});
+    }).observe(document.body,{childList:true,subtree:true});
+  });
 })();

@@ -18,6 +18,18 @@
 /app.d4596317c4a7.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+/brands/f-droid.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/microsoft-store.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/telegram.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/uptodown.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /compare.a0575b77ab4c.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -37,6 +49,12 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /desktop-promo.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/downloads.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/downloads.js
   Cache-Control: public, max-age=3600, must-revalidate
 
 /favicon.ico
@@ -112,6 +130,9 @@
   Cache-Control: no-store, max-age=0, must-revalidate
   CDN-Cache-Control: no-store
   Cloudflare-CDN-Cache-Control: no-store
+
+/site-community.css
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /site-language.css
   Cache-Control: public, max-age=3600, must-revalidate

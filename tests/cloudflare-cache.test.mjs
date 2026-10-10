@@ -164,7 +164,7 @@ test('cookie/auth responses, errors and API-shaped paths remain private without 
 test('source/dependency changes rotate URLs and retain old hashed copies for cached pages', () => {
   const fixture = mkdtempSync(join(tmpdir(), 'zenithw-cache-test-'));
   try {
-    for (const path of ['scripts/build-cache-assets.mjs', 'scripts/update_csp.py', 'scripts/cache-assets-manifest.json',
+    for (const path of ['shared/build-files.mjs', 'scripts/build-cache-assets.mjs', 'scripts/update_csp.py', 'scripts/cache-assets-manifest.json',
       'frontend/_headers', 'frontend/index.html', 'frontend/about.html', 'frontend/cache-assets',
       ...Object.keys(manifest).map(source => 'frontend/' + source)]) {
       const destination = join(fixture, path);

@@ -276,13 +276,14 @@ function revealReleaseSections(){
 
 async function jumpTo(ver){
   if(!UPDATE_VERSIONS.includes(ver))return;
-  location.assign(ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver+'/');
+  const destination=ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver+'/';
+  location.assign(window.ZWLanguage?ZWLanguage.path(destination):destination);
 }
 
 async function render(){
   const t=window.ZWLanguage?ZWLanguage.copy(TX,CUR_LANG):TX[CUR_LANG];
   const hashCandidate=decodeURIComponent((location.hash||'').replace('#',''));
-  const hash=UPDATE_VERSIONS.includes(hashCandidate)?hashCandidate:(location.pathname.match(/^\/updates\/(v[0-9.]+)\/?$/)?.[1]||'');
+  const hash=UPDATE_VERSIONS.includes(hashCandidate)?hashCandidate:(location.pathname.replace(/^\/(en|de|fr|ru|vi|zh|ja)(?=\/)/,'').match(/^\/updates\/(v[0-9.]+)\/?$/)?.[1]||'');
   if(hash&&hash!==LATEST_UPDATE.ver&&UPDATE_VERSIONS.includes(hash)&&findIndex(hash)===-1){
     try{await loadUpdateArchive();}catch(e){console.error('update archive load failed',e);}
   }
@@ -331,7 +332,7 @@ function setLegalLang(l){
   CUR_LANG=window.ZWLanguage?l:(TX[l]?l:'en');
   const t=window.ZWLanguage?ZWLanguage.copy(TX,l):(TX[l]||TX.en);
   const header=window.ZWLanguage?ZWLanguage.copy(PAGE_COPY,l):PAGE_COPY[CUR_LANG];
-  document.documentElement.lang=CUR_LANG;
+  document.documentElement.lang=CUR_LANG==='zh'?'zh-CN':CUR_LANG;
   document.getElementById('pgTitle').textContent=t.title;
   document.getElementById('pgDesc').setAttribute('content',t.desc);
   document.getElementById('pgBack').textContent=t.back;

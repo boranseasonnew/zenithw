@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-static-language="zh" data-localized-route="/updates/v13.4/">
+<head>
+<link rel="stylesheet" href="/cache-assets/site-language.750ddfc30c31.css">
+<script src="/cache-assets/site-language.17d338058a3b.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title id="pgTitle">v13.4 — 准备转换输出时无需静默截断 — ZenithW</title>
+<meta name="description" id="pgDesc" content="v13.4 — 准备转换输出时无需静默截断 — ZenithW. 最危险的转换失败是看似成功的不完整文件。 v13.4 关闭了静默数据丢失路径并加强了尝试失败的磁盘清理。">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="/favicon.ico">
+<link href="/cache-assets/fonts.4ed1cddfa4da.css" rel="stylesheet">
+<link rel="stylesheet" href="/cache-assets/updates.a9ce0355196e.css">
+<link rel="stylesheet" href="/site-shell.css?v=14.4">
+<script src="/version.js?v=15.2"></script>
+<link rel="stylesheet" href="/cache-assets/site-community.3f344770a2cb.css">
+<!-- generated SEO metadata -->
+<link rel="canonical" href="https://zenithw.space/zh/updates/v13.4/">
+<link rel="alternate" hreflang="tr" href="https://zenithw.space/updates/v13.4/">
+<link rel="alternate" hreflang="en" href="https://zenithw.space/en/updates/v13.4/">
+<link rel="alternate" hreflang="de" href="https://zenithw.space/de/updates/v13.4/">
+<link rel="alternate" hreflang="fr" href="https://zenithw.space/fr/updates/v13.4/">
+<link rel="alternate" hreflang="ru" href="https://zenithw.space/ru/updates/v13.4/">
+<link rel="alternate" hreflang="vi" href="https://zenithw.space/vi/updates/v13.4/">
+<link rel="alternate" hreflang="zh-CN" href="https://zenithw.space/zh/updates/v13.4/">
+<link rel="alternate" hreflang="ja" href="https://zenithw.space/ja/updates/v13.4/">
+<link rel="alternate" hreflang="x-default" href="https://zenithw.space/updates/v13.4/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="v13.4 — 准备转换输出时无需静默截断 — ZenithW">
+<meta property="og:description" content="v13.4 — 准备转换输出时无需静默截断 — ZenithW. 最危险的转换失败是看似成功的不完整文件。 v13.4 关闭了静默数据丢失路径并加强了尝试失败的磁盘清理。">
+<meta property="og:url" content="https://zenithw.space/zh/updates/v13.4/">
+<meta property="og:site_name" content="ZenithW">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zenithw.space/zenithw.png">
+<meta property="og:image:alt" content="ZenithW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="v13.4 — 准备转换输出时无需静默截断 — ZenithW">
+<meta name="twitter:description" content="v13.4 — 准备转换输出时无需静默截断 — ZenithW. 最危险的转换失败是看似成功的不完整文件。 v13.4 关闭了静默数据丢失路径并加强了尝试失败的磁盘清理。">
+<meta name="twitter:image" content="https://zenithw.space/zenithw.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://zenithw.space/#organization","name":"ZenithW","url":"https://zenithw.space/","logo":"https://zenithw.space/zenithw.png","sameAs":["https://github.com/boranseasonnew/zenithw","https://www.instagram.com/zenithwonline/","https://t.me/zenithwon"]},{"@type":"WebSite","@id":"https://zenithw.space/#website","name":"ZenithW","url":"https://zenithw.space/","inLanguage":["tr","en","de","fr","ru","vi","zh-CN","ja"],"publisher":{"@id":"https://zenithw.space/#organization"}},{"@type":"WebPage","@id":"https://zenithw.space/zh/updates/v13.4/#webpage","name":"v13.4 — 准备转换输出时无需静默截断 — ZenithW","description":"v13.4 — 准备转换输出时无需静默截断 — ZenithW. 最危险的转换失败是看似成功的不完整文件。 v13.4 关闭了静默数据丢失路径并加强了尝试失败的磁盘清理。","url":"https://zenithw.space/zh/updates/v13.4/","inLanguage":"zh-CN","isPartOf":{"@id":"https://zenithw.space/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://zenithw.space/zh/"},{"@type":"ListItem","position":2,"name":"更新","item":"https://zenithw.space/zh/updates/v13.4/"}]}]}</script>
+<!-- end generated SEO metadata -->
+</head>
+<body class="updates-page">
+<a class="upd-skip" id="updSkip" href="#releaseArticle" data-l10n="{&quot;text:0&quot;:&quot;Güncelleme notlarına geç&quot;}">跳至发行说明</a>
+<main class="upd-shell">
+  <nav class="upd-site-header" aria-label="页面导航" data-l10n="{&quot;aria-label&quot;:&quot;Sayfa navigasyonu&quot;}">
+    <a href="/zh/" class="upd-brand" aria-label="ZenithW 主页" data-l10n="{&quot;aria-label&quot;:&quot;ZenithW ana sayfa&quot;}"><img src="/zenithw.png" alt="" width="34" height="34">ZenithW</a>
+    <div class="upd-header-actions">
+      <a href="/zh/" class="upd-home-link" aria-label="主页" data-l10n="{&quot;aria-label&quot;:&quot;Ana sayfa&quot;}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span id="pgBack" data-l10n="{&quot;text:0&quot;:&quot;ana sayfa&quot;}">首页</span></a>
+    </div>
+  </nav>
+
+  <header class="upd-page-intro">
+    <span class="upd-eyebrow" id="updEyebrow" data-l10n="{&quot;text:0&quot;:&quot;ZENITHW / SÜRÜM NOTLARI&quot;}">ZENITHW / 版本说明</span>
+    <h1 id="updPageTitle" data-l10n="{&quot;text:0&quot;:&quot;Güncellemeler&quot;}">更新</h1>
+    <p id="updPageLead" data-l10n="{&quot;text:0&quot;:&quot;Yeni özellikler, düzeltmeler ve küçük iyileştirmeler. Her sürümde neyin değiştiğini burada açıkça anlatıyoruz.&quot;}">新功能、修复和深思熟虑的改进。清晰记录每个版本中的更改。</p>
+  </header>
+
+  <section class="upd-hero" id="releaseArticle" tabindex="-1">
+      <div class="upd-top-row">
+        <span class="upd-ver-badge" id="updBadge">v13.4</span>
+        <span class="upd-top-date" id="updDate" data-l10n="{&quot;text:0&quot;:&quot;ağustos 2026&quot;}">2026 年 8 月</span>
+        <div class="upd-pick"><select id="verPicker" aria-label="Sürüm seç" onchange="jumpTo(this.value)"><option value="v15.2">v15.2</option><option value="v15.1">v15.1</option><option value="v15.0">v15.0</option><option value="v14.4">v14.4</option><option value="v14.3">v14.3</option><option value="v14.2">v14.2</option><option value="v14.1">v14.1</option><option value="v14.0">v14.0</option><option value="v13.8">v13.8</option><option value="v13.7">v13.7</option><option value="v13.6">v13.6</option><option value="v13.5">v13.5</option><option value="v13.4" selected>v13.4</option><option value="v13.3">v13.3</option><option value="v13.2">v13.2</option><option value="v13.1">v13.1</option><option value="v13.0">v13.0</option><option value="v12.9">v12.9</option><option value="v12.8">v12.8</option><option value="v12.7">v12.7</option><option value="v12.6">v12.6</option><option value="v12.5">v12.5</option><option value="v12.4">v12.4</option><option value="v12.3">v12.3</option><option value="v12.2">v12.2</option><option value="v12.1">v12.1</option><option value="v12.0">v12.0</option><option value="v11.7">v11.7</option><option value="v11.6">v11.6</option><option value="v11.5">v11.5</option><option value="v11.4">v11.4</option><option value="v11.3">v11.3</option><option value="v11.2">v11.2</option><option value="v11.1">v11.1</option><option value="v11.0">v11.0</option><option value="v10.9">v10.9</option><option value="v10.8">v10.8</option><option value="v10.7">v10.7</option><option value="v10.6">v10.6</option><option value="v10.5">v10.5</option><option value="v10.4">v10.4</option><option value="v10.3">v10.3</option><option value="v10.2">v10.2</option><option value="v10.1">v10.1</option><option value="v10.0">v10.0</option><option value="v9.0">v9.0</option><option value="v8.1">v8.1</option><option value="v8.0">v8.0</option><option value="v7.3">v7.3</option><option value="v7.2">v7.2</option><option value="v7.1">v7.1</option><option value="v7.0">v7.0</option><option value="v6.1">v6.1</option><option value="v6.0">v6.0</option><option value="v5.6">v5.6</option><option value="v5.5">v5.5</option><option value="v5.4">v5.4</option><option value="v5.3">v5.3</option><option value="v5.2">v5.2</option><option value="v5.1">v5.1</option><option value="v5.0">v5.0</option><option value="v4.0">v4.0</option></select></div>
+      </div>
+      <h2 class="upd-post-title" id="updPostTitle" data-l10n="{&quot;text:0&quot;:&quot;dönüştürme çıktıları kesilmeden ve doğrulanarak hazırlanıyor&quot;}">准备转换输出时无需静默截断</h2>
+      <figure class="upd-cover" id="updCover" hidden><img id="updCoverImg" alt="" loading="eager" decoding="async"></figure>
+      <div class="upd-anma" id="updAnma"></div>
+  </section>
+
+    <div class="upd-reading-layout">
+    <aside class="upd-contents">
+      <p class="upd-contents-heading" id="updContentsHeading" data-l10n="{&quot;text:0&quot;:&quot;Bu sürümde&quot;}">在此版本中</p>
+      <nav id="updContents" aria-label="发布部分" data-l10n="{&quot;aria-label&quot;:&quot;Güncelleme bölümleri&quot;}"><a href="#release-section-1" data-l10n="{&quot;text:1&quot;:&quot;sessiz süre ve boyut kesme kaldırıldı&quot;}"><span aria-hidden="true">01</span>静音持续时间和尺寸削减已删除</a><a href="#release-section-2" data-l10n="{&quot;text:1&quot;:&quot;ağır transcode için gerçekçi bütçe&quot;}"><span aria-hidden="true">02</span>大量转码的现实预算</a><a href="#release-section-3" data-l10n="{&quot;text:1&quot;:&quot;başarısız denemeler iz bırakmıyor&quot;}"><span aria-hidden="true">03</span>失败的尝试不会留下任何痕迹</a></nav>
+      <p class="upd-read-hint" id="updReadHint" data-l10n="{&quot;text:0&quot;:&quot;Kaydır, yenilikleri keşfet&quot;}">滚动查看发生了什么变化</p>
+    </aside>
+    <article class="upd-article">
+      <div class="upd-intro" id="updIntro"><p data-l10n="{&quot;text:0&quot;:&quot;Dönüştürmede en tehlikeli hata, eksik bir dosyanın başarılı görünmesidir. v13.4 bu sessiz veri kaybını kapattı ve başarısız denemelerin disk yaşam döngüsünü sıkılaştırdı.&quot;}">最危险的转换失败是看似成功的不完整文件。 v13.4 关闭了静默数据丢失路径并加强了尝试失败的磁盘清理。</p></div>
+      <div id="updSections"><section class="upd-section" id="release-section-1"><h3 data-l10n="{&quot;text:0&quot;:&quot;sessiz süre ve boyut kesme kaldırıldı&quot;}">静音持续时间和尺寸削减已删除</h3><p data-l10n="{&quot;text:0&quot;:&quot;FFmpeg artık bir dosyayı süre veya boyut sınırında kesip başarılı döndüremiyor. Girdi süresi işlemden önce ölçülüyor; çıktı sınırı canlı izleniyor ve aşılırsa kısmi sonuç siliniyor.&quot;}">FFmpeg 无法再在持续时间或大小边界处停止并将部分文件报告为完整。在处理之前测量输入持续时间，实时监控输出大小，并删除超出限制的部分结果。</p></section>
+<section class="upd-section" id="release-section-2"><h3 data-l10n="{&quot;text:0&quot;:&quot;ağır transcode için gerçekçi bütçe&quot;}">大量转码的现实预算</h3><p data-l10n="{&quot;text:0&quot;:&quot;Kalite kaybı olmadan yapılabilen hızlı remux daha geniş medya süresini korurken CPU ağırlıklı yeniden kodlama varsayılan olarak on dakikalık girdiyle sınırlandırılıyor.&quot;}">快速无损重新混合保留了更广泛的媒体范围，而 CPU 密集型重新编码默认限制为十分钟的输入。</p></section>
+<section class="upd-section" id="release-section-3"><h3 data-l10n="{&quot;text:0&quot;:&quot;başarısız denemeler iz bırakmıyor&quot;}">失败的尝试不会留下任何痕迹</h3><p data-l10n="{&quot;text:0&quot;:&quot;Bir sağlayıcı profili başarısız olup diğeri başarılı olduğunda önceki denemenin part, ses, görüntü veya altyazı parçaları artık geçici diskte sahipsiz kalmıyor.&quot;}">当一个提供程序配置文件失败而另一个提供程序配置文件成功时，先前尝试的部分视频、音频、字幕和临时工件不再在磁盘上保持孤立状态。</p></section></div>
+      <div class="upd-outro" id="updOutro" data-l10n="{&quot;text:0&quot;:&quot;Dönüştürme artık eksik sonucu sessizce sunmak yerine güvenli ve anlaşılır biçimde başarısız oluyor.&quot;}">现在，转换会安全且明确地失败，而不是默默地提供不完整的结果。</div>
+      <div class="upd-signoff" id="updSignoff" data-l10n="{&quot;text:0&quot;:&quot;ZenithW · sürüm notları&quot;}">ZenithW · 发行说明</div>
+      <nav class="upd-nav-row" id="updNavRow" aria-label="发布导航" data-l10n="{&quot;aria-label&quot;:&quot;Sürüm gezinmesi&quot;}"><a class="upd-nav-link" href="/zh/updates/v13.5/"><span class="upd-nav-label" data-l10n="{&quot;text:0&quot;:&quot;yeni sürüm&quot;}">较新的</span>← v13.5</a><a class="upd-nav-link next" href="/zh/updates/v13.3/"><span class="upd-nav-label" data-l10n="{&quot;text:0&quot;:&quot;eski sürüm&quot;}">较老的</span>v13.3 →</a></nav>
+    </article>
+  </div>
+<!-- generated community updates --><p class="telegram-changelog"><a href="https://t.me/zenithwon" target="_blank" rel="noopener noreferrer" data-l10n="{&quot;text:0&quot;:&quot;Follow updates on Telegram&quot;}">在 Telegram 上关注更新</a></p><!-- end generated community updates -->
+</main>
+
+<div id="siteBottomNav" data-active="updates"></div>
+<script src="/cache-assets/updates-core.52e7b3e462d5.js"></script>
+<script src="/site-shell.js?v=14.3"></script>
+
+<!-- generated community footer --><footer class="site-community-footer" data-community="footer"><a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.instagram.com/zenithwonline/" target="_blank" rel="noopener noreferrer">Instagram</a><a class="telegram-link" href="https://t.me/zenithwon" target="_blank" rel="noopener noreferrer"><img src="/cache-assets/telegram.f438f2293a19.svg" width="18" height="18" alt=""><span data-l10n="{&quot;text:0&quot;:&quot;Join Telegram&quot;}">加入 Telegram</span></a></footer><!-- end generated community footer -->
+</body>
+</html>

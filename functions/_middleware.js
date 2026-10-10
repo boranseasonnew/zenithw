@@ -1,6 +1,8 @@
 import { PAGES_CSP } from "../shared/pages-security.mjs";
 import { STATIC_ASSET_PATHS } from "../shared/pages-cache-assets.mjs";
 
+import { legacyDownloadRoute } from "../shared/download-routes.mjs";
+
 const NO_STORE = "private, no-store, max-age=0";
 const ENABLED_VALUES = new Set(["1", "true", "yes", "on"]);
 const DISABLED_VALUES = new Set(["0", "false", "no", "off"]);
@@ -121,6 +123,12 @@ async function pageResponse(context) {
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+  const legacy = legacyDownloadRoute(url.pathname);
+  if (legacy && ["GET", "HEAD"].includes(context.request.method)) {
+    const destination = new URL(legacy, url.origin);
+    destination.search = url.search;
+    return new Response(null, { status: 301, headers: { Location: destination.href, "Cache-Control": "public, max-age=3600" } });
+  }
   // Backstop if a deployment forgets _routes.json. Only known public assets
   // skip the gate; an API path ending in .js/.png never matches this allowlist.
   if (["GET", "HEAD"].includes(context.request.method) && STATIC_ASSET_PATHS.has(url.pathname)) {

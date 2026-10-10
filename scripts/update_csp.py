@@ -29,6 +29,8 @@ def collect_hashes() -> tuple[list[str], list[str]]:
         for match in SCRIPT_RE.finditer(source):
             if re.search(r"\bsrc\s*=", match.group("attrs"), re.I):
                 continue
+            if re.search(r'\btype\s*=\s*[\"\']application/(?:ld\+)?json[\"\']', match.group("attrs"), re.I):
+                continue
             body = match.group("body")
             if body.strip():
                 scripts.add(csp_hash(body))

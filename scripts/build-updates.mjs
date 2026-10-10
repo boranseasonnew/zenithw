@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileWithRetry as writeFileSync } from '../shared/build-files.mjs';
+import { readFileSync, mkdirSync } from 'node:fs';
 import vm from 'node:vm';
 
 const root = new URL('../frontend/', import.meta.url);

@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
+import { writeFileWithRetry as writeFileSync } from '../shared/build-files.mjs';
+import { readFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
@@ -157,6 +158,7 @@ const sitemapPages = new Map();
 for (const file of walk(frontend).filter(file => file.endsWith('.html'))) {
   const path = relative(frontend, file).replaceAll('\\', '/');
   let source = read(path);
+  if ((source.includes('data-static-language=') && /^(en|de|fr|ru|vi|zh|ja)\//.test(path)) || ['/app','/pc-app'].includes(routeFor(path))) continue;
   if (/name="robots"[^>]*content="[^"]*noindex/.test(source)) continue;
   const canonical = /rel="canonical"\s+href="([^"]+)"/.exec(source)?.[1];
   if (!canonical?.startsWith(origin)) continue;

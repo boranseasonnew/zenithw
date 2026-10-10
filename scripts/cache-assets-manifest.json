@@ -1,39 +1,67 @@
 {
+  "downloads.js": {
+    "url": "/cache-assets/downloads.489d12f4c4d3.js",
+    "sha256": "489d12f4c4d303e444db6ab766dc1d53a96a65e2e245cce059071cf277686d07"
+  },
+  "downloads.css": {
+    "url": "/cache-assets/downloads.8181e6ca9040.css",
+    "sha256": "8181e6ca904098e5dd2553e213230905edc208358c041a03c979ada04b142644"
+  },
+  "site-community.css": {
+    "url": "/cache-assets/site-community.3f344770a2cb.css",
+    "sha256": "3f344770a2cb7a710160008c0f63c5957c983da3a08cb11a9442421cab835147"
+  },
+  "brands/microsoft-store.svg": {
+    "url": "/cache-assets/microsoft-store.945102dab110.svg",
+    "sha256": "945102dab11084b7093dacfd674eb96feceda47d8157d34ff7cb412c2ba50101"
+  },
+  "brands/f-droid.svg": {
+    "url": "/cache-assets/f-droid.713613ef572f.svg",
+    "sha256": "713613ef572f2a2b5744acca006a0fb8a3ff096a3fbc8067bd5d8271fe94050d"
+  },
+  "brands/uptodown.svg": {
+    "url": "/cache-assets/uptodown.9b44fba8aa25.svg",
+    "sha256": "9b44fba8aa253f06a0daf1a0cea312b996acd5dcd32acf7f9f5ff979a59ca1ca"
+  },
+  "brands/telegram.svg": {
+    "url": "/cache-assets/telegram.f438f2293a19.svg",
+    "sha256": "f438f2293a19beeea351865c436602d4a6309b2d3a78e577359529e3f9bdf3de"
+  },
   "locales/tr.json": {
-    "url": "/cache-assets/tr.25e9eb079012.json",
-    "sha256": "25e9eb0790128322a55e326905eb648b38ecf2e05766095e812fd088da0bf721"
+    "url": "/cache-assets/tr.991747086e8e.json",
+    "sha256": "991747086e8e5fc1d4894c772ac53f100a8ecf47da69eb9b097dd1300a4d72d9"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.fafd9fc34032.json",
-    "sha256": "fafd9fc3403245191936f2c098db194925a72ab40e96ac2cf30ee9aa4cc23c77"
+    "url": "/cache-assets/en.6340430f875c.json",
+    "sha256": "6340430f875cc80b118a5e8b494f90954c37eb0038196c4e71b6accec1f1d9fe"
   },
   "locales/fr.json": {
-    "url": "/cache-assets/fr.3d9174fd53e3.json",
-    "sha256": "3d9174fd53e3dd4618b85eee4fd2ed932483437fd9adff89a3f8a6bbbd724c6a"
+    "url": "/cache-assets/fr.8bca4eb9712d.json",
+    "sha256": "8bca4eb9712de107df517712df67537c9043ef691a81342c43135147b8582eba"
   },
   "locales/de.json": {
-    "url": "/cache-assets/de.4f316c09b055.json",
-    "sha256": "4f316c09b055f148f4bebfb785c7409c06851d830bd53a7e17bf68280ecdeae6"
+    "url": "/cache-assets/de.6e37f85f5649.json",
+    "sha256": "6e37f85f564944f99876af63818eac62143957be37e4b9b344d71a75ac558f09"
   },
   "locales/ru.json": {
-    "url": "/cache-assets/ru.152af1b9419b.json",
-    "sha256": "152af1b9419bde1deb36dbbe4aba4d4a5a7c858ce2cda0dbdbca0ef86d6b1bf7"
+    "url": "/cache-assets/ru.2a4b61728149.json",
+    "sha256": "2a4b61728149a83b0452808912f7b0e86cd86f0d425e72bc49f2702d486ac058"
   },
   "locales/vi.json": {
-    "url": "/cache-assets/vi.3a086f0e4040.json",
-    "sha256": "3a086f0e4040dda355c83359ee335e48cff9de414b92edfae162f20c7393196d"
+    "url": "/cache-assets/vi.cf7244dbd32d.json",
+    "sha256": "cf7244dbd32d2f7053a467cf822d99d6bf154067c1c4a619f1fdfba8d25ea6a7"
   },
   "locales/zh.json": {
-    "url": "/cache-assets/zh.c9b57472252b.json",
-    "sha256": "c9b57472252b9f5cf2073a1e1f33a1efdb137304ace77cbee5d8588f81a8adc8"
+    "url": "/cache-assets/zh.8cdec433a653.json",
+    "sha256": "8cdec433a653cfdfc46c7e03f2b8cf9c577d97cbbeb7c5ced2536a02ac8e4aa4"
   },
   "locales/ja.json": {
-    "url": "/cache-assets/ja.2f2c99f6f63f.json",
-    "sha256": "2f2c99f6f63f7f1da24e73cd4b3474797e1968ad16344d76eb1001cf4d3499f2"
+    "url": "/cache-assets/ja.49fb3f9f58d8.json",
+    "sha256": "49fb3f9f58d82b479d01bae80292f8305854c634ec372bd320e26aa4bf1ed780"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.f00b8f5b934d.js",
-    "sha256": "f00b8f5b934db9d5f7c36d526da84f5a9f2eaf7eba2a2886e2d6b73941b8e2e2"
+    "url": "/cache-assets/site-language.17d338058a3b.js",
+    "sha256": "17d338058a3b700b1b4d57275a3306bc959f4e2913bcb6cb1b764896d3936f3f"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.750ddfc30c31.css",
@@ -52,8 +80,8 @@
     "sha256": "834ee93b2c57b82f6fcd6cdab7f1b51808af807af045a5bd9f2fb8d0f7f805c4"
   },
   "updates-core.99daf4ea6088.js": {
-    "url": "/cache-assets/updates-core.cc193d51e91a.js",
-    "sha256": "cc193d51e91ae4a382f327e5fc02c9e6bdf55191356658b4092a71cd9bc4402a"
+    "url": "/cache-assets/updates-core.52e7b3e462d5.js",
+    "sha256": "52e7b3e462d572666bdcb242fd495f6c867e0fd302b76d02ea150f24cb17ada1"
   },
   "updates.4afebabda436.css": {
     "url": "/cache-assets/updates.a9ce0355196e.css",
