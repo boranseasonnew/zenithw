@@ -27,7 +27,8 @@ const text=(tag,key,attrs='')=>`<${tag} ${attrs} ${label(key)}>${t(key)}</${tag}
 const external=(url,key,cls='download-action')=>`<a class="${cls}" href="${escape(url)}" target="_blank" rel="noopener noreferrer" ${label(key)}>${t(key)}</a>`;
 const status=state=>text('span',({available:'Available',coming:'Coming Soon',review:'Under Review'})[state],`class="status status-${state}"`);
 function storeCard(name,store,logo) {
- const brand=logo?`<img class="${name==='Microsoft Store'?'store-badge':'store-wordmark'}" src="/brands/${logo}" width="${name==='Microsoft Store'?160:110}" height="${name==='Microsoft Store'?40:32}" alt="${name}">`:`<h3>${name}</h3>`;
+ const image=logo?`<img class="${name==='Microsoft Store'?'store-badge':'store-wordmark'}" src="/brands/${logo}" width="${name==='Microsoft Store'?160:110}" height="${name==='Microsoft Store'?40:32}" alt="${name}">`:'';
+ const brand=logo?(name==='Microsoft Store'&&store.status==='available'?`<a href="${escape(store.url)}" class="store-badge-link" target="_blank" rel="noopener noreferrer" aria-label="${escape(name)}">${image}</a>`:image):`<h3>${name}</h3>`;
  return `<article class="download-option"><div class="option-heading"><h3>${brand}</h3>${status(store.status)}</div>${store.status==='available'?external(store.url,name):text('p','Store publication is pending. Download the current release from GitHub.')}${store.reviewUrl?external(store.reviewUrl,'View submission'):''}</article>`;
 }
 const size=(bytes)=>(bytes/1e6).toFixed(1)+' MB';
