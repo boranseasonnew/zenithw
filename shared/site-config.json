@@ -19,9 +19,9 @@
     "checksums": "https://github.com/boranseasonnew/zenithw/releases/download/v4.1.0/SHA256SUMS.txt",
     "stores": {
       "microsoft": {
-        "status": "review",
+        "status": "available",
         "productId": "9NVWM7S7MJP7",
-        "url": null
+        "url": "https://apps.microsoft.com/store/detail/9NVWM7S7MJP7?cid=DevShareMCLPCS"
       },
       "winget": {
         "status": "review",
