@@ -120,6 +120,9 @@
 /premium-pages.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/premium-workspaces.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /remux-studio.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -171,6 +174,9 @@
   Cache-Control: public, max-age=0, must-revalidate
   CDN-Cache-Control: no-store
   Cloudflare-CDN-Cache-Control: no-store
+
+/workspace-choices.js
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /zenithw-promo-poster.png
   Cache-Control: public, max-age=3600, must-revalidate

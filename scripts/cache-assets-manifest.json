@@ -1,11 +1,23 @@
 {
+  "local-media.js": {
+    "url": "/cache-assets/local-media.8f06bcc335a0.js",
+    "sha256": "8f06bcc335a097c95862afa8623c104282b0ab2be6947b7adf1ff4bece0d8519"
+  },
+  "workspace-choices.js": {
+    "url": "/cache-assets/workspace-choices.a29fbcc02bdd.js",
+    "sha256": "a29fbcc02bdd9c0badd839b49944fac25d8dd06e8bd66cd9540621294efe6065"
+  },
+  "premium-workspaces.css": {
+    "url": "/cache-assets/premium-workspaces.817a8c734de6.css",
+    "sha256": "817a8c734de64978658afc52638a064357668ff50e721c4a39ce4b32ec17db37"
+  },
   "downloads.js": {
     "url": "/cache-assets/downloads.489d12f4c4d3.js",
     "sha256": "489d12f4c4d303e444db6ab766dc1d53a96a65e2e245cce059071cf277686d07"
   },
   "downloads.css": {
-    "url": "/cache-assets/downloads.8181e6ca9040.css",
-    "sha256": "8181e6ca904098e5dd2553e213230905edc208358c041a03c979ada04b142644"
+    "url": "/cache-assets/downloads.1b967f77c38e.css",
+    "sha256": "1b967f77c38e30defe53959c69c03f69f9edcd93beae3d90d252dacd9261d4d4"
   },
   "site-community.css": {
     "url": "/cache-assets/site-community.3f344770a2cb.css",
@@ -68,8 +80,8 @@
     "sha256": "750ddfc30c314df7120fcb37a2b7b8aeb3656683cfd1f8c0a479e8cc026671b1"
   },
   "app.d4596317c4a7.js": {
-    "url": "/cache-assets/app.3e949c710b02.js",
-    "sha256": "3e949c710b028fda462451dddbda14eb467296ae30f2d07b2fce8242da8df742"
+    "url": "/cache-assets/app.e0a5a2e7a16f.js",
+    "sha256": "e0a5a2e7a16f7c7337441472c116a9845da6b48c7613aea0ab4630344f0e922c"
   },
   "style.487d49f0164d.css": {
     "url": "/cache-assets/style.0a44b1a04019.css",

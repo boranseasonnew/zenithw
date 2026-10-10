@@ -39,7 +39,7 @@ jobs:
         run: |
           node scripts/build-cache-assets.mjs --check
           node --test tests/cloudflare-cache.test.mjs
-          node --test tests/site-language.test.mjs tests/about-locales.test.mjs tests/updates-static.test.mjs
+          node --test tests/site-language.test.mjs tests/about-locales.test.mjs tests/updates-static.test.mjs tests/downloads-seo.test.mjs tests/workspace-choices.test.mjs
 
       - name: Backend testlerini çalıştır
         working-directory: backend

@@ -42,6 +42,7 @@
     "/pc-app.css",
     "/pc-app.js",
     "/premium-pages.css",
+    "/premium-workspaces.css",
     "/remux-studio.css",
     "/robots.txt",
     "/runtime-config.js",
@@ -56,6 +57,7 @@
     "/updates-core.99daf4ea6088.js",
     "/updates.4afebabda436.css",
     "/version.js",
+    "/workspace-choices.js",
     "/zenithw-promo-poster.png",
     "/zenithw.png"
   ]

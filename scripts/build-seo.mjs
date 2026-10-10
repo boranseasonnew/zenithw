@@ -179,10 +179,12 @@ for (const file of walk(frontend).filter(file => file.endsWith('.html'))) {
   const separator = source.indexOf('</head>');
   let head = source.slice(0, separator);
   head = head.replace(/\s*<!-- generated SEO metadata -->[\s\S]*?<!-- end generated SEO metadata -->/g, '')
+    .replace(/\s*<link\b[^>]*rel="canonical"[^>]*>/g, '')
     .replace(/\s*<meta\s+(?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>/g, '')
     .replace(/\s*<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
   const schema = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2).replaceAll('<', '\\u003c');
   const metadata = `\n<!-- generated SEO metadata -->
+<link rel="canonical" href="${canonical}">
 <meta property="og:type" content="${guide ? 'article' : 'website'}">
 <meta property="og:title" content="${escape(title)}">
 <meta property="og:description" content="${escape(description)}">

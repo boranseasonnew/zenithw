@@ -15,7 +15,7 @@ execFileSync(process.platform === 'win32' ? 'python' : 'python3',
 // Keep the checked-in source URLs available for old pages and development.
 // Only generated, content-hashed copies receive immutable response headers.
 const sources = [
-  'downloads.js', 'downloads.css', 'site-community.css', ...['microsoft-store','f-droid','uptodown','telegram'].map(brand=>'brands/'+brand+'.svg'),
+  'local-media.js', 'workspace-choices.js', 'premium-workspaces.css', 'downloads.js', 'downloads.css', 'site-community.css', ...['microsoft-store','f-droid','uptodown','telegram'].map(brand=>'brands/'+brand+'.svg'),
   'site-language.js', 'site-language.css', ...['tr','en','fr','de','ru','vi','zh','ja'].map(lang=>'locales/'+lang+'.json'),
   'app.d4596317c4a7.js', 'style.487d49f0164d.css',
   'updates-core.99daf4ea6088.js', 'updates-archive.07c744021db2.js',
