@@ -45,163 +45,16 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://zenithw.space/#organization","name":"ZenithW","url":"https://zenithw.space/","logo":"https://zenithw.space/zenithw.png","sameAs":["https://github.com/boranseasonnew/zenithw","https://www.instagram.com/zenithwonline/","https://t.me/zenithwon"]},{"@type":"WebSite","@id":"https://zenithw.space/#website","name":"ZenithW","url":"https://zenithw.space/","inLanguage":["tr","en","de","fr","ru","vi","zh-CN","ja"],"publisher":{"@id":"https://zenithw.space/#organization"}},{"@type":"WebPage","@id":"https://zenithw.space/en/support#webpage","name":"Support — ZenithW","description":"ZenithW communication and social links.","url":"https://zenithw.space/en/support","inLanguage":"en","isPartOf":{"@id":"https://zenithw.space/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://zenithw.space/en/"},{"@type":"ListItem","position":2,"name":"If you have an ideawe would like to hear it.","item":"https://zenithw.space/en/support"}]}]}</script>
 <!-- end generated SEO metadata -->
 
-<!-- Support-only sponsor presentation; shared application styles stay unchanged. -->
-<style id="support-sponsor-styles">
-body.tool-page.support-page {
-  --sponsor-ink: #f5f1ff;
-  --sponsor-muted: #bab5c8;
-  --sponsor-lilac: #cfb8ff;
-  background: radial-gradient(ellipse at 18% 12%, #9b6ef015, transparent 45%),
-    radial-gradient(ellipse at 85% 60%, #76d8ca0b, transparent 44%), #101112;
-}
-.tool-page.support-page .tool-page-main { max-width: 680px; padding-block: 10px 12px; }
-.tool-page.support-page .tool-page-brand { margin-block-end: 28px; }
-.tool-page.support-page .support-hero { margin-block: 0 24px; }
-.tool-page.support-page .support-hero h1 { font-size: clamp(28px, 5vw, 38px); }
-.tool-page.support-page .support-hero > p { max-width: 480px; font-size: 13px; line-height: 1.65; }
-.tool-page.support-page .support-modal.tool-page-panel { width: 100% !important; max-width: 600px !important; margin-inline: auto !important; }
-.tool-page.support-page .support-modal .tool-modal-body { padding: 0; gap: 14px; }
-.support-page .sponsor-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 92px;
-  gap: 16px 24px;
-  padding: 24px;
-  border: 1px solid #c7a9ff38;
-  border-radius: 20px;
-  color: var(--sponsor-ink);
-  background: radial-gradient(ellipse at 100% 0%, #a581f52b, transparent 62%),
-    radial-gradient(ellipse at 5% 100%, #75dccb14, transparent 60%), #19171f;
-  box-shadow: 0 16px 50px #0003, inset 0 1px 0 #ffffff0a;
-}
-.support-page .sponsor-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .3;
-  background: radial-gradient(circle, #d2bcff30 1px, transparent 1px) 0 0 / 18px 18px;
-  mask-image: linear-gradient(90deg, transparent, #000);
-}
-.support-page .sponsor-copy { min-width: 0; }
-.support-page .sponsor-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-block-end: 12px;
-  color: var(--sponsor-lilac);
-  font: 650 10px/1.4 Arial, sans-serif;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.support-page .sponsor-eyebrow svg { width: 13px; height: 13px; }
-.support-page .sponsor-copy h2 { margin: 0 0 7px; font: 650 24px/1.2 Arial, sans-serif; letter-spacing: -.7px; }
-.support-page .sponsor-copy p { margin: 0; color: var(--sponsor-muted); font: 13px/1.6 Arial, sans-serif; }
-.support-page .sponsor-cat {
-  display: grid;
-  place-items: center;
-  align-self: center;
-  aspect-ratio: 1;
-  border: 1px solid #d7bdff25;
-  border-radius: 27px;
-  color: #eadcff;
-  background: linear-gradient(145deg, #cfb8ff1f, #95e8d30b);
-  box-shadow: inset 0 1px 0 #ffffff12, 0 0 30px #a98ae716;
-  rotate: -6deg;
-  transition: rotate .25s ease;
-}
-.support-page .sponsor-cat svg { width: 68px; height: 68px; }
-.support-page .sponsor-actions { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; }
-.support-page .sponsor-button {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 12px 18px;
-  border: 1px solid #e4d6ff60;
-  border-radius: 12px;
-  color: #21172e;
-  background: linear-gradient(115deg, #d6c1ff, #e9dfff 58%, #c8eddf);
-  box-shadow: 0 4px 18px #b294ed20, inset 0 1px 0 #ffffff85;
-  text-decoration: none;
-  font: 700 13px/1.4 Arial, sans-serif;
-  translate: 0 0;
-  scale: 1;
-  transition: translate .2s ease, scale .16s ease;
-}
-.support-page .sponsor-button::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: #fff;
-  opacity: 0;
-  transition: opacity .2s ease;
-}
-.support-page .sponsor-button svg { width: 19px; height: 19px; flex: 0 0 auto; fill: currentColor; }
-.support-page .sponsor-arrow { margin-inline-start: 2px; font-size: 17px; translate: 0 0; transition: translate .2s ease; }
-.support-page .sponsor-account { color: var(--sponsor-muted); font: 11px/1.5 Arial, sans-serif; overflow-wrap: anywhere; }
-.tool-page.support-page .sponsor-button:focus-visible { outline: 3px solid #d8c1ff; outline-offset: 5px; }
-.support-page .sponsor-button:active { translate: 0 0; scale: .97; }
-.tool-page.support-page .contact-picker > summary {
-  min-height: 48px;
-  padding: 14px 18px;
-  border: 1px solid #3a3545;
-  border-radius: 12px;
-  color: #d9d5e2;
-  background: linear-gradient(120deg, #ffffff08, #c7a9ff08), #1a191e;
-  transition: background-color .2s ease;
-}
-.tool-page.support-page .contact-picker > summary:hover { background-color: #25222c; }
-.tool-page.support-page .contact-picker .support-link-list { grid-template-columns: 1fr; background: #19181e; }
-.tool-page.support-page .contact-picker .support-link-row { min-height: 76px; }
-@supports (background: linear-gradient(115deg in oklab, #d6c1ff, #c8eddf)) {
-  .support-page .sponsor-button { background: linear-gradient(115deg in oklab, #d6c1ff, #e9dfff 58%, #c8eddf); }
-}
-@media (hover: hover) and (pointer: fine) {
-  .support-page .sponsor-button:hover { translate: 0 -2px; }
-  .support-page .sponsor-button:hover::before { opacity: .15; }
-  .support-page .sponsor-button:hover .sponsor-arrow { translate: 2px -2px; }
-  .support-page .sponsor-card:hover .sponsor-cat { rotate: 0deg; }
-}
-@media (max-width: 480px) {
-  .tool-page.support-page { padding-inline: 14px; }
-  .tool-page.support-page .tool-page-main { padding-inline: 0; }
-  .support-page .sponsor-card { grid-template-columns: minmax(0, 1fr) 62px; gap: 16px 12px; padding: 20px 18px; border-radius: 17px; }
-  .support-page .sponsor-cat { border-radius: 20px; }
-  .support-page .sponsor-cat svg { width: 48px; height: 48px; }
-  .support-page .sponsor-copy h2 { font-size: 22px; }
-  .support-page .sponsor-button { width: 100%; padding-inline: 10px; }
-  .support-page .sponsor-account { width: 100%; text-align: center; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .support-page :is(.sponsor-button, .sponsor-button::before, .sponsor-arrow, .sponsor-cat) { transition: none; }
-  .support-page .sponsor-button:hover, .support-page .sponsor-button:active, .support-page .sponsor-button:hover .sponsor-arrow { translate: 0 0; scale: 1; }
-  .support-page .sponsor-card:hover .sponsor-cat { rotate: -6deg; }
-}
-@media (forced-colors: active) {
-  .support-page .sponsor-card, .support-page .sponsor-cat { border-color: CanvasText; }
-  .support-page .sponsor-button { border-color: LinkText; color: LinkText; }
-  .support-page .sponsor-button::before { display: none; }
-}
-</style>
+<link rel="stylesheet" href="/support-sponsor.css?v=fae90b0d143f">
+<script src="/support-sponsor.js?v=bb9fd4255787" defer></script>
 </head>
 <body class="theme-default tool-page premium-tool-page support-page">
 <main class="tool-page-main">
   <a class="tool-page-brand" href="/en/">ZenithW<span>.</span></a>
   <header class="premium-page-hero compact-page-hero support-hero">
-    <div class="premium-kicker" data-l10n="{&quot;text:1&quot;:&quot;insandan insana&quot;}"><span></span>human to human</div>
-    <h1 data-l10n="{&quot;text:0&quot;:&quot;Bir fikrin varsa,&quot;}">If you have an idea<br><span data-l10n="{&quot;text:0&quot;:&quot;duymak isteriz.&quot;}">we would like to hear it.</span></h1>
-    <p data-l10n="{&quot;text:0&quot;:&quot;Hata bildirimi, yeni platform önerisi veya sadece selam vermek için doğrudan ulaş. Otomatik yanıt labirenti yok.&quot;}">Reach out directly to report a bug, suggest a new platform, or just say hi. No automatic response maze.</p>
-    <div class="premium-proof-row"><span data-l10n="{&quot;text:1&quot;:&quot;doğrudan iletişim&quot;}"><i></i>direct contact</span><span data-l10n="{&quot;text:1&quot;:&quot;gerçek geri bildirim&quot;}"><i></i>real feedback</span></div>
+    <div class="premium-kicker" data-support-copy="kicker">a little support, a lot of love</div>
+    <h1><span data-support-copy="line1">ZenithW is for everyone.</span><br><span data-support-copy="line2">Support is always optional.</span></h1>
+    <p data-support-copy="lead">No pressure to sign up, subscribe or pay. If you feel like helping, you&#x27;re welcome to; if you don&#x27;t, keep enjoying ZenithW just the same.</p>
   </header>
   <div class="don-modal tool-modal support-modal tool-page-panel" aria-label="ZenithW">
     
@@ -210,25 +63,33 @@ body.tool-page.support-page {
     <section class="sponsor-card" aria-labelledby="sponsor-title">
       <div class="sponsor-copy">
         <span class="sponsor-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"/></svg>GitHub Sponsors</span>
-        <h2 id="sponsor-title" data-l10n="{&quot;text:0&quot;:&quot;destek ol&quot;}">support us</h2>
-        <p data-l10n="{&quot;text:0&quot;:&quot;küçük bir katkı ZenithW&#x27;nin devamına yardımcı olur&quot;}">a small contribution helps keep ZenithW going</p>
-      </div>
-      <div class="sponsor-cat" aria-hidden="true">
-        <svg viewBox="0 0 80 80" fill="none"><path d="m18 32 1-20 17 11a27 27 0 0 1 10 0l16-11 1 20c6 6 8 12 6 19-3 11-14 18-28 18S16 62 13 51c-2-7 0-13 5-19Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="m23 29 1-10 9 7m16 0 9-7 1 10" stroke="#c6a5f1" stroke-width="2" stroke-linecap="round"/><path d="M26 42v5m29-5v5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="m38 49 3 3 3-3m-3 3v3m0 0c-4 4-8 1-8 1m8-1c4 4 8 1 8 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m18 49 9 2m-10 6 10-1m29-5 9-2m-9 7 10 1" stroke="currentColor" stroke-opacity=".6" stroke-width="1.6" stroke-linecap="round"/><path d="M67 16c-6-6-11 2 0 8 11-6 6-14 0-8Z" fill="#ecadc6"/></svg>
+        <h2 id="sponsor-title" data-support-copy="title">A little help goes a long way.</h2>
+        <p data-support-copy="body">You never have to support us. But I won&#x27;t say no to a small contribution toward the servers that keep ZenithW running. Every bit gives this independent project a little more room to breathe.</p>
+        <p class="sponsor-note" data-support-copy="note">Whether you contribute or simply use ZenithW, I&#x27;m glad you&#x27;re here. 💗</p>
       </div>
       <div class="sponsor-actions">
-        <a class="sponsor-button" href="https://github.com/sponsors/boranseasonnew" target="_blank" rel="noopener noreferrer" lang="en" translate="no">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C16.5 4 17.5 4.3 17.5 4.3c.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
-          <span>Pls buy me a cat 😭</span><span class="sponsor-arrow" aria-hidden="true">↗</span>
-        </a>
-        <span class="sponsor-account">@boranseasonnew</span>
+        <div class="sponsor-friends" aria-hidden="true"><span class="sponsor-character friend-triangle"><span class="friend-face"><span class="friend-eye"><span class="friend-pupil"></span><span class="friend-heart-eye">♥</span></span><span class="friend-eye"><span class="friend-pupil"></span><span class="friend-heart-eye">♥</span></span></span><span class="friend-mouth"></span></span><span class="sponsor-character friend-circle"><span class="friend-face"><span class="friend-eye"><span class="friend-pupil"></span><span class="friend-heart-eye">♥</span></span><span class="friend-eye"><span class="friend-pupil"></span><span class="friend-heart-eye">♥</span></span></span><span class="friend-mouth"></span></span><span class="sponsor-character friend-pill"><span class="friend-face"><span class="friend-eye"><span class="friend-pupil"></span><span class="friend-heart-eye">♥</span></span><span class="friend-eye"><span class="friend-pupil"></span><span class="friend-heart-eye">♥</span></span></span><span class="friend-mouth"></span></span></div>
+        <div class="sponsor-action-copy">
+          <a class="sponsor-button" href="https://github.com/sponsors/boranseasonnew" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C16.5 4 17.5 4.3 17.5 4.3c.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+            <span data-support-copy="cta">Please buy me a cat 😭</span><span class="sponsor-arrow" aria-hidden="true">↗</span>
+          </a>
+          <span class="sponsor-account">@boranseasonnew</span>
+        </div>
       </div>
+      <div class="sponsor-promises"><span data-support-copy="promise1">No required account</span><span data-support-copy="promise2">No subscription</span><span data-support-copy="promise3">No payment required</span></div>
+      <div class="sponsor-particles" aria-hidden="true"></div>
     </section>
     <details class="contact-picker"><summary data-l10n="{&quot;text:0&quot;:&quot;iletişim kanalları&quot;}">communication channels<span aria-hidden="true">↗</span></summary><div class="support-link-list">
       <div class="don-ig support-link-row">
         <div class="don-card-icon don-instagram-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
         <div class="support-link-copy"><div class="don-ig-name" data-l10n="{&quot;text:0&quot;:&quot;instagram&quot;}">instagram</div><div class="don-ig-handle" data-l10n="{&quot;text:0&quot;:&quot;@boranseason&quot;}">@boranseason</div></div>
         <a href="https://www.instagram.com/boranseason" target="_blank" rel="noopener noreferrer" class="don-ig-link" id="donFollowBtn" data-l10n="{&quot;text:0&quot;:&quot;takip et&quot;}">follow</a>
+      </div>
+      <div class="don-telegram support-link-row">
+        <div class="don-card-icon don-telegram-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 3.4 2.8 10.3c-1.2.5-1.2 1.1-.2 1.4l4.6 1.4 1.8 5.4c.2.6.1.8.7.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8L22 5.1c.3-1.3-.5-2-1.3-1.7ZM8.9 12.8l9-5.7c.4-.3.8-.1.5.2l-7.7 7-.3 3.2-1.5-4.7Z"/></svg></div>
+        <div class="support-link-copy"><div class="don-contact-name">Telegram</div><div class="don-contact-email" data-support-copy="telegramDetail">Updates and project news</div></div>
+        <a href="https://t.me/zenithwon" target="_blank" rel="noopener noreferrer" class="don-contact-link" data-support-copy="telegramJoin">join the channel</a>
       </div>
       <div class="don-contact support-link-row">
         <div class="don-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg></div>

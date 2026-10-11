@@ -9,6 +9,7 @@ CONFIG=json.loads((ROOT/'shared/site-config.json').read_text(encoding='utf-8'))
 ORIGIN=CONFIG['origin']
 LANGUAGES=['tr','en','de','fr','ru','vi','zh','ja']
 CATALOGS={lang:json.loads((FRONTEND/f'locales/{lang}.json').read_text(encoding='utf-8')) for lang in LANGUAGES}
+SUPPORT_COPY=json.loads((FRONTEND/'support-copy.json').read_text(encoding='utf-8'))
 HTML_LANG=lambda lang:'zh-CN' if lang=='zh' else lang
 LOCALES={'tr':'tr_TR','en':'en_US','de':'de_DE','fr':'fr_FR','ru':'ru_RU','vi':'vi_VN','zh':'zh_CN','ja':'ja_JP'}
 VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
@@ -46,7 +47,7 @@ class Translation(HTMLParser):
         line,col=self.getpos();return self.offsets[line-1]+col
     def handle_starttag(self,tag,attrs):
         a=dict(attrs);raw=self.get_starttag_text();start=self.position()
-        node={'tag':tag,'start':start,'raw':raw,'inner':start+len(raw),'blocked':tag in BLOCKED or any(n['blocked'] for n in self.stack),'fields':json.loads(a.get('data-l10n','{}')),'children':0}
+        node={'tag':tag,'start':start,'raw':raw,'inner':start+len(raw),'blocked':tag in BLOCKED or any(n['blocked'] for n in self.stack),'fields':json.loads(a.get('data-l10n','{}')),'support_copy':a.get('data-support-copy'),'children':0}
         if self.stack:self.stack[-1]['children']+=1
         if not node['blocked']:
             for key in ['alt','title','placeholder','aria-label','content']:
@@ -69,7 +70,8 @@ class Translation(HTMLParser):
         if not self.stack:return
         node=self.stack[-1];key='text:'+str(node['children']);node['children']+=1
         if node['blocked']:return
-        original=node['fields'].get(key,value);translated=translate(original,self.lang)
+        original=node['fields'].get(key,value)
+        translated=SUPPORT_COPY[self.lang].get(node['support_copy'],value) if node['support_copy'] and key=='text:0' else translate(original,self.lang)
         if translated==value:return
         start=self.position();end=self.source.find('<',start)
         if end<0:end=len(self.source)
