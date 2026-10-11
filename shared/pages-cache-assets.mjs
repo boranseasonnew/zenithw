@@ -81,6 +81,7 @@ export const STATIC_ASSET_PATHS = new Set([
   "/cache-assets/site-language.eb5509a0a82c.js",
   "/cache-assets/site-language.f00b8f5b934d.js",
   "/cache-assets/site-language.fec944aa5400.js",
+  "/cache-assets/site-shell.6d55a8df4e13.css",
   "/cache-assets/site-shell.c686497b0742.css",
   "/cache-assets/style.0a44b1a04019.css",
   "/cache-assets/support-copy.3d639d29b1cb.json",
