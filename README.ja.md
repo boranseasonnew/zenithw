@@ -12,7 +12,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/WEB-v15.2-222222?style=for-the-badge" alt="Web v15.2">
   <img src="https://img.shields.io/badge/WINDOWS-v4.1.0-222222?style=for-the-badge&amp;logo=windows11" alt="Windows v4.1.0">
-  <img src="https://img.shields.io/badge/ANDROID-v2.1.3-222222?style=for-the-badge&amp;logo=android&amp;logoColor=3DDC84" alt="Android v2.1.3">
   <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0 license">
 </p>
 
