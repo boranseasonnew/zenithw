@@ -16,7 +16,9 @@ execFileSync(process.platform === 'win32' ? 'python' : 'python3',
 // Only generated, content-hashed copies receive immutable response headers.
 const sources = [
   'local-media.js', 'workspace-choices.js', 'premium-workspaces.css', 'downloads.js', 'downloads.css', 'site-community.css', ...['microsoft-store','f-droid','uptodown','telegram'].map(brand=>'brands/'+brand+'.svg'),
-  'site-language.js', 'site-language.css', ...['tr','en','fr','de','ru','vi','zh','ja'].map(lang=>'locales/'+lang+'.json'),
+  'site-language.js', 'site-language.css', 'site-shell.css',
+  'support-copy.json', 'support-sponsor.css', 'support-sponsor.js',
+  ...['tr','en','fr','de','ru','vi','zh','ja'].map(lang=>'locales/'+lang+'.json'),
   'app.d4596317c4a7.js', 'style.487d49f0164d.css',
   'updates-core.99daf4ea6088.js', 'updates-archive.07c744021db2.js',
   'updates.4afebabda436.css', 'info.6c44eb6f52e7.css',

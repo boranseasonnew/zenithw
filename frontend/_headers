@@ -155,6 +155,12 @@
 /style.487d49f0164d.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/support-sponsor.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/support-sponsor.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /updates-archive.07c744021db2.js
   Cache-Control: public, max-age=3600, must-revalidate
 

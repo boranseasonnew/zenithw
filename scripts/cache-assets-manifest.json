@@ -79,6 +79,22 @@
     "url": "/cache-assets/site-language.750ddfc30c31.css",
     "sha256": "750ddfc30c314df7120fcb37a2b7b8aeb3656683cfd1f8c0a479e8cc026671b1"
   },
+  "site-shell.css": {
+    "url": "/cache-assets/site-shell.c686497b0742.css",
+    "sha256": "c686497b074280425243329d576638b140869adb1d943b8d164191452d17009c"
+  },
+  "support-copy.json": {
+    "url": "/cache-assets/support-copy.3d639d29b1cb.json",
+    "sha256": "3d639d29b1cb459e9cefbabdfe4ea93bfbce957d87fa74b270f70584537af284"
+  },
+  "support-sponsor.css": {
+    "url": "/cache-assets/support-sponsor.fae90b0d143f.css",
+    "sha256": "fae90b0d143f79ef2d4da44f76bdde631d14a3434394960b59e7bf01c38a6cd9"
+  },
+  "support-sponsor.js": {
+    "url": "/cache-assets/support-sponsor.9179d5064601.js",
+    "sha256": "9179d506460104b93eedae7b06519c70a9271fc2c468a488d729f101e5b2cba9"
+  },
   "app.d4596317c4a7.js": {
     "url": "/cache-assets/app.e0a5a2e7a16f.js",
     "sha256": "e0a5a2e7a16f7c7337441472c116a9845da6b48c7613aea0ab4630344f0e922c"
