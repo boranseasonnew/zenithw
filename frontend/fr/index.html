@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/cache-assets/style.0a44b1a04019.css">
 <link rel="stylesheet" href="/cache-assets/site-shell.6d55a8df4e13.css">
 <link rel="stylesheet" href="/media-guidance.css?v=14.4">
-<link rel="stylesheet" href="/desktop-promo.css?v=1">
+<link rel="stylesheet" href="/desktop-promo.css?v=2">
 <script src="/version.js?v=15.2-desktop4.1.0"></script>
 <link rel="stylesheet" href="/cache-assets/guides.8e81aba3443d.css">
 <link rel="stylesheet" href="/cache-assets/site-community.3f344770a2cb.css">
@@ -272,8 +272,11 @@
 
 <!-- YOUTUBE APP HANDOFF -->
 <div class="overlay tone-cool" id="youtubeAppOverlay">
-  <section class="upd-modal youtube-app-modal" aria-labelledby="youtubeAppTitle" aria-describedby="youtubeAppBody">
+  <section class="upd-modal youtube-app-modal" role="dialog" aria-modal="true" aria-labelledby="youtubeAppTitle" aria-describedby="youtubeAppBody">
     <button class="modal-close-btn" id="youtubeAppClose" type="button" aria-label="Fermer" data-l10n="{&quot;aria-label&quot;:&quot;Kapat&quot;}">✕</button>
+<div class="popup-device-scene" aria-hidden="true">
+      <svg viewBox="0 0 260 108" fill="none"><rect x="28" y="14" width="152" height="82" rx="12" class="scene-screen"/><rect x="37" y="23" width="134" height="60" rx="6" class="scene-display"/><path d="M92 43v20l19-10-19-10Z" class="scene-play"/><path d="M16 96h176" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><rect x="187" y="27" width="44" height="72" rx="10" class="scene-screen"/><rect x="193" y="36" width="32" height="46" rx="5" class="scene-display"/><path d="m202 59 5 5 9-11" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M205 91h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M166 7h13m-6.5-6.5v13M246 54h8m-4-4v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
     <div class="youtube-app-mark" aria-hidden="true">
       <svg viewBox="0 0 24 24"><path d="M23 12s0-4.1-.5-6.1a3 3 0 0 0-2.1-2.1C18.4 3.3 12 3.3 12 3.3s-6.4 0-8.4.5a3 3 0 0 0-2.1 2.1C1 7.9 1 12 1 12s0 4.1.5 6.1a3 3 0 0 0 2.1 2.1c2 .5 8.4.5 8.4.5s6.4 0 8.4-.5a3 3 0 0 0 2.1-2.1C23 16.1 23 12 23 12Zm-13 3.5v-7l6 3.5-6 3.5Z"/></svg>
     </div>
@@ -384,9 +387,12 @@
 </div>
 
 <!-- ONE-TIME DESKTOP APP REMINDER -->
-<section class="desktop-promo" id="desktopPromo" hidden role="dialog" aria-modal="false" aria-labelledby="desktopPromoTitle">
+<section class="overlay desktop-promo" id="desktopPromo" hidden role="dialog" aria-modal="true" aria-labelledby="desktopPromoTitle" aria-describedby="desktopPromoBody">
   <div class="desktop-promo-card">
-    <button class="desktop-promo-close" type="button" onclick="closeDesktopPromo()" aria-label="Fermer" data-l10n="{&quot;aria-label&quot;:&quot;Close&quot;,&quot;text:0&quot;:&quot;×&quot;}">×</button>
+    <button class="desktop-promo-close" type="button" id="desktopPromoClose" aria-label="Fermer" data-l10n="{&quot;aria-label&quot;:&quot;Close&quot;,&quot;text:0&quot;:&quot;×&quot;}">×</button>
+<div class="popup-device-scene" aria-hidden="true">
+      <svg viewBox="0 0 260 108" fill="none"><rect x="28" y="14" width="152" height="82" rx="12" class="scene-screen"/><rect x="37" y="23" width="134" height="60" rx="6" class="scene-display"/><path d="M92 43v20l19-10-19-10Z" class="scene-play"/><path d="M16 96h176" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><rect x="187" y="27" width="44" height="72" rx="10" class="scene-screen"/><rect x="193" y="36" width="32" height="46" rx="5" class="scene-display"/><path d="m202 59 5 5 9-11" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M205 91h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M166 7h13m-6.5-6.5v13M246 54h8m-4-4v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
     <div class="desktop-promo-icon" aria-hidden="true"><span data-l10n="{&quot;text:0&quot;:&quot;Z&quot;}">Z.</span></div>
     <div class="desktop-promo-copy">
       <span class="desktop-promo-kicker" id="desktopPromoKicker" data-l10n="{&quot;text:0&quot;:&quot;ZENITHW APPS&quot;}">APPLICATIONS ZENITHW</span>
@@ -407,7 +413,7 @@
         integrity="sha512-Xm9qbB6Pu06k3PUwPj785dyTl6oHxgsv9nHp7ej7nCpAqGZT3OZpsELuCYX05DdonFpTlBpXMOxjavIAIUwr0w=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/runtime-config.js?v=2"></script>
-<script src="/cache-assets/app.e0a5a2e7a16f.js"></script>
+<script src="/cache-assets/app.a769e4ec016c.js"></script>
 <script src="/site-shell.js?v=14.7"></script>
 
 <!-- generated community footer --><footer class="site-community-footer" data-community="footer"><a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.instagram.com/zenithwonline/" target="_blank" rel="noopener noreferrer">Instagram</a><a class="telegram-link" href="https://t.me/zenithwon" target="_blank" rel="noopener noreferrer"><img src="/cache-assets/telegram.f438f2293a19.svg" width="18" height="18" alt=""><span data-l10n="{&quot;text:0&quot;:&quot;Join Telegram&quot;}">Rejoindre Telegram</span></a></footer><!-- end generated community footer -->

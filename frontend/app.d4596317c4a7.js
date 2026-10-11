@@ -1546,6 +1546,14 @@ function handleOverlay(e,id){if(e.target===document.getElementById(id)){if(id===
 function closeOverlay(id,preservePending){
   const overlay=document.getElementById(id);if(!overlay)return;
   const wasOpen=overlay.classList.contains('open');
+  if(id==='desktopPromo'){
+    try{
+      sessionStorage.setItem(DESKTOP_PROMO_SESSION_KEY,'1');
+      if(document.getElementById('desktopPromoNever')?.checked)localStorage.setItem(DESKTOP_PROMO_DISMISS_KEY,'1');
+    }catch(e){}
+    overlay.classList.remove('is-visible');
+    setTimeout(()=>{if(!overlay.classList.contains('open'))overlay.hidden=true;},240);
+  }
   overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');overlay.inert=true;syncModalBackground();
   unlockPageScrollIfIdle();
   if(id==='servicesOverlay'){const chip=document.getElementById('servicesChip');if(chip){chip.classList.remove('open');chip.setAttribute('aria-expanded','false');}}
@@ -1703,15 +1711,7 @@ async function reDownload(url){
 const DESKTOP_PROMO_SESSION_KEY='zw_desktop_promo_seen';
 const DESKTOP_PROMO_DISMISS_KEY='zw_desktop_promo_dismissed';
 function closeDesktopPromo(){
-  const promo=document.getElementById('desktopPromo');
-  const never=document.getElementById('desktopPromoNever');
-  try{
-    sessionStorage.setItem(DESKTOP_PROMO_SESSION_KEY,'1');
-    if(never&&never.checked)localStorage.setItem(DESKTOP_PROMO_DISMISS_KEY,'1');
-  }catch(e){}
-  if(!promo)return;
-  promo.classList.remove('is-visible');
-  setTimeout(()=>{promo.hidden=true;},340);
+  closeOverlay('desktopPromo');
 }
 function initDesktopPromo(){
   const promo=document.getElementById('desktopPromo');
@@ -1719,9 +1719,16 @@ function initDesktopPromo(){
   try{
     if(localStorage.getItem(DESKTOP_PROMO_DISMISS_KEY)==='1'||sessionStorage.getItem(DESKTOP_PROMO_SESSION_KEY)==='1')return;
   }catch(e){}
+  document.getElementById('desktopPromoClose')?.addEventListener('click',closeDesktopPromo);
+  promo.addEventListener('click',event=>{if(event.target===promo)closeDesktopPromo();});
   setTimeout(()=>{
+    const editing=document.activeElement?.matches('input,textarea,select,[contenteditable="true"]');
+    if(document.hidden||editing||document.querySelector('.overlay.open'))return;
     promo.hidden=false;
-    requestAnimationFrame(()=>promo.classList.add('is-visible'));
+    requestAnimationFrame(()=>{
+      promo.classList.add('is-visible');
+      openOverlay('desktopPromo');
+    });
   },5000);
 }
 document.addEventListener('DOMContentLoaded',initDesktopPromo);

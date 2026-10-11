@@ -4,6 +4,15 @@ import { STATIC_ASSET_PATHS } from "../shared/pages-cache-assets.mjs";
 import { legacyDownloadRoute } from "../shared/download-routes.mjs";
 
 const NO_STORE = "private, no-store, max-age=0";
+
+// Cloudflare reads this response nonce when authorizing its injected JSD scripts.
+// Retain the reviewed hashes for our own inline code and event handlers.
+function htmlSecurityPolicy() {
+  const bytes = crypto.getRandomValues(new Uint8Array(18));
+  const nonce = btoa(String.fromCharCode(...bytes));
+  return PAGES_CSP.replace("script-src ", `script-src 'nonce-${nonce}' `);
+}
+
 const ENABLED_VALUES = new Set(["1", "true", "yes", "on"]);
 const DISABLED_VALUES = new Set(["0", "false", "no", "off"]);
 const DEFAULT_MESSAGE = "Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız.";
@@ -79,7 +88,7 @@ async function maintenancePage(context, config, previewOnly = false) {
   headers.set("Cache-Control", NO_STORE);
   headers.set("CDN-Cache-Control", "no-store");
   headers.set("Cloudflare-CDN-Cache-Control", "no-store");
-  headers.set("Content-Security-Policy", PAGES_CSP);
+  headers.set("Content-Security-Policy", htmlSecurityPolicy());
   headers.set("Content-Language", "tr");
   headers.set("X-Maintenance-Mode", config.active ? "active" : "inactive");
   headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
@@ -106,7 +115,7 @@ async function pageResponse(context) {
     context.request.headers.has("Cookie") ||
     headers.has("Set-Cookie");
 
-  if (isHtml) headers.set("Content-Security-Policy", PAGES_CSP);
+  if (isHtml) headers.set("Content-Security-Policy", htmlSecurityPolicy());
   headers.set("Cache-Control", isPrivate || response.status >= 400 || !isHtml
     ? NO_STORE
     : "public, max-age=0, must-revalidate");

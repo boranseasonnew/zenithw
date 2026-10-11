@@ -13,6 +13,7 @@ export const STATIC_ASSET_PATHS = new Set([
   "/cache-assets/app-pages.846a01737927.js",
   "/cache-assets/app.3e949c710b02.js",
   "/cache-assets/app.92a2eed5ae77.js",
+  "/cache-assets/app.a769e4ec016c.js",
   "/cache-assets/app.e0a5a2e7a16f.js",
   "/cache-assets/compare.a0575b77ab4c.css",
   "/cache-assets/de.4f316c09b055.json",

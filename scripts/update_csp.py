@@ -44,10 +44,10 @@ def build_policy(*, include_inline: bool = True) -> str:
     directives = [
         "default-src 'self'", "base-uri 'self'", "object-src 'none'",
         "frame-ancestors 'none'", "form-action 'self'",
-        ("script-src 'self' 'unsafe-hashes' https://cdnjs.cloudflare.com " + allowed_inline).rstrip(),
+        ("script-src 'self' 'unsafe-hashes' https://cdnjs.cloudflare.com https://static.cloudflareinsights.com " + allowed_inline).rstrip(),
         "style-src 'self' 'unsafe-inline'", "font-src 'self'",
         "img-src 'self' data: blob: https:", "media-src 'self' blob:",
-        "connect-src 'self' https://api.zenithw.space wss://api.zenithw.space",
+        "connect-src 'self' https://api.zenithw.space wss://api.zenithw.space https://cloudflareinsights.com",
         "worker-src 'self' blob:", "manifest-src 'self'", "upgrade-insecure-requests",
     ]
     return "; ".join(directives)
