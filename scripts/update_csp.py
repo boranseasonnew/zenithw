@@ -43,7 +43,7 @@ def build_policy(*, include_inline: bool = True) -> str:
     allowed_inline = " ".join(script_hashes + handler_hashes) if include_inline else ""
     directives = [
         "default-src 'self'", "base-uri 'self'", "object-src 'none'",
-        "frame-ancestors 'none'", "form-action 'self'",
+        "frame-ancestors 'none'", "frame-src 'self' https://www.youtube-nocookie.com", "form-action 'self'",
         ("script-src 'self' 'unsafe-hashes' https://cdnjs.cloudflare.com https://static.cloudflareinsights.com " + allowed_inline).rstrip(),
         "style-src 'self' 'unsafe-inline'", "font-src 'self'",
         "img-src 'self' data: blob: https:", "media-src 'self' blob:",

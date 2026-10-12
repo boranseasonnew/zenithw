@@ -41,14 +41,14 @@ test('All release titles, introductions and sections have translations in eight 
   }
 });
 
-function runtime(saved='ru', {settings=true, browser=['ja-JP']}={}){
+function runtime(saved='ru', {settings=true, browser=['ja-JP'], location, route}={}){
   const pending=[], writes=[];
   const select={value:'',setAttribute(){},removeAttribute(){},hasAttribute:()=>false,replaceChildren(){}};
-  const document={readyState:'complete',documentElement:{},querySelectorAll:()=>[],getElementById:()=>settings?select:null,
+  const document={readyState:'complete',documentElement:{getAttribute:()=>route},querySelectorAll:()=>[],getElementById:()=>settings?select:null,
     createElement:tag=>{assert.equal(tag,'option');return {};},querySelector:()=>null};
-  const window={dispatchEvent(){}};
+  const window={dispatchEvent(){},location};
   const context=vm.createContext({window,document,navigator:{languages:browser},console:{error(){}},
-    CustomEvent:class{},localStorage:{getItem:()=>saved,setItem:(key,value)=>writes.push([key,value])},
+    URLSearchParams,CustomEvent:class{},localStorage:{getItem:()=>saved,setItem:(key,value)=>writes.push([key,value])},
     fetch:url=>new Promise(resolve=>pending.push({url,resolve}))});
   vm.runInContext(read('site-language.js'),context);
   const complete=(index,ok=true)=>pending[index].resolve({ok,json:async()=>catalogs[pending[index].url.match(/([a-z]+)\.json$/)[1]]});
@@ -82,4 +82,14 @@ test('Pages without a Settings selector detect browser language without saving a
     assert.equal(state.document.documentElement.lang,expected);
     assert.deepEqual(state.writes,[]);
   }
+});
+
+// Locale navigation must keep download campaigns and the selected platform.
+test('changing locale preserves the current query and platform fragment',async()=>{
+  const assigned=[];
+  const location={pathname:'/downloads',search:'?source=navbar',hash:'#windows',assign:url=>assigned.push(url)};
+  const state=runtime('en',{settings:false,location,route:'/downloads'});
+  state.complete(0);await state.api.ready;
+  const change=state.api.use('de');state.complete(1);await change;
+  assert.deepEqual(assigned,['/de/downloads?source=navbar#windows']);
 });

@@ -17,3 +17,207 @@ export const downloadCopy = Object.fromEntries(Object.entries(values).map(([lang
 
 const submissionLabels={tr:'Başvuruyu görüntüle',en:'View submission',de:'Antrag ansehen',fr:'Voir la demande',ru:'Посмотреть заявку',vi:'Xem hồ sơ gửi duyệt',zh:'查看提交申请',ja:'申請内容を見る'};
 for(const [lang,label] of Object.entries(submissionLabels))downloadCopy[lang]['View submission']=label;
+
+// Tutorial strings feed the same Downloads catalogs and static translations.
+const tutorialKeys = ["Watch Android Tutorial", "Learn how to use the Android app, step by step.", "Android tutorial", "Close tutorial", "ZenithW Android tutorial video", "YouTube loads only when you open the tutorial.", "Watch Tutorial"];
+const tutorialCopy = {
+  "en": [
+    "Watch Android Tutorial",
+    "Learn how to use the Android app, step by step.",
+    "Android tutorial",
+    "Close tutorial",
+    "ZenithW Android tutorial video",
+    "YouTube loads only when you open the tutorial.",
+    "Watch Tutorial"
+  ],
+  "tr": [
+    "Android eğitimini izle",
+    "Android uygulamasını adım adım kullanmayı öğren.",
+    "Android eğitimi",
+    "Eğitimi kapat",
+    "ZenithW Android eğitim videosu",
+    "YouTube yalnızca eğitimi açtığında yüklenir.",
+    "Eğitimi izle"
+  ],
+  "de": [
+    "Android-Anleitung ansehen",
+    "Lerne Schritt für Schritt, wie du die Android-App benutzt.",
+    "Android-Anleitung",
+    "Anleitung schließen",
+    "ZenithW Android-Anleitungsvideo",
+    "YouTube wird erst geladen, wenn du die Anleitung öffnest.",
+    "Anleitung ansehen"
+  ],
+  "fr": [
+    "Voir le tutoriel Android",
+    "Apprenez à utiliser l’application Android, étape par étape.",
+    "Tutoriel Android",
+    "Fermer le tutoriel",
+    "Vidéo du tutoriel Android de ZenithW",
+    "YouTube se charge uniquement lorsque vous ouvrez le tutoriel.",
+    "Voir le tutoriel"
+  ],
+  "ru": [
+    "Смотреть инструкцию для Android",
+    "Узнайте, как пользоваться приложением Android, шаг за шагом.",
+    "Инструкция для Android",
+    "Закрыть инструкцию",
+    "Видеоинструкция ZenithW для Android",
+    "YouTube загружается только при открытии инструкции.",
+    "Смотреть инструкцию"
+  ],
+  "vi": [
+    "Xem hướng dẫn Android",
+    "Tìm hiểu cách sử dụng ứng dụng Android từng bước.",
+    "Hướng dẫn Android",
+    "Đóng hướng dẫn",
+    "Video hướng dẫn ZenithW trên Android",
+    "YouTube chỉ được tải khi bạn mở hướng dẫn.",
+    "Xem hướng dẫn"
+  ],
+  "zh": [
+    "观看 Android 教程",
+    "逐步了解如何使用 Android 应用。",
+    "Android 教程",
+    "关闭教程",
+    "ZenithW Android 教程视频",
+    "只有打开教程时才会加载 YouTube。",
+    "观看教程"
+  ],
+  "ja": [
+    "Android チュートリアルを見る",
+    "Android アプリの使い方を順を追って学べます。",
+    "Android チュートリアル",
+    "チュートリアルを閉じる",
+    "ZenithW Android チュートリアル動画",
+    "チュートリアルを開いたときだけ YouTube が読み込まれます。",
+    "チュートリアルを見る"
+  ]
+};
+for (const [lang, labels] of Object.entries(tutorialCopy)) {
+  if (labels.length !== tutorialKeys.length) throw new Error(`Tutorial copy mismatch: ${lang}`);
+  tutorialKeys.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
+}
+
+const hubKeys = ["Your device. Your ZenithW.", "Windows or Android. Free, open source and ad-free.", "Download for Windows", "Download for Android", "Other device options", "Alternative download sources", "New releases, in the loop.", "Follow development and be the first to hear about releases.", "Free. Open source. In your control.", "Choose your platform", "Installation file", "Portable version"];
+const hubCopy = {
+  "en": [
+    "Your device. Your ZenithW.",
+    "Windows or Android. Free, open source and ad-free.",
+    "Download for Windows",
+    "Download for Android",
+    "Other device options",
+    "Alternative download sources",
+    "New releases, in the loop.",
+    "Follow development and be the first to hear about releases.",
+    "Free. Open source. In your control.",
+    "Choose your platform",
+    "Installation file",
+    "Portable version"
+  ],
+  "tr": [
+    "Senin cihazın. Senin ZenithW’n.",
+    "Windows veya Android. Ücretsiz, açık kaynak ve reklamsız.",
+    "Windows için indir",
+    "Android için indir",
+    "Diğer cihaz seçenekleri",
+    "Alternatif indirme kaynakları",
+    "Yeni sürümlerden haberdar ol.",
+    "Geliştirme sürecini takip et, duyuruları ilk sen öğren.",
+    "Ücretsiz. Açık kaynak. Senin kontrolünde.",
+    "Platformunu seç",
+    "Kurulum dosyası",
+    "Taşınabilir sürüm"
+  ],
+  "de": [
+    "Dein Gerät. Dein ZenithW.",
+    "Windows oder Android. Kostenlos, quelloffen und werbefrei.",
+    "Für Windows herunterladen",
+    "Für Android herunterladen",
+    "Weitere Geräteoptionen",
+    "Alternative Downloadquellen",
+    "Neue Versionen im Blick.",
+    "Verfolge die Entwicklung und erfahre zuerst von neuen Versionen.",
+    "Kostenlos. Quelloffen. Unter deiner Kontrolle.",
+    "Plattform wählen",
+    "Installationsdatei",
+    "Portable Version"
+  ],
+  "fr": [
+    "Votre appareil. Votre ZenithW.",
+    "Windows ou Android. Gratuit, open source et sans publicité.",
+    "Télécharger pour Windows",
+    "Télécharger pour Android",
+    "Autres options pour votre appareil",
+    "Autres sources de téléchargement",
+    "Restez au courant des nouvelles versions.",
+    "Suivez le développement et découvrez les nouvelles versions en premier.",
+    "Gratuit. Open source. Sous votre contrôle.",
+    "Choisir votre plateforme",
+    "Fichier d’installation",
+    "Version portable"
+  ],
+  "ru": [
+    "Ваше устройство. Ваш ZenithW.",
+    "Windows или Android. Бесплатно, с открытым кодом и без рекламы.",
+    "Скачать для Windows",
+    "Скачать для Android",
+    "Другие варианты устройств",
+    "Другие источники загрузки",
+    "Не пропускайте новые версии.",
+    "Следите за разработкой и узнавайте о выпусках первыми.",
+    "Бесплатно. Открытый код. Под вашим контролем.",
+    "Выберите платформу",
+    "Установочный файл",
+    "Портативная версия"
+  ],
+  "vi": [
+    "Thiết bị của bạn. ZenithW của bạn.",
+    "Windows hoặc Android. Miễn phí, mã nguồn mở và không quảng cáo.",
+    "Tải cho Windows",
+    "Tải cho Android",
+    "Tùy chọn thiết bị khác",
+    "Nguồn tải thay thế",
+    "Theo dõi các phiên bản mới.",
+    "Theo dõi quá trình phát triển và nhận tin phiên bản mới đầu tiên.",
+    "Miễn phí. Mã nguồn mở. Bạn nắm quyền kiểm soát.",
+    "Chọn nền tảng",
+    "Tệp cài đặt",
+    "Phiên bản di động"
+  ],
+  "zh": [
+    "你的设备。你的 ZenithW。",
+    "Windows 或 Android。免费、开源、无广告。",
+    "下载 Windows 版",
+    "下载 Android 版",
+    "其他设备选项",
+    "其他下载来源",
+    "关注新版本。",
+    "关注开发动态，第一时间了解新版本。",
+    "免费。开源。由你掌控。",
+    "选择平台",
+    "安装文件",
+    "便携版"
+  ],
+  "ja": [
+    "あなたの端末。あなたの ZenithW。",
+    "Windows または Android。無料、オープンソース、広告なし。",
+    "Windows 版をダウンロード",
+    "Android 版をダウンロード",
+    "その他の端末向けオプション",
+    "その他のダウンロード元",
+    "新しいリリースをチェック。",
+    "開発の進捗を追い、新しいリリースをいち早く知ることができます。",
+    "無料。オープンソース。あなたがコントロール。",
+    "プラットフォームを選択",
+    "インストールファイル",
+    "ポータブル版"
+  ]
+};
+for (const [lang, labels] of Object.entries(hubCopy)) {
+  if (labels.length !== hubKeys.length) throw new Error(`Hub copy mismatch: ${lang}`);
+  hubKeys.forEach((key,index) => { downloadCopy[lang][key] = labels[index]; });
+}
+
+const hubAuxiliaryCopy = {"tr": ["Marka künyeleri", "Gezinme menüsünü aç"], "en": ["Brand credits", "Open navigation"], "de": ["Markenhinweise", "Navigation öffnen"], "fr": ["Crédits des marques", "Ouvrir la navigation"], "ru": ["Сведения о брендах", "Открыть меню навигации"], "vi": ["Thông tin thương hiệu", "Mở menu điều hướng"], "zh": ["品牌说明", "打开导航菜单"], "ja": ["ブランド表記", "ナビゲーションを開く"]};
+for (const [lang,labels] of Object.entries(hubAuxiliaryCopy)) { downloadCopy[lang]['Brand credits']=labels[0]; downloadCopy[lang]['Open navigation']=labels[1]; }

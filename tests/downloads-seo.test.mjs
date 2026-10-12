@@ -91,7 +91,8 @@ test('download choices use actual release assets, verified versions and honest p
  assert.ok(html.includes('Windows 10/11'));assert.ok(html.includes('Android 7.0'));
  for(const platform of ['windows','android'])assert.ok(html.includes(config[platform].version));
  for(const asset of [config.windows.installer,config.windows.portable,...config.android.apks])assert.ok(html.includes('href="'+asset.url+'"'));
- assert.equal((html.match(/>Under Review<\/span>/g)||[]).length,4);
+ const underReview=Object.values(config.windows.stores).concat(Object.values(config.android.stores)).filter(store=>store.status==='review').length;
+ assert.equal((html.match(/>Under Review<\/span>/g)||[]).length,underReview);
  assert.ok(!html.includes('https://apps.microsoft.com/detail/'));assert.ok(!html.includes('https://www.uptodown.com/zenith'));
  assert.ok(html.includes('winget install --id ZenithW.Desktop --exact --source winget'));
  assert.ok(visible(html).includes(catalogs.en['This command will be available after the WinGet package is approved.']));
@@ -100,7 +101,9 @@ test('download choices use actual release assets, verified versions and honest p
 test('Telegram links on all public/private pages use the shared URL and safe new-tab attributes',()=>{
  const walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(dir,e.name)):[join(dir,e.name)]);
  for(const file of walk(join(root,'frontend')).filter(file=>file.endsWith('.html'))){
-  const source=readFileSync(file,'utf8');assert.ok(source.includes('data-community="footer"'),file);
+  const source=readFileSync(file,'utf8');
+  if (/<meta\b[^>]*http-equiv="refresh"/i.test(source)) continue; // Redirect aliases have no site footer.
+  assert.ok(source.includes('data-community="footer"'),file);
   for(const match of source.matchAll(/<a\b[^>]*href="https:\/\/t\.me\/[^>]+>/g)){
    assert.ok(match[0].includes('href="'+config.telegram+'"'),file);assert.ok(match[0].includes('target="_blank"'));assert.ok(match[0].includes('rel="noopener noreferrer"'));
   }

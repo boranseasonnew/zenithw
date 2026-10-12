@@ -12,12 +12,16 @@
     "sha256": "817a8c734de64978658afc52638a064357668ff50e721c4a39ce4b32ec17db37"
   },
   "downloads.js": {
-    "url": "/cache-assets/downloads.489d12f4c4d3.js",
-    "sha256": "489d12f4c4d303e444db6ab766dc1d53a96a65e2e245cce059071cf277686d07"
+    "url": "/cache-assets/downloads.501fd77d93c3.js",
+    "sha256": "501fd77d93c36d41efba96df0f4683bc87b8781ef193a191a7bc84e3b2a46b01"
+  },
+  "android-tutorial.js": {
+    "url": "/cache-assets/android-tutorial.7d54ccf59f6c.js",
+    "sha256": "7d54ccf59f6c8b2b6fe447d42e9f32795ec11fe48af9ec2aaf511e9f3f088933"
   },
   "downloads.css": {
-    "url": "/cache-assets/downloads.1b967f77c38e.css",
-    "sha256": "1b967f77c38e30defe53959c69c03f69f9edcd93beae3d90d252dacd9261d4d4"
+    "url": "/cache-assets/downloads.c789b08d530c.css",
+    "sha256": "c789b08d530c61975729f02d5b3f853d2a9eb99203c64b55fb92e3007f310a2c"
   },
   "site-community.css": {
     "url": "/cache-assets/site-community.3f344770a2cb.css",
@@ -39,41 +43,73 @@
     "url": "/cache-assets/telegram.f438f2293a19.svg",
     "sha256": "f438f2293a19beeea351865c436602d4a6309b2d3a78e577359529e3f9bdf3de"
   },
+  "brands/f-droid-icon.svg": {
+    "url": "/cache-assets/f-droid-icon.8a18ba93e2d2.svg",
+    "sha256": "8a18ba93e2d2444adcaf6973f45fcfc52a798791473a8c39ef1948eb6331a158"
+  },
+  "brands/uptodown-icon.svg": {
+    "url": "/cache-assets/uptodown-icon.3469baaeb858.svg",
+    "sha256": "3469baaeb858a96935ad0444a0d5fbb94128f369fd33f1980b1f78ff73045f38"
+  },
+  "brands/windows.svg": {
+    "url": "/cache-assets/windows.8a1145b921a4.svg",
+    "sha256": "8a1145b921a47cfc10f845516e2d12a86f257d61c1c3ec856f0c7bac020d506e"
+  },
+  "brands/android.svg": {
+    "url": "/cache-assets/android.5f05dae657da.svg",
+    "sha256": "5f05dae657da9f31e5d4a09b7976f39881617f6b3e4d4562d9ee16295d250bdb"
+  },
+  "brands/github.svg": {
+    "url": "/cache-assets/github.ccd84c89b105.svg",
+    "sha256": "ccd84c89b1056345608fc3489357f8acc7397e49a3cdc2d418b6c8016911d47b"
+  },
+  "brands/microsoft-store-icon.svg": {
+    "url": "/cache-assets/microsoft-store-icon.9e3cbc5e931f.svg",
+    "sha256": "9e3cbc5e931fd3a6958b02172c015cbe135c09e594299c86c1fd8f3323e7de0b"
+  },
+  "brands/winget.png": {
+    "url": "/cache-assets/winget.0ed19a44f6a0.png",
+    "sha256": "0ed19a44f6a06e4f2ffe42e97b1437a61e95415670b5ae59feb26d00733e9574"
+  },
+  "brands/credits.json": {
+    "url": "/cache-assets/credits.29c12303fcd9.json",
+    "sha256": "29c12303fcd97565950a4188759b19f98873aeb4b47e76da91cbf1fbb4ff2c86"
+  },
   "locales/tr.json": {
-    "url": "/cache-assets/tr.991747086e8e.json",
-    "sha256": "991747086e8e5fc1d4894c772ac53f100a8ecf47da69eb9b097dd1300a4d72d9"
+    "url": "/cache-assets/tr.18deed40849a.json",
+    "sha256": "18deed40849a24862e105bf66429240fe3a14f46bb517551a0486b2212a0b66c"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.6340430f875c.json",
-    "sha256": "6340430f875cc80b118a5e8b494f90954c37eb0038196c4e71b6accec1f1d9fe"
+    "url": "/cache-assets/en.e8053188173b.json",
+    "sha256": "e8053188173b75b008f3f564966f2cfbbace39d128599d3893cded2d37072ba8"
   },
   "locales/fr.json": {
-    "url": "/cache-assets/fr.8bca4eb9712d.json",
-    "sha256": "8bca4eb9712de107df517712df67537c9043ef691a81342c43135147b8582eba"
+    "url": "/cache-assets/fr.80d93eab06da.json",
+    "sha256": "80d93eab06da4bcab327fdba1c004429f1ecc5e85181d2cf193ea254a616715c"
   },
   "locales/de.json": {
-    "url": "/cache-assets/de.6e37f85f5649.json",
-    "sha256": "6e37f85f564944f99876af63818eac62143957be37e4b9b344d71a75ac558f09"
+    "url": "/cache-assets/de.d505d611c298.json",
+    "sha256": "d505d611c2983bed5e4d7aab0e461b1c4546afc65f3d81c2cae8b7fe8647d784"
   },
   "locales/ru.json": {
-    "url": "/cache-assets/ru.2a4b61728149.json",
-    "sha256": "2a4b61728149a83b0452808912f7b0e86cd86f0d425e72bc49f2702d486ac058"
+    "url": "/cache-assets/ru.9250e3a7a4e9.json",
+    "sha256": "9250e3a7a4e9e10d9f812c79533fc28255b3dd9d9bdfa5c3a76b863d4a01ba14"
   },
   "locales/vi.json": {
-    "url": "/cache-assets/vi.cf7244dbd32d.json",
-    "sha256": "cf7244dbd32d2f7053a467cf822d99d6bf154067c1c4a619f1fdfba8d25ea6a7"
+    "url": "/cache-assets/vi.ee1fa55003e9.json",
+    "sha256": "ee1fa55003e935eba662c11f8f9767961e4b4ea9ece157bfff456c36dfd0dc65"
   },
   "locales/zh.json": {
-    "url": "/cache-assets/zh.8cdec433a653.json",
-    "sha256": "8cdec433a653cfdfc46c7e03f2b8cf9c577d97cbbeb7c5ced2536a02ac8e4aa4"
+    "url": "/cache-assets/zh.0e7afb382434.json",
+    "sha256": "0e7afb382434e2f5b679f06dfeb1ce5742361bebb26b47984be681d945603af8"
   },
   "locales/ja.json": {
-    "url": "/cache-assets/ja.49fb3f9f58d8.json",
-    "sha256": "49fb3f9f58d82b479d01bae80292f8305854c634ec372bd320e26aa4bf1ed780"
+    "url": "/cache-assets/ja.c7ac9f8a7248.json",
+    "sha256": "c7ac9f8a72481c6a4955dbb2822c2c2339b209c5bf7c7d011a68523ac64a819d"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.17d338058a3b.js",
-    "sha256": "17d338058a3b700b1b4d57275a3306bc959f4e2913bcb6cb1b764896d3936f3f"
+    "url": "/cache-assets/site-language.889fd0dace3f.js",
+    "sha256": "889fd0dace3fb9fd0a9a96bf7f52ee766f2b17d8ef552658ea15da1910520fd6"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.750ddfc30c31.css",

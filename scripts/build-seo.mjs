@@ -94,7 +94,7 @@ const homeBlock = `<!-- generated discovery content -->
   <span class="guide-kicker">ZENITHW / WEB · ANDROID · WINDOWS</span>
   <h1 id="discovery-title">Ücretsiz video ve ses indirici.</h1>
   <p class="discovery-lead">TikTok, Instagram, X, Reddit, Pinterest ve SoundCloud gibi desteklenen kaynaklardan video veya ses kaydet. Bağlantını yukarıya yapıştır, uygun modu seç ve dosyanı indir.</p>
-  <div class="discovery-platforms"><a href="/app">Android uygulaması ↗</a><a href="/pc-app">Windows uygulaması ↗</a><a href="/convert">Video ve ses dönüştür ↗</a><a href="/remux">Kayıpsız remux ↗</a></div>
+  <div class="discovery-platforms"><a href="/app">Android uygulaması ↗</a><a href="/pc-app">Windows uygulaması ↗</a><a href="/convert">Video ve ses dönüştür ↗</a><a href="/remux">Kayıpsız remux ↗</a><a href="/downloads#android-tutorial" data-l10n="{&quot;text:0&quot;:&quot;Watch Tutorial&quot;}">Eğitimi izle</a></div>
   <section class="discovery-how"><h2>Nasıl kullanılır?</h2><ol class="guide-steps"><li>Profil adresi yerine kaydetmek istediğin paylaşımın bağlantısını kopyala.</li><li>Bağlantıyı yapıştırıp devam et. Video ve ses için otomatik, yalnızca ses için ses modunu kullan.</li><li>İndirme planını kontrol et ve indir. Kullanılabilir kalite, kaynak paylaşımın sunduğu akışlara bağlıdır.</li></ol></section>
   <div class="discovery-heading"><h2>İlk bağlantından son dosyana.</h2><a href="/guides">Tüm rehberler ↗</a></div>
   ${cards('tr')}

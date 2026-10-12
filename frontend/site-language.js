@@ -98,7 +98,8 @@
       const returnRoute = location && new URLSearchParams(location.search || '').get('return');
       const sourceRoute = returnRoute || document.documentElement.getAttribute?.('data-localized-route');
       if (location && sourceRoute && localizedRoutes.has(basePath(sourceRoute.split(/[?#]/)[0]))) {
-        const destination=path(sourceRoute,language);
+        const suffix=returnRoute ? '' : (location.search||'')+(location.hash||'');
+        const destination=path(sourceRoute+suffix,language);
         if (destination!==location.pathname+(location.search||'')+(location.hash||'')) { location.assign(destination); return; }
       }
       notify();
