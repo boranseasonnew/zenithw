@@ -1,6 +1,193 @@
 const LATEST_UPDATE = {
-  "ver": "v15.2",
+  "ver": "v15.9",
   "latest": true,
+  "dateTr": "12 ekim 2026",
+  "dateEn": "October 12, 2026",
+  "cover": null,
+  "titleTr": "Yeni indirmeler. Daha net bir ZenithW.",
+  "titleEn": "New downloads. A clearer ZenithW.",
+  "introTr": [
+    "v15.9; yenilenen Downloads tasarımını, Android eğitim videosunu ve sade sürüm arşivini bir araya getiriyor. Son destek ve mobil performans çalışmalarını da v15.3–v15.8 notlarında bulabilirsin."
+  ],
+  "introEn": [
+    "v15.9 brings together the redesigned Downloads page, Android tutorial and minimal release archive. Recent support and mobile performance work is also documented in the v15.3–v15.8 notes."
+  ],
+  "sections": [
+    {
+      "hTr": "Downloads, yeniden tasarlandı",
+      "hEn": "Downloads, redesigned",
+      "pTr": "Mat siyah ve gri yüzeyler, gerçek ve renkli platform logoları, dengeli kartlar ve kısa etkileşim animasyonları. Mobilde Windows ve Android sekmeleri, masaüstünde karşılaştırması kolay bir düzen var. Güncel Windows 4.1.0 ve Android 2.1.3 indirme seçenekleri aynı merkezde.",
+      "pEn": "Matte black and grey surfaces, authentic colour platform logos, balanced cards and short interaction animations. Mobile gets Windows and Android tabs; desktop gets an easy-to-compare layout. Current Windows 4.1.0 and Android 2.1.3 downloads share one hub."
+    },
+    {
+      "hTr": "Android rehberi, siteden ayrılmadan",
+      "hEn": "Android tutorial, without leaving the site",
+      "pTr": "Downloads içindeki eğitim kartı, videoyu 16:9 bir pencerede açıyor. YouTube oynatıcısı yalnızca tıkladığında youtube-nocookie.com üzerinden oluşturuluyor; pencere kapatılınca tamamen kaldırılıyor. ESC, dışarıya tıklama ve kapatma butonu destekleniyor, klavye odağı geri dönüyor.",
+      "pEn": "The tutorial card opens a 16:9 video dialog. The YouTube player is created through youtube-nocookie.com only after a click and removed entirely on close. Escape, backdrop clicks and the close button work, with keyboard focus restored."
+    },
+    {
+      "hTr": "Sürüm notları, daha rahat okunuyor",
+      "hEn": "Release notes, easier to read",
+      "pTr": "Updates sayfası güçlü tipografi, ince ayraçlar ve daha rahat satır aralıklarıyla baştan düzenlendi. v15.3–v15.9 hızlı arşivi ve tüm geçmiş sürümler için seçim menüsü var. İçerik JavaScript olmadan da okunabiliyor; sekiz dil ve mobil yerleşim korunuyor.",
+      "pEn": "Updates was rebuilt around clear typography, fine dividers and comfortable spacing. A quick v15.3–v15.9 archive sits alongside a picker for all older releases. Notes remain readable without JavaScript, with eight languages and a responsive layout."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_8 = {
+  "ver": "v15.8",
+  "latest": false,
+  "dateTr": "12 ekim 2026",
+  "dateEn": "October 12, 2026",
+  "cover": null,
+  "titleTr": "İndirmeler tek bir yerde",
+  "titleEn": "Downloads in one place",
+  "introTr": [
+    "Windows ve Android için yeni Downloads merkezi hazırlandı."
+  ],
+  "introEn": [
+    "A new Downloads hub was prepared for Windows and Android."
+  ],
+  "sections": [
+    {
+      "hTr": "Neler değişti?",
+      "hEn": "What changed?",
+      "pTr": "Platforma uygun kurulum seçenekleri, sürüm bilgileri ve mağaza bağlantıları aynı sayfada toplandı. Eski uygulama sayfaları ilgili platform bölümüne yönleniyor; dil değiştirildiğinde seçilen platform korunuyor.",
+      "pEn": "Install options, version details and store links for each platform were brought together. Older app pages lead to the appropriate platform section, and switching languages keeps the selected platform."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_7 = {
+  "ver": "v15.7",
+  "latest": false,
+  "dateTr": "11 ekim 2026",
+  "dateEn": "October 11, 2026",
+  "cover": null,
+  "titleTr": "Daha anlaşılır uyarılar",
+  "titleEn": "Clearer notices",
+  "introTr": [
+    "Uygulama önerisi ve YouTube uyarısı pencerelerini yeniledik."
+  ],
+  "introEn": [
+    "We refreshed the app recommendation and YouTube notice dialogs."
+  ],
+  "sections": [
+    {
+      "hTr": "Neler değişti?",
+      "hEn": "What changed?",
+      "pTr": "Kompakt yerleşim, daha net eylemler ve klavye erişilebilirliğiyle pencereler iyileştirildi. Cloudflare güvenlik ve analiz betikleri için içerik güvenliği kuralları düzenlendi; gerekli kaynaklar daha dar izinlerle tanımlandı.",
+      "pEn": "Compact layouts, clearer actions and keyboard accessibility improve the dialogs. Content security rules were aligned with Cloudflare security and analytics scripts, using narrower permissions for the required sources."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_6 = {
+  "ver": "v15.6",
+  "latest": false,
+  "dateTr": "11 ekim 2026",
+  "dateEn": "October 11, 2026",
+  "cover": null,
+  "titleTr": "Mobilde daha hafif bir arayüz",
+  "titleEn": "A lighter interface on mobile",
+  "introTr": [
+    "Mobil cihazlarda kaydırmayı zorlayan görsel efektlerin maliyetini azalttık."
+  ],
+  "introEn": [
+    "We reduced the cost of visual effects that can make mobile scrolling sluggish."
+  ],
+  "sections": [
+    {
+      "hTr": "Neler değişti?",
+      "hEn": "What changed?",
+      "pTr": "Bulanıklık, filtre ve animasyon kullanımı küçük ekranlarda sınırlandı; bilgi ve karşılaştırma kartları da bu düzenlemeye dahil edildi. Paylaşılan stiller içerik tabanlı önbellek adresleriyle sunuluyor. Amaç, Android Firefox dahil mobil tarayıcılardaki çizim yükünü azaltmak.",
+      "pEn": "Blur, filters and animation were limited on small screens, including information and comparison cards. Shared styles now use content-based cache addresses. The goal is to reduce rendering work in mobile browsers, including Firefox on Android."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_5 = {
+  "ver": "v15.5",
+  "latest": false,
+  "dateTr": "11 ekim 2026",
+  "dateEn": "October 11, 2026",
+  "cover": null,
+  "titleTr": "Topluluğa daha yakın",
+  "titleEn": "Closer to the community",
+  "introTr": [
+    "Telegram bağlantıları ve daha doğal çevirilerle iletişimi kolaylaştırdık."
+  ],
+  "introEn": [
+    "Telegram links and more natural translations make it easier to stay in touch."
+  ],
+  "sections": [
+    {
+      "hTr": "Neler değişti?",
+      "hEn": "What changed?",
+      "pTr": "Telegram, Support iletişim kanallarına ve Community bölümüne eklendi. “Lütfen bana bir kedi al” butonu ve gönüllü destek metni sekiz dilde yerelleştirildi; dil seçimi sayfalar arasında korunuyor.",
+      "pEn": "Telegram was added to Support’s contact channels and the Community section. The “Please buy me a cat” button and optional support message were localized in eight languages, with the language choice kept across pages."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_4 = {
+  "ver": "v15.4",
+  "latest": false,
+  "dateTr": "11 ekim 2026",
+  "dateEn": "October 11, 2026",
+  "cover": null,
+  "titleTr": "Daha kişisel bir destek sayfası",
+  "titleEn": "A more personal Support page",
+  "introTr": [
+    "Sunucu giderlerine katkıda bulunma fikrini daha açık, daha sıcak bir dille anlattık."
+  ],
+  "introEn": [
+    "We explain contributions to server costs in a clearer, warmer way."
+  ],
+  "sections": [
+    {
+      "hTr": "Neler değişti?",
+      "hEn": "What changed?",
+      "pTr": "Kompakt destek alanı, imleci takip eden karakterler ve dokunma ya da hover sırasında yükselen kalpler eklendi. Mesajımız aynı: ZenithW’yi kullanmak için ödeme veya zorunlu üyelik gerekmiyor.",
+      "pEn": "The compact support area adds characters that follow the pointer and hearts that float up on touch or hover. Our message remains: using ZenithW requires neither payment nor mandatory registration."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_3 = {
+  "ver": "v15.3",
+  "latest": false,
+  "dateTr": "11 ekim 2026",
+  "dateEn": "October 11, 2026",
+  "cover": null,
+  "titleTr": "Destek için yeni bir yol",
+  "titleEn": "A new way to support ZenithW",
+  "introTr": [
+    "GitHub Sponsors, ZenithW’nin destek seçeneklerine eklendi."
+  ],
+  "introEn": [
+    "GitHub Sponsors joins ZenithW’s support options."
+  ],
+  "sections": [
+    {
+      "hTr": "Neler değişti?",
+      "hEn": "What changed?",
+      "pTr": "Web ve Android depolarına finansman bağlantısı eklendi. Destek sayfasındaki kedi butonu doğrudan boranseasonnew GitHub Sponsors profiline açılıyor; katkıda bulunmak tamamen isteğe bağlı.",
+      "pEn": "Funding links were added to the web and Android repositories. The cat button on Support opens boranseasonnew’s GitHub Sponsors profile directly; contributions are entirely optional."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_2 = {
+  "ver": "v15.2",
+  "latest": false,
   "dateTr": "8 ekim 2026",
   "dateEn": "October 8, 2026",
   "cover": null,
@@ -216,8 +403,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;
@@ -259,21 +446,6 @@ const PAGE_COPY={
   en:{eyebrow:'ZENITHW / RELEASE NOTES',title:'Updates',lead:'New features, fixes, and thoughtful improvements. A clear record of what changed in each release.'}
 };
 
-// One observer, one short entrance per card. Text stays visible without JS.
-let releaseRevealObserver=null;
-function revealReleaseSections(){
-  releaseRevealObserver?.disconnect();
-  if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  releaseRevealObserver=new IntersectionObserver(entries=>{
-    for(const entry of entries){
-      if(!entry.isIntersecting)continue;
-      entry.target.classList.add('is-revealed');
-      releaseRevealObserver.unobserve(entry.target);
-    }
-  },{threshold:0.08,rootMargin:'0px 0px -24px 0px'});
-  document.querySelectorAll('#updSections .upd-section').forEach(section=>releaseRevealObserver.observe(section));
-}
-
 async function jumpTo(ver){
   if(!UPDATE_VERSIONS.includes(ver))return;
   const destination=ver===LATEST_UPDATE.ver?'/updates':'/updates/'+ver+'/';
@@ -308,13 +480,15 @@ async function render(){
       <p>${releaseText(s.pTr,s.pEn)}</p>
     </section>`).join('');
   document.getElementById('updContents').innerHTML=u.sections.map((s,index)=>`<a href="#release-section-${index+1}"><span aria-hidden="true">${String(index+1).padStart(2,'0')}</span>${releaseText(s.hTr,s.hEn)}</a>`).join('');
-  revealReleaseSections();
+
   document.getElementById('updOutro').textContent=releaseText(u.outroTr,u.outroEn);
   document.getElementById('updSignoff').textContent=t.signoff;
 
   const picker=document.getElementById('verPicker');
   picker.innerHTML=UPDATE_VERSIONS.map(ver=>`<option value="${ver}"${ver===u.ver?' selected':''}>${ver}${ver===LATEST_UPDATE.ver?' · '+t.latestLabel:''}</option>`).join('');
 
+  const archive=document.getElementById('updRecent');
+  archive.innerHTML=CURRENT_RELEASES.slice(0,7).map(r=>`<a href="${window.ZWLanguage?ZWLanguage.path(r.ver===LATEST_UPDATE.ver?'/updates':'/updates/'+r.ver+'/'):r.ver===LATEST_UPDATE.ver?'/updates':'/updates/'+r.ver+'/'}"${r.ver===u.ver?' aria-current="page"':''}><span>${r.ver}</span><span class="upd-archive-title">${releaseText(r.titleTr,r.titleEn)}</span></a>`).join('');
   const order=UPDATE_VERSIONS.indexOf(u.ver);
   const newer=order>0?UPDATE_VERSIONS[order-1]:null;
   const older=order>=0&&order<UPDATE_VERSIONS.length-1?UPDATE_VERSIONS[order+1]:null;
@@ -340,6 +514,8 @@ function setLegalLang(l){
   document.getElementById('updEyebrow').textContent=header.eyebrow;
   document.getElementById('updPageTitle').textContent=header.title;
   document.getElementById('updPageLead').textContent=header.lead;
+  document.getElementById('updArchiveHeading').textContent=releaseText('Son sürümler','Recent releases');
+  document.getElementById('updRecent').setAttribute('aria-label',releaseText('Son sürümler','Recent releases'));
   document.getElementById('updContentsHeading').textContent=t.contents;
   document.getElementById('updContents').setAttribute('aria-label',t.contentsNav);
   document.getElementById('updReadHint').textContent=t.readHint;

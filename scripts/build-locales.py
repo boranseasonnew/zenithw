@@ -6,6 +6,7 @@ import html, json, re, time
 root = Path(__file__).resolve().parents[1]
 frontend = root / 'frontend'
 catalog = json.loads((frontend / 'locales/en.json').read_text(encoding='utf-8'))
+version = re.search(r"ver:\s*'v([0-9.]+)'", (frontend / 'version.js').read_text(encoding='utf-8'))[1]
 void = {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
 blocked = {'script','style','svg','code','pre'}
 class Markup(HTMLParser):
@@ -60,7 +61,7 @@ for path in frontend.rglob('*.html'):
     parser=Markup(source);parser.feed(source);output=parser.result()
     if 'site-language.js' not in output and not re.search(r'/cache-assets/site-language\.[a-f0-9]+\.js',output):
         output=output.replace('<head>','<head>\n<link rel="stylesheet" href="/site-language.css">\n<script src="/site-language.js"></script>',1)
-    output=output.replace('version.js?v=15.1','version.js?v=15.2')
+    output=re.sub(r'version\.js\?v=[0-9.]+', 'version.js?v='+version, output)
     if output!=source:
         # Windows file scanners can briefly reject an otherwise writable file.
         for attempt in range(6):
