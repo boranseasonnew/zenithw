@@ -10,14 +10,14 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/WEB-v15.2-222222?style=for-the-badge" alt="Web v15.2">
+  <img src="https://img.shields.io/badge/WEB-v15.9-222222?style=for-the-badge" alt="Web v15.9">
   <img src="https://img.shields.io/badge/WINDOWS-v4.1.0-222222?style=for-the-badge&amp;logo=windows11" alt="Windows v4.1.0">
   <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0 license">
 </p>
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Web v15.2 · ZenithW Desktop v4.1.0
+Web v15.9 · ZenithW Desktop v4.1.0
 
 ZenithW は、動画・音声のダウンロード、音声抽出、変換、リマックスができるオープンソースのメディアツールです。広告やサブスクリプションはなく、アカウント登録も不要です。
 
