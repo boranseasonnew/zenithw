@@ -32,3 +32,13 @@ test('all eight clean routes preserve title, exact future note and original loca
 test('integration exposes genuine PCM waveform/export utilities',async()=>{
  const channels=[Float32Array.from([0,.7,-.2]),Float32Array.from([0,.2,-.8])];assert.equal(waveformPeaks(channels,1)[0],Math.fround(.8));const bytes=await encodeWav(channels).arrayBuffer();assert.equal(new DataView(bytes).getUint32(24,true),44100);assert.equal(bytes.byteLength,56);
 });
+
+test('npm and Cloudflare pnpm locks preserve the declared Lilith dependencies',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8'));
+ const npmLock=JSON.parse(readFileSync(new URL('../package-lock.json',import.meta.url),'utf8'));
+ const importer=readFileSync(new URL('../pnpm-lock.yaml',import.meta.url),'utf8').replaceAll('\r\n','\n').split('\npackages:')[0];
+ for(const name of ['@lilith/audio-engine','onnxruntime-web']){
+  const version=manifest.dependencies[name];assert.equal(npmLock.packages[''].dependencies[name],version);
+  assert.ok(importer.includes(`      '${name}':\n        specifier: ${version}`)||importer.includes(`      ${name}:\n        specifier: ${version}`),'pnpm importer must match '+name);
+ }
+});

@@ -6,3 +6,8 @@
   `Co-authored-by: Codex <codex@openai.com>`
 
 - Do not replace the primary author with Codex or rewrite old commits to add this trailer.
+
+## Website dependency locks
+
+- Cloudflare Pages installs with pnpm. When changing root dependencies, update both `package-lock.json` and `pnpm-lock.yaml`.
+- Verify `pnpm install --frozen-lockfile` and the complete website production build in an isolated checkout before pushing dependency changes.
