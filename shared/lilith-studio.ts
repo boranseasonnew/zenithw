@@ -14,6 +14,7 @@ export const ENGLISH={
   complete:'Ready for playback',fallback:'WebGPU failed; trying WASM / CPU',error:'Error',cleared:'Cached model removed.',cacheError:'Cannot clear cache while processing.',credits:'Model: Anjok07 and aufr33 / UVR. MDX-Net: Kuielab. Not a Lilith-trained neural network.',
   waveform:'Waveform',limitError:'Choose a shorter or smaller file; mono/stereo up to 4 minutes and 96 MiB.',decodeError:'This browser could not decode the file. Try WAV or MP3.',modelError:'Model download or verification failed. Check your connection and try again.',runtimeError:'Local inference failed. Try a shorter file in WASM / CPU mode.',
   browserError:'Local AI processing is unavailable in this browser. Use a current browser on a secure connection.',
+  locale:'en-US',resultsInfo:'{duration} s · 44.1 kHz · {backend} · Processing: {time} s',playbackError:'Playback failed. Try playing the track again.',exportError:'The download could not be prepared. Try again.',cacheFailed:'The model cache could not be cleared. Try again.',
   uploadStep:'Upload your track',configureStep:'Shape your sound',resultsStep:'Listen & download',replaceFile:'Change track',
   unlock:'Choose a track to unlock the separation options.',visualTitle:'One track. Two possibilities.',visualCopy:'Find the voice. Rediscover the music.',
   settings:'Engine settings',vocalsHint:'Isolate the voice',instrumentalHint:'Keep the music',trackReady:'Track selected',
@@ -26,6 +27,7 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
   let file:File|undefined,processedFile:File|undefined,processedBackend='',controller:AbortController|undefined,busy=false,generation=0,frame=0,destroyed=false;
   const urls=new Set<string>(),timers=new Set<ReturnType<typeof setTimeout>>();
   const el=<K extends keyof HTMLElementTagNameMap>(tag:K,text?:string,cls?:string)=>{const node=document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;};
+  const number=(value:number,digits=1)=>new Intl.NumberFormat(t.locale,{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(value);
   root.dataset.state='upload';
   const icon=(kind:string)=>{
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.5');svg.setAttribute('aria-hidden','true');
@@ -73,12 +75,12 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
   const output=el('section',undefined,'results');output.hidden=true;output.setAttribute('aria-label',t.results);
   const cacheBar=el('div',undefined,'cache-bar'),storage=el('span',t.storage),clear=el('button',t.cache);cacheBar.append(storage,clear);
   root.replaceChildren(stepper,layout,output,cacheBar,el('p',t.credits,'credits'));
-  const updateStorage=async()=>{try{const sdk=engine??await createSeparator();const info=await sdk.storageInfo();storage.textContent=`${t.storage}: ${(info.cachedBytes/1e6).toFixed(1)} MB`;}catch{storage.textContent=t.storage;}};
+  const updateStorage=async()=>{try{const sdk=engine??await createSeparator();const info=await sdk.storageInfo();storage.textContent=`${t.storage}: ${number(info.cachedBytes/1e6)} MB`;}catch{storage.textContent=t.storage;}};
   void updateStorage();
   const updateFile=(next:File|undefined)=>{
     if(busy||!next)return;
     if(next.size>(options.maxFileBytes??96*1024*1024)){uploadStatus.hidden=false;uploadStatus.textContent=t.limitError;return;}
-    uploadStatus.hidden=true;file=next;filename.textContent=`${next.name} · ${(next.size/1024/1024).toFixed(1)} MiB`;
+    uploadStatus.hidden=true;file=next;filename.textContent=`${next.name} · ${number(next.size/1024/1024)} MiB`;
     status.textContent=t.ready;configuration.hidden=false;welcome.hidden=true;replace.hidden=false;selected.hidden=false;root.dataset.state='configure';
     if(result){output.hidden=true;void clearResults();}
     if(matchMedia('(max-width: 760px)').matches)configuration.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
@@ -93,18 +95,18 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
   const clearResults=async()=>{cancelAnimationFrame(frame);await player?.dispose();player=undefined;result?.dispose();result=undefined;processedFile=undefined;output.replaceChildren();output.hidden=true;};
   const report=(event:ProgressEvent)=>{
     const names:Record<string,string>={'decoding':t.decoding,'model-download':event.cached?t.cached:t.download,'model-verify':t.verify,'runtime':t.runtime,'model-load':t.loading,'preparing-tensors':t.tensors,'inference':t.inference,'reconstructing':t.reconstructing,'ready':t.complete,'cpu-fallback':t.fallback};
-    status.textContent=(names[event.stage]??t.working)+(event.completed!==undefined?` · ${event.completed}/${event.total}`:event.loaded!==undefined&&!event.cached?` · ${(event.loaded/1e6).toFixed(1)} / ${((event.total??0)/1e6).toFixed(1)} MB`:'');
+    status.textContent=(names[event.stage]??t.working)+(event.completed!==undefined?` · ${event.completed}/${event.total}`:event.loaded!==undefined&&!event.cached?` · ${number(event.loaded/1e6)} / ${number((event.total??0)/1e6)} MB`:'');
     if(event.progress!==undefined){progress.value=event.progress;}else progress.removeAttribute('value');
   };
   async function showResults(value:SeparationResult) {
     result=value;player=new SynchronizedPlayer(value);output.hidden=false;
     const heading=el('div',undefined,'results-heading'),both=el('button',t.both,'primary'),zip=el('button',t.zip);
-    heading.append(el('h2',t.results),both,zip);output.append(heading,el('p',`${value.vocals.duration.toFixed(2)}s · 44.1 kHz · ${value.metadata.backend.toUpperCase()} · ${value.metadata.inferenceSeconds.toFixed(1)}s inference`,'model-info'));
+    heading.append(el('h2',t.results),both,zip);output.append(heading,el('p',t.resultsInfo.replace('{duration}',number(value.vocals.duration,2)).replace('{backend}',value.metadata.backend.toUpperCase()).replace('{time}',number(value.metadata.inferenceSeconds)),'model-info'));
     const stems=el('div',undefined,'stem-grid');output.append(stems);
     const updates:(()=>void)[]=[];
     const tick=()=>{for(const update of updates)update();both.textContent=player?.playing&&player.playbackMode==='both'?t.pauseBoth:t.both;if(player?.playing)frame=requestAnimationFrame(tick);};
-    const playback=async(name:'both'|StemName)=>{try{if(player?.playing&&player.playbackMode===name)player.pause();else await player?.play(name);cancelAnimationFrame(frame);tick();}catch(error){status.textContent=String(error);}};
-    both.onclick=()=>void playback('both');zip.onclick=async()=>{zip.disabled=true;try{download(await value.exportZip(file?.name),safeFilename(file?.name)+'_stems.zip');}catch(error){status.textContent=String(error);}finally{zip.disabled=false;}};
+    const playback=async(name:'both'|StemName)=>{try{if(player?.playing&&player.playbackMode===name)player.pause();else await player?.play(name);cancelAnimationFrame(frame);tick();}catch(error){status.textContent=t.playbackError;}};
+    both.onclick=()=>void playback('both');zip.onclick=async()=>{zip.disabled=true;try{download(await value.exportZip(file?.name),safeFilename(file?.name)+'_stems.zip');}catch{status.textContent=t.exportError;}finally{zip.disabled=false;}};
     const preferred=(choices.querySelector('input:checked') as HTMLInputElement).value as StemName;
     for(const name of [preferred,preferred==='vocals'?'instrumental':'vocals'] as StemName[]){
       const row=el('article',undefined,'stem-card'),title=el('h3',t[name]),canvas=el('canvas');canvas.width=1000;canvas.height=120;canvas.setAttribute('aria-label',`${t[name]} ${t.waveform}`);
@@ -119,8 +121,8 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
       const controls=el('div',undefined,'player-controls'),play=el('button',t.play),clock=el('span',`0:00 / ${time(value[name].duration)}`),volume=el('input');volume.type='range';volume.min='0';volume.max='1';volume.step='.01';volume.value='1';volume.setAttribute('aria-label',`${t[name]} ${t.volume}`);
       const mute=el('button',t.mute),wav=el('button',t.wav);mute.setAttribute('aria-pressed','false');
       volume.oninput=()=>player?.volume(name,Number(volume.value));mute.onclick=()=>{const active=mute.getAttribute('aria-pressed')!=='true';mute.setAttribute('aria-pressed',String(active));player?.mute(name,active);};
-      play.onclick=()=>void playback(name);wav.onclick=()=>download(value.exportWav(name),safeFilename(file?.name)+'_'+name+'.wav');
-      seek.oninput=()=>{void player?.seek(Number(seek.value)).then(()=>{cancelAnimationFrame(frame);tick();}).catch(error=>{status.textContent=String(error);});};
+      play.onclick=()=>void playback(name);wav.onclick=()=>{try{download(value.exportWav(name),safeFilename(file?.name)+'_'+name+'.wav');}catch{status.textContent=t.exportError;}};
+      seek.oninput=()=>{void player?.seek(Number(seek.value)).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{status.textContent=t.playbackError;});};
       const draw=()=>{const fraction=(player?.currentTime??0)/value[name].duration;ctx.clearRect(0,0,1000,120);ctx.drawImage(layers[0],0,0);ctx.save();ctx.beginPath();ctx.rect(0,0,1000*fraction,120);ctx.clip();ctx.drawImage(layers[1],0,0);ctx.restore();clock.textContent=`${time(player?.currentTime??0)} / ${time(value[name].duration)}`;seek.value=String(player?.currentTime??0);play.textContent=player?.playing&&(player.playbackMode===name||player.playbackMode==='both')?t.pause:t.play;};
       controls.append(play,clock,el('span',t.volume),volume,mute,wav);row.append(title,canvas,seek,controls);stems.append(row);updates.push(draw);
     }
@@ -136,7 +138,7 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
     finally{if(!destroyed)setBusy(false);}
   };
   cancel.onclick=()=>controller?.abort();
-  clear.onclick=async()=>{try{await (engine??await createSeparator()).clearCache();status.textContent=t.cleared;await updateStorage();}catch(error){status.textContent=`${t.cacheError} ${String(error)}`;}};
+  clear.onclick=async()=>{try{await (engine??await createSeparator()).clearCache();status.textContent=t.cleared;await updateStorage();}catch(error){status.textContent=busy?t.cacheError:t.cacheFailed;}};
   const destroy=async()=>{destroyed=true;++generation;controller?.abort();await engine?.dispose();await clearResults();for(const url of urls)URL.revokeObjectURL(url);for(const timer of timers)clearTimeout(timer);urls.clear();timers.clear();};
   window.addEventListener('pagehide',()=>void destroy(),{once:true});
   return {destroy};

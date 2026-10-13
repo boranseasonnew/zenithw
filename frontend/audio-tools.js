@@ -59,6 +59,11 @@ var ENGLISH = {
   modelError: "Model download or verification failed. Check your connection and try again.",
   runtimeError: "Local inference failed. Try a shorter file in WASM / CPU mode.",
   browserError: "Local AI processing is unavailable in this browser. Use a current browser on a secure connection.",
+  locale: "en-US",
+  resultsInfo: "{duration} s \xB7 44.1 kHz \xB7 {backend} \xB7 Processing: {time} s",
+  playbackError: "Playback failed. Try playing the track again.",
+  exportError: "The download could not be prepared. Try again.",
+  cacheFailed: "The model cache could not be cleared. Try again.",
   uploadStep: "Upload your track",
   configureStep: "Shape your sound",
   resultsStep: "Listen & download",
@@ -83,6 +88,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     if (cls) node.className = cls;
     return node;
   };
+  const number = (value, digits = 1) => new Intl.NumberFormat(t.locale, { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(value);
   root2.dataset.state = "upload";
   const icon = (kind) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -197,7 +203,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     try {
       const sdk = engine ?? await createSeparator();
       const info = await sdk.storageInfo();
-      storage.textContent = `${t.storage}: ${(info.cachedBytes / 1e6).toFixed(1)} MB`;
+      storage.textContent = `${t.storage}: ${number(info.cachedBytes / 1e6)} MB`;
     } catch {
       storage.textContent = t.storage;
     }
@@ -212,7 +218,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     }
     uploadStatus.hidden = true;
     file = next;
-    filename.textContent = `${next.name} \xB7 ${(next.size / 1024 / 1024).toFixed(1)} MiB`;
+    filename.textContent = `${next.name} \xB7 ${number(next.size / 1024 / 1024)} MiB`;
     status.textContent = t.ready;
     configuration.hidden = false;
     welcome.hidden = true;
@@ -279,7 +285,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
   };
   const report = (event) => {
     const names = { "decoding": t.decoding, "model-download": event.cached ? t.cached : t.download, "model-verify": t.verify, "runtime": t.runtime, "model-load": t.loading, "preparing-tensors": t.tensors, "inference": t.inference, "reconstructing": t.reconstructing, "ready": t.complete, "cpu-fallback": t.fallback };
-    status.textContent = (names[event.stage] ?? t.working) + (event.completed !== void 0 ? ` \xB7 ${event.completed}/${event.total}` : event.loaded !== void 0 && !event.cached ? ` \xB7 ${(event.loaded / 1e6).toFixed(1)} / ${((event.total ?? 0) / 1e6).toFixed(1)} MB` : "");
+    status.textContent = (names[event.stage] ?? t.working) + (event.completed !== void 0 ? ` \xB7 ${event.completed}/${event.total}` : event.loaded !== void 0 && !event.cached ? ` \xB7 ${number(event.loaded / 1e6)} / ${number((event.total ?? 0) / 1e6)} MB` : "");
     if (event.progress !== void 0) {
       progress.value = event.progress;
     } else progress.removeAttribute("value");
@@ -290,7 +296,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     output.hidden = false;
     const heading = el("div", void 0, "results-heading"), both = el("button", t.both, "primary"), zip = el("button", t.zip);
     heading.append(el("h2", t.results), both, zip);
-    output.append(heading, el("p", `${value.vocals.duration.toFixed(2)}s \xB7 44.1 kHz \xB7 ${value.metadata.backend.toUpperCase()} \xB7 ${value.metadata.inferenceSeconds.toFixed(1)}s inference`, "model-info"));
+    output.append(heading, el("p", t.resultsInfo.replace("{duration}", number(value.vocals.duration, 2)).replace("{backend}", value.metadata.backend.toUpperCase()).replace("{time}", number(value.metadata.inferenceSeconds)), "model-info"));
     const stems = el("div", void 0, "stem-grid");
     output.append(stems);
     const updates = [];
@@ -306,7 +312,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
         cancelAnimationFrame(frame);
         tick();
       } catch (error) {
-        status.textContent = String(error);
+        status.textContent = t.playbackError;
       }
     };
     both.onclick = () => void playback("both");
@@ -314,8 +320,8 @@ function mountStudio(root2, overrides = {}, options = {}) {
       zip.disabled = true;
       try {
         download(await value.exportZip(file?.name), safeFilename(file?.name) + "_stems.zip");
-      } catch (error) {
-        status.textContent = String(error);
+      } catch {
+        status.textContent = t.exportError;
       } finally {
         zip.disabled = false;
       }
@@ -362,13 +368,19 @@ function mountStudio(root2, overrides = {}, options = {}) {
         player?.mute(name, active);
       };
       play.onclick = () => void playback(name);
-      wav.onclick = () => download(value.exportWav(name), safeFilename(file?.name) + "_" + name + ".wav");
+      wav.onclick = () => {
+        try {
+          download(value.exportWav(name), safeFilename(file?.name) + "_" + name + ".wav");
+        } catch {
+          status.textContent = t.exportError;
+        }
+      };
       seek.oninput = () => {
         void player?.seek(Number(seek.value)).then(() => {
           cancelAnimationFrame(frame);
           tick();
-        }).catch((error) => {
-          status.textContent = String(error);
+        }).catch(() => {
+          status.textContent = t.playbackError;
         });
       };
       const draw = () => {
@@ -438,7 +450,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
       status.textContent = t.cleared;
       await updateStorage();
     } catch (error) {
-      status.textContent = `${t.cacheError} ${String(error)}`;
+      status.textContent = busy ? t.cacheError : t.cacheFailed;
     }
   };
   const destroy = async () => {
