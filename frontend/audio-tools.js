@@ -1,10 +1,10 @@
 // shared/lilith-studio.ts
-import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, listModels } from "/vendor/lilith-engine/index.js?v=d43ffcd1fda5";
+import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, listModels } from "/vendor/lilith-engine/index.js?v=b905484e9ecd";
 var ENGLISH = {
   upload: "Choose your audio",
   browse: "Browse files",
   drop: "Drop a file here, or browse from your device.",
-  formats: "Mono or stereo \xB7 Up to 60 seconds / 24 MiB \xB7 Codecs depend on your browser",
+  formats: "Mono or stereo \xB7 Up to 4 minutes / 96 MiB \xB7 Codecs depend on your browser",
   model: "AI model",
   modelInfo: "UVR-MDX-NET-Voc_FT \xB7 66.8 MB \xB7 First run downloads the model and a 26.8 MB runtime. Quality varies by recording.",
   backend: "Processing backend",
@@ -54,11 +54,23 @@ var ENGLISH = {
   cacheError: "Cannot clear cache while processing.",
   credits: "Model: Anjok07 and aufr33 / UVR. MDX-Net: Kuielab. Not a Lilith-trained neural network.",
   waveform: "Waveform",
-  limitError: "Choose a shorter or smaller file; mono/stereo up to 60 seconds and 24 MiB.",
+  limitError: "Choose a shorter or smaller file; mono/stereo up to 4 minutes and 96 MiB.",
   decodeError: "This browser could not decode the file. Try WAV or MP3.",
   modelError: "Model download or verification failed. Check your connection and try again.",
   runtimeError: "Local inference failed. Try a shorter file in WASM / CPU mode.",
-  browserError: "Local AI processing is unavailable in this browser. Use a current browser on a secure connection."
+  browserError: "Local AI processing is unavailable in this browser. Use a current browser on a secure connection.",
+  uploadStep: "Upload your track",
+  configureStep: "Shape your sound",
+  resultsStep: "Listen & download",
+  replaceFile: "Change track",
+  unlock: "Choose a track to unlock the separation options.",
+  visualTitle: "One track. Two possibilities.",
+  visualCopy: "Find the voice. Rediscover the music.",
+  settings: "Engine settings",
+  vocalsHint: "Isolate the voice",
+  instrumentalHint: "Keep the music",
+  trackReady: "Track selected",
+  longWarning: "Up to four minutes. Longer tracks use more memory and may take several minutes on a GPU or much longer on a CPU. Keep this tab open."
 };
 function mountStudio(root2, overrides = {}, options = {}) {
   const t = { ...ENGLISH, ...overrides };
@@ -71,7 +83,30 @@ function mountStudio(root2, overrides = {}, options = {}) {
     if (cls) node.className = cls;
     return node;
   };
-  const card = el("section", void 0, "audio-card"), label = el("h2", t.upload), drop = el("div", void 0, "drop-area");
+  root2.dataset.state = "upload";
+  const icon = (kind) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "1.5");
+    svg.setAttribute("aria-hidden", "true");
+    const paths = { upload: "M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4", vocals: "M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8", instrumental: "M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z", shield: "m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6" };
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", paths[kind] ?? paths.upload);
+    svg.append(path);
+    return svg;
+  };
+  const stepper = el("ol", void 0, "studio-steps");
+  for (const [index, text] of [t.uploadStep, t.configureStep, t.resultsStep].entries()) {
+    const step = el("li");
+    step.dataset.step = String(index + 1);
+    step.append(el("span", String(index + 1).padStart(2, "0"), "step-number"), el("span", text));
+    stepper.append(step);
+  }
+  const layout = el("div", void 0, "workspace-grid"), card = el("section", void 0, "audio-card upload-panel"), label = el("h2", t.upload), drop = el("div", void 0, "drop-area");
+  const uploadHeading = el("div", void 0, "panel-heading");
+  uploadHeading.append(el("span", "01", "panel-number"), label);
   const input = el("input");
   input.type = "file";
   input.accept = "audio/*,.wav,.mp3,.flac,.ogg,.m4a,.aac,.webm";
@@ -79,8 +114,30 @@ function mountStudio(root2, overrides = {}, options = {}) {
   input.className = "file-input";
   const browse = el("label", t.browse, "button");
   browse.htmlFor = input.id;
-  const filename = el("p", t.drop, "filename");
-  drop.append(el("span", "\u2191", "upload-icon"), filename, input, browse, el("small", t.formats));
+  const filename = el("p", t.drop, "filename"), uploadMark = el("span", void 0, "upload-icon");
+  uploadMark.append(icon("upload"));
+  drop.append(uploadMark, filename, input, browse, el("small", t.formats));
+  const replace = el("button", t.replaceFile, "replace-track");
+  replace.hidden = true;
+  replace.onclick = () => input.click();
+  const selected = el("span", t.trackReady, "selected-badge");
+  selected.hidden = true;
+  const privacy = el("div", void 0, "privacy-note");
+  privacy.append(icon("shield"), el("p", t.privacy));
+  card.append(uploadHeading, selected, drop, replace, privacy);
+  const welcome = el("aside", void 0, "welcome-panel");
+  const artwork = el("div", void 0, "record-art");
+  artwork.setAttribute("aria-hidden", "true");
+  const disc = el("div", void 0, "record-disc");
+  disc.append(el("span", void 0, "record-label"), el("span", void 0, "record-hole"));
+  artwork.append(el("span", void 0, "orbit-ring orbit-one"), el("span", void 0, "orbit-ring orbit-two"), disc);
+  welcome.append(artwork, el("h2", t.visualTitle), el("p", t.visualCopy), el("small", t.unlock));
+  const configuration = el("section", void 0, "audio-card configuration-panel");
+  configuration.hidden = true;
+  const configurationHeading = el("div", void 0, "panel-heading");
+  configurationHeading.append(el("span", "02", "panel-number"), el("h2", t.configureStep));
+  const settings = el("details", void 0, "engine-settings"), settingsTitle = el("summary", t.settings);
+  settings.append(settingsTitle);
   const fields = el("div", void 0, "fields"), modelLabel = el("label", t.model), select = el("select");
   select.setAttribute("aria-label", t.model);
   for (const model of listModels()) {
@@ -106,7 +163,11 @@ function mountStudio(root2, overrides = {}, options = {}) {
     radio.name = "lilith-action";
     radio.value = value;
     radio.checked = choices.children.length === 1;
-    option.append(radio, document.createTextNode(text));
+    const glyph = el("span", void 0, "choice-icon");
+    glyph.append(icon(value === "vocals" ? "vocals" : "instrumental"));
+    const copy = el("span", void 0, "choice-copy");
+    copy.append(el("strong", text), el("small", value === "vocals" ? t.vocalsHint : t.instrumentalHint));
+    option.append(radio, glyph, copy);
     choices.append(option);
   }
   const actions = el("div", void 0, "actions"), start = el("button", t.separate, "primary"), cancel = el("button", t.cancel);
@@ -119,13 +180,19 @@ function mountStudio(root2, overrides = {}, options = {}) {
   progress.hidden = true;
   progress.max = 1;
   progress.setAttribute("aria-label", t.working);
-  card.append(label, drop, fields, el("p", t.modelInfo, "model-info"), choices, actions, status, progress, el("p", t.privacy, "privacy"));
+  settings.append(fields, el("p", t.modelInfo, "model-info"));
+  configuration.append(configurationHeading, choices, settings, el("p", t.longWarning, "device-note"), actions, status, progress);
+  const uploadStatus = el("p", t.empty, "upload-status");
+  uploadStatus.hidden = true;
+  uploadStatus.setAttribute("role", "alert");
+  card.append(uploadStatus);
+  layout.append(card, welcome, configuration);
   const output = el("section", void 0, "results");
   output.hidden = true;
   output.setAttribute("aria-label", t.results);
   const cacheBar = el("div", void 0, "cache-bar"), storage = el("span", t.storage), clear = el("button", t.cache);
   cacheBar.append(storage, clear);
-  root2.replaceChildren(card, output, cacheBar, el("p", t.credits, "credits"));
+  root2.replaceChildren(stepper, layout, output, cacheBar, el("p", t.credits, "credits"));
   const updateStorage = async () => {
     try {
       const sdk = engine ?? await createSeparator();
@@ -138,13 +205,25 @@ function mountStudio(root2, overrides = {}, options = {}) {
   void updateStorage();
   const updateFile = (next) => {
     if (busy || !next) return;
+    if (next.size > (options.maxFileBytes ?? 96 * 1024 * 1024)) {
+      uploadStatus.hidden = false;
+      uploadStatus.textContent = t.limitError;
+      return;
+    }
+    uploadStatus.hidden = true;
     file = next;
     filename.textContent = `${next.name} \xB7 ${(next.size / 1024 / 1024).toFixed(1)} MiB`;
     status.textContent = t.ready;
+    configuration.hidden = false;
+    welcome.hidden = true;
+    replace.hidden = false;
+    selected.hidden = false;
+    root2.dataset.state = "configure";
     if (result) {
       output.hidden = true;
       void clearResults();
     }
+    if (matchMedia("(max-width: 760px)").matches) configuration.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
   input.addEventListener("change", () => updateFile(input.files?.[0]));
   drop.addEventListener("dragover", (event) => {
@@ -163,9 +242,12 @@ function mountStudio(root2, overrides = {}, options = {}) {
     cancel.disabled = !value;
     clear.disabled = value;
     input.disabled = value;
+    replace.disabled = value;
     select.disabled = value;
     backend.disabled = value;
+    for (const radio of choices.querySelectorAll("input")) radio.disabled = value;
     progress.hidden = !value;
+    root2.dataset.state = value ? "processing" : result ? "results" : file ? "configure" : "upload";
     root2.setAttribute("aria-busy", String(value));
   };
   const time = (seconds) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
@@ -209,6 +291,8 @@ function mountStudio(root2, overrides = {}, options = {}) {
     const heading = el("div", void 0, "results-heading"), both = el("button", t.both, "primary"), zip = el("button", t.zip);
     heading.append(el("h2", t.results), both, zip);
     output.append(heading, el("p", `${value.vocals.duration.toFixed(2)}s \xB7 44.1 kHz \xB7 ${value.metadata.backend.toUpperCase()} \xB7 ${value.metadata.inferenceSeconds.toFixed(1)}s inference`, "model-info"));
+    const stems = el("div", void 0, "stem-grid");
+    output.append(stems);
     const updates = [];
     const tick = () => {
       for (const update of updates) update();
@@ -243,6 +327,18 @@ function mountStudio(root2, overrides = {}, options = {}) {
       canvas.height = 120;
       canvas.setAttribute("aria-label", `${t[name]} ${t.waveform}`);
       const peaks = waveformPeaks(value[name].channels, 500), ctx = canvas.getContext("2d");
+      const layers = [document.createElement("canvas"), document.createElement("canvas")];
+      const palette = getComputedStyle(root2), colors = [palette.getPropertyValue("--wave-idle").trim() || "#615879", palette.getPropertyValue("--accent").trim() || "#bda4ef"];
+      for (const [index, layer] of layers.entries()) {
+        layer.width = 1e3;
+        layer.height = 120;
+        const context = layer.getContext("2d");
+        context.fillStyle = colors[index];
+        for (let i = 0; i < peaks.length; i++) {
+          const height = Math.max(1, Math.min(1, peaks[i]) * 110);
+          context.fillRect(i * 2, 60 - height / 2, 1, height);
+        }
+      }
       const seek = el("input");
       seek.type = "range";
       seek.min = "0";
@@ -278,18 +374,20 @@ function mountStudio(root2, overrides = {}, options = {}) {
       const draw = () => {
         const fraction = (player?.currentTime ?? 0) / value[name].duration;
         ctx.clearRect(0, 0, 1e3, 120);
-        for (let i = 0; i < peaks.length; i++) {
-          ctx.fillStyle = i / peaks.length < fraction ? "#bda4ef" : "#5a526b";
-          const height = Math.max(1, Math.min(1, peaks[i]) * 110);
-          ctx.fillRect(i * 2, 60 - height / 2, 1, height);
-        }
+        ctx.drawImage(layers[0], 0, 0);
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, 1e3 * fraction, 120);
+        ctx.clip();
+        ctx.drawImage(layers[1], 0, 0);
+        ctx.restore();
         clock.textContent = `${time(player?.currentTime ?? 0)} / ${time(value[name].duration)}`;
         seek.value = String(player?.currentTime ?? 0);
         play.textContent = player?.playing && (player.playbackMode === name || player.playbackMode === "both") ? t.pause : t.play;
       };
       controls.append(play, clock, el("span", t.volume), volume, mute, wav);
       row.append(title, canvas, seek, controls);
-      output.append(row);
+      stems.append(row);
       updates.push(draw);
     }
     tick();
@@ -312,7 +410,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     try {
       await clearResults();
       await engine?.dispose();
-      engine = await createSeparator({ model: select.value, backend: backend.value, maxDuration: 60, maxFileBytes: 24 * 1024 * 1024, ...options });
+      engine = await createSeparator({ model: select.value, backend: backend.value, maxDuration: 240, maxFileBytes: 96 * 1024 * 1024, ...options });
       const value = await engine.separate(file, { signal: controller.signal, onProgress: report });
       if (token !== generation || destroyed) {
         value.dispose();
@@ -363,4 +461,4 @@ var api = window.ZWLanguage;
 if (api) await api.ready;
 var root = document.getElementById("studio");
 var strings = Object.fromEntries(Object.entries(ENGLISH).map(([key, text]) => [key, api?.translate(text) ?? text]));
-mountStudio(root, strings, { workerUrl: "/audio-separator-worker.js?v=b09dd2e7d8f7" });
+mountStudio(root, strings, { workerUrl: "/audio-separator-worker.js?v=2aceb67cbd85" });

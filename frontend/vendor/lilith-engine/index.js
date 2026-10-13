@@ -67,7 +67,7 @@ var ModelRegistry = class {
 // packages/core/src/audio/decoder.ts
 function validateInput(file, options) {
   if (!(file instanceof Blob) || !file.size) throw new AudioEngineError("DECODE", "Choose a nonempty audio file.");
-  if (file.size > (options.maxFileBytes ?? 24 * 1024 * 1024)) throw new AudioEngineError("LIMIT", "File exceeds the configured memory-safe limit.");
+  if (file.size > (options.maxFileBytes ?? 96 * 1024 * 1024)) throw new AudioEngineError("LIMIT", "File exceeds the configured memory-safe limit.");
 }
 async function durationHint(file, signal) {
   if (typeof document === "undefined") return NaN;
@@ -107,7 +107,7 @@ async function durationHint(file, signal) {
 async function decodeAudio(file, rate, options, signal) {
   checkAbort(signal);
   validateInput(file, options);
-  const max = options.maxDuration ?? 60, hint = await durationHint(file, signal);
+  const max = options.maxDuration ?? 240, hint = await durationHint(file, signal);
   checkAbort(signal);
   if (Number.isFinite(hint) && hint > max) throw new AudioEngineError("LIMIT", `Audio must be ${max} seconds or shorter.`);
   const bytes = await file.arrayBuffer();
@@ -255,7 +255,7 @@ var SeparationEngine = class {
       const output = await new Promise((resolve, reject) => {
         const worker = new Worker(this.options.workerUrl ?? new URL("./separation-worker.js", import.meta.url), { type: "module" });
         this.worker = worker;
-        const timer = setTimeout(() => fail(new AudioEngineError("WORKER", "Inference exceeded 30 minutes. Try a shorter file.")), 30 * 60 * 1e3);
+        const timer = setTimeout(() => fail(new AudioEngineError("WORKER", "Inference exceeded 60 minutes. Try a shorter file.")), 60 * 60 * 1e3);
         const cleanup = () => {
           clearTimeout(timer);
           controller.signal.removeEventListener("abort", abort);
