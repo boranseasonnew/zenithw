@@ -1,5 +1,6 @@
 import { PAGES_CSP } from "../shared/pages-security.mjs";
 import { STATIC_ASSET_PATHS } from "../shared/pages-cache-assets.mjs";
+import { AUDIO_WORKER_CSP, AUDIO_WORKER_PATH } from "../shared/audio-separator-security.mjs";
 
 import { legacyDownloadRoute } from "../shared/download-routes.mjs";
 
@@ -132,6 +133,14 @@ async function pageResponse(context) {
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+  if (url.pathname === AUDIO_WORKER_PATH && ["GET", "HEAD"].includes(context.request.method)) {
+    const response = await context.next();
+    const headers = new Headers(response.headers);
+    headers.set("Content-Security-Policy", AUDIO_WORKER_CSP);
+    headers.set("Cache-Control", "public, max-age=0, must-revalidate");
+    headers.set("CDN-Cache-Control", "no-store");
+    return new Response(response.body, { status: response.status, headers });
+  }
   const legacy = legacyDownloadRoute(url.pathname);
   if (legacy && ["GET", "HEAD"].includes(context.request.method)) {
     const destination = new URL(legacy, url.origin);

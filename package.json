@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-updates.mjs && node scripts/build-downloads.mjs && node scripts/build-seo.mjs && node scripts/build-local-media.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && node scripts/build-cache-assets.mjs",
+    "build": "node scripts/build-updates.mjs && node scripts/build-downloads.mjs && node scripts/build-lilith-integration.mjs && node scripts/build-lilith-page.mjs && node scripts/build-seo.mjs && node scripts/build-local-media.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && node scripts/build-cache-assets.mjs",
     "build:seo": "node scripts/build-downloads.mjs && node scripts/build-seo.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && node scripts/build-cache-assets.mjs",
-    "lint": "node --check frontend/updates-core.99daf4ea6088.js && node --check frontend/info-page.412ae0f21fba.js && node --check scripts/build-updates.mjs",
+    "lint": "node --check frontend/updates-core.99daf4ea6088.js && node --check frontend/info-page.412ae0f21fba.js && node --check scripts/build-updates.mjs && node --check frontend/audio-tools.js && node --check scripts/build-lilith-page.mjs",
     "test:updates": "node --test tests/updates-static.test.mjs",
     "test:about": "node --test tests/about-locales.test.mjs",
     "test:languages": "node --test tests/site-language.test.mjs",
@@ -18,7 +18,9 @@
     "test:seo": "node --test tests/downloads-seo.test.mjs"
   },
   "dependencies": {
-    "mediabunny": "1.56.1"
+    "mediabunny": "1.56.1",
+    "onnxruntime-web": "1.30.0",
+    "@lilith/audio-engine": "file:frontend/vendor/lilith-engine"
   },
   "devDependencies": {
     "esbuild": "0.25.12"

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { onRequest } from '../functions/_middleware.js';
 const frontend=fileURLToPath(new URL('../frontend/',import.meta.url));
 const port=Number(process.env.PORT || 8770);
-const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.xml':'application/xml','.png':'image/png','.jpg':'image/jpeg','.ico':'image/x-icon','.woff2':'font/woff2','.txt':'text/plain'};
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.wasm':'application/wasm','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.xml':'application/xml','.png':'image/png','.jpg':'image/jpeg','.ico':'image/x-icon','.woff2':'font/woff2','.txt':'text/plain'};
 function asset(url, method='GET') {
  const pathname=decodeURIComponent(url.pathname);
  const raw=resolve(frontend,'.'+pathname);

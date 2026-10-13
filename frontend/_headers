@@ -21,7 +21,22 @@
 /app.d4596317c4a7.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+/audio-separator-worker.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/audio-tools-link.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/audio-tools.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/audio-tools.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /brands/android.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/credits.json
   Cache-Control: public, max-age=3600, must-revalidate
 
 /brands/f-droid-icon.svg
@@ -179,6 +194,9 @@
 /style.487d49f0164d.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/support-copy.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /support-sponsor.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -192,6 +210,24 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /updates.4afebabda436.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/index.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/onnxruntime-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/onnxruntime-ThirdPartyNotices.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/pffft-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/web-audio-separation-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/separation-worker.js
   Cache-Control: public, max-age=3600, must-revalidate
 
 /vendor/local-media-worker.js

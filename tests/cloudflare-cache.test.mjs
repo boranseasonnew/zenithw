@@ -70,7 +70,10 @@ test('Pages output uses valid header/routing rules and never excludes HTML or dy
     '/maintenance-config.json', '/api/info', '/files/token.mp4', '/download', '/auth/session']) {
     assert.ok(!excluded(path), path);
   }
-  for (const path of STATIC_ASSET_PATHS) assert.ok(excluded(path), path);
+  for (const path of STATIC_ASSET_PATHS) {
+    if(path==='/audio-separator-worker.js') assert.ok(!excluded(path), 'worker must receive its scoped Function CSP');
+    else assert.ok(excluded(path), path);
+  }
 });
 
 test('every generated resource reference resolves and dependency fingerprints are linked', () => {
@@ -124,7 +127,9 @@ test('HTML revalidates, carries the full CSP and never caches the live maintenan
   assert.equal(response.status, 200);
   assert.equal(response.headers.get('Cache-Control'), 'public, max-age=0, must-revalidate');
   assert.equal(response.headers.get('Cloudflare-CDN-Cache-Control'), 'no-store');
-  assert.equal(response.headers.get('Content-Security-Policy'), PAGES_CSP);
+  const actualCsp=response.headers.get('Content-Security-Policy');
+  assert.match(actualCsp,/'nonce-[A-Za-z0-9+/]+'/);
+  assert.equal(actualCsp.replace(/ 'nonce-[^']+'/g,''), PAGES_CSP);
   assert.match(PAGES_CSP, /'sha256-/);
   assert.ok(!PAGES_CSP.match(/script-src[^;]*'unsafe-inline'/));
 });

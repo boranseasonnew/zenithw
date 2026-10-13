@@ -147,7 +147,7 @@ def metadata(source,route,lang):
     return head.rstrip()+seo+source[head_end:]
 
 # Legal terms are intentionally excluded until their translations receive a legal review.
-BASE_ROUTES=['/','/downloads','/about','/about/community','/about/credit','/support','/updates','/guides','/convert','/remux']
+BASE_ROUTES=['/','/downloads','/media-tools','/audio-separator','/about','/about/community','/about/credit','/support','/updates','/guides','/convert','/remux']
 sources={}
 for route in BASE_ROUTES:
     path=FRONTEND/('index.html' if route=='/' else route[1:]+'.html');sources[route]=path.read_text(encoding='utf-8')

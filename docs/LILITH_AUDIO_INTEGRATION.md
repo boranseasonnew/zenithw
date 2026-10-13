@@ -1,0 +1,13 @@
+# Lilith Audio Engine integration (unreleased)
+
+The clean `/audio-separator` route uses an independent Lilith 0.1.0 SDK snapshot under `frontend/vendor/lilith-engine`. The same Studio component is adapted through the original `ZWLanguage` catalogs; there is no second inference engine or translation framework. Package dependency: `file:frontend/vendor/lilith-engine`. Snapshot source is maintained independently in `boranseasonnew/lilith-audio-engine`; it has not been pushed or deployed in this session.
+
+`shared/lilith-page.ts` passes the root worker entrypoint explicitly. `build-lilith-integration.mjs` versions SDK/worker URLs and adjusts only runtime asset locations in the compiled SDK worker. The root worker's Function response permits WASM compilation and model-only external connections; ordinary page CSP is not broadened. Runtime assets ≤20 MiB fit Pages'25 MiB asset ceiling; model weights download lazily from a pinned public URL and are not bundled. Full third-party notices are included with the package snapshot.
+
+Four actions share one real model output; previews use actual PCM waveforms and a shared AudioContext for synchronized stems. WAV exports are PCM16 stereo44.1kHz; ZIP contains two separate sanitized WAV names. Defaults are deliberately conservative:60s/24MiB, mono/stereo. Current input is local File/Blob. Optional media URL import is not in this first Lilith integration. Android/Windows applications were not modified.
+
+Verified locally with real Pages middleware: 8s authorized recording, WebGPU, two waveforms/stems,11.7s inference, public model download/CORS and worker CSP. Independent SDK also verified in Chromium using WASM86.2741s and WebGPU11.2s (3 completed windows). These are single-machine results, not realtime/mobile/perceptual quality guarantees. Desktop1365px and mobile390px viewport checks passed. Firefox launch failed in this Windows test environment (`spawn UNKNOWN`); real Android and Safari are unverified. No public route/deployment is claimed.
+
+Do not push/deploy without explicit owner approval. Do not create a legacy `/vocal-remover.html` redirect without reviewing a live route and obtaining approval. Update the snapshot from a tested Lilith build, preserve notices and runtime layout, run build/lint/integration tests, then record version/hash provenance before publishing.
+
+SDK source snapshot: local Lilith main commit `1e57d9a14c8c3bdd96cf8247cd427fc3ce473952`. Latest Studio regression: genuine8s WebGPU11.3s, shared-clock playback/seek/mute, WAV/ZIP browser downloads, reuse across actions without another inference request. All eight localized routes tested at390px with no overflow.

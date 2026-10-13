@@ -1,0 +1,10 @@
+export { createSeparator, SeparationEngine } from './engine/separation-engine.js';
+export { listModels, getModel, validateManifest, ModelRegistry } from './models/registry.js';
+export { AudioEngineError } from './utils/errors.js';
+export { SynchronizedPlayer } from './playback/synchronized-player.js';
+export { waveformPeaks } from './audio/waveform.js';
+export { encodeWav } from './export/wav.js';
+export { zipStems, safeFilename } from './export/zip.js';
+export { modelStorage, clearModelCache } from './runtime/model-cache.js';
+export type * from './types.js';
+export type { ModelAdapter } from './models/adapter.js';

@@ -1,0 +1,8 @@
+{
+  "parts": [
+    "./runtime/runtime-4d069564e511.bin",
+    "./runtime/runtime-3fb2f4b203c8.bin"
+  ],
+  "bytes": 26781914,
+  "mjs": "./runtime/ort-wasm-simd-threaded.asyncify.mjs"
+}
