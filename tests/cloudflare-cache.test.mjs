@@ -71,7 +71,7 @@ test('Pages output uses valid header/routing rules and never excludes HTML or dy
     assert.ok(!excluded(path), path);
   }
   for (const path of STATIC_ASSET_PATHS) {
-    if(path==='/audio-separator-worker.js') assert.ok(!excluded(path), 'worker must receive its scoped Function CSP');
+    if(['/audio-separator-worker.js','/audio-export-worker.js'].includes(path)) assert.ok(!excluded(path), 'worker must receive its scoped Function CSP');
     else assert.ok(excluded(path), path);
   }
 });

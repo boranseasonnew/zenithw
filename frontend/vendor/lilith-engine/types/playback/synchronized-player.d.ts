@@ -4,11 +4,11 @@ export declare class SynchronizedPlayer {
     private buffers;
     private gains;
     private sources;
+    private enabled;
     private revision;
     private offset;
     private startedAt;
     private active;
-    private mode;
     private disposed;
     private volumes;
     private muted;
@@ -18,7 +18,11 @@ export declare class SynchronizedPlayer {
     get playing(): boolean;
     get playbackMode(): PlaybackMode;
     get currentTime(): number;
+    isPlaying(name: StemName): boolean;
     play(mode?: PlaybackMode): Promise<void>;
+    playStem(name: StemName): Promise<void>;
+    pauseStem(name: StemName): void;
+    private resume;
     private stopNodes;
     pause(): void;
     seek(seconds: number): Promise<void>;

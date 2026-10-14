@@ -33,3 +33,11 @@ Credits: Anjok07 and aufr33, Ultimate Vocal Remover core developers; original MD
 - SHA-256: `534b2070fcc7df514b13ef660dc8cbb328679c2374d04354a5c42bb14ecce111`
 
 The software downloads this public model only on an explicit separation action. No permission is inferred for other weights merely because an architecture is MIT. HyperACE, Resurrection and unverified model files are not distributed or enabled.
+
+## Browser media and export
+
+Mediabunny 1.61.4 and its official MP3/FLAC encoders: MPL-2.0. Unmodified source is available at https://www.npmjs.com/package/mediabunny/v/1.61.4 . License texts are distributed in dist/licenses. MP3 uses LAME (LGPL-2.0-or-later); FLAC uses libFLAC (BSD-3-Clause). Upstream package source and README notices retain their respective codec notices. These components keep their own terms; the original Lilith code remains MIT.
+
+Exact unmodified Mediabunny and encoder source files, package manifests, upstream attribution and rebuild instructions are included in dist/licenses/source-code. LAME 3.100 upstream source: https://sourceforge.net/projects/lame/files/lame/3.100/ . LAME attribution: https://lame.sourceforge.io/ . libFLAC source: https://github.com/xiph/flac . Encoding uses no MP3 decoder from LAME. Codec libraries may be rebuilt/replaced following the distributed upstream README instructions.
+
+The complete unmodified LAME 3.100 source archive and its LGPL COPYING text are distributed in dist/licenses (SHA-256 ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e). libFLAC binary attribution is reproduced in libFLAC-COPYING.Xiph.txt.

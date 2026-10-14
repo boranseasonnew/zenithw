@@ -132,7 +132,7 @@ const headers = blocks.join('\n\n') + '\n';
 if (headers.split('\n').some(line => line.length > 2000)) throw new Error('A Pages _headers line exceeds 2000 characters.');
 if (blocks.filter(block => block.startsWith('/')).length > 100) throw new Error('Pages _headers exceeds 100 rules. Review retained immutable assets.');
 write(join(frontend, '_headers'), headers);
-const exclude = [...new Set(['/cache-assets/*', '/fonts/*', '/vendor/*', ...ordinary.filter(url => url !== '/audio-separator-worker.js' && !url.startsWith('/fonts/') && !url.startsWith('/vendor/'))])];
+const exclude = [...new Set(['/cache-assets/*', '/fonts/*', '/vendor/*', ...ordinary.filter(url => !['/audio-separator-worker.js','/audio-export-worker.js'].includes(url) && !url.startsWith('/fonts/') && !url.startsWith('/vendor/'))])];
 if (exclude.length + 1 > 100 || exclude.some(url => url.length > 100)) throw new Error('Pages Function route limits exceeded.');
 write(join(frontend, '_routes.json'), JSON.stringify({ version: 1, include: ['/*'], exclude }, null, 2) + '\n');
 write(join(repository, 'shared/pages-cache-assets.mjs'),

@@ -10,3 +10,9 @@ shared/pages-cache-assets.mjs text eol=lf
 frontend/cache-assets/** -text whitespace=cr-at-eol
 frontend/audio-separator-worker.js -text -diff -whitespace
 frontend/vendor/lilith-engine/separation-worker.js -text -diff -whitespace
+
+frontend/audio-export-worker.js -text -diff -whitespace
+frontend/vendor/lilith-engine/audio-export-worker.js -text -diff -whitespace
+
+# Keep third-party copyright and license source files byte-identical.
+frontend/vendor/lilith-engine/licenses/** -text -whitespace

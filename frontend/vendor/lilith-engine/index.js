@@ -1,14 +1,7 @@
-// packages/core/src/utils/errors.ts
-var AudioEngineError = class extends Error {
-  constructor(code, message, options) {
-    super(message, options);
-    this.code = code;
-    this.name = "AudioEngineError";
-  }
-};
-function checkAbort(signal) {
-  if (signal?.aborted) throw new AudioEngineError("ABORTED", "Operation canceled.");
-}
+import {
+  AudioEngineError,
+  checkAbort
+} from "./audio-io-KVQTNUDF.js";
 
 // packages/core/src/models/registry.ts
 var MDX_MODEL = Object.freeze({
@@ -67,7 +60,7 @@ var ModelRegistry = class {
 // packages/core/src/audio/decoder.ts
 function validateInput(file, options) {
   if (!(file instanceof Blob) || !file.size) throw new AudioEngineError("DECODE", "Choose a nonempty audio file.");
-  if (file.size > (options.maxFileBytes ?? 96 * 1024 * 1024)) throw new AudioEngineError("LIMIT", "File exceeds the configured memory-safe limit.");
+  if (file.size > (options.maxFileBytes ?? 96 * 1024 * 1024)) throw new AudioEngineError("SIZE", "File exceeds the configured memory-safe limit.");
 }
 async function durationHint(file, signal) {
   if (typeof document === "undefined") return NaN;
@@ -107,9 +100,14 @@ async function durationHint(file, signal) {
 async function decodeAudio(file, rate, options, signal) {
   checkAbort(signal);
   validateInput(file, options);
-  const max = options.maxDuration ?? 240, hint = await durationHint(file, signal);
+  const max = options.maxDuration ?? 240;
+  if (options.range) {
+    if (options.range.duration > max) throw new AudioEngineError("DURATION", "Selected range exceeds duration limit.");
+    return (await import("./audio-io-KPCL4JXF.js")).decodeRange(file, options.range.start, options.range.duration, rate, signal);
+  }
+  const hint = await durationHint(file, signal);
   checkAbort(signal);
-  if (Number.isFinite(hint) && hint > max) throw new AudioEngineError("LIMIT", `Audio must be ${max} seconds or shorter.`);
+  if (Number.isFinite(hint) && hint > max) throw new AudioEngineError("DURATION", `Audio duration is ${hint} seconds. Audio must be ${max} seconds or shorter.`);
   const bytes = await file.arrayBuffer();
   checkAbort(signal);
   const context = new OfflineAudioContext(2, 1, rate);
@@ -120,8 +118,8 @@ async function decodeAudio(file, rate, options, signal) {
     throw new AudioEngineError("DECODE", "This browser cannot decode the file. Try WAV, MP3 or a supported codec.", { cause: error });
   }
   checkAbort(signal);
-  if (audio.duration <= 0 || audio.duration > max || audio.length > rate * max || audio.sampleRate !== rate || audio.numberOfChannels > 2)
-    throw new AudioEngineError("LIMIT", "Decoded audio exceeds duration/channel limits (mono or stereo only).");
+  if (audio.numberOfChannels > 2) throw new AudioEngineError("CHANNELS", "Only mono or stereo audio is supported.");
+  if (audio.duration <= 0 || audio.duration > max || audio.length > rate * max || audio.sampleRate !== rate) throw new AudioEngineError("DURATION", `Decoded duration is ${audio.duration} seconds; limit is ${max}.`);
   const left = new Float32Array(audio.getChannelData(0)), right = new Float32Array(audio.getChannelData(audio.numberOfChannels === 1 ? 0 : 1));
   for (const channel of [left, right]) for (const sample of channel) if (!Number.isFinite(sample)) throw new AudioEngineError("DECODE", "Audio contains invalid samples.");
   return { channels: [left, right], sampleRate: rate, duration: audio.length / rate };
@@ -340,15 +338,16 @@ async function createSeparator(options = {}) {
 }
 
 // packages/core/src/playback/synchronized-player.ts
+var names = ["vocals", "instrumental"];
 var SynchronizedPlayer = class {
   buffers;
   gains;
-  sources = [];
+  sources = {};
+  enabled = /* @__PURE__ */ new Set();
   revision = 0;
   offset = 0;
   startedAt = 0;
   active = false;
-  mode = "both";
   disposed = false;
   volumes = { vocals: 1, instrumental: 1 };
   muted = { vocals: false, instrumental: false };
@@ -359,52 +358,78 @@ var SynchronizedPlayer = class {
     this.duration = result.vocals.duration;
     if (!this.duration || result.instrumental.duration !== this.duration) throw new RangeError("Aligned stems required.");
     const buffer = (name) => {
-      const stem = result[name], b = this.context.createBuffer(2, stem.channels[0].length, stem.sampleRate);
-      for (let ch = 0; ch < 2; ch++) b.copyToChannel(stem.channels[ch], ch);
+      const s = result[name], b = this.context.createBuffer(2, s.channels[0].length, s.sampleRate);
+      for (let ch = 0; ch < 2; ch++) b.copyToChannel(s.channels[ch], ch);
       return b;
     };
     this.buffers = { vocals: buffer("vocals"), instrumental: buffer("instrumental") };
     this.gains = { vocals: this.context.createGain(), instrumental: this.context.createGain() };
-    for (const gain of Object.values(this.gains)) gain.connect(this.context.destination);
+    for (const g of Object.values(this.gains)) g.connect(this.context.destination);
   }
   get playing() {
     return this.active && this.currentTime < this.duration;
   }
   get playbackMode() {
-    return this.mode;
+    return this.enabled.size === 1 ? [...this.enabled][0] : "both";
   }
   get currentTime() {
     return Math.min(this.duration, Math.max(0, this.offset + (this.active ? Math.max(0, this.context.currentTime - this.startedAt) : 0)));
   }
-  async play(mode = this.mode) {
-    if (this.disposed) throw new Error("Player disposed.");
-    if (!["both", "vocals", "instrumental"].includes(mode)) throw new RangeError("Invalid playback mode.");
+  isPlaying(name) {
+    return this.playing && this.enabled.has(name);
+  }
+  async play(mode = this.playbackMode) {
+    if (this.disposed) throw Error("Player disposed.");
+    if (!["both", ...names].includes(mode)) throw new RangeError("Invalid playback mode.");
     this.pause();
-    const revision = this.revision;
-    if (this.offset >= this.duration) this.offset = 0;
-    this.mode = mode;
+    this.enabled = new Set(mode === "both" ? names : [mode]);
+    await this.resume();
+  }
+  // Join the same clock instead of stopping the other stem. Both PCM sources
+  // stay scheduled together; per-stem transport gates their individual gains.
+  async playStem(name) {
+    if (this.disposed) throw Error("Player disposed.");
+    if (!names.includes(name)) throw new RangeError("Invalid stem.");
+    this.enabled.add(name);
+    if (this.playing) {
+      this.updateGain(name);
+      return;
+    }
+    await this.resume();
+  }
+  pauseStem(name) {
+    this.enabled.delete(name);
+    this.updateGain(name);
+    if (!this.enabled.size) this.pause();
+  }
+  async resume() {
+    const revision = ++this.revision;
     await this.context.resume();
     if (this.disposed || revision !== this.revision) return;
+    this.stopNodes();
+    if (this.offset >= this.duration) this.offset = 0;
     const when = this.context.currentTime + 0.03;
     this.startedAt = when;
     this.active = true;
-    for (const name of mode === "both" ? ["vocals", "instrumental"] : [mode]) {
+    for (const name of names) {
       const source = this.context.createBufferSource();
       source.buffer = this.buffers[name];
       source.connect(this.gains[name]);
+      this.sources[name] = source;
+      this.updateGain(name);
       source.start(when, this.offset);
-      this.sources.push(source);
       source.onended = () => {
         if (this.currentTime >= this.duration) {
-          this.active = false;
           this.offset = this.duration;
+          this.active = false;
+          this.enabled.clear();
           this.stopNodes();
         }
       };
     }
   }
   stopNodes() {
-    for (const source of this.sources) {
+    for (const source of Object.values(this.sources)) {
       source.onended = null;
       try {
         source.stop();
@@ -412,20 +437,24 @@ var SynchronizedPlayer = class {
       }
       source.disconnect();
     }
-    this.sources = [];
+    this.sources = {};
   }
   pause() {
     ++this.revision;
     this.offset = this.currentTime;
     this.active = false;
+    this.enabled.clear();
     this.stopNodes();
   }
   async seek(seconds) {
     if (!Number.isFinite(seconds)) throw new RangeError("Invalid seek position.");
-    const resume = this.playing;
+    const resume = this.playing, enabled = new Set(this.enabled);
     this.pause();
     this.offset = Math.max(0, Math.min(this.duration, seconds));
-    if (resume) await this.play(this.mode);
+    if (resume) {
+      this.enabled = enabled;
+      await this.resume();
+    }
   }
   volume(name, value) {
     if (!Number.isFinite(value) || value < 0 || value > 1) throw new RangeError("Volume must be between 0 and 1.");
@@ -437,14 +466,14 @@ var SynchronizedPlayer = class {
     this.updateGain(name);
   }
   updateGain(name) {
-    this.gains[name].gain.setTargetAtTime(this.muted[name] ? 0 : this.volumes[name], this.context.currentTime, 0.01);
+    this.gains[name].gain.setTargetAtTime(this.muted[name] || !this.enabled.has(name) ? 0 : this.volumes[name], this.context.currentTime, 0.01);
   }
   async dispose() {
     if (this.disposed) return;
     this.pause();
     this.disposed = true;
     this.buffers = {};
-    for (const gain of Object.values(this.gains)) gain.disconnect();
+    for (const g of Object.values(this.gains)) g.disconnect();
     await this.context.close();
   }
 };
@@ -461,6 +490,73 @@ function waveformPeaks(channels, points = 800) {
   }
   return peaks;
 }
+
+// packages/core/src/audio/inspect.ts
+async function inspectAudio(file) {
+  try {
+    return await (await import("./audio-io-KPCL4JXF.js")).inspect(file);
+  } catch {
+    return new Promise((resolve, reject) => {
+      const audio = document.createElement("audio"), url = URL.createObjectURL(file);
+      const cleanup = () => {
+        clearTimeout(timer);
+        audio.removeAttribute("src");
+        audio.load();
+        URL.revokeObjectURL(url);
+      };
+      const fail = () => {
+        cleanup();
+        reject(Error("Metadata unavailable."));
+      };
+      const timer = setTimeout(fail, 8e3);
+      audio.preload = "metadata";
+      audio.onloadedmetadata = () => {
+        const duration = audio.duration;
+        cleanup();
+        Number.isFinite(duration) ? resolve({ duration }) : reject(Error("Invalid duration."));
+      };
+      audio.onerror = fail;
+      audio.src = url;
+    });
+  }
+}
+
+// packages/core/src/export/encoded.ts
+async function exportAudio(stem, format, options = {}) {
+  checkAbort(options.signal);
+  if (format === "wav") return encodeWav(stem.channels, stem.sampleRate);
+  if (!["mp3", "flac"].includes(format)) throw new AudioEngineError("OUTPUT", "Unknown export format.");
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(options.workerUrl ?? new URL("./audio-export-worker.js", import.meta.url), { type: "module" });
+    const cleanup = () => {
+      clearTimeout(timer);
+      options.signal?.removeEventListener("abort", abort);
+      worker.terminate();
+    };
+    const fail = (error) => {
+      cleanup();
+      reject(error);
+    };
+    const abort = () => fail(new AudioEngineError("ABORTED", "Export canceled."));
+    const timer = setTimeout(() => fail(new AudioEngineError("OUTPUT", "Export timed out.")), 10 * 60 * 1e3);
+    options.signal?.addEventListener("abort", abort, { once: true });
+    worker.onerror = (e) => fail(new AudioEngineError("OUTPUT", e.message || "Audio encoding failed."));
+    worker.onmessage = ({ data }) => {
+      if (data.type === "progress") {
+        try {
+          options.onProgress?.(data.progress);
+        } catch {
+          fail(new AudioEngineError("OUTPUT", "Export callback failed."));
+        }
+      } else if (data.type === "done") {
+        cleanup();
+        resolve(data.blob);
+      } else if (data.type === "error") fail(new AudioEngineError("OUTPUT", data.message));
+    };
+    worker.postMessage({ channels: stem.channels, sampleRate: stem.sampleRate, format });
+    if (options.signal?.aborted) abort();
+  });
+}
 export {
   AudioEngineError,
   ModelRegistry,
@@ -469,7 +565,9 @@ export {
   clearModelCache,
   createSeparator,
   encodeWav,
+  exportAudio,
   getModel,
+  inspectAudio,
   listModels,
   modelStorage,
   safeFilename,

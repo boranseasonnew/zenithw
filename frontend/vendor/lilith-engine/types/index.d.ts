@@ -8,3 +8,6 @@ export { zipStems, safeFilename } from './export/zip.js';
 export { modelStorage, clearModelCache } from './runtime/model-cache.js';
 export type * from './types.js';
 export type { ModelAdapter } from './models/adapter.js';
+export { inspectAudio } from './audio/inspect.js';
+export { exportAudio } from './export/encoded.js';
+export type { AudioExportFormat } from './export/encoded.js';

@@ -21,6 +21,9 @@
 /app.d4596317c4a7.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+/audio-export-worker.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /audio-separator-worker.js
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -212,7 +215,31 @@
 /updates.4afebabda436.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/vendor/lilith-engine/audio-export-worker.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/audio-io-KPCL4JXF.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/audio-io-KVQTNUDF.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /vendor/lilith-engine/index.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/LAME-COPYING.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/libFLAC-COPYING.Xiph.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/mediabunny-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/mediabunny-flac-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/lilith-engine/licenses/mediabunny-mp3-LICENSE.txt
   Cache-Control: public, max-age=3600, must-revalidate
 
 /vendor/lilith-engine/licenses/onnxruntime-LICENSE.txt

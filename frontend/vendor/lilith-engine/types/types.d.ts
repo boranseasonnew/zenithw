@@ -61,6 +61,11 @@ export interface SeparatorOptions {
     model?: string;
     backend?: Backend;
     maxDuration?: number;
+    range?: {
+        start: number;
+        duration: number;
+    };
+    exportWorkerUrl?: string | URL;
     maxFileBytes?: number;
     workerUrl?: string | URL;
     cache?: boolean;

@@ -62,3 +62,10 @@ test('Studio strings and engine information use every existing locale catalog',(
   if(language!=='en')for(const key of ['resultsInfo','modelInfo','privacy','playbackError','exportError'])assert.notEqual(catalog[english[key]],english[key],language+': untranslated '+key);
  }
 });
+
+test('export worker WASM/child workers stay scoped and retain private networking',async()=>{
+ const response=await onRequest({request:new Request('https://zenithw.space/audio-export-worker.js'),next:async()=>new Response('// export',{headers:{'Content-Type':'text/javascript'}})});
+ const csp=response.headers.get('Content-Security-Policy');assert.match(csp,/wasm-unsafe-eval/);assert.match(csp,/worker-src 'self' blob:/);assert.doesNotMatch(csp,/huggingface|'unsafe-eval'/);
+ const routes=JSON.parse(readFileSync(new URL('../frontend/_routes.json',import.meta.url),'utf8'));assert.ok(!routes.exclude.includes('/audio-export-worker.js'));
+ const studio=readFileSync(new URL('../shared/lilith-studio.ts',import.meta.url),'utf8');assert.doesNotMatch(studio,/lilith-action|listModels|Processing backend/);assert.match(studio,/playStem/);assert.match(studio,/closedby/);
+});
