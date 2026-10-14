@@ -24,7 +24,7 @@ brotli==1.2.0
 mutagen==1.47.0
 pycryptodomex==3.21.0
 websockets==15.0.1
-psutil==7.0.0
+psutil==7.2.2
 
 # Security fixes for untrusted HTTP streaming and safe filesystem serving.
 urllib3==2.8.0
