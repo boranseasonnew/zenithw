@@ -212,7 +212,10 @@ async function modelStorage() {
     const cache = await caches.open(MODEL_CACHE);
     for (const request of await cache.keys()) {
       const response = await cache.match(request);
-      if (response) cachedBytes += (await response.blob()).size;
+      if (response) {
+        const declared = Number(response.headers.get("Content-Length"));
+        cachedBytes += Number.isSafeInteger(declared) && declared > 0 ? declared : (await response.blob()).size;
+      }
     }
   }
   const estimate = await navigator.storage?.estimate();
@@ -234,12 +237,16 @@ var SeparationEngine = class {
   disposed = false;
   worker;
   abort;
+  idleTimer;
   async separate(file, job = {}) {
     if (this.disposed) throw new AudioEngineError("DISPOSED", "Separator was disposed.");
     if (this.busy) throw new AudioEngineError("BUSY", "A separation job is already running.");
     checkAbort(job.signal);
     if (typeof Worker === "undefined" || typeof OfflineAudioContext === "undefined" || !globalThis.isSecureContext)
       throw new AudioEngineError("UNSUPPORTED", "Use a current browser on HTTPS or localhost with Web Audio and module Worker support.");
+    if (this.idleTimer) clearTimeout(this.idleTimer);
+    this.idleTimer = void 0;
+    const totalStart = performance.now();
     this.busy = true;
     const controller = new AbortController();
     this.abort = () => controller.abort();
@@ -248,20 +255,22 @@ var SeparationEngine = class {
     const report = (event) => job.onProgress?.(event);
     try {
       report({ stage: "decoding" });
-      const audio = await decodeAudio(file, this.model.sampleRate, this.options, controller.signal);
+      const audio = await decodeAudio(file, this.model.sampleRate, { ...this.options, range: job.range ?? this.options.range }, controller.signal);
       checkAbort(controller.signal);
       const output = await new Promise((resolve, reject) => {
-        const worker = new Worker(this.options.workerUrl ?? new URL("./separation-worker.js", import.meta.url), { type: "module" });
+        const worker = this.worker ?? new Worker(this.options.workerUrl ?? new URL("./separation-worker.js", import.meta.url), { type: "module" });
         this.worker = worker;
         const timer = setTimeout(() => fail(new AudioEngineError("WORKER", "Inference exceeded 60 minutes. Try a shorter file.")), 60 * 60 * 1e3);
-        const cleanup = () => {
+        const cleanup = (terminate) => {
           clearTimeout(timer);
           controller.signal.removeEventListener("abort", abort);
-          worker.terminate();
-          this.worker = void 0;
+          worker.onmessage = null;
+          worker.onerror = null;
+          worker.onmessageerror = null;
+          if (terminate) this.releaseWorker();
         };
         const fail = (error) => {
-          cleanup();
+          cleanup(true);
           reject(error);
         };
         const abort = () => fail(new AudioEngineError("ABORTED", "Operation canceled."));
@@ -276,7 +285,7 @@ var SeparationEngine = class {
               fail(error instanceof Error ? error : new Error("Progress callback failed."));
             }
           } else if (data.type === "done") {
-            cleanup();
+            cleanup(false);
             resolve(data);
           } else if (data.type === "error") fail(new AudioEngineError(data.code, data.message));
         };
@@ -292,7 +301,7 @@ var SeparationEngine = class {
       const result = {
         vocals,
         instrumental,
-        metadata: { model: this.model.id, backend: output.backend, inferenceSeconds: output.inferenceSeconds, gain: output.gain },
+        metadata: { model: this.model.id, backend: output.backend, inferenceSeconds: output.inferenceSeconds, setupSeconds: output.setupSeconds, modelReused: output.modelReused, totalSeconds: (performance.now() - totalStart) / 1e3, gain: output.gain },
         exportWav: (name) => {
           ensure();
           if (!["vocals", "instrumental"].includes(name)) throw new AudioEngineError("OUTPUT", "Unknown stem.");
@@ -313,24 +322,34 @@ var SeparationEngine = class {
       return result;
     } finally {
       job.signal?.removeEventListener("abort", externalAbort);
-      this.worker?.terminate();
-      this.worker = void 0;
       this.busy = false;
       this.abort = void 0;
+      if (this.worker && !this.disposed) {
+        const idle = Math.min(3e5, Math.max(1e3, this.options.idleTimeoutMs ?? 12e4));
+        this.idleTimer = setTimeout(() => {
+          this.releaseWorker();
+        }, idle);
+      }
     }
+  }
+  releaseWorker() {
+    if (this.idleTimer) clearTimeout(this.idleTimer);
+    this.idleTimer = void 0;
+    this.worker?.terminate();
+    this.worker = void 0;
   }
   storageInfo() {
     return modelStorage();
   }
   clearCache() {
     if (this.busy) throw new AudioEngineError("BUSY", "Wait or cancel before clearing the model cache.");
+    this.releaseWorker();
     return clearModelCache();
   }
   async dispose() {
     this.disposed = true;
     this.abort?.();
-    this.worker?.terminate();
-    this.worker = void 0;
+    this.releaseWorker();
   }
 };
 async function createSeparator(options = {}) {

@@ -51,6 +51,9 @@ export interface SeparationResult {
         model: string;
         backend: Exclude<Backend, 'auto'>;
         inferenceSeconds: number;
+        setupSeconds?: number;
+        totalSeconds?: number;
+        modelReused?: boolean;
         gain: number;
     };
     exportWav(stem: StemName): Blob;
@@ -69,8 +72,13 @@ export interface SeparatorOptions {
     maxFileBytes?: number;
     workerUrl?: string | URL;
     cache?: boolean;
+    idleTimeoutMs?: number;
 }
 export interface JobOptions {
+    range?: {
+        start: number;
+        duration: number;
+    };
     signal?: AbortSignal;
     onProgress?: (event: ProgressEvent) => void;
 }

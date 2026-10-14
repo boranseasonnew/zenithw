@@ -41,7 +41,7 @@ class DownloadProfileContractTests(unittest.TestCase):
         self.assertEqual(choose("https://youtube.com/watch?v=x", "2160", enabled=True, is_audio=False), ("720", "720p-busy"))
         self.assertEqual(choose("https://youtube.com/watch?v=x", "2160", enabled=True, is_audio=True), ("2160", "off"))
         self.assertEqual(choose("https://example.com/video", "2160", enabled=True, is_audio=False), ("2160", "off"))
-        self.assertIn('youtube_adaptive_quality:!!S.youtubeAdaptiveQuality', FRONTEND_SOURCE)
+        self.assertIn('youtube_adaptive_quality:!!plan.youtubeAdaptiveQuality', FRONTEND_SOURCE)
 
     def test_youtube_quality_fallback_never_escapes_the_selected_cap(self):
         namespace = {"AUDIO_FMTS": {"mp3"}, "is_youtube": lambda url: True}

@@ -93,6 +93,9 @@
 /desktop-promo.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/download-safety.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /downloads.css
   Cache-Control: public, max-age=3600, must-revalidate
 

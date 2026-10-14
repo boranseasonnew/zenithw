@@ -110,6 +110,8 @@ class OutboundSecurityTests(unittest.TestCase):
 
     def test_configured_ffmpeg_keeps_input_protocol_guard(self):
         namespace = {
+            "FFMPEG_LOCAL_DEMUXERS": "mov,mp3,wav",
+            "FFMPEG_POST_DEMUXERS": "mov,mp3,wav,image2,png_pipe",
             "FFMPEG_LOCAL_PROTOCOLS": "file,pipe,crypto,data",
             "YOUTUBE_USER_AGENT": "youtube", "DEFAULT_USER_AGENT": "test",
             "YTDLP_CACHE_DIR": False, "POT_PROVIDER_URL": "",
@@ -121,7 +123,7 @@ class OutboundSecurityTests(unittest.TestCase):
             namespace["FFMPEG_DIR"] = directory
             opts = opts_fn("https://example.com/video", use_cookies=False)
             self.assertEqual(opts["postprocessor_args"]["ffmpeg_i"],
-                             ["-protocol_whitelist", "file,pipe,crypto,data"])
+                             ["-protocol_whitelist", "file,pipe,crypto,data", "-format_whitelist", "mov,mp3,wav,image2,png_pipe"])
             if directory:
                 self.assertEqual(opts["postprocessor_args"]["ffmpeg"], ["-threads", "2"])
 

@@ -1,7 +1,11 @@
 {
+  "download-safety.js": {
+    "url": "/cache-assets/download-safety.f8da11af7c3c.js",
+    "sha256": "f8da11af7c3ca888a6541e33974a4494f05191ecdcbd9d3f6f58d338ea9c39f2"
+  },
   "audio-tools.js": {
-    "url": "/cache-assets/audio-tools.67ee655375ce.js",
-    "sha256": "67ee655375ceaea74132c4225f4edf683845721a154f1e65f712100d87dc207b"
+    "url": "/cache-assets/audio-tools.f194fbbd96ce.js",
+    "sha256": "f194fbbd96cef6f869d2475f946e1f8078988ed2e4e0e575ed17bf72d42feb09"
   },
   "audio-tools.css": {
     "url": "/cache-assets/audio-tools.ca3f505ed99e.css",
@@ -88,40 +92,40 @@
     "sha256": "29c12303fcd97565950a4188759b19f98873aeb4b47e76da91cbf1fbb4ff2c86"
   },
   "locales/tr.json": {
-    "url": "/cache-assets/tr.f7aec52c0eb8.json",
-    "sha256": "f7aec52c0eb8b282d6df5a6968aca58695c1a3196abd254b7a532d5e24b59252"
+    "url": "/cache-assets/tr.47a5841a0abb.json",
+    "sha256": "47a5841a0abb360dbbc0c41dedbbd26fd5df297c4017296b144d72edf2105710"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.1f9908ed689e.json",
-    "sha256": "1f9908ed689ed8afcfbb4394ed2551642ac8f008d0bf613fbd7a3a05921d3038"
+    "url": "/cache-assets/en.1d14d2a0207c.json",
+    "sha256": "1d14d2a0207c739f3c5260c96457f687d8712f63162ad98023ebe4be7a28ccfd"
   },
   "locales/fr.json": {
-    "url": "/cache-assets/fr.8a9de525e440.json",
-    "sha256": "8a9de525e44026471a4e404665970c9087c4b439738742e9024ce2b572dc75c4"
+    "url": "/cache-assets/fr.70a757697422.json",
+    "sha256": "70a7576974224d8da469d38380767d1b97c3917178cc5a44d9d16b871bb19c9c"
   },
   "locales/de.json": {
-    "url": "/cache-assets/de.95b84410a528.json",
-    "sha256": "95b84410a528d7725d3b4c8471c87d54b32ee1c14903d5bb69953ea489044285"
+    "url": "/cache-assets/de.eee97186cb08.json",
+    "sha256": "eee97186cb08dfb6e8b98bd3aba5c0647673668e066228e21af60d7b210d7bdc"
   },
   "locales/ru.json": {
-    "url": "/cache-assets/ru.2f5640faf8a6.json",
-    "sha256": "2f5640faf8a60b0671879b649415f56cab71bfe33c72d400454e800b9d40ac86"
+    "url": "/cache-assets/ru.bc79375f0de2.json",
+    "sha256": "bc79375f0de23bafb7127e4a1c170b22dad85c8c70e6a1f4c7f2b7bc7d2bc20a"
   },
   "locales/vi.json": {
-    "url": "/cache-assets/vi.fec6356a9431.json",
-    "sha256": "fec6356a943153bf0a30dff805a89c96243e2b1aa170421e042a522498e1e70f"
+    "url": "/cache-assets/vi.a1550d6ac2a5.json",
+    "sha256": "a1550d6ac2a5288aa3d287bc40bc47123454738b7b0075126bbaf50f6ff2179f"
   },
   "locales/zh.json": {
-    "url": "/cache-assets/zh.09e8b8df56e8.json",
-    "sha256": "09e8b8df56e8ce56e9de4e7326ef3e463270cecde8b39be4c024d553ebf686ea"
+    "url": "/cache-assets/zh.7059655babca.json",
+    "sha256": "7059655babcaeaa35b086f74f6b0b2569b2aa834beb6159a58e22c5a5b4674a8"
   },
   "locales/ja.json": {
-    "url": "/cache-assets/ja.c06396aa8622.json",
-    "sha256": "c06396aa862213f740d98bcab83712df3c51ce4dbee9afb4abfe3c3db212be4c"
+    "url": "/cache-assets/ja.34581ae8732d.json",
+    "sha256": "34581ae8732d16867825d50257ac4fc8ba026d62d5b4093343701adc8fce4e10"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.414bed2528ca.js",
-    "sha256": "414bed2528cafc481c23266858c1c579f72db233fcc9c8dcd31ff01d75c2190f"
+    "url": "/cache-assets/site-language.b1b5bdaf1724.js",
+    "sha256": "b1b5bdaf1724bae5d8442c3a9b4396cdefbee9bc211d1f386a738400ac1cba45"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.750ddfc30c31.css",
@@ -144,8 +148,8 @@
     "sha256": "9179d506460104b93eedae7b06519c70a9271fc2c468a488d729f101e5b2cba9"
   },
   "app.d4596317c4a7.js": {
-    "url": "/cache-assets/app.a769e4ec016c.js",
-    "sha256": "a769e4ec016cc565f377192343a86f1e4b66a24e11a3e555bec909509f01740a"
+    "url": "/cache-assets/app.fe3468d19117.js",
+    "sha256": "fe3468d19117253554ab2c31e1f8786f1b150d5178962fb87ccc8ceb87fbbbf4"
   },
   "style.487d49f0164d.css": {
     "url": "/cache-assets/style.0a44b1a04019.css",
@@ -156,8 +160,8 @@
     "sha256": "834ee93b2c57b82f6fcd6cdab7f1b51808af807af045a5bd9f2fb8d0f7f805c4"
   },
   "updates-core.99daf4ea6088.js": {
-    "url": "/cache-assets/updates-core.6f0d9160beb8.js",
-    "sha256": "6f0d9160beb83cdcabe8c913d5fb9d10743051d2c243c4d3b099a81352249c93"
+    "url": "/cache-assets/updates-core.216d12842820.js",
+    "sha256": "216d12842820ec8fdbaecd4f6b99d551f0b3edad10492359a26551c59e4fd08a"
   },
   "updates.4afebabda436.css": {
     "url": "/cache-assets/updates.2590c4fa45bd.css",

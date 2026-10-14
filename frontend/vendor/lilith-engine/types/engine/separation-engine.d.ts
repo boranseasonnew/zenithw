@@ -6,8 +6,10 @@ export declare class SeparationEngine {
     private disposed;
     private worker?;
     private abort?;
+    private idleTimer?;
     constructor(options?: SeparatorOptions);
     separate(file: Blob, job?: JobOptions): Promise<SeparationResult>;
+    private releaseWorker;
     storageInfo(): Promise<{
         cachedBytes: number;
         usage?: number;

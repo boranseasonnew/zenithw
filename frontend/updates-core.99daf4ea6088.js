@@ -1,6 +1,61 @@
 const LATEST_UPDATE = {
-  "ver": "v15.9",
+  "ver": "v16.0",
   "latest": true,
+  "dateTr": "14 ekim 2026",
+  "dateEn": "October 14, 2026",
+  "cover": null,
+  "titleTr": "Sesini ayır. ZenithW ile devam et.",
+  "titleEn": "Separate your sound. Keep going with ZenithW.",
+  "introTr": [
+    "v16.0 ile ZenithW, indirdiğin medyayla çalışabileceğin bir araç ekosistemine dönüşüyor. Yeni AI vokal ayırıcı; şarkının vokalini ve enstrümantalini cihazında hazırlıyor. Dinle, karıştır ve ihtiyacın olan sesi indir."
+  ],
+  "introEn": [
+    "With v16.0, ZenithW grows into a tool ecosystem for working with your media. The new AI vocal separator prepares vocals and instrumental music on your device. Listen, mix and download the sound you need."
+  ],
+  "sections": [
+    {
+      "hTr": "Dosyanı seç; vokal ve müzik birlikte ayrılsın",
+      "hEn": "Choose a file; get vocals and music together",
+      "pTr": "Ne yapmak istediğini soran seçim ekranını kaldırdık. Dosya seçildiğinde doğrulanmış UVR-MDX modeli otomatik kullanılıyor ve tek AI işlemiyle iki ses hazırlanıyor. Bu, basit bir ses filtresi değil; gerçek model tabanlı kaynak ayırma. Sonuç kalitesi kayda göre değişebilir.",
+      "pEn": "We removed the action selection screen. Choosing a file automatically uses the verified UVR-MDX model to prepare both stems in one AI operation. This is genuine model-based source separation. Results vary with the recording."
+    },
+    {
+      "hTr": "İki ses, aynı zaman çizgisi",
+      "hEn": "Two stems, one timeline",
+      "pTr": "Vokali ve müziği ayrı ayrı veya birlikte dinleyebilirsin. Dalga biçimleri gerçek sesten üretilir; oynatma konumu, ses düzeyi ve sessize alma kontrolü elinde. Oynatma düğmesinin yanından MP3, FLAC veya WAV seç; iki WAV dosyasını birlikte ZIP olarak da indirebilirsin.",
+      "pEn": "Listen to vocals and music separately or together. Waveforms come from the actual audio, with playback position, volume and mute controls. Choose MP3, FLAC or WAV beside each play button, or download both WAV stems in a ZIP."
+    },
+    {
+      "hTr": "Dosyan cihazında kalır",
+      "hEn": "Your file stays on your device",
+      "pTr": "Ses ayırma ve dışa aktarma tarayıcıda çalışır; ses dosyan ZenithW sunucusuna yüklenmez. İlk kullanımda yaklaşık 67 MB model ve işlem altyapısı indirilir. Model önbelleği tarayıcında tutulur; depolama izni, özel gezinme veya alan yetersizliği kalıcı önbelleği engelleyebilir.",
+      "pEn": "Separation and export run in your browser; your audio is not uploaded to ZenithW servers. The first run downloads a roughly 67 MB model and runtime assets. Your browser keeps the model cache; storage restrictions, private browsing or low space can prevent persistence."
+    },
+    {
+      "hTr": "Sonraki şarkıda daha az hazırlık",
+      "hEn": "Less preparation for the next song",
+      "pTr": "Aynı sekmede arka arkaya ayırırken model ve AI oturumu yeniden kullanılır. İki dakika boşta kalınca bellek bırakılır. Önbellekten okuma, AI hazırlığı ve şarkıyı işleme artık ayrı durumlar gösterir: her şarkı yeniden analiz edilir, modelin yeniden indirilmesi gerekmez. WebGPU uygunsa kullanılır; işlemciyle çalışma daha yavaş olabilir.",
+      "pEn": "Consecutive jobs in the same tab reuse the model and AI session. Memory is released after two idle minutes. Cache loading, AI preparation and track processing have distinct states: every song needs fresh analysis, but the model need not be downloaded again. WebGPU is used when available; CPU processing can be slower."
+    },
+    {
+      "hTr": "Birbirini tamamlayan araçlar",
+      "hEn": "Tools that work together",
+      "pTr": "Web indirme, dönüştürme ve remux araçları; Android ve Windows uygulamaları; açık kaynak Lilith Audio Engine. Hepsi ZenithW ekosisteminin parçaları. Vokal ayırıcı şimdilik yalnızca webde: mono veya stereo, 96 MiB dosya ve en fazla dört dakikalık bölüm. Uzun şarkılarda işleyeceğin bölümü seçebilirsin. Android ve Windows için bu özelliğin geleceği garanti değil.",
+      "pEn": "Web downloads, conversion and remux tools; Android and Windows apps; the open-source Lilith Audio Engine. All belong to the ZenithW ecosystem. Vocal separation is currently web-only: mono or stereo, files up to 96 MiB and sections up to four minutes. Select a section for longer tracks. Future Android and Windows support for this feature is not guaranteed."
+    },
+    {
+      "hTr": "Bulk indirmelerde daha kontrollü akış",
+      "hEn": "More control over bulk downloads",
+      "pTr": "Tekrarlanan bağlantılar ayıklanır, seçtiğin ayarlar işlem boyunca korunur ve başarısız bağlantılar tekrar denemek için listede kalır. Sunucu beklemeni istediğinde sınırlı yeniden deneme uygulanır. Küçük dosya aktarımında ilerleme alınan baytlara göre gösterilir; hazırlama ve gerçek indirme birbirinden ayrılır.",
+      "pEn": "Duplicate links are removed, selected settings stay fixed during the batch and failed links remain for retry. Limited retries respect server wait instructions. Small-file transfer progress reflects received bytes, keeping preparation distinct from the actual download."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V15_9 = {
+  "ver": "v15.9",
+  "latest": false,
   "dateTr": "12 ekim 2026",
   "dateEn": "October 12, 2026",
   "cover": null,
@@ -403,8 +458,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;
@@ -488,7 +543,7 @@ async function render(){
   picker.innerHTML=UPDATE_VERSIONS.map(ver=>`<option value="${ver}"${ver===u.ver?' selected':''}>${ver}${ver===LATEST_UPDATE.ver?' · '+t.latestLabel:''}</option>`).join('');
 
   const archive=document.getElementById('updRecent');
-  archive.innerHTML=CURRENT_RELEASES.slice(0,7).map(r=>`<a href="${window.ZWLanguage?ZWLanguage.path(r.ver===LATEST_UPDATE.ver?'/updates':'/updates/'+r.ver+'/'):r.ver===LATEST_UPDATE.ver?'/updates':'/updates/'+r.ver+'/'}"${r.ver===u.ver?' aria-current="page"':''}><span>${r.ver}</span><span class="upd-archive-title">${releaseText(r.titleTr,r.titleEn)}</span></a>`).join('');
+  archive.innerHTML=CURRENT_RELEASES.slice(0,8).map(r=>`<a href="${window.ZWLanguage?ZWLanguage.path(r.ver===LATEST_UPDATE.ver?'/updates':'/updates/'+r.ver+'/'):r.ver===LATEST_UPDATE.ver?'/updates':'/updates/'+r.ver+'/'}"${r.ver===u.ver?' aria-current="page"':''}><span>${r.ver}</span><span class="upd-archive-title">${releaseText(r.titleTr,r.titleEn)}</span></a>`).join('');
   const order=UPDATE_VERSIONS.indexOf(u.ver);
   const newer=order>0?UPDATE_VERSIONS[order-1]:null;
   const older=order>=0&&order<UPDATE_VERSIONS.length-1?UPDATE_VERSIONS[order+1]:null;

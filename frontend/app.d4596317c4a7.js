@@ -1,4 +1,5 @@
 const API=window.ZENITHW_API||"https://api.zenithw.space";
+const DOWNLOAD_POLICY_READY=import('/download-safety.js');
 const YOUTUBE_WEB_ENABLED=window.ZENITHW_YOUTUBE_WEB_ENABLED===true;
 async function downloadThumbnail(){
   if(!videoInfo||!videoInfo.url) return;
@@ -645,7 +646,8 @@ let bulkRunning=false,bulkStopRequested=false,activeBulkJob=null;
 async function fetchBulkVideos(){
   if(bulkRunning){await cancelBulkDownloads();return;}
   const textarea=document.getElementById('urlTextarea');
-  const requestedUrls=textarea.value.split('\n').map(u=>u.trim()).filter(u=>u&&u.startsWith('http'));
+  let requestedUrls;
+  try{requestedUrls=(await DOWNLOAD_POLICY_READY).normalizeBulkUrls(textarea.value);}catch(e){toast(t(e instanceof RangeError?'bulkMaxLinks':'errUnsupported'),'#ed4245');return;}
   if(requestedUrls.length===0){toast(t('bulkNeedLink'),'#ed4245');return;}
   if(requestedUrls.length>10){toast(t('bulkMaxLinks'),'#f59e0b');return;}
   const blockedYoutube=requestedUrls.filter(shouldRouteYoutubeToApps);
@@ -655,30 +657,32 @@ async function fetchBulkVideos(){
   
   const successCount=[];
   const failCount=[];
+  const plan={...S},mode=DL_MODE;textarea.disabled=true;
   const goBtn=document.querySelector('.url-go-btn');
   bulkRunning=true;bulkStopRequested=false;
   if(goBtn){goBtn.onclick=cancelBulkDownloads;goBtn.setAttribute('aria-label',t('dlCancel'));goBtn.innerHTML='✕';}
   
-  for(let i=0;i<urls.length;i++){
+  try{for(let i=0;i<urls.length;i++){
     if(bulkStopRequested)break;
     const url=urls[i];
     document.getElementById('urlSpinWrap').innerHTML=`<div style="font-size:10px;color:var(--text2)">${i+1}/${urls.length}</div>`;
     try{
       // Bulk deliberately skips /info: /download already extracts the title and
       // prepares the file, so each item costs one backend/upstream job.
-      const result=await startDownload({bulk:true,url,onJobStart:job=>{activeBulkJob=job;}});
+      const result=await startDownload({bulk:true,url,plan,mode,onJobStart:job=>{activeBulkJob=job;},onRetry:()=>{document.getElementById('urlSpinWrap').textContent=`${i+1}/${urls.length} · ${t('queued')}`;},onProgress:(pct,received,total)=>{if(total>0)document.getElementById('urlSpinWrap').textContent=`${i+1}/${urls.length} · ${Math.min(100,Math.floor(received/total*100))}%`;}});
       activeBulkJob=null;
       if(result.ok)successCount.push(url);
       else failCount.push(url);
     }catch(e){
       failCount.push(url);
     }
-    await new Promise(r=>setTimeout(r,1000));
+    try{await (await DOWNLOAD_POLICY_READY).abortableWait(500,activeBulkJob?.controller.signal);}catch{}
   }
-  activeBulkJob=null;bulkRunning=false;
+  }finally{activeBulkJob=null;bulkRunning=false;textarea.disabled=false;}
   document.getElementById('urlSpinWrap').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--text3)"><circle cx="12" cy="12" r="10"/></svg>';
-  toast(`${successCount.length} ${t('bulkSuccessWord')}, ${failCount.length} ${t('bulkFailWord')}`,successCount.length>0?'#3bba64':'#ed4245');
-  if(!bulkStopRequested){textarea.value='';toggleBulkMode();}
+  if(!bulkStopRequested)toast(`${successCount.length} ${t('bulkSuccessWord')}, ${failCount.length} ${t('bulkFailWord')}`,successCount.length>0?'#3bba64':'#ed4245');
+  const remaining=requestedUrls.filter(url=>!successCount.includes(url));textarea.value=remaining.join('\n');
+  if(!bulkStopRequested&&remaining.length===0)toggleBulkMode();
   else if(goBtn){goBtn.onclick=fetchBulkVideos;goBtn.setAttribute('aria-label',t('dlBtn'));goBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
 }
 async function cancelBulkDownloads(){
@@ -1039,7 +1043,7 @@ async function runPlaylistQueue(fullSelectedIdx,alreadyDone,fmtOverride){
 const NATIVE_HANDOFF_START_TIMEOUT_MS=15000;
 const NATIVE_TRANSFER_TIMEOUT_MS=45*60*1000;
 async function waitForNativeTransfer(statusPath,onProgress,signal){
-  if(!statusPath)throw new Error('Transfer status unavailable');
+  const policy=await DOWNLOAD_POLICY_READY;statusPath=policy.preparedUrl(statusPath,API,location.href,true);
   const startedAt=Date.now();
   let transferStarted=false;
   while(Date.now()-startedAt<NATIVE_TRANSFER_TIMEOUT_MS){
@@ -1060,7 +1064,7 @@ async function waitForNativeTransfer(statusPath,onProgress,signal){
   throw new DOMException('Prepared transfer timed out','TimeoutError');
 }
 async function triggerNativeDownload(path,statusPath,onProgress,signal){
-  if(!path)throw new Error('Download path unavailable');
+  const policy=await DOWNLOAD_POLICY_READY;path=policy.preparedUrl(path,API,location.href);statusPath=policy.preparedUrl(statusPath,API,location.href,true);
   const a=document.createElement('a');
   a.href=path.startsWith('http')?path:API+path;document.body.appendChild(a);a.click();
   document.body.removeChild(a);
@@ -1083,41 +1087,28 @@ async function fetchMediaJob(formData){
 }
 async function handoffPreparedDownload(payload,allowSaveModal,onProgress,signal){
   if(!payload||!payload.download_url)throw new Error('Download file was not prepared');
+  const policy=await DOWNLOAD_POLICY_READY;
+  payload={...payload,download_url:policy.preparedUrl(payload.download_url,API,location.href),transfer_status_url:policy.preparedUrl(payload.transfer_status_url,API,location.href,true)};
   if(allowSaveModal&&Number(payload.size)>0&&Number(payload.size)<=BLOB_SAVE_LIMIT){
     const controller=new AbortController();
     activeTransferAbort=controller;
     const totalTimeout=setTimeout(()=>controller.abort(),PREPARED_TRANSFER_TIMEOUT_MS);
-    let idleTimeout=null,reader=null;
+    let idleTimeout=null;
+    const abort=()=>controller.abort();signal?.addEventListener('abort',abort,{once:true});if(signal?.aborted)controller.abort();
     const resetIdle=()=>{if(idleTimeout)clearTimeout(idleTimeout);idleTimeout=setTimeout(()=>controller.abort(),PREPARED_TRANSFER_IDLE_MS);};
     try{
       resetIdle();
       const transfer=await fetch(payload.download_url.startsWith('http')?payload.download_url:API+payload.download_url,{signal:controller.signal,cache:'no-store'});
       if(!transfer.ok)throw new Error('Prepared download expired');
-      const total=Number(transfer.headers.get('Content-Length'))||Number(payload.size)||0;
-      let blob;
-      if(transfer.body&&transfer.body.getReader){
-        reader=transfer.body.getReader();
-        const chunks=[];
-        let received=0;
-        while(true){
-          const part=await reader.read();
-          if(part.done)break;
-          resetIdle();
-          chunks.push(part.value);received+=part.value.byteLength;
-          if(onProgress&&total>0)onProgress(Math.min(99,90+Math.floor(received/total*9)),received,total);
-        }
-        blob=new Blob(chunks,{type:transfer.headers.get('Content-Type')||'application/octet-stream'});
-      }else{
-        blob=await transfer.blob();
-      }
+      const expected=Number(payload.size)||0;
+      const blob=await policy.readBoundedBlob(transfer,BLOB_SAVE_LIMIT,expected,(received,total)=>{resetIdle();if(onProgress&&total>0)onProgress(Math.min(99,90+Math.floor(received/total*9)),received,total);},controller.signal);
       if(!blob.size)throw new Error('Prepared download is empty');
       openSaveModal(blob,payload.filename||'download');
       return 'save-modal';
     }catch(e){
-      if(reader)try{await reader.cancel();}catch(_e){}
       throw e;
     }finally{
-      clearTimeout(totalTimeout);if(idleTimeout)clearTimeout(idleTimeout);
+      signal?.removeEventListener('abort',abort);clearTimeout(totalTimeout);if(idleTimeout)clearTimeout(idleTimeout);
       if(activeTransferAbort===controller)activeTransferAbort=null;
     }
   }
@@ -1258,7 +1249,8 @@ async function startDownload(options={}){
   const sourceInfo=bulk?{url:String(options.url||'').trim(),title:''}:videoInfo;
   if(!sourceInfo.url)return {ok:false,error_code:'invalid_url'};
   if(shouldRouteYoutubeToApps(sourceInfo.url)){showYoutubeAppRequired();return {ok:false,error_code:'youtube_app_required'};}
-  const isAudio=(DL_MODE==='audio'),isMute=(DL_MODE==='mute'),fmt=isAudio?S.afmt:S.vfmt;
+  const plan=options.plan||S,mode=options.mode||DL_MODE;
+  const isAudio=(mode==='audio'),isMute=(mode==='mute'),fmt=isAudio?plan.afmt:plan.vfmt;
   if(!bulk)await ensureSocket();
   const btn=document.getElementById('dlBtn');
   const btnTxt=document.getElementById('dlBtnTxt');
@@ -1274,22 +1266,32 @@ async function startDownload(options={}){
   const activeJob={downloadId:requestId,controller};
   if(typeof options.onJobStart==='function')options.onJobStart(activeJob);
   if(!bulk){dlId=requestId;dlAbort=controller;activeProgressJobId=requestId;}
+  let timedOut=false;const prepareTimeout=setTimeout(()=>{timedOut=true;controller.abort();},MEDIA_JOB_TIMEOUT_MS);
   try{
-    const preferredSub=S.subtitleLang&&S.subtitleLang!=='auto'?S.subtitleLang:'tr';
-    const body={url:sourceInfo.url,quality:S.quality,format:fmt,codec:S.codec,audioQ:S.audioQ,youtube_adaptive_quality:!!S.youtubeAdaptiveQuality,metadata:S.metadata,sid:bulk?'':socketId,download_id:requestId,audio_only:isAudio,mute:isMute,sponsorblock:!!S.sponsorblock,subtitles:!!S.subtitles,sub_langs:[preferredSub,'en']};
-    if(!bulk)body.download_name=buildFilename(S.fnfTemplate||'{title}.{ext}',sourceInfo,fmt);
-    const res=await fetch(API+'/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal});
+    const policy=await DOWNLOAD_POLICY_READY;
+    const preferredSub=plan.subtitleLang&&plan.subtitleLang!=='auto'?plan.subtitleLang:'tr';
+    const body={url:sourceInfo.url,quality:plan.quality,format:fmt,codec:plan.codec,audioQ:plan.audioQ,youtube_adaptive_quality:!!plan.youtubeAdaptiveQuality,metadata:plan.metadata,sid:bulk?'':socketId,download_id:requestId,audio_only:isAudio,mute:isMute,sponsorblock:!!plan.sponsorblock,subtitles:!!plan.subtitles,sub_langs:[preferredSub,'en']};
+    if(!bulk)body.download_name=buildFilename(plan.fnfTemplate||'{title}.{ext}',sourceInfo,fmt);
+    let res,payload;let retryBudget=0;
+    for(let attempt=0;;attempt++){
+      res=await fetch(API+'/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal});
+      payload=await res.json().catch(()=>({}));
+      const recoverable=res.status===429||(res.status===503&&payload.error_code==='server_busy');
+      const delay=policy.retryDelay(res.headers.get('Retry-After'));
+      if(!bulk||!recoverable||attempt>=2||retryBudget+delay>180000)break;
+      retryBudget+=delay;options.onRetry?.(delay);await policy.abortableWait(delay,controller.signal);
+    }
+    clearTimeout(prepareTimeout);
     if(!bulk)dlId=null;
     if(res.status===409)return {ok:false,error_code:'cancelled'};
-    const payload=await res.json().catch(()=>({}));
     if(!res.ok){
       if(handleYoutubeAppRequired(payload))return {ok:false,error_code:'youtube_app_required',status:res.status};
       if(!bulk){resetProgress();showPublicError(payload,res.status,sourceInfo.url,false);}
-      return {ok:false,error_code:payload.error_code||'request_failed',status:res.status};
+      return {ok:false,error_code:payload.error_code||'request_failed',status:res.status,retry_after:res.headers.get('Retry-After')};
     }
     // Batch items always use native handoff; a later item cannot replace a
     // small-file Blob waiting in the save modal.
-    const handoff=await handoffPreparedDownload(payload,!bulk,bulk?null:(pct,received,total)=>{
+    const handoff=await handoffPreparedDownload(payload,!bulk,bulk?options.onProgress:(pct,received,total)=>{
       setProgress(pct,t('downloading'),'',false,{downloaded_bytes:received,total_bytes:total});
     },controller.signal);
     addToLocalHistory({url:sourceInfo.url,title:sourceInfo.title||payload.filename||'video',platform:getPlatformName(sourceInfo.url||''),format:fmt});
@@ -1304,9 +1306,10 @@ async function startDownload(options={}){
       dlAbort=null;resetProgress();
       if(e.name!=='AbortError')showPublicError({error_code:'network_error'},0,sourceInfo.url,false);
     }
-    return {ok:false,error_code:e.name==='AbortError'?'cancelled':'network_error'};
+    return {ok:false,error_code:timedOut?'request_timeout':e.name==='AbortError'?'cancelled':'network_error'};
   }
   finally{
+    clearTimeout(prepareTimeout);
     if(activeProgressJobId===requestId)activeProgressJobId=null;
     if(!bulk){dlAbort=null;dlId=null;scheduleSocketDisconnect();}
   }

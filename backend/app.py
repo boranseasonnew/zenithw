@@ -126,6 +126,11 @@ app.config['SECRET_KEY'] = SECRET_KEY
 # pay bırakarak büyük yüklemelerin Railway'e ulaşmadan 413 almasını önlüyoruz.
 MAX_UPLOAD_SIZE_BYTES = 95 * 1024 * 1024
 app.config['MAX_CONTENT_LENGTH'] = MAX_UPLOAD_SIZE_BYTES
+# Bound multipart field memory/part count independently of the streamed file.
+app.config['MAX_FORM_MEMORY_SIZE'] = 256 * 1024
+app.config['MAX_FORM_PARTS'] = 8
+MAX_API_JSON_BYTES = 16 * 1024
+API_JSON_PATHS = frozenset({'/info', '/download', '/thumbnail', '/cancel'})
 
 # ── Constants ──────────────────────────────────────────
 def _bounded_env_float(name, default, minimum, maximum):
@@ -183,6 +188,8 @@ MAX_CONCURRENT_TRANSFERS_PER_IP = min(
     MAX_CONCURRENT_TRANSFERS,
     _bounded_env_int("MAX_CONCURRENT_TRANSFERS_PER_IP", 2, 1, 32),
 )
+MAX_TRANSFER_QUEUE = _bounded_env_int("MAX_TRANSFER_QUEUE", 12, 1, 100)
+MAX_TRANSFER_QUEUE_PER_IP = min(MAX_TRANSFER_QUEUE, _bounded_env_int("MAX_TRANSFER_QUEUE_PER_IP", 2, 1, 8))
 MAX_SOCKET_CONNECTIONS = _bounded_env_int("MAX_SOCKET_CONNECTIONS", 400, 10, 5000)
 MAX_SOCKET_CONNECTIONS_PER_IP = min(
     MAX_SOCKET_CONNECTIONS,
@@ -480,7 +487,7 @@ if os.environ.get("FLASK_ENV") == "development":
     ALLOWED_ORIGINS += ["http://localhost:5000", "http://127.0.0.1:3000"]
 
 CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
-socketio = SocketIO(app, cors_allowed_origins=ALLOWED_ORIGINS, async_mode='gevent')
+socketio = SocketIO(app, cors_allowed_origins=ALLOWED_ORIGINS, async_mode='gevent', max_http_buffer_size=64 * 1024)
 
 DOWNLOAD_DIR = "./downloads"
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
@@ -847,6 +854,17 @@ def _enforce_cloudflare_origin():
 
 
 @app.before_request
+def _limit_api_json_body():
+    """Small control requests must never inherit the media-upload allowance."""
+    if request.method == "POST" and request.path.rstrip("/") in API_JSON_PATHS:
+        # Flask 3.1 also enforces this while reading chunked/unknown-length input.
+        request.max_content_length = MAX_API_JSON_BYTES
+        if request.content_length is not None and request.content_length > MAX_API_JSON_BYTES:
+            return jsonify({"error": "Request body is too large", "error_code": "request_too_large"}), 413
+    return None
+
+
+@app.before_request
 def _enforce_maintenance_mode():
     """Bakım sırasında yeni ve pahalı işleri durdur; mevcut dosya/cancel akışını koru."""
     if not MAINTENANCE_MODE or request.method == "OPTIONS":
@@ -904,6 +922,8 @@ transfer_slots = threading.Semaphore(MAX_CONCURRENT_TRANSFERS)
 transfer_lock = threading.Lock()
 active_transfers_count = 0
 active_transfers_per_ip = defaultdict(int)
+transfer_waiting_count = 0
+transfer_waiting_per_ip = defaultdict(int)
 info_cache_lock = threading.Lock()
 info_response_cache = OrderedDict()
 info_inflight = {}
@@ -934,22 +954,35 @@ def service_busy(message, retry_after=10, status=503):
 
 
 def acquire_transfer_slot(ip):
-    """Wait for a bounded native-transfer slot without consuming the file token."""
-    global active_transfers_count
-    deadline = time.monotonic() + TRANSFER_QUEUE_WAIT_SECONDS
-    while True:
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
+    """Bound both active transfers and waiting requests; preserve unused tokens."""
+    global active_transfers_count, transfer_waiting_count
+    with transfer_lock:
+        if (transfer_waiting_count >= MAX_TRANSFER_QUEUE
+                or transfer_waiting_per_ip.get(ip, 0) >= MAX_TRANSFER_QUEUE_PER_IP):
             return False
-        if not transfer_slots.acquire(blocking=True, timeout=min(1, remaining)):
-            continue
+        transfer_waiting_count += 1
+        transfer_waiting_per_ip[ip] += 1
+    try:
+        deadline = time.monotonic() + TRANSFER_QUEUE_WAIT_SECONDS
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return False
+            if not transfer_slots.acquire(blocking=True, timeout=min(1, remaining)):
+                continue
+            with transfer_lock:
+                if active_transfers_per_ip[ip] < MAX_CONCURRENT_TRANSFERS_PER_IP:
+                    active_transfers_per_ip[ip] += 1
+                    active_transfers_count += 1
+                    return True
+            transfer_slots.release()
+            time.sleep(min(0.25, max(0, remaining)))
+    finally:
         with transfer_lock:
-            if active_transfers_per_ip[ip] < MAX_CONCURRENT_TRANSFERS_PER_IP:
-                active_transfers_per_ip[ip] += 1
-                active_transfers_count += 1
-                return True
-        transfer_slots.release()
-        time.sleep(min(0.25, max(0, remaining)))
+            transfer_waiting_count -= 1
+            transfer_waiting_per_ip[ip] -= 1
+            if transfer_waiting_per_ip[ip] <= 0:
+                transfer_waiting_per_ip.pop(ip, None)
 
 
 def release_transfer_slot(ip):
@@ -1039,6 +1072,7 @@ def probe_media_duration(input_path):
                     FFPROBE_PATH,
                     '-v', 'error',
                     '-protocol_whitelist', FFMPEG_LOCAL_PROTOCOLS,
+                    '-format_whitelist', FFMPEG_LOCAL_DEMUXERS,
                     '-show_entries', 'format=duration:stream=duration',
                     '-of', 'default=noprint_wrappers=1:nokey=1',
                     input_path,
@@ -1074,6 +1108,7 @@ def probe_media_duration(input_path):
                 ffmpeg_cmd,
                 '-hide_banner', '-nostdin',
                 '-protocol_whitelist', FFMPEG_LOCAL_PROTOCOLS,
+                    '-format_whitelist', FFMPEG_LOCAL_DEMUXERS,
                 '-i', input_path,
             ],
             capture_output=True,
@@ -1735,11 +1770,13 @@ def _is_private_ip(ip_str):
 
 
 def is_safe_url(u):
+    if not isinstance(u, str) or not u or len(u) > 4096 or any(ord(c) < 32 or ord(c) == 127 for c in u):
+        return False
     try:
         parsed = urlparse(u)
     except Exception:
         return False
-    if parsed.scheme not in ("http", "https"):
+    if parsed.scheme not in ("http", "https") or parsed.username is not None or parsed.password is not None:
         return False
     hostname = parsed.hostname
     if not hostname:
@@ -2114,6 +2151,9 @@ def is_youtube_auth_required_error(error_text):
 
 # ── Base opts ─────────────────────────────────────────
 FFMPEG_LOCAL_PROTOCOLS = "file,pipe,crypto,data"
+FFMPEG_LOCAL_DEMUXERS = "mov,matroska,webm,avi,asf,flv,mpeg,mpegts,mp3,wav,flac,ogg,aac,aiff"
+# Local thumbnail/subtitle/metadata inputs remain compatible; manifests do not.
+FFMPEG_POST_DEMUXERS = FFMPEG_LOCAL_DEMUXERS + ",image2,image2pipe,png_pipe,jpeg_pipe,webp_pipe,gif,ass,srt,webvtt,ffmetadata"
 
 
 def get_base_opts(url, use_cookies=True, youtube_player_clients=None):
@@ -2132,10 +2172,10 @@ def get_base_opts(url, use_cookies=True, youtube_player_clients=None):
             "dash": "native",
         },
         "external_downloader_args": {
-            "ffmpeg_i": ["-protocol_whitelist", FFMPEG_LOCAL_PROTOCOLS],
+            "ffmpeg_i": ["-protocol_whitelist", FFMPEG_LOCAL_PROTOCOLS, "-format_whitelist", FFMPEG_LOCAL_DEMUXERS],
         },
         "postprocessor_args": {
-            "ffmpeg_i": ["-protocol_whitelist", FFMPEG_LOCAL_PROTOCOLS],
+            "ffmpeg_i": ["-protocol_whitelist", FFMPEG_LOCAL_PROTOCOLS, "-format_whitelist", FFMPEG_POST_DEMUXERS],
         },
         "http_headers": {
             "User-Agent": YOUTUBE_USER_AGENT if is_youtube(url) else DEFAULT_USER_AGENT
@@ -3467,7 +3507,7 @@ def apply_mute_postprocessing(full_path):
     try:
         ffmpeg_cmd = FFMPEG_PATH or os.path.join(FFMPEG_DIR, "ffmpeg")
         result = subprocess.run(
-            [ffmpeg_cmd, "-y", "-protocol_whitelist", FFMPEG_LOCAL_PROTOCOLS,
+            [ffmpeg_cmd, "-y", "-protocol_whitelist", FFMPEG_LOCAL_PROTOCOLS, "-format_whitelist", FFMPEG_LOCAL_DEMUXERS,
              "-i", full_path,
              "-c", "copy", "-an", muted_path],
             capture_output=True, text=True, timeout=FFMPEG_TIMEOUT
@@ -4147,6 +4187,7 @@ def convert_file_with_slot(ip, spool_reservation):
             ffmpeg_cmd,
             '-hide_banner', '-loglevel', 'fatal', '-nostdin',
             '-protocol_whitelist', FFMPEG_LOCAL_PROTOCOLS,
+                    '-format_whitelist', FFMPEG_LOCAL_DEMUXERS,
             '-probesize', '10M', '-analyzeduration', '10M',
             '-i', input_path, '-y', '-threads', str(FFMPEG_THREADS),
         ]

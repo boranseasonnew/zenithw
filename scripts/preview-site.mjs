@@ -16,6 +16,8 @@ function asset(url, method='GET') {
   const destination=new URL(url);destination.pathname=pathname.replace(/index\.html$/,'').replace(/\.html$/,'');
   return new Response(null,{status:301,headers:{Location:destination.href}});
  }
+ // Pages resolves a clean HTML route ahead of a same-name archive directory.
+ if(existsSync(file+'.html'))file+='.html';
  if(existsSync(file)&&statSync(file).isDirectory()) {
   if(!pathname.endsWith('/')) { const dest=new URL(url);dest.pathname+='/';return new Response(null,{status:301,headers:{Location:dest.href}}); }
   file=resolve(file,'index.html');

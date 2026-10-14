@@ -7,13 +7,13 @@ const read = path => readFileSync(new URL(`../frontend/${path}`, import.meta.url
 test('release notes are present in the first HTML without JavaScript', () => {
   const latest = read('updates.html');
   const older = read('updates/v14.4/index.html');
-  assert.match(latest, /Yeni indirmeler. Daha net bir ZenithW./);
-  assert.match(latest, /Android rehberi, siteden ayrılmadan/);
+  assert.match(latest, /Sesini ayır. ZenithW ile devam et./);
+  assert.match(latest, /Dosyanı seç; vokal ve müzik birlikte ayrılsın/);
   assert.match(older, /YouTube daha akıllı, ilerleme daha net/);
   assert.match(older, /Gerçek akış çözünürlüğü doğrulanıyor/);
   assert.match(older, /<link rel="canonical" href="https:\/\/zenithw\.space\/updates\/v14\.4\/">/);
-  assert.ok(statSync(new URL('../frontend/updates.html', import.meta.url)).size < 35_000);
-  assert.ok(statSync(new URL('../frontend/updates/v14.4/index.html', import.meta.url)).size < 35_000);
+  assert.ok(statSync(new URL('../frontend/updates.html', import.meta.url)).size < 45_000);
+  assert.ok(statSync(new URL('../frontend/updates/v14.4/index.html', import.meta.url)).size < 45_000);
   assert.match(read('sitemap.xml'), /https:\/\/zenithw\.space\/updates\/v14\.4/);
 });
 
@@ -34,7 +34,7 @@ test('v15.3–v15.9 notes have static content and accessible archive links', () 
     assert.match(html, /id="updRecent"/);
     assert.match(html, /id="release-section-1"/);
     for (const lang of ['en','de','fr','ru','vi','zh','ja']) {
-      const path=minor===9?`${lang}/updates.html`:`${lang}/updates/v15.${minor}/index.html`;
+      const path=`${lang}/updates/v15.${minor}/index.html`;
       assert.doesNotMatch(read(path), />Neler değişti|>Son sürümler|aria-label="Son sürümler"/);
     }
   }

@@ -1,5 +1,5 @@
 // shared/lilith-studio.ts
-import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, inspectAudio, exportAudio } from "/vendor/lilith-engine/index.js?v=2946614b36bc";
+import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, inspectAudio, exportAudio } from "/vendor/lilith-engine/index.js?v=28950ca80236";
 var ENGLISH = {
   upload: "Choose your audio",
   browse: "Browse files",
@@ -52,6 +52,8 @@ var ENGLISH = {
   replaceFile: "Change track",
   vocalsHint: "Isolate the voice",
   instrumentalHint: "Keep the music",
+  warm: "Model ready \u2014 processing this track",
+  cacheWarning: "Your browser could not keep the model cache. A later visit may download it again.",
   automatic: "Automatic separation",
   automaticCopy: "Upload once. Get vocals and music together. No settings needed.",
   local: "On your device",
@@ -263,7 +265,10 @@ function mountStudio(root2, overrides = {}, options = {}) {
     }
   };
   const report = (event) => {
-    const names = { decoding: t.decoding, "model-download": event.cached ? t.cached : t.download, "model-verify": t.verify, runtime: t.runtime, "model-load": t.loading, "preparing-tensors": t.tensors, inference: t.inference, reconstructing: t.reconstructing, ready: t.complete, "cpu-fallback": t.fallback };
+    if (event.warning && /unavailable|quota/.test(event.warning)) {
+      firstRun.textContent = t.cacheWarning;
+    }
+    const names = { decoding: t.decoding, "model-download": event.cached ? t.cached : t.download, "model-verify": t.verify, "model-ready": t.warm, runtime: t.runtime, "model-load": t.loading, "preparing-tensors": t.tensors, inference: t.inference, reconstructing: t.reconstructing, ready: t.complete, "cpu-fallback": t.fallback };
     status.textContent = (names[event.stage] ?? t.working) + (event.completed !== void 0 ? ` \xB7 ${event.completed}/${event.total}` : event.loaded !== void 0 && !event.cached ? ` \xB7 ${number(event.loaded / 1e6)} / ${number((event.total ?? 0) / 1e6)} MB` : "");
     if (event.progress !== void 0) progress.value = event.progress;
     else progress.removeAttribute("value");
@@ -278,9 +283,8 @@ function mountStudio(root2, overrides = {}, options = {}) {
     const token = ++generation;
     try {
       await clearResults();
-      await engine?.dispose();
-      engine = await createSeparator({ ...options, model: "mdx-default", backend: "auto", maxDuration: 240, maxFileBytes: 96 * 1024 * 1024, range });
-      const value = await engine.separate(file, { signal: controller.signal, onProgress: report });
+      if (!engine) engine = await createSeparator({ ...options, model: "mdx-default", backend: "auto", maxDuration: 240, maxFileBytes: 96 * 1024 * 1024 });
+      const value = await engine.separate(file, { signal: controller.signal, onProgress: report, range });
       if (token !== generation || destroyed) {
         value.dispose();
         return;
@@ -499,7 +503,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
       output.append(row);
       updates.push(draw);
     }
-    output.append(el("p", t.resultsInfo.replace("{duration}", number(value.vocals.duration, 2)).replace("{backend}", value.metadata.backend.toUpperCase()).replace("{time}", number(value.metadata.inferenceSeconds)), "model-info"));
+    output.append(el("p", t.resultsInfo.replace("{duration}", number(value.vocals.duration, 2)).replace("{backend}", value.metadata.backend.toUpperCase()).replace("{time}", number(value.metadata.totalSeconds ?? value.metadata.inferenceSeconds)), "model-info"));
     tick();
   }
   clear.onclick = async () => {
@@ -534,4 +538,4 @@ var api = window.ZWLanguage;
 if (api) await api.ready;
 var root = document.getElementById("studio");
 var strings = Object.fromEntries(Object.entries(ENGLISH).map(([key, text]) => [key, api?.translate(text) ?? text]));
-mountStudio(root, strings, { workerUrl: "/audio-separator-worker.js?v=2aceb67cbd85", exportWorkerUrl: "/audio-export-worker.js?v=8e89dd115571" });
+mountStudio(root, strings, { workerUrl: "/audio-separator-worker.js?v=fb3ef8db479a", exportWorkerUrl: "/audio-export-worker.js?v=8e89dd115571" });

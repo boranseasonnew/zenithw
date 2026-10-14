@@ -319,7 +319,7 @@ class ClientIpTrustTests(unittest.TestCase):
     def test_frontend_transfer_has_total_and_idle_timeouts(self):
         self.assertIn("PREPARED_TRANSFER_TIMEOUT_MS", FRONTEND_SOURCE)
         self.assertIn("PREPARED_TRANSFER_IDLE_MS", FRONTEND_SOURCE)
-        self.assertIn("reader.cancel", FRONTEND_SOURCE)
+        self.assertIn("reader.cancel", (FRONTEND_DIR / "download-safety.js").read_text(encoding="utf-8"))
         self.assertIn("createSocketClient", FRONTEND_SOURCE)
 
 
@@ -671,6 +671,7 @@ class ConversionGuardTests(unittest.TestCase):
             "FFPROBE_PATH": "ffprobe",
             "FFMPEG_PATH": "ffmpeg",
             "FFMPEG_DIR": None,
+            "FFMPEG_LOCAL_DEMUXERS": "mov,mp3,wav",
             "FFMPEG_LOCAL_PROTOCOLS": "file,pipe",
             "FFMPEG_TIMEOUT": 30,
             "subprocess": fake_subprocess,
@@ -693,6 +694,7 @@ class ConversionGuardTests(unittest.TestCase):
             "FFPROBE_PATH": None,
             "FFMPEG_PATH": "ffmpeg",
             "FFMPEG_DIR": None,
+            "FFMPEG_LOCAL_DEMUXERS": "mov,mp3,wav",
             "FFMPEG_LOCAL_PROTOCOLS": "file,pipe",
             "FFMPEG_TIMEOUT": 30,
             "subprocess": fake_subprocess,
@@ -1071,6 +1073,7 @@ class MutePostprocessingTests(unittest.TestCase):
             }),
             "FFMPEG_PATH": "ffmpeg",
             "FFMPEG_DIR": "/usr/bin",
+            "FFMPEG_LOCAL_DEMUXERS": "mov,mp3,wav",
             "FFMPEG_LOCAL_PROTOCOLS": "file",
             "FFMPEG_TIMEOUT": 30,
             "_register_cleanup": lambda path: None,
