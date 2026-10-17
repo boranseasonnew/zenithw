@@ -11,7 +11,7 @@
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Web v16.0 · ZenithW Desktop v4.1.0
+Web v16.0 · ZenithW Desktop v4.2.0
 
 ZenithW is an open-source media downloader with tools for audio extraction, conversion and remuxing. No ads, subscription or mandatory account.
 
