@@ -18,6 +18,106 @@ export const downloadCopy = Object.fromEntries(Object.entries(values).map(([lang
 const submissionLabels={tr:'Başvuruyu görüntüle',en:'View submission',de:'Antrag ansehen',fr:'Voir la demande',ru:'Посмотреть заявку',vi:'Xem hồ sơ gửi duyệt',zh:'查看提交申请',ja:'申請内容を見る'};
 for(const [lang,label] of Object.entries(submissionLabels))downloadCopy[lang]['View submission']=label;
 
+// Platform-specific release details, shared by static HTML and language catalogs.
+const releaseCopy = {
+ en: [
+  'Add up to 50 links at once, select playlist entries and manage up to 100 queued jobs.',
+  'Add up to 50 links at once, select from up to 200 playlist entries and queue up to 200 active or pending jobs.',
+  'Prepare another link while downloading; follow transfer, processing and saving as separate stages.',
+  'Embed 3000 × 3000 square artwork in supported MP3, M4A, MP4, FLAC, MKV and MOV files.',
+  'Use the installer for Windows shortcuts and uninstallation, or choose the portable EXE to run without installation.',
+  'Cookie profiles are encrypted on the device. Background and scheduled downloads depend on Android’s battery and network restrictions.',
+  'Check app releases manually; update yt-dlp separately through verified stable/nightly engine updates in the GitHub edition.',
+  'Full native 16 KB memory-page compatibility is not yet verified.',
+  'No ads or mandatory account. Media is downloaded and processed on your device.'
+ ],
+ tr: [
+  'Tek seferde 50 bağlantı ekle, oynatma listesi öğelerini seç ve en fazla 100 işi kuyrukta yönet.',
+  'Tek seferde 50 bağlantı ekle, 200 girdiye kadar oynatma listesinden seçim yap ve en fazla 200 etkin veya bekleyen işi kuyruğa al.',
+  'İndirme sürerken başka bir bağlantıyı hazırla; aktarım, işleme ve kaydetmeyi ayrı aşamalar olarak takip et.',
+  'Desteklenen MP3, M4A, MP4, FLAC, MKV ve MOV dosyalarına 3000 × 3000 kare kapak göm.',
+  'Windows kısayolları ve uygulama kaldırma desteği için kurulum paketini, kurmadan çalıştırmak için taşınabilir EXE’yi seç.',
+  'Cookie profilleri cihazda şifrelenir. Arka plandaki ve zamanlanmış indirmeler Android’in pil ve ağ kısıtlamalarına bağlıdır.',
+  'Uygulama sürümlerini elle kontrol et; GitHub sürümünde yt-dlp’yi doğrulanan stable/nightly motor güncellemeleriyle ayrıca güncelle.',
+  'Tam yerel 16 KB bellek sayfası uyumluluğu henüz doğrulanmış değildir.',
+  'Reklam veya zorunlu hesap yok. Medya cihazında indirilir ve işlenir.'
+ ],
+ de: [
+  'Füge bis zu 50 Links auf einmal hinzu, wähle Playlist-Einträge und verwalte bis zu 100 Aufträge in der Warteschlange.',
+  'Füge bis zu 50 Links auf einmal hinzu, wähle aus bis zu 200 Playlist-Einträgen und verwalte bis zu 200 aktive oder wartende Aufträge.',
+  'Bereite während eines Downloads weitere Links vor und verfolge Übertragung, Verarbeitung und Speichern als getrennte Phasen.',
+  'Bette quadratische Cover mit 3000 × 3000 Pixeln in unterstützte MP3-, M4A-, MP4-, FLAC-, MKV- und MOV-Dateien ein.',
+  'Der Installer erstellt Windows-Verknüpfungen und ermöglicht die Deinstallation; die portable EXE läuft ohne Installation.',
+  'Cookie-Profile werden auf dem Gerät verschlüsselt. Hintergrund- und geplante Downloads unterliegen den Akku- und Netzwerkbeschränkungen von Android.',
+  'Prüfe App-Versionen manuell; aktualisiere yt-dlp in der GitHub-Ausgabe separat über geprüfte Stable-/Nightly-Engine-Updates.',
+  'Die vollständige native Kompatibilität mit 16-KB-Speicherseiten ist noch nicht bestätigt.',
+  'Keine Werbung und kein Pflichtkonto. Medien werden auf deinem Gerät heruntergeladen und verarbeitet.'
+ ],
+ fr: [
+  'Ajoutez jusqu’à 50 liens à la fois, sélectionnez les éléments d’une playlist et gérez jusqu’à 100 tâches en file d’attente.',
+  'Ajoutez jusqu’à 50 liens à la fois, choisissez parmi 200 éléments de playlist maximum et gérez jusqu’à 200 tâches actives ou en attente.',
+  'Préparez un autre lien pendant un téléchargement et suivez séparément le transfert, le traitement et l’enregistrement.',
+  'Intégrez des pochettes carrées de 3000 × 3000 pixels aux fichiers MP3, M4A, MP4, FLAC, MKV et MOV compatibles.',
+  'Choisissez le programme d’installation pour les raccourcis Windows et la désinstallation, ou l’EXE portable pour une utilisation sans installation.',
+  'Les profils de cookies sont chiffrés sur l’appareil. Les téléchargements en arrière-plan et planifiés dépendent des restrictions de batterie et de réseau d’Android.',
+  'Vérifiez manuellement les versions de l’application ; mettez yt-dlp à jour séparément via les mises à jour vérifiées stable/nightly de l’édition GitHub.',
+  'La compatibilité native complète avec les pages mémoire de 16 Ko n’est pas encore vérifiée.',
+  'Sans publicité ni compte obligatoire. Les médias sont téléchargés et traités sur votre appareil.'
+ ],
+ ru: [
+  'Добавляйте до 50 ссылок за раз, выбирайте элементы плейлиста и управляйте очередью до 100 заданий.',
+  'Добавляйте до 50 ссылок за раз, выбирайте из 200 элементов плейлиста и ставьте в очередь до 200 активных или ожидающих заданий.',
+  'Готовьте следующую ссылку во время загрузки; отслеживайте передачу, обработку и сохранение как отдельные этапы.',
+  'Встраивайте квадратные обложки 3000 × 3000 в поддерживаемые файлы MP3, M4A, MP4, FLAC, MKV и MOV.',
+  'Выберите установщик для ярлыков и удаления через Windows или портативный EXE для работы без установки.',
+  'Профили cookie шифруются на устройстве. Фоновые и запланированные загрузки зависят от ограничений Android для батареи и сети.',
+  'Проверяйте версии приложения вручную; обновляйте yt-dlp отдельно через проверенные обновления stable/nightly в версии GitHub.',
+  'Полная нативная совместимость со страницами памяти 16 КБ пока не подтверждена.',
+  'Без рекламы и обязательного аккаунта. Медиа загружаются и обрабатываются на вашем устройстве.'
+ ],
+ vi: [
+  'Thêm tối đa 50 liên kết mỗi lần, chọn mục trong danh sách phát và quản lý tối đa 100 tác vụ trong hàng đợi.',
+  'Thêm tối đa 50 liên kết mỗi lần, chọn từ tối đa 200 mục trong danh sách phát và xếp tối đa 200 tác vụ đang chạy hoặc chờ.',
+  'Chuẩn bị liên kết khác khi đang tải; theo dõi truyền dữ liệu, xử lý và lưu thành các giai đoạn riêng.',
+  'Nhúng ảnh bìa vuông 3000 × 3000 vào các tệp MP3, M4A, MP4, FLAC, MKV và MOV được hỗ trợ.',
+  'Chọn trình cài đặt để tạo lối tắt và gỡ cài đặt qua Windows, hoặc EXE di động để chạy mà không cần cài đặt.',
+  'Hồ sơ cookie được mã hóa trên thiết bị. Tải nền và tải theo lịch phụ thuộc vào các hạn chế pin và mạng của Android.',
+  'Kiểm tra phiên bản ứng dụng thủ công; cập nhật yt-dlp riêng qua các bản cập nhật công cụ stable/nightly đã xác minh trong bản GitHub.',
+  'Khả năng tương thích gốc đầy đủ với trang bộ nhớ 16 KB chưa được xác minh.',
+  'Không quảng cáo hoặc tài khoản bắt buộc. Nội dung được tải và xử lý trên thiết bị của bạn.'
+ ],
+ zh: [
+  '每次最多添加 50 个链接，选择播放列表条目，并管理最多 100 个排队任务。',
+  '每次最多添加 50 个链接，从最多 200 个播放列表条目中选择，并将最多 200 个运行中或等待中的任务加入队列。',
+  '下载时可以准备另一个链接，并分别查看传输、处理和保存阶段。',
+  '在支持的 MP3、M4A、MP4、FLAC、MKV 和 MOV 文件中嵌入 3000 × 3000 方形封面。',
+  '选择安装程序可创建 Windows 快捷方式并支持卸载；选择便携版 EXE 可免安装运行。',
+  'Cookie 配置在设备上加密保存。后台及定时下载受 Android 电池和网络限制影响。',
+  '手动检查应用版本；GitHub 版可通过经过验证的 stable/nightly 引擎更新单独更新 yt-dlp。',
+  '尚未验证完整的原生 16 KB 内存页兼容性。',
+  '无广告，无需强制注册账户。媒体在你的设备上下载和处理。'
+ ],
+ ja: [
+  '一度に最大50件のリンクを追加し、プレイリストの項目を選び、最大100件のジョブをキューで管理できます。',
+  '一度に最大50件のリンクを追加し、最大200件のプレイリスト項目から選択して、実行中・待機中を合わせて最大200件をキューに登録できます。',
+  'ダウンロード中も次のリンクを準備でき、転送・処理・保存を別々の段階として確認できます。',
+  '対応するMP3、M4A、MP4、FLAC、MKV、MOVファイルに3000 × 3000の正方形カバーを埋め込めます。',
+  'Windowsのショートカット作成とアンインストールにはインストーラーを、インストールせず使うにはポータブルEXEを選んでください。',
+  'Cookieプロファイルは端末上で暗号化されます。バックグラウンド・予約ダウンロードはAndroidのバッテリーとネットワークの制限を受けます。',
+  'アプリのバージョンを手動で確認できます。GitHub版では、検証済みのstable/nightlyエンジン更新でyt-dlpを個別に更新できます。',
+  '16 KBメモリページへの完全なネイティブ対応は、まだ確認されていません。',
+  '広告や必須アカウントはありません。メディアは端末上でダウンロード・処理されます。'
+ ]
+};
+for (const [lang, labels] of Object.entries(releaseCopy)) {
+ if (labels.length !== releaseCopy.en.length) throw new Error(`Release copy mismatch: ${lang}`);
+ releaseCopy.en.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
+}
+export const downloadFeatures = {
+ windows: [releaseCopy.en[4], releaseCopy.en[0], releaseCopy.en[2], releaseCopy.en[3], releaseCopy.en[8]],
+ android: [releaseCopy.en[1], releaseCopy.en[2], releaseCopy.en[3], releaseCopy.en[5], releaseCopy.en[6], releaseCopy.en[7], releaseCopy.en[8]]
+};
+
 // Tutorial strings feed the same Downloads catalogs and static translations.
 const tutorialKeys = ["Watch Android Tutorial", "Learn how to use the Android app, step by step.", "Android tutorial", "Close tutorial", "ZenithW Android tutorial video", "YouTube loads only when you open the tutorial.", "Watch Tutorial"];
 const tutorialCopy = {

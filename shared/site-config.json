@@ -2,21 +2,21 @@
   "origin": "https://zenithw.space",
   "telegram": "https://t.me/zenithwon",
   "windows": {
-    "version": "4.1.0",
+    "version": "4.2.0",
     "requirements": "Windows 10/11 · x64",
     "storeMinimum": "Windows 10 version 2004 (build 19041)",
-    "release": "https://github.com/boranseasonnew/zenithw/releases/tag/v4.1.0",
+    "release": "https://github.com/boranseasonnew/zenithw/releases/latest",
     "installer": {
-      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.1.0/Zenith-4.1.0-Windows-Setup.exe",
-      "name": "Zenith-4.1.0-Windows-Setup.exe",
-      "bytes": 216065042
+      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/Zenith-4.2.0-Windows-Setup.exe",
+      "name": "Zenith-4.2.0-Windows-Setup.exe",
+      "bytes": 214723677
     },
     "portable": {
-      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.1.0/Zenith-4.1.0-Windows.exe",
-      "name": "Zenith-4.1.0-Windows.exe",
-      "bytes": 198768237
+      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/Zenith-4.2.0-Windows.exe",
+      "name": "Zenith-4.2.0-Windows.exe",
+      "bytes": 214567377
     },
-    "checksums": "https://github.com/boranseasonnew/zenithw/releases/download/v4.1.0/SHA256SUMS.txt",
+    "checksums": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/SHA256SUMS.txt",
     "stores": {
       "microsoft": {
         "status": "available",
@@ -31,28 +31,28 @@
     }
   },
   "android": {
-    "version": "2.1.3",
+    "version": "2.2.0",
     "requirements": "Android 7.0+ (API 24)",
-    "release": "https://github.com/boranseasonnew/zenithw-android/releases/tag/v2.1.3",
-    "checksums": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.1.3/SHA256SUMS.txt",
+    "release": "https://github.com/boranseasonnew/zenithw-android/releases/latest",
+    "checksums": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.2.0/SHA256SUMS.txt",
     "apks": [
       {
         "abi": "arm64-v8a",
-        "name": "Zenith-2.1.3-stable-arm64-v8a.apk",
-        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.1.3/Zenith-2.1.3-stable-arm64-v8a.apk",
-        "bytes": 73191482
+        "name": "Zenith-2.2.0-stable-arm64-v8a.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.2.0/Zenith-2.2.0-stable-arm64-v8a.apk",
+        "bytes": 73336794
       },
       {
         "abi": "armeabi-v7a",
-        "name": "Zenith-2.1.3-stable-armeabi-v7a.apk",
-        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.1.3/Zenith-2.1.3-stable-armeabi-v7a.apk",
-        "bytes": 66022740
+        "name": "Zenith-2.2.0-stable-armeabi-v7a.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.2.0/Zenith-2.2.0-stable-armeabi-v7a.apk",
+        "bytes": 66168048
       },
       {
         "abi": "x86_64",
-        "name": "Zenith-2.1.3-stable-x86_64.apk",
-        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.1.3/Zenith-2.1.3-stable-x86_64.apk",
-        "bytes": 76198563
+        "name": "Zenith-2.2.0-stable-x86_64.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.2.0/Zenith-2.2.0-stable-x86_64.apk",
+        "bytes": 76343875
       }
     ],
     "stores": {
