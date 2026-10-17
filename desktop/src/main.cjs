@@ -1,10 +1,10 @@
 const { app, BrowserWindow, dialog, ipcMain, shell, session, Tray, Menu, Notification, powerSaveBlocker } = require('electron');
-const { spawn, execFileSync } = require('node:child_process');
+const { spawn } = require('node:child_process');
 const { randomUUID } = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
-const { createProgressTracker } = require('./progress.cjs');
+const { createProgressTracker, progressArgs } = require('./progress.cjs');
 const { videoFormats } = require('./formats.cjs');
 const { retryDownload, redactDiagnostic } = require('./download-retry.cjs');
 
@@ -12,6 +12,35 @@ const engineCopy = require('./engine-copy.json');
 const local = text => engineCopy[text]?.[Math.max(0,['tr','en','ru','de'].indexOf(settings?.language||'en'))] || text;
 const activeJobs = new Map();
 const versionCache = new Map();
+const mediaCache = new Map();
+let inspection = null, shuttingDown = false;
+const mediaCacheKey = (url, current) => JSON.stringify([url, Object.fromEntries(['playlist','ipMode','proxyUrl','socketTimeout','userAgent','refererUrl','extractorRetries','extractorArgs','cookieMode','cookieBrowser'].map(key => [key,current[key]])), fs.existsSync(cookiePath()) ? fs.statSync(cookiePath()).mtimeMs : 0]);
+function cachedMedia(url, current) {
+  const item = mediaCache.get(mediaCacheKey(url, current));
+  if (!item || Date.now() - item.createdAt > 90000) return null;
+  return item.data;
+}
+function cancelInspection(id) {
+  if (!inspection || (id !== undefined && inspection.id !== id)) return false;
+  inspection.cancelled = true; inspection.abort?.(); return true;
+}
+function pumpQueue() {
+  if (shuttingDown || updating) return;
+  let running = [...activeJobs.values()].filter(record => record.state === 'running').length;
+  for (const record of activeJobs.values()) {
+    if (running >= settings.maxDownloads) break;
+    if (record.state !== 'queued' || record.cancelled) continue;
+    record.state = 'running'; running++;
+    record.run().catch(error => {
+      record.terminal = true;
+      const recoveryPath = preserveRecovery(record.workDir, record.job.id);
+      if (!recoveryPath) fs.rmSync(record.workDir, { recursive: true, force: true });
+      emit(record.job, 'failed', { detail: redactDiagnostic(error.message) });
+      releaseJob(record.job.id);
+    });
+  }
+  syncSleepBlocker();
+}
 // Stable uses its own identity; the previous edition stays available.
 app.setPath('userData', path.join(app.getPath('appData'), 'Zenith Stable'));
 if (process.platform === 'win32') app.setAppUserModelId('space.zenithw.desktop.stable');
@@ -21,16 +50,14 @@ const historyPath = () => path.join(app.getPath('userData'), 'history.json');
 let history = [];
 let tray = null, sleepBlocker = null;
 function resetSessionHistory() {
-  history = [];
-  // Retire the previous persistent list, without touching downloaded media.
-  fs.rmSync(historyPath(), { force: true });
+  history = readArray(historyPath(), 300).filter(item => typeof item?.id === 'string' && Array.isArray(item.files));
 }
 function syncSleepBlocker() {
-  const required = settings?.preventSleep && activeJobs.size > 0;
+  const required = settings?.preventSleep && [...activeJobs.values()].some(record => record.state === 'running');
   if (required && sleepBlocker === null && powerSaveBlocker) sleepBlocker = powerSaveBlocker.start('prevent-app-suspension');
   if (!required && sleepBlocker !== null) { powerSaveBlocker.stop(sleepBlocker); sleepBlocker = null; }
 }
-function releaseJob(id) { activeJobs.delete(id); syncSleepBlocker(); }
+function releaseJob(id) { activeJobs.delete(id); syncSleepBlocker(); setImmediate(pumpQueue); }
 function showMainWindow() { if (mainWindow && !mainWindow.isDestroyed()) { mainWindow.show(); mainWindow.restore(); mainWindow.focus(); } }
 function syncTray() {
   if (!settings?.trayEnabled && tray) { tray.destroy(); tray = null; }
@@ -57,6 +84,7 @@ function readArray(file, limit) {
 }
 function remember(job, result) {
   history = [{ id: job.id, title: job.title, thumbnail: job.thumbnail, kind: job.kind, createdAt: Date.now(), ...result }, ...history].slice(0, 300);
+  try { writePrivate(historyPath(), history); } catch { /* Keep the saved media and in-memory history if preferences are read-only. */ }
 }
 
 const allowedBrowsers = new Set(['chrome', 'edge', 'firefox', 'brave', 'opera', 'vivaldi']);
@@ -150,7 +178,7 @@ function validatedSettings(next) {
 function saveSettings(next) {
   settings = { ...settings, ...validatedSettings(next), settingsVersion: 3 };
   writePrivate(configPath(), settings);
-  syncTray(); syncSleepBlocker();
+  syncTray(); syncSleepBlocker(); setImmediate(pumpQueue);
   return settings;
 }
 
@@ -258,7 +286,7 @@ const baseArgs = (current = settings) => ['--ignore-config', '--ffmpeg-location'
   '--js-runtimes', `deno:${requiredTool('deno.exe')}`, ...networkArgs(current)];
 function downloadArgs(job, current, workDir) {
   const output = path.join(workDir, current.playlist && current.playlistFolder ? '%(playlist_title,playlist_id|Playlist)s' : '', (current.playlist && current.playlistNumber ? '%(playlist_index)03d - ' : '') + sanitizeNaming(current.naming));
-  const args = ['--newline', ...baseArgs(current), '--paths', workDir, '--paths', `temp:${workDir}`, '-o', output,
+  const args = [...progressArgs(), ...baseArgs(current), '--paths', workDir, '--paths', `temp:${workDir}`, '-o', output,
     '--retries', String(bounded(current.retries, 1, 30, 10)), '--fragment-retries', String(bounded(current.fragmentRetries, 1, 30, 10)), '--file-access-retries', String(bounded(current.fileAccessRetries, 1, 30, 3)),
     '--concurrent-fragments', String(bounded(current.concurrentFragments, 1, 16, 4)), ...aria2Args(current)];
   args.push(current.playlist ? '--yes-playlist' : '--no-playlist');
@@ -313,7 +341,7 @@ function downloadArgs(job, current, workDir) {
   // otherwise successful download as a postprocessing failure.
   if (current.embedThumbnail) {
     const canEmbed = job.kind === 'audio' ? ['mp3','m4a','opus','flac','vorbis','alac'].includes(job.audioFormat || current.audioFormat) : ['mp4','mkv','mov'].includes(outputContainer);
-    args.push('--convert-thumbnails', 'jpg');
+    args.push('--convert-thumbnails', 'jpg', '--write-thumbnail');
     if (canEmbed) args.push('--embed-thumbnail');
     else args.push('--write-thumbnail');
   }
@@ -334,13 +362,14 @@ function downloadArgs(job, current, workDir) {
 }
 
 const mediaExtensions = new Set(['.mp4', '.mkv', '.webm', '.mov', '.avi', '.m4a', '.mp3', '.opus', '.ogg', '.flac', '.wav', '.aac', '.flv']);
-function inspectMedia(file) {
+async function inspectMedia(file) {
   if (!mediaExtensions.has(path.extname(file).toLowerCase())) return null;
   try {
     const stat = fs.statSync(file);
     if (!stat.isFile() || stat.size < 1024) return null;
-    const probe = execFileSync(requiredTool('ffprobe.exe'), ['-v', 'error', '-show_entries', 'stream=codec_type', '-of', 'csv=p=0', file], { encoding: 'utf8', windowsHide: true, timeout: 15000 });
-    const types = new Set(probe.toLowerCase().split(/\s+/).filter(Boolean));
+    const probe = await runTool(requiredTool('ffprobe.exe'), ['-v', 'error', '-show_entries', 'stream=codec_type:stream_disposition=attached_pic', '-of', 'json', file], 15000);
+    const streams = JSON.parse(probe.stdout).streams || [];
+    const types = new Set(streams.filter(stream => !stream.disposition?.attached_pic).map(stream => stream.codec_type));
     return types.has('audio') || types.has('video') ? { file, size: stat.size, types } : null;
   } catch { return null; }
 }
@@ -353,14 +382,19 @@ function uniqueDestination(folder, name) {
 function jobFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
     const file = path.join(directory, entry.name);
-    return entry.isDirectory() ? jobFiles(file) : entry.isFile() ? [file] : [];
+    return entry.isDirectory() ? (entry.name.startsWith('.zenith-cover-') ? [] : jobFiles(file)) : entry.isFile() ? [file] : [];
   });
 }
-function publishMedia(workDir, destination, job) {
-  const inspected = jobFiles(workDir)
-    .filter((file) => job.keepOriginal || !/\.(f\d+|temp)\.[^.]+$/i.test(path.basename(file)))
-    .map(inspectMedia)
-    .filter(Boolean);
+async function publishMedia(workDir, destination, job) {
+  const candidates = jobFiles(workDir).filter(file => job.keepOriginal || !/\.(f\d+|temp)\.[^.]+$/i.test(path.basename(file)));
+  const inspected = [];
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(2, candidates.length) }, async () => {
+    while (next < candidates.length) {
+      const item = await inspectMedia(candidates[next++]);
+      if (item) inspected.push(item);
+    }
+  }));
   let selected;
   if (job.kind === 'audio') {
     const audio = inspected.filter((item) => item.types.has('audio')).sort((a, b) => b.size - a.size);
@@ -371,20 +405,23 @@ function publishMedia(workDir, destination, job) {
     selected = job.playlist || job.splitChapters || job.keepOriginal ? inspected.filter(item => item.types.has('video')) : candidates.sort((a, b) => b.size - a.size).slice(0, 1);
   }
   fs.mkdirSync(destination, { recursive: true });
-  return selected.map(({ file: source }) => {
+  const published = [], warnings = [];
+  for (const { file: source } of selected) {
+    try {
     const relativeFolder = path.relative(workDir, path.dirname(source));
     const targetFolder = job.playlistFolder && relativeFolder ? path.join(destination, relativeFolder) : destination;
     if (path.relative(destination, targetFolder).startsWith('..')) throw new Error('Invalid playlist folder.');
     fs.mkdirSync(targetFolder, { recursive: true });
     const target = job.forceOverwrites ? path.join(targetFolder, path.basename(source)) : uniqueDestination(targetFolder, path.basename(source));
-    try { fs.renameSync(source, target); }
+    try { await fs.promises.rename(source, target); }
     catch (error) {
       if (error.code !== 'EXDEV') throw error;
       const staged = target + '.zenith-' + randomUUID() + '.tmp';
-      try { fs.copyFileSync(source, staged, fs.constants.COPYFILE_EXCL); fs.renameSync(staged, target); }
+      try { await fs.promises.copyFile(source, staged, fs.constants.COPYFILE_EXCL); await fs.promises.rename(staged, target); }
       finally { fs.rmSync(staged, { force: true }); }
-      fs.unlinkSync(source);
+      try { fs.unlinkSync(source); } catch { warnings.push('cleanup'); }
     }
+    published.push(target);
     // Unsupported cover containers receive a matching JPG sidecar. If an
     // embedding postprocessor failed, preserve that cover with the saved media.
     const originalStem = path.parse(source).name;
@@ -392,12 +429,16 @@ function publishMedia(workDir, destination, job) {
     const sidecarExtensions = new Set(['.jpg','.png','.webp','.json','.description','.srt','.vtt','.ass','.lrc']);
     const sourceFolder = path.dirname(source);
     for (const entry of fs.readdirSync(sourceFolder, { withFileTypes: true })) {
-      if (!entry.isFile() || !entry.name.startsWith(originalStem + '.') || !sidecarExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      if (entry.name === 'source-info.json' || !entry.isFile() || !entry.name.startsWith(originalStem + '.') || !sidecarExtensions.has(path.extname(entry.name).toLowerCase())) continue;
       const suffix = entry.name.slice(originalStem.length);
-      fs.copyFileSync(path.join(sourceFolder, entry.name), job.forceOverwrites ? path.join(targetFolder, targetStem + suffix) : uniqueDestination(targetFolder, targetStem + suffix));
+      try { await fs.promises.copyFile(path.join(sourceFolder, entry.name), job.forceOverwrites ? path.join(targetFolder, targetStem + suffix) : uniqueDestination(targetFolder, targetStem + suffix)); }
+      catch { warnings.push('sidecar'); }
     }
-    return target;
-  });
+    } catch { warnings.push('media'); }
+  }
+  if (!published.length && warnings.length) throw new Error(local('Dosyalar hedef klasöre kaydedilemedi.'));
+  published.warnings = warnings;
+  return published;
 }
 function preserveRecovery(workDir, jobId) {
   if (!fs.existsSync(workDir)) return '';
@@ -414,7 +455,7 @@ function preserveRecovery(workDir, jobId) {
   }
 }
 function jobKey(job) {
-  return `${job.kind}|${job.format || job.audioFormat || ''}|${JSON.stringify(job.trim)}|${settings.videoContainer}|${job.url}`;
+  return JSON.stringify([job.kind, job.format, job.audioFormat, job.videoQuality, job.trim, job.playlist, job.playlistItems, job.container, job.url]);
 }
 function runTool(file, args, timeout = 180000, maxStdoutBytes = 65536, spawnOptions = {}, record = null) {
   return new Promise((resolve, reject) => {
@@ -429,6 +470,7 @@ function runTool(file, args, timeout = 180000, maxStdoutBytes = 65536, spawnOpti
         spawn('taskkill', ['/pid', String(child.pid), '/t', '/f'], { windowsHide: true }).on('error', () => child.kill());
       } else child.kill('SIGTERM');
     };
+    if (record) record.abort = () => { terminate(); done(() => reject(new Error('Inspection cancelled.'))); };
     const timer = setTimeout(() => { terminate(); done(() => reject(new Error('İşlem zaman aşımına uğradı.'))); }, timeout);
     child.stdout.on('data', (chunk) => {
       if (settled) return;
@@ -450,14 +492,14 @@ function runTool(file, args, timeout = 180000, maxStdoutBytes = 65536, spawnOpti
 }
 async function performUpdate(channel) {
   if (updating) throw new Error('yt-dlp update already running.');
-  if (activeJobs.size) throw new Error(msg('busy'));
+  if (activeJobs.size || inspection) throw new Error(msg('busy'));
   if (!allowedChannels.has(channel)) throw new Error(msg('updateFail'));
   updating = true;
   try {
     const result = await runTool(requiredTool('yt-dlp.exe'), ['--update-to', channel], 240000);
     saveSettings({ ytDlpChannel: channel });
     return { channel, version: await toolVersion('yt-dlp.exe'), detail: (result.stdout || result.stderr).trim() };
-  } finally { updating = false; }
+  } finally { updating = false; setImmediate(pumpQueue); }
 }
 function cookieLine(cookie) {
   const domain = `${cookie.httpOnly ? '#HttpOnly_' : ''}${cookie.domain || ''}`.replace(/[\t\r\n]/g, '');
@@ -499,15 +541,25 @@ app.whenReady().then(() => {
   try { scriptFiles = JSON.parse(fs.readFileSync(scriptPath(), 'utf8')); } catch {}
   createWindow();
   syncTray();
-  if (settings.autoUpdateYtDlp) setTimeout(() => performUpdate(settings.ytDlpChannel).then((result) => mainWindow?.webContents.send('engine:updated', result)).catch((error) => mainWindow?.webContents.send('engine:updated', { error: error.message })), 1600);
+  if (settings.autoUpdateYtDlp) {
+    const updateWhenIdle = () => {
+      if (!settings.autoUpdateYtDlp || shuttingDown) return;
+      if (activeJobs.size || inspection) { setTimeout(updateWhenIdle, 30000).unref(); return; }
+      performUpdate(settings.ytDlpChannel).then(result => mainWindow?.webContents.send('engine:updated', result))
+        .catch(error => mainWindow?.webContents.send('engine:updated', { error: error.message }));
+    };
+    setTimeout(updateWhenIdle, 30000).unref();
+  }
   app.on('activate', () => { if (!BrowserWindow.getAllWindows().length) createWindow(); });
 });
 app.on('before-quit', () => {
+  shuttingDown = true; cancelInspection(); mediaCache.clear();
   if (sleepBlocker !== null) { powerSaveBlocker.stop(sleepBlocker); sleepBlocker = null; }
   for (const record of activeJobs.values()) {
-    record.cancelled = true;
+    record.cancelled = true; record.coverController?.abort();
+    if (record.workDir) fs.rmSync(path.join(record.workDir, 'source-info.json'), { force: true });
     try {
-      if (process.platform === 'win32' && record.child.pid) spawn('taskkill', ['/pid', String(record.child.pid), '/t', '/f'], { windowsHide: true });
+      if (process.platform === 'win32' && record.child?.pid) spawn('taskkill', ['/pid', String(record.child.pid), '/t', '/f'], { windowsHide: true });
       else record.child.kill('SIGTERM');
     } catch {}
   }
@@ -572,20 +624,33 @@ handleMain('engine:update', (_, channel) => performUpdate(channel));
 handleMain('cookies:login', (_, url) => openLogin(url));
 handleMain('cookies:save', () => exportCookies());
 handleMain('cookies:clear', async () => { await session.fromPartition(COOKIE_PARTITION).clearStorageData({ storages: ['cookies'] }); fs.rmSync(cookiePath(), { force: true }); saveSettings({ cookieMode: 'none' }); return { count: 0 }; });
-handleMain('media:inspect', async (_, rawUrl) => {
+handleMain('media:cancelInspect', (_, id) => cancelInspection(id));
+handleMain('media:inspect', async (_, rawUrl, requestId) => {
   if (updating) throw new Error('yt-dlp is updating. Please wait.');
-  const url = sanitizeUrl(rawUrl);
+  const url = sanitizeUrl(rawUrl), current = { ...settings };
+  cancelInspection();
+  const record = { id: String(requestId || randomUUID()).slice(0, 100), cancelled: false };
+  inspection = record;
   try {
-    const playlistArgs = settings.playlist ? ['--yes-playlist', '--flat-playlist', '--playlist-end', '1'] : ['--no-playlist'];
-    const result = await runTool(requiredTool('yt-dlp.exe'), [...playlistArgs, '--dump-single-json', '--skip-download', ...baseArgs(), url], 90000, 16 * 1024 * 1024);
-    const data = JSON.parse(result.stdout);
-    const formats = videoFormats(data, settings.videoContainer, settings.videoCodec);
-    return { title: data.title, uploader: data.uploader || data.channel, duration: data.duration, thumbnail: data.thumbnail || data.thumbnails?.at(-1)?.url, formats, isPlaylist: data._type === 'playlist' || Array.isArray(data.entries) };
-  } catch (error) { throw new Error(`${msg('inspect')} ${error.message || ''}`.trim()); }
+    let data = cachedMedia(url, current);
+    if (!data) {
+      const playlistArgs = current.playlist ? ['--yes-playlist', '--flat-playlist', '--playlist-end', '1'] : ['--no-playlist'];
+      const result = await runTool(requiredTool('yt-dlp.exe'), [...playlistArgs, '--dump-single-json', '--skip-download', ...baseArgs(current), url], 90000, 16 * 1024 * 1024, {}, record);
+      if (record.cancelled) throw new Error('Inspection cancelled.');
+      data = JSON.parse(result.stdout);
+      if (mediaCache.size >= 4) mediaCache.delete(mediaCache.keys().next().value);
+      const key = mediaCacheKey(url, current), item = { createdAt: Date.now(), data };
+      mediaCache.set(key, item);
+      setTimeout(() => { if (mediaCache.get(key) === item) mediaCache.delete(key); }, 90000).unref();
+    }
+    return { title: data.title, uploader: data.uploader || data.channel, duration: data.duration, thumbnail: data.thumbnail || data.thumbnails?.at(-1)?.url,
+      formats: videoFormats(data, current.videoContainer, current.videoCodec), isPlaylist: data._type === 'playlist' || Array.isArray(data.entries) || new URL(url).searchParams.has('list') };
+  } catch (error) { throw new Error(`${msg('inspect')} ${redactDiagnostic(error.message || '')}`.trim()); }
+  finally { if (inspection === record) inspection = null; }
 });
 handleMain('download:start', async (_, request) => {
   if (updating) throw new Error('yt-dlp is updating. Please wait.');
-  if (activeJobs.size >= settings.maxDownloads) throw new Error(local('Eşzamanlı indirme sınırı doldu.'));
+  if (activeJobs.size >= 100) throw new Error(local('Kuyruk en fazla 100 indirme alabilir.'));
   if (!request || typeof request !== 'object') throw new Error('Invalid download request.');
   if (request.format && !/^[a-zA-Z0-9_+./<>=*\[\]-]{1,300}$/.test(request.format)) throw new Error('Invalid format.');
   if (request.audioFormat && !['mp3','m4a','opus','flac','wav','aac','vorbis','alac'].includes(request.audioFormat)) throw new Error('Invalid audio format.');
@@ -598,22 +663,32 @@ handleMain('download:start', async (_, request) => {
   }
 
   const job = { id: randomUUID(), url: sanitizeUrl(request.url), kind: request.kind === 'audio' ? 'audio' : 'video', trim, title: String(request.title || 'Medya').slice(0, 300), thumbnail: /^https:\/\//.test(request.thumbnail || '') ? String(request.thumbnail).slice(0, 2048) : '', format: String(request.format || ''), formatExt: ['mp4', 'webm', 'mkv'].includes(request.formatExt) ? request.formatExt : '', audioFormat: String(request.audioFormat || 'mp3') };
-  const key = jobKey(job);
-  const existing = [...activeJobs.values()].find((item) => item.key === key);
-  if (existing) return { id: existing.job.id, duplicate: true };
   job.videoQuality = bounded(request.videoQuality, 144, 8640, settings.videoQuality);
   const current = { ...settings };
+  if (typeof request.playlist === 'boolean') current.playlist = request.playlist;
   if (request.playlistItems !== undefined) { if (typeof request.playlistItems !== 'string' || !/^[\d,:-]{1,1024}$/.test(request.playlistItems)) throw new Error('Invalid playlist items.'); current.playlistItems = request.playlistItems; }
+  job.playlist = current.playlist; job.playlistItems = current.playlistItems; job.container = current.videoContainer;
+  const key = jobKey(job);
+  const existing = [...activeJobs.values()].find(item => item.key === key);
+  if (existing) return { id: existing.job.id, duplicate: true };
   requiredTool('yt-dlp.exe'); requiredTool('ffmpeg.exe'); requiredTool('ffprobe.exe');
   const workDir = path.join(app.getPath('temp'), 'ZenithW', job.id);
   fs.mkdirSync(workDir, { recursive: true });
   let args;
   try { args = downloadArgs(job, current, workDir); }
   catch (error) { fs.rmSync(workDir, { recursive: true, force: true }); throw error; }
-  const record = { child: null, job, key, workDir, scripts: { ...scriptFiles }, destination: current.downloadFolder, terminal: false, cancelled: false };
+  const record = { state: 'queued', coverController: new AbortController(), child: null, job, key, workDir, scripts: { ...scriptFiles }, destination: current.downloadFolder, terminal: false, cancelled: false };
   activeJobs.set(job.id, record);
-  syncSleepBlocker();
-  emit(job, 'started', { title: request.title || job.url });
+  record.run = async () => {
+  emit(job, 'started', { title: job.title, url: job.url, thumbnail: job.thumbnail, kind: job.kind, phase: 'preparing', percent: 0 });
+  // Cached signed media URLs remain private and expire after 90 seconds. Retry
+  // always extracts the original URL again. Playlist entries are never cached.
+  const cached = !current.playlist && !job.trim ? cachedMedia(job.url, current) : null;
+  if (cached && Array.isArray(cached.formats) && cached.formats.length) {
+    const infoFile = path.join(workDir, 'source-info.json');
+    writePrivate(infoFile, cached);
+    args = args.slice(0, -1).concat('--load-info-json', infoFile);
+  }
   let scriptWarning = '';
   try {
     scriptWarning = await runScript('before', current, record);
@@ -648,14 +723,14 @@ handleMain('download:start', async (_, request) => {
       for (const line of lines) {
         if (/has already been recorded in the archive/i.test(line)) archiveSkipped = true;
         const progress = trackProgress(line);
-        if (progress) emit(job, 'progress', progress);
+        if (progress) { if (progress.title) job.title = progress.title; emit(job, 'progress', { ...progress, attempt }); }
       }
     };
     child.stdout.on('data', (chunk) => consumeOutput(chunk));
     child.stderr.on('data', (chunk) => consumeOutput(chunk, true));
     child.on('error', (error) => { if (record.cancelled) return finishCancelled(); if (record.terminal) return; record.terminal = true; releaseJob(job.id); fs.rmSync(workDir, { recursive: true, force: true }); emit(job, 'failed', { detail: error.message }); });
-    child.on('close', async (code) => {
-      if (record.terminal) return;
+    const onClose = async (code) => {
+      if (record.terminal || record.finalizing) return;
       if (record.cancelled) return finishCancelled();
       attempts.push({ downloader: transportSettings.useAria2 ? 'aria2' : 'native', restarted, code, detail: redactDiagnostic(errorTail) });
       const retry = retryDownload({ attempt, code, error: errorTail + stdoutTail, useAria2: transportSettings.useAria2, refreshed, restarted });
@@ -669,17 +744,37 @@ handleMain('download:start', async (_, request) => {
         args = downloadArgs(job, transportSettings, workDir);
         args.splice(args.length - 1, 0, '--check-formats');
         if (restarted) args.splice(args.length - 1, 0, '--no-continue', '--http-chunk-size', '1M');
-        emit(job, 'progress', { percent: 0, detail: local(retry.reason === 'aria2' ? 'Aria2 başarısız; normal indirme deneniyor…' : 'İndirme bağlantısı yenileniyor…') });
+        emit(job, 'progress', { percent: 0, phase: 'preparing', attempt, detail: local(retry.reason === 'aria2' ? 'Aria2 başarısız; normal indirme deneniyor…' : 'İndirme bağlantısı yenileniyor…') });
         launch();
         return;
       }
-      record.terminal = true;
+      record.finalizing = true;
+      fs.rmSync(path.join(workDir, 'source-info.json'), { force: true });
+      let coverWarning = '';
+      if (current.embedThumbnail) {
+        emit(job, 'progress', { phase: 'processing', percent: null, detail: local('Kapak kareye dönüştürülüyor…') });
+        const result = await require('./square-cover.cjs').squareCover({
+          files: jobFiles(workDir).filter(file => mediaExtensions.has(path.extname(file).toLowerCase()) && !/\.(f\d+|temp)\.[^.]+$/i.test(path.basename(file))),
+          ffmpeg: requiredTool('ffmpeg.exe'), ffprobe: requiredTool('ffprobe.exe'), runTool, signal: record.coverController.signal
+        });
+        if (!current.writeThumbnail) {
+          for (const file of result.converted) {
+            const parsed = path.parse(file);
+            for (const extension of ['.jpg','.jpeg','.png','.webp']) {
+              await fs.promises.rm(path.join(parsed.dir, parsed.name + extension), { force: true }).catch(() => {});
+            }
+          }
+        }
+        if (result.warnings.length) coverWarning = 'Kare kapak hazırlanamadı; özgün kapak korundu.';
+      }
+      if (record.cancelled) return finishCancelled();
+      record.committing = true;
       let published = [];
-      try { published = publishMedia(workDir, record.destination, { ...job, playlist: current.playlist, playlistFolder: current.playlistFolder, splitChapters: current.splitChapters, keepOriginal: current.keepOriginal, forceOverwrites: current.forceOverwrites }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
+      try { emit(job, 'progress', { phase: 'processing', percent: null, detail: local('Dosya doğrulanıyor ve kaydediliyor…') }); published = await publishMedia(workDir, record.destination, { ...job, playlist: current.playlist, playlistFolder: current.playlistFolder, splitChapters: current.splitChapters, keepOriginal: current.keepOriginal, forceOverwrites: current.forceOverwrites }); } catch (error) { errorTail = `${errorTail}\n${error.message}`; }
       if (!published.length && code !== 0) {
         writePrivate(path.join(workDir, 'failure.json'), { version: app.getVersion(), createdAt: new Date().toISOString(), attempts });
       }
-      const recoveryPath = published.length ? '' : preserveRecovery(workDir, job.id);
+      const recoveryPath = !published.length || published.warnings?.includes('media') ? preserveRecovery(workDir, job.id) : '';
       if (!recoveryPath) {
         if (current.keepFragments && fs.readdirSync(workDir).length) {
           const retained = path.join(app.getPath('userData'), 'fragments', job.id);
@@ -689,9 +784,9 @@ handleMain('download:start', async (_, request) => {
       }
       if (published.length) {
         const afterWarning = await runScript('after', current, record, published).catch(() => 'Dosya kaydedildi; son script kesildi.');
-        const warning = code !== 0 || !!scriptWarning || !!afterWarning;
-        remember(job, { files: published, warning });
-        emit(job, 'complete', { detail: afterWarning || scriptWarning || (code === 0 ? 'Kaydedildi' : 'Medya kaydedildi; isteğe bağlı son işlem tamamlanamadı.'), files: published.map((filePath) => path.basename(filePath)), warning });
+        const warning = code !== 0 || !!scriptWarning || !!afterWarning || !!coverWarning || !!published.warnings?.length;
+        remember(job, { files: published, warning, ...(recoveryPath ? { recoveryPath } : {}) });
+        emit(job, 'complete', { detail: afterWarning || scriptWarning || coverWarning || (published.warnings?.length ? 'Bazı yan dosyalar veya liste öğeleri kaydedilemedi.' : '') || (code === 0 ? 'Kaydedildi' : 'Medya kaydedildi; isteğe bağlı son işlem tamamlanamadı.'), files: published.map((filePath) => path.basename(filePath)), warning });
       } else if (code === 0 && archiveSkipped) {
         emit(job, 'complete', { detail: 'Daha önce indirildiği için tekrar atlandı.', skipped: true });
       } else {
@@ -699,16 +794,31 @@ handleMain('download:start', async (_, request) => {
         const detail = recoveryPath ? `${reason} · Kurtarma dosyaları: ${recoveryPath}` : reason;
         emit(job, 'failed', { detail });
       }
-      releaseJob(job.id);
-    });
+      record.terminal = true; releaseJob(job.id);
+    };
+    child.on('close', code => onClose(code).catch(error => {
+      if (record.cancelled) return finishCancelled();
+      record.terminal = true;
+      fs.rmSync(path.join(workDir, 'source-info.json'), { force: true });
+      preserveRecovery(workDir, job.id);
+      emit(job, 'failed', { detail: redactDiagnostic(error.message) }); releaseJob(job.id);
+    }));
   };
   launch();
-  return { id: job.id };
+  };
+  emit(job, 'queued', { title: job.title, url: job.url, thumbnail: job.thumbnail, kind: job.kind, phase: 'queued', percent: 0 });
+  setImmediate(pumpQueue);
+  return { id: job.id, queued: true };
 });
 handleMain('download:cancel', (_, jobId) => {
   const record = activeJobs.get(jobId);
-  if (!record || record.terminal || record.cancelled) return false;
-  record.cancelled = true;
+  if (!record || record.terminal || record.cancelled || record.committing) return false;
+  record.cancelled = true; record.coverController.abort();
+  if (record.state === 'queued') {
+    record.terminal = true;
+    fs.rmSync(record.workDir, { recursive: true, force: true });
+    emit(record.job, 'cancelled', { detail: local('İptal edildi.') }); releaseJob(jobId); return true;
+  }
   emit(record.job, 'cancelling', { detail: 'İptal ediliyor…' });
   if (process.platform === 'win32' && record.child?.pid) {
     const terminator = spawn('taskkill', ['/pid', String(record.child.pid), '/t', '/f'], { windowsHide: true });
@@ -723,6 +833,7 @@ handleMain('history:get', () => history.map(item => ({ ...item, files: (item.fil
 handleMain('history:remove', (_, id) => {
   if (activeJobs.has(id)) return false;
   history = history.filter(item => item.id !== id);
+  try { writePrivate(historyPath(), history); } catch { /* Keep the saved media and in-memory history if preferences are read-only. */ }
   return true;
 });
 handleMain('media:playlist', async (_, rawUrl) => {
@@ -779,4 +890,14 @@ handleMain('cookies:import', async () => {
   fs.writeFileSync(cookiePath(), content, { mode: 0o600 });
   saveSettings({ cookieMode: 'session' });
   return { count: rows.length };
+});
+
+const checkAppRelease = require('./app-release.cjs').createReleaseChecker({ currentVersion: app.getVersion(), fetch });
+let offeredRelease = null;
+handleMain('app:info', () => ({ version: app.getVersion(), portable: !!process.env.PORTABLE_EXECUTABLE_DIR, store: !!process.windowsStore }));
+handleMain('app:checkUpdate', async () => { const result = await checkAppRelease(); offeredRelease = result.status === 'available' ? result.url : null; return result; });
+handleMain('app:openRelease', () => { if (!offeredRelease) throw new Error('Check for updates first.'); return shell.openExternal(offeredRelease); });
+handleMain('app:external', (_, name) => {
+  const target = { source: 'https://github.com/boranseasonnew/zenithw', website: 'https://zenithw.space', sponsor: 'https://github.com/sponsors/boranseasonnew' }[name];
+  if (!target) throw new Error('Invalid external link.'); return shell.openExternal(target);
 });

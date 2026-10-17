@@ -55,9 +55,11 @@ async function save(values){
  saveChain=saveChain.catch(()=>{}).then(async()=>{settings=await api.settings.save(values);syncSettings();});return saveChain;
 }
 function openSettings(id='general-settings'){
+ if($('#workspace-menu').matches(':popover-open'))$('#workspace-menu').hidePopover();
  if($('#url-options').matches(':popover-open'))$('#url-options').hidePopover();
  $('#settings-search').value='';$$('.settings-tabs button').forEach(n=>n.classList.toggle('active',n.dataset.tab===id));$$('.settings-panel').forEach(n=>{n.classList.toggle('active',n.id===id);n.hidden=false;});$$('.setting').forEach(n=>n.hidden=false);
  if(!$('#settings-dialog').open)$('#settings-dialog').showModal();
+ if(id==='engine-settings')refreshTools().catch(e=>toast(errorText(e)));
 }
 async function chooseFolder(){requireNative();const folder=await api.pickFolder();if(folder)await save({downloadFolder:folder});return folder;}
 $$('[data-settings]').forEach(n=>n.onclick=()=>openSettings(n.dataset.settings));$$('.settings-tabs button').forEach(n=>n.onclick=()=>openSettings(n.dataset.tab));$$('.close-dialog').forEach(n=>n.onclick=()=>n.closest('dialog').close());
@@ -73,21 +75,21 @@ fields.forEach(id=>{const n=$('#'+id);if(!n)return;n.onchange=guarded(async()=>{
 async function refreshTools(){
  tools=await api.tools();$('#ytdlp-version').textContent=tools.ytDlpVersion||'—';$('#ffmpeg-version').textContent=tools.ffmpegVersion||'—';$('#aria2-version').textContent=tools.aria2Version||'—';
  $('#engine-state').innerHTML='<i></i>'+esc(native?(tools.ytDlp&&tools.ffmpeg?t('Yerel motor hazır','Local engine ready'):t('Motor eksik','Engine missing')):t('Arayüz önizlemesi','Interface preview'));
- $('#status-version').textContent=tools.ytDlpVersion?'yt-dlp '+tools.ytDlpVersion:'Zenith 4.1.0';
+ $('#status-version').textContent='Zenith 4.2.0';
  $('#cookie-status').textContent=tools.sessionCookies?t('Yerel cookie dosyası hazır','Local cookie file ready'):tools.cookieCount?tools.cookieCount+' cookie':t('Henüz çerez yok','No cookies yet');
 }
 async function analyze(keepTrim=false){
  selectedPlaylistItems=null;
  requireNative();const url=normalize($('#url').value);$('#url').value=url;const id=++inspectId,button=$('#inspect');button.disabled=true;$('#command-note').textContent=t('Bağlantı hazırlanıyor…','Preparing link…');
- try{const result=await api.inspect(url);if(id!==inspectId||normalize($('#url').value)!==url)return;
- media=result;mediaUrl=url;kind=$('#quick-kind').value;$('#media-heading').textContent=result.title||t('Medya','Media');$('#uploader').textContent=result.uploader||'';$('#media-duration').textContent=result.duration?time(result.duration):'';$('#thumb').src=/^https:\/\//.test(result.thumbnail||'')?result.thumbnail:'brand.png';$('#media-error').hidden=true;
+ try{const result=await api.inspect(url,String(id));if(id!==inspectId||normalize($('#url').value)!==url)return;
+ media=result;mediaUrl=url;$('#download-playlist-row').hidden=!result.isPlaylist;$('#download-playlist').checked=!!settings.playlist&&!!result.isPlaylist;kind=$('#quick-kind').value;$('#media-heading').textContent=result.title||t('Medya','Media');$('#uploader').textContent=result.uploader||'';$('#media-duration').textContent=result.duration?time(result.duration):'';$('#thumb').src=/^https:\/\//.test(result.thumbnail||'')?result.thumbnail:'brand.png';$('#media-error').hidden=true;
  if(!keepTrim){$('#trim-enabled').checked=preTrim.enabled;$('#trim-start').value=preTrim.start;$('#trim-end').value=preTrim.end||(result.duration?time(result.duration):'');$('#trim-panel').hidden=!preTrim.enabled;pendingTrim=false;}
  renderFormats();setupTrimSliders();updateTrim();if(!$('#media-dialog').open)$('#media-dialog').showModal();
- }finally{if(id===inspectId){button.disabled=false;$('#command-note').textContent=t('Enter ile hazırla','Press Enter to prepare');}}
+ }catch(e){if(id===inspectId)throw e;}finally{if(id===inspectId){button.disabled=false;$('#command-note').textContent=t('Enter ile hazırla','Press Enter to prepare');}}
 }
 function renderFormats(){
  const preferred=Number(settings.videoQuality||1080);
- const videos=(settings.playlist?[8640,2160,1440,1080,720,480].map(height=>({id:'playlist-'+height,height,ext:settings.videoContainer,playlist:true})): [...(media?.formats||[])]).sort((a,b)=>Math.abs(a.height-preferred)-Math.abs(b.height-preferred));
+ const videos=($('#download-playlist').checked?[8640,2160,1440,1080,720,480].map(height=>({id:'playlist-'+height,height,ext:settings.videoContainer,playlist:true})): [...(media?.formats||[])]).sort((a,b)=>Math.abs(a.height-preferred)-Math.abs(b.height-preferred));
  const items=kind==='audio'?[{id:'aac',label:'AAC',ext:'aac',detail:'AAC'},{id:'vorbis',label:'OGG',ext:'ogg',detail:'Vorbis'},{id:'alac',label:'ALAC',ext:'m4a',detail:'Lossless'},{id:'mp3',label:'MP3',ext:'mp3',detail:'192 / 320 kbps'},{id:'m4a',label:'M4A',ext:'m4a',detail:'AAC'},{id:'opus',label:'Opus',ext:'opus',detail:'Opus'},{id:'flac',label:'FLAC',ext:'flac',detail:'Lossless'},{id:'wav',label:'WAV',ext:'wav',detail:'PCM'}]:videos.slice(0,8).map(f=>({...f,label:f.height>=8640?t('En yüksek','Highest'):f.height+'p',detail:[f.ext?.toUpperCase(),f.fps?f.fps+' FPS':'',bytes(f.size)].filter(Boolean).join(' · ')}));
  if(!items.length&&kind==='video')items.push({id:'bv*+ba/b',label:t('En iyi','Best'),ext:settings.videoContainer,detail:t('Kaynak kalitesi','Source quality')});
  selection=items.find(f=>f.id===selection?.id)||items.find(f=>f.id===settings.audioFormat&&kind==='audio')||items[0];
@@ -106,9 +108,9 @@ function updateTrim(){try{const trim=trimValue(),total=media?.duration||1,start=
 async function start(){
  requireNative();if(!media||starting)return;
  if(normalize($('#url').value)!==mediaUrl)throw Error(t('Bağlantı değişti. Tekrar hazırla.','Link changed. Prepare it again.'));
- if(settings.playlist&&settings.promptPlaylist&&media.isPlaylist&&selectedPlaylistItems===null){starting=true;$('#download').disabled=true;try{const items=await choosePlaylist();if(items===null)return;selectedPlaylistItems=items;}finally{starting=false;$('#download').disabled=false;}}
+ if($('#download-playlist').checked&&media.isPlaylist&&selectedPlaylistItems===null){starting=true;$('#download').disabled=true;try{const items=await choosePlaylist();if(items===null)return;selectedPlaylistItems=items;}finally{starting=false;$('#download').disabled=false;}}
  const trim=trimValue();starting=true;$('#download').disabled=true;$('#media-error').hidden=true;
- try{const result=await api.start({url:mediaUrl,title:media.title,thumbnail:media.thumbnail,kind,videoQuality:selection?.height||settings.videoQuality,format:kind==='video'&&!settings.playlist?selection?.id:'',formatExt:kind==='video'?selection?.ext:'',audioFormat:kind==='audio'?selection?.id:settings.audioFormat,trim,...(selectedPlaylistItems!==null?{playlistItems:selectedPlaylistItems}:{})});
+ try{const result=await api.start({url:mediaUrl,title:media.title,thumbnail:media.thumbnail,kind,videoQuality:selection?.height||settings.videoQuality,playlist:$('#download-playlist').checked,format:kind==='video'&&!$('#download-playlist').checked?selection?.id:'',formatExt:kind==='video'?selection?.ext:'',audioFormat:kind==='audio'?selection?.id:settings.audioFormat,trim,...(selectedPlaylistItems!==null?{playlistItems:selectedPlaylistItems}:{})});
  if(!jobs.has(result.id))jobs.set(result.id,{id:result.id,title:media.title,thumbnail:media.thumbnail,kind,percent:0,createdAt:Date.now(),detail:t('Hazırlanıyor','Preparing')});else Object.assign(jobs.get(result.id),{thumbnail:media.thumbnail,kind});
  jobs.get(result.id).url=mediaUrl;$('#media-dialog').close();switchTab('downloads');renderJobs();persistJobs();
  }catch(e){$('#media-error').textContent=errorText(e);$('#media-error').hidden=false;}finally{starting=false;$('#download').disabled=false;}
@@ -123,12 +125,12 @@ function renderJobs(){
  $('#empty-state').hidden=items.length>0;$('#empty-state h1').textContent=query?t('Sonuç yok','No results'):tab==='history'?t('Geçmişin burada','Your history lives here'):t('Henüz indirme yok','No downloads yet');$('#empty-state p').textContent=tab==='history'?t('Tamamlanan dosyalar burada görünür.','Completed files appear here.'):t('Bağlantını yukarıya yapıştır.','Paste a link above.');
  const action=(key,id,label,glyph)=>'<button data-'+key+'="'+esc(id)+'" aria-label="'+esc(t(label,label))+'" title="'+esc(t(label,label))+'">'+icon(glyph)+'</button>';
  $('#job-list').innerHTML=items.map(j=>{
-  const status=j.failed?t('İndirme başarısız','Download failed'):j.done?t('Kaydedildi','Saved'):t('İndiriliyor','Downloading');
+  const status=j.failed?t('İndirme başarısız','Download failed'):j.cancelled?t('İptal edildi.','Cancelled'):j.done?t('Kaydedildi','Saved'):phaseLabel(j.phase);
   let actions=!j.done?action('cancel',j.id,'İptal','close'):'';
   if(j.failed&&j.url)actions+=action('retry',j.id,'Tekrar dene','retry');
   if(history.some(h=>h.id===j.id))actions+=action('open',j.id,'Aç','arrow')+action('reveal',j.id,'Klasör','folder');
   if(j.done)actions+=action('remove',j.id,'Kaydı kaldır','close');
-  return '<article class="job '+(j.failed?'failed':'')+'" data-job="'+esc(j.id)+'"><span class="job-state">'+esc(status)+'</span><img class="job-cover" src="'+esc(/^https:\/\//.test(j.thumbnail||'')?j.thumbnail:'brand.png')+'" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="job-body"><h3>'+esc(j.title)+'</h3><div class="progress"><progress max="100" value="'+Math.max(0,Math.min(100,j.percent||0))+'"></progress><span class="percent">'+Math.floor(j.percent||0)+'%</span></div><p class="detail">'+esc(j.detail||t('Hazırlanıyor','Preparing'))+'</p></div><div class="job-actions">'+actions+'</div></article>';
+  return '<article class="job '+(j.failed?'failed':'')+'" data-job="'+esc(j.id)+'"><span class="job-state">'+esc(status)+'</span><img class="job-cover" src="'+esc(/^https:\/\//.test(j.thumbnail||'')?j.thumbnail:'brand.png')+'" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="job-body"><h3>'+esc(j.title)+'</h3><div class="progress"><progress max="100" '+(j.percent===null?'':'value="'+Math.max(0,Math.min(100,j.percent||0))+'"')+'></progress><span class="percent">'+(j.percent===null?'—':Math.floor(j.percent||0)+'%')+'</span></div><p class="detail">'+esc(j.detail||t('Hazırlanıyor','Preparing'))+'</p></div><div class="job-actions">'+actions+'</div></article>';
  }).join('');
  $$('[data-cancel]').forEach(n=>n.onclick=guarded(()=>api.cancel(n.dataset.cancel)));
  $$('[data-open]').forEach(n=>n.onclick=guarded(()=>api.history.open(n.dataset.open,false)));
@@ -138,7 +140,24 @@ function renderJobs(){
  $('#status-summary').textContent=[...jobs.values()].some(j=>!j.done)?t('İndiriliyor','Downloading'):t('Hazır','Ready');
 }
 
-function paintProgress(j){if(tab!=='downloads')return;const row=$$('.job').find(n=>n.dataset.job===j.id);if(!row)return;row.querySelector('progress').value=j.percent||0;row.querySelector('.percent').textContent=Math.floor(j.percent||0)+'%';row.querySelector('.detail').textContent=j.detail||'';}
+function phaseLabel(phase){return t(({queued:'Sırada',preparing:'Hazırlanıyor',downloading:'İndiriliyor',processing:'Son işleme'})[phase]||'Hazırlanıyor','Preparing');}
+function progressDetail(e){
+ if(e.detail&&e.phase!=='downloading')return e.detail;
+ const parts=[phaseLabel(e.phase)];
+ if(e.itemCount>1)parts.push(t('Liste öğesi','Playlist item')+' '+e.itemIndex+'/'+e.itemCount);
+ if(e.streamCount>1)parts.push(t('Akış','Stream')+' '+e.streamIndex+'/'+e.streamCount);
+ if(e.downloadedBytes>0)parts.push(bytes(e.downloadedBytes)+(e.totalBytes>0?' / '+(e.estimated?'≈ ':'')+bytes(e.totalBytes):''));
+ if(e.speed>0)parts.push(bytes(e.speed)+'/s');
+ if(Number.isFinite(e.eta)&&e.eta>=0&&e.phase==='downloading')parts.push(t(e.etaScope==='stream'?'Bu akış için tahmini süre':'Aktarım için tahmini süre','Estimated transfer time')+' '+time(e.eta));
+ if(e.percentScope==='stream')parts.push(t('Yüzde bu akışa aittir','Percentage applies to this stream'));
+ return parts.join(' · ');
+}
+function paintProgress(j){
+ if(tab!=='downloads')return;const row=$$('.job').find(n=>n.dataset.job===j.id);if(!row)return;
+ const progress=row.querySelector('progress');if(j.percent===null)progress.removeAttribute('value');else progress.value=j.percent||0;
+ row.querySelector('.percent').textContent=j.percent===null?'—':Math.floor(j.percent||0)+'%';
+ row.querySelector('.detail').textContent=j.detail||'';row.querySelector('.job-state').textContent=phaseLabel(j.phase);
+}
 async function refreshHistory(){history=await api.history.get();renderJobs();}
 async function refreshProfiles(){const profiles=await api.profiles.list();$('#profiles-list').innerHTML=profiles.map(p=>'<div class="profile-item"><span>'+esc(p.name)+'</span><button class="soft" data-profile="'+esc(p.id)+'">'+esc(t('Kullan','Use'))+'</button></div>').join('');$$('[data-profile]').forEach(n=>n.onclick=guarded(async()=>{requireNative();settings=await api.profiles.load(n.dataset.profile);$('#active-profile').textContent=profiles.find(p=>p.id===n.dataset.profile)?.name||t('Varsayılan','Default');syncSettings();toast(t('Profil seçildi','Profile selected'));}));}
 function renderWelcome(){
@@ -152,10 +171,11 @@ function renderWelcome(){
 }
 $('#welcome-next').onclick=guarded(async()=>{if(welcomeStep<2){welcomeStep++;if(welcomeStep===2)await refreshTools();renderWelcome();}else{await save({onboardingComplete:true});$('#welcome-dialog').close();$('#url').focus();}});
 $('#welcome-skip').onclick=guarded(async()=>{await save({onboardingComplete:true});$('#welcome-dialog').close();});$('#onboarding-open').onclick=()=>{welcomeStep=0;renderWelcome();$('#welcome-dialog').showModal();};
-$('#url-form').onsubmit=guarded(async e=>{e.preventDefault();await analyze();});$('#url').oninput=()=>{inspectId++;$('#inspect').disabled=false;media=null;};
-$('#paste').onclick=guarded(async()=>{$('#url').value=normalize(await navigator.clipboard.readText());$('#url').focus();media=null;inspectId++;});$('#quick-kind').onchange=()=>{kind=$('#quick-kind').value;};
+$('#url-form').onsubmit=guarded(async e=>{e.preventDefault();await analyze();});$('#url').oninput=()=>{if(native)api.cancelInspect(String(inspectId)).catch(()=>{});inspectId++;$('#inspect').disabled=false;media=null;};
+$('#paste').onclick=guarded(async()=>{if(native)await api.cancelInspect(String(inspectId));$('#url').value=normalize(await navigator.clipboard.readText());$('#url').focus();media=null;inspectId++;});$('#quick-kind').onchange=()=>{kind=$('#quick-kind').value;};
 $('#trim-quick').onclick=()=>openQuick('trim',$('#trim-quick'));$('#quick-options').onclick=()=>openQuick('format',$('#quick-options'));
 $('#trim-toggle').onclick=()=>{$('#trim-panel').hidden=!$('#trim-panel').hidden;$('#trim-enabled').checked=!$('#trim-panel').hidden;updateTrim();};$('#trim-enabled').onchange=updateTrim;$('#trim-start').oninput=updateTrim;$('#trim-end').oninput=updateTrim;
+$('#download-playlist').onchange=()=>{selectedPlaylistItems=null;renderFormats();};
 $('#kind-video').onclick=()=>{kind='video';renderFormats();};$('#kind-audio').onclick=()=>{kind='audio';renderFormats();};$('#download-container').onchange=guarded(async e=>{await save({videoContainer:e.target.value});await analyze(true);});
 $('#download').onclick=guarded(start);$('#open-folder').onclick=guarded(()=>{requireNative();return api.openDownloads();});$('#destination').onclick=$('#choose-folder').onclick=guarded(chooseFolder);
 $('#downloads-tab').onclick=()=>switchTab('downloads');$('#history-tab').onclick=()=>switchTab('history');$('#search').oninput=renderJobs;
@@ -166,10 +186,20 @@ $('#import-cookies').onclick=guarded(async()=>{requireNative();const result=awai
 $('#save-profile').onclick=guarded(async()=>{requireNative();await api.profiles.save($('#profile-name').value);await refreshProfiles();});
 $('#export-settings').onclick=guarded(async()=>{requireNative();if(await api.settings.export())toast(t('Ayarlar dışa aktarıldı','Settings exported'));});$('#import-settings').onclick=guarded(async()=>{requireNative();const value=await api.settings.import();if(value){settings=value;syncSettings();toast(t('Ayarlar içe aktarıldı','Settings imported'));}});
 api.onDownload(async e=>{
- let j=jobs.get(e.jobId);if(!j&&e.type==='started'){j={id:e.jobId,title:e.title,percent:0,createdAt:Date.now(),detail:t('Hazırlanıyor','Preparing')};jobs.set(j.id,j);renderJobs();}
- if(!j)return;if(e.type==='progress'){j.percent=Math.max(j.percent||0,Math.min(99,Number(e.percent)||0));j.detail=e.detail;paintProgress(j);}
- else if(['complete','failed','cancelled'].includes(e.type)){Object.assign(j,{done:true,failed:e.type==='failed',cancelled:e.type==='cancelled',percent:e.type==='complete'?100:j.percent,detail:e.detail});if(e.type==='complete')await refreshHistory();renderJobs();persistJobs();}
- else if(e.type==='cancelling'){j.detail=t('İptal ediliyor…','Cancelling…');paintProgress(j);}
+ let j=jobs.get(e.jobId);
+ if(!j&&['started','queued'].includes(e.type)){
+  j={id:e.jobId,title:e.title,thumbnail:e.thumbnail,url:e.url,kind:e.kind,phase:e.phase,percent:0,createdAt:Date.now(),detail:phaseLabel(e.phase)};
+  jobs.set(j.id,j);renderJobs();
+ }
+ if(!j)return;
+ if(['progress','started'].includes(e.type)){
+  if(e.title){j.title=e.title;const row=$$('.job').find(n=>n.dataset.job===j.id);if(row)row.querySelector('h3').textContent=e.title;}
+  j.phase=e.phase||'preparing';j.percent=e.percent===null?null:Math.max(0,Math.min(99,Number(e.percent)||0));
+  j.attempt=e.attempt??j.attempt;j.detail=progressDetail(e);paintProgress(j);
+ }else if(['complete','failed','cancelled'].includes(e.type)){
+  Object.assign(j,{done:true,failed:e.type==='failed',cancelled:e.type==='cancelled',percent:e.type==='complete'?100:j.percent,detail:e.detail});
+  if(e.type==='complete')await refreshHistory();renderJobs();persistJobs();
+ }else if(e.type==='cancelling'){j.detail=t('İptal ediliyor…','Cancelling…');paintProgress(j);}
 });
 api.onCookiesUpdated(guarded(async e=>{toast(e.message);settings=await api.settings.get();syncSettings();await refreshTools();}));api.onEngineUpdated(guarded(async e=>{toast(e.error||t('yt-dlp güncellendi','yt-dlp updated'));await refreshTools();}));
 document.addEventListener('keydown',e=>{const editable=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);if(e.ctrlKey&&e.key===','){e.preventDefault();openSettings();}if(e.ctrlKey&&e.key.toLowerCase()==='l'){e.preventDefault();$('#url').focus();$('#url').select();}if(e.ctrlKey&&e.key.toLowerCase()==='v'&&!editable&&!$('dialog[open]')){e.preventDefault();$('#paste').click();}});
@@ -225,7 +255,12 @@ for(const phase of ['before','after']){
 }
 window.addEventListener('resize',()=>{if($('#url-options').matches(':popover-open'))$('#url-options').hidePopover();});
 
-(async()=>{settings=await api.settings.get();syncSettings();restoreJobs();await refreshHistory();await refreshProfiles();await refreshScripts();await refreshTools();await launchSplash();if(!settings.onboardingComplete){renderWelcome();$('#welcome-dialog').showModal();}})().catch(e=>toast(errorText(e)));
+(async()=>{
+ settings=await api.settings.get();syncSettings();restoreJobs();renderJobs();
+ await launchSplash();
+ Promise.allSettled([refreshHistory(),refreshProfiles(),refreshScripts(),refreshTools(),refreshAppVersion()]).then(results=>{for(const result of results)if(result.status==='rejected')toast(errorText(result.reason));});
+ if(!settings.onboardingComplete){renderWelcome();$('#welcome-dialog').showModal();}
+})().catch(e=>{toast(errorText(e));$('#launch-splash')?.remove();});
 
 function setupTrimSliders(){
  const total=media?.duration;if(!total)return;
@@ -238,6 +273,48 @@ function setupTrimSliders(){
   const paint=()=>{input.value=time(slider.value);label.textContent=time(slider.value);updateTrim();};slider.oninput=paint;paint();
  }
 }
-const launchStarted=performance.now();
-async function launchSplash(){const layer=$('#launch-splash');const reduced=settings.reducedMotion||matchMedia('(prefers-reduced-motion:reduce)').matches;await new Promise(r=>setTimeout(r,Math.max(0,(reduced?200:1500)-(performance.now()-launchStarted))));layer.classList.add('finished');setTimeout(()=>layer.remove(),260);}
-setTimeout(()=>$('#launch-splash')?.remove(),8000);
+async function launchSplash(){
+ const layer=$('#launch-splash');
+ // The shell is already usable: never wait for tool/network checks or a timer.
+ await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+ layer?.classList.add('finished');setTimeout(()=>layer?.remove(),220);
+}
+setTimeout(()=>$('#launch-splash')?.remove(),2500);
+
+$$('[data-library]').forEach(button=>button.onclick=()=>{$('#workspace-menu').hidePopover();switchTab(button.dataset.library);});
+$('#bulk-open').onclick=()=>{$('#bulk-dialog').showModal();$('#bulk-links').focus();};
+$('#bulk-submit').onclick=guarded(async()=>{
+ requireNative();const button=$('#bulk-submit'),result=$('#bulk-result');
+ const lines=$('#bulk-links').value.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
+ if(!lines.length||lines.length>50)throw Error(t('1 ile 50 arasında bağlantı gir.','Enter 1 to 50 links.'));
+ const urls=[...new Set(lines.map(normalize))];let added=0,duplicates=lines.length-urls.length;const failures=[];
+ const batchKind=$('#bulk-kind').value,playlist=$('#bulk-playlist').checked;
+ button.disabled=true;$('#bulk-links').disabled=true;
+ try{
+  for(const url of urls){
+   try{const item=await api.start({url,title:new URL(url).hostname,kind:batchKind,playlist,audioFormat:settings.audioFormat,videoQuality:settings.videoQuality});if(item.duplicate)duplicates++;else added++;}
+   catch(e){failures.push(url+' — '+errorText(e));}
+   result.textContent=t('Kuyruğa eklendi','Added to queue')+': '+added+' / '+urls.length;
+  }
+  result.textContent=t('Kuyruğa eklendi','Added to queue')+': '+added+' · '+t('Yinelenen','Duplicates')+': '+duplicates+(failures.length?' · '+t('Eklenemedi','Not added')+': '+failures.length:'');
+  if(failures.length){const details=document.createElement('pre');details.textContent=failures.join('\n');$('#bulk-errors')?.remove();details.id='bulk-errors';result.after(details);}
+  else{$('#bulk-errors')?.remove();$('#bulk-links').value='';}
+  switchTab('downloads');
+ }finally{button.disabled=false;$('#bulk-links').disabled=false;}
+});
+$$('dialog').forEach(dialog=>dialog.addEventListener('click',event=>{
+ if(event.target!==dialog)return;const box=dialog.getBoundingClientRect();
+ if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();
+}));
+async function refreshAppVersion(){if(native){const info=await api.appInfo();$('#about-version').textContent=info.version;$('#status-version').textContent='Zenith '+info.version;}}
+$('#check-app-update').onclick=async()=>{
+ const button=$('#check-app-update'),status=$('#release-status');button.disabled=true;$('#open-app-release').hidden=true;
+ status.textContent=t('GitHub sürümleri kontrol ediliyor…','Checking GitHub releases…');
+ try{requireNative();const release=await api.checkAppUpdate();
+  status.textContent=release.status==='available'?t('Yeni sürüm mevcut:','New version available:')+' '+release.latestVersion:release.status==='ahead'?t('Bu sürüm, yayımlanan son sürümden daha yeni.','This version is newer than the latest published release.'):t('Şu anda güncelleme yok. Güncel sürümü kullanıyorsun.','No updates right now. You are up to date.');
+  $('#open-app-release').hidden=release.status!=='available';
+ }catch(e){status.textContent=t('Güncelleme kontrol edilemedi. Bağlantını kontrol edip tekrar dene.','Could not check updates. Check your connection and try again.');}
+ finally{button.disabled=false;}
+};
+$('#open-app-release').onclick=guarded(()=>api.openAppRelease());
+$$('[data-external]').forEach(button=>button.onclick=guarded(()=>{requireNative();return api.openExternal(button.dataset.external);}));
