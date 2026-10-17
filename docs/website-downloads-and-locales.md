@@ -2,7 +2,9 @@
 
 The public hub is `/downloads`. `/app` and `/pc-app` (including `.html` and language-prefixed aliases) permanently redirect to its Android and Windows sections. Queries are preserved. The Cloudflare Function applies these redirects before maintenance checks; `_redirects` provides the static-host fallback.
 
-`shared/site-config.json` is the source for versions, release files, platform requirements, distribution status and Telegram. A missing Telegram URL removes generated links. A pending distribution has no fabricated store destination. Windows 4.1.0 and Android 2.1.3 EXE/APK asset URLs returned HTTP 200 with matching sizes on 2026-10-10. Store approvals must be checked before changing their status to `available`.
+`shared/site-config.json` is the source for versions, release files, platform requirements, distribution status and Telegram. A missing Telegram URL removes generated links. A pending distribution has no fabricated store destination. Windows 4.2.0 and Android 2.2.0 EXE/APK asset URLs returned HTTP 200 with matching sizes on 2026-10-18; both checksum URLs also returned HTTP 200. GitHub release-page links use `/releases/latest`; direct file and checksum links are pinned together to the displayed version so they remain consistent. Update names, versions and byte counts together for each new release. Store approvals must be checked before changing their status to `available`.
+
+`scripts/downloads-content.mjs` supplies translated feature descriptions for all eight languages. Windows documents the 50-link batch and 100-job queue limits; Android documents the 50-link batch, 200-entry playlist and 200-job queue limits. Requirements include Windows x64/Store minimums and Android 7.0+, with device architecture, background-work and 16 KB memory-page limitations explained beside the Android choices. `npm run check:release-content` verifies the generated links and version metadata for every language against the shared configuration and desktop package version.
 
 ## Build and languages
 
