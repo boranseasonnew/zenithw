@@ -1,12 +1,12 @@
 # ZenithW Desktop privacy / Masaüstü gizliliği
 
-Updated: 9 October 2026. Applies to the Windows desktop application, including the Microsoft Store package. Contact: **info@zenithw.space**. Source: https://github.com/boranseasonnew/zenithw .
+Updated: 17 October 2026. Applies to the Windows desktop application, including the Microsoft Store package. Contact: **info@zenithw.space**. Source: https://github.com/boranseasonnew/zenithw .
 
 ## English
 
 ZenithW Desktop processes media on your Windows device. It does not require a ZenithW account and contains no ZenithW advertising or analytics integration. Source URLs, media requests and any cookies you choose to use are sent to the selected source service through yt-dlp or the optional login browser. Those services receive connection information, including your IP address, and apply their own policies. Your downloads are not uploaded to the ZenithW web processing server by the desktop downloader.
 
-Preferences, profiles, optional cookie exports, selected script paths, optional download archive and recovery information are stored locally in the application's user data. Downloaded files are saved in your chosen folder. Session history is cleared when the application starts again; downloaded media and preferences are preserved. Recovery files and optional archive records can remain independently of session history. Recovery diagnostics redact signed URLs and sensitive headers, but file names, source metadata and local paths may still reveal personal information; review them before sharing a report.
+Preferences, profiles, optional cookie exports, selected script paths, optional download archive and recovery information are stored locally in the application's user data. Downloaded files are saved in your chosen folder. Up to 300 download-history entries are retained locally across app restarts until cleared; downloaded media and preferences are preserved. Recovery files and optional archive records can remain independently of session history. Recovery diagnostics redact signed URLs and sensitive headers, but file names, source metadata and local paths may still reveal personal information; review them before sharing a report.
 
 Cookie use is optional. Cookies can be imported from a file or a browser you select, or obtained through an explicit login in the app's separate browser session. They are used to access the source you choose, and are not sent to ZenithW as telemetry. Clear the app's cookie session in Settings when it is no longer needed. Account authentication pages belong to the relevant service.
 
@@ -18,7 +18,7 @@ ZenithW does not automatically send crash reports, recovery logs or download his
 
 ZenithW Desktop medya işlemlerini Windows cihazında yapar. ZenithW hesabı gerektirmez; ZenithW reklam veya analiz entegrasyonu içermez. Kaynak bağlantısı, medya istekleri ve kullanmayı seçtiğin çerezler yt-dlp veya isteğe bağlı oturum tarayıcısı üzerinden seçtiğin kaynak hizmete iletilir. Bu hizmetler IP adresin dahil bağlantı bilgilerini alır ve kendi politikalarını uygular. Masaüstü indiricisi dosyalarını ZenithW web işlem sunucusuna yüklemez.
 
-Tercihler, profiller, isteğe bağlı çerez dosyaları, seçilen script yolları, indirme arşivi ve kurtarma bilgileri yerel uygulama verisinde tutulur. Dosyalar seçtiğin klasöre kaydedilir. Uygulama yeniden açıldığında oturum geçmişi temizlenir; indirilen dosyalar ve tercihler korunur. Kurtarma dosyaları ve arşiv kayıtları geçmişten bağımsız kalabilir. Kurtarma kayıtlarında imzalı URL ve hassas başlıklar gizlenir; dosya adı, kaynak bilgisi veya yerel yollar kişisel bilgi içerebilir. Paylaşmadan önce incele.
+Tercihler, profiller, isteğe bağlı çerez dosyaları, seçilen script yolları, indirme arşivi ve kurtarma bilgileri yerel uygulama verisinde tutulur. Dosyalar seçtiğin klasöre kaydedilir. En fazla 300 indirme geçmişi kaydı, temizlenene kadar yeniden açılışlarda da yerel olarak saklanır; indirilen dosyalar ve tercihler korunur. Kurtarma dosyaları ve arşiv kayıtları geçmişten bağımsız kalabilir. Kurtarma kayıtlarında imzalı URL ve hassas başlıklar gizlenir; dosya adı, kaynak bilgisi veya yerel yollar kişisel bilgi içerebilir. Paylaşmadan önce incele.
 
 Çerez kullanımı isteğe bağlıdır: seçtiğin dosya veya tarayıcıdan alınabilir ya da uygulamanın ayrı oturum tarayıcısında açıkça giriş yaparak oluşturulabilir. Seçtiğin kaynağa erişim için kullanılır; ZenithW'ye analiz verisi olarak gönderilmez. İhtiyacın kalmadığında Ayarlar'dan oturum çerezlerini temizle. Giriş sayfası ilgili hizmete aittir.
 
@@ -30,7 +30,7 @@ ZenithW geliştiriciye otomatik hata raporu, kurtarma günlüğü veya indirme g
 
 ZenithW Desktop verarbeitet Medien auf Ihrem Windows-Gerät, ohne ZenithW-Konto, Werbung oder ZenithW-Analyseintegration. URLs, Medienanfragen und freiwillig verwendete Cookies werden an den gewählten Quelldienst übermittelt. Dieser erhält auch Verbindungsinformationen wie Ihre IP-Adresse und wendet seine eigenen Regeln an. Der Desktop-Downloader lädt Ihre Medien nicht auf den ZenithW-Webserver hoch.
 
-Einstellungen, Profile, optionale Cookies, Skriptpfade, Downloadarchiv und Wiederherstellungsinformationen werden lokal gespeichert. Downloads liegen im gewählten Ordner. Beim neuen App-Start wird der Sitzungsverlauf gelöscht; Dateien und Einstellungen bleiben erhalten. Wiederherstellungsdateien und Archivdaten können separat bestehen bleiben. Diagnoseinformationen verbergen signierte URLs und sensible Header; Dateinamen, Quelldaten und lokale Pfade können dennoch persönliche Informationen enthalten. Prüfen Sie Berichte vor dem Teilen.
+Einstellungen, Profile, optionale Cookies, Skriptpfade, Downloadarchiv und Wiederherstellungsinformationen werden lokal gespeichert. Downloads liegen im gewählten Ordner. Bis zu 300 Verlaufseinträge bleiben über Neustarts hinweg lokal gespeichert, bis sie gelöscht werden; Dateien und Einstellungen bleiben erhalten. Wiederherstellungsdateien und Archivdaten können separat bestehen bleiben. Diagnoseinformationen verbergen signierte URLs und sensible Header; Dateinamen, Quelldaten und lokale Pfade können dennoch persönliche Informationen enthalten. Prüfen Sie Berichte vor dem Teilen.
 
 Cookies sind optional und stammen aus einer gewählten Datei, einem ausgewählten Browser oder einer ausdrücklich gestarteten Anmeldung im separaten App-Browser. Sie dienen dem Zugriff auf die gewählte Quelle und werden nicht als Telemetrie an ZenithW gesendet. Löschen Sie die App-Cookies in den Einstellungen, wenn sie nicht mehr benötigt werden.
 
@@ -40,7 +40,7 @@ Aktivierte Motor-Updates kontaktieren die offiziellen yt-dlp-Veröffentlichungen
 
 ZenithW Desktop обрабатывает медиа на вашем устройстве Windows. Учётная запись ZenithW не требуется; интеграций рекламы или аналитики ZenithW нет. Ссылки, запросы медиа и cookies, которые вы решили использовать, передаются выбранному источнику. Он получает данные соединения, включая IP-адрес, и применяет свои правила. Приложение не загружает скачиваемые файлы на веб-сервер обработки ZenithW.
 
-Настройки, профили, необязательные cookies, пути скриптов, архив скачивания и данные восстановления хранятся локально. Файлы сохраняются в выбранной папке. При новом запуске история сеанса очищается; файлы и настройки сохраняются. Файлы восстановления и архив могут сохраняться отдельно от истории. В диагностике скрываются подписанные URL и конфиденциальные заголовки, однако имена файлов, данные источника и локальные пути могут содержать личную информацию. Проверяйте отчёт перед отправкой.
+Настройки, профили, необязательные cookies, пути скриптов, архив скачивания и данные восстановления хранятся локально. Файлы сохраняются в выбранной папке. До 300 записей истории сохраняются локально между запусками, пока не будут очищены; файлы и настройки сохраняются. Файлы восстановления и архив могут сохраняться отдельно от истории. В диагностике скрываются подписанные URL и конфиденциальные заголовки, однако имена файлов, данные источника и локальные пути могут содержать личную информацию. Проверяйте отчёт перед отправкой.
 
 Cookies необязательны: их можно получить из выбранного файла, браузера или после явно начатого входа в отдельном браузере приложения. Они используются для доступа к выбранному источнику и не отправляются ZenithW как телеметрия. Удаляйте cookies приложения в настройках, когда они больше не нужны.
 

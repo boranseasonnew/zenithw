@@ -19,7 +19,7 @@ async function main() {
   }
   if(!draft && /LocalPreparation|local draft|placeholder/i.test(Object.values(identity).join(' ')))throw new Error('A draft identity cannot be submitted to the Store.');
   const pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
-  const output=path.resolve(root,'../ZenithW-Builds/Microsoft-Store-Preparation');
+  const output=path.resolve(root,'../ZenithW-Builds/Microsoft-Store-Preparation',pkg.version);
   process.env.CSC_IDENTITY_AUTO_DISCOVERY='false';
   const kits=path.join(process.env['ProgramFiles(x86)']||'C:\\Program Files (x86)','Windows Kits/10/bin');
   if (!process.env.ELECTRON_BUILDER_WINDOWS_KITS_PATH && fs.existsSync(kits)) {
@@ -29,7 +29,7 @@ async function main() {
     if(version)process.env.ELECTRON_BUILDER_WINDOWS_KITS_PATH=path.join(kits,version,'x64');
   }
   const files=await build({projectDir:root,targets:Platform.WINDOWS.createTarget(['appx'],Arch.x64),publish:'never',config:{
-    extends:null,
+    extends:null,buildVersion:`${pkg.version}.0`,
     toolsets:{winCodeSign:'1.1.0'},
     directories:{output},
     appx:{...identity,applicationId:'ZenithW',displayName:'ZenithW Desktop',backgroundColor:'#151515',

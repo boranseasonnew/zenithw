@@ -893,10 +893,17 @@ handleMain('cookies:import', async () => {
 });
 
 const checkAppRelease = require('./app-release.cjs').createReleaseChecker({ currentVersion: app.getVersion(), fetch });
+const storeUpdatesUrl = 'ms-windows-store://downloadsandupdates';
 let offeredRelease = null;
 handleMain('app:info', () => ({ version: app.getVersion(), portable: !!process.env.PORTABLE_EXECUTABLE_DIR, store: !!process.windowsStore }));
-handleMain('app:checkUpdate', async () => { const result = await checkAppRelease(); offeredRelease = result.status === 'available' ? result.url : null; return result; });
-handleMain('app:openRelease', () => { if (!offeredRelease) throw new Error('Check for updates first.'); return shell.openExternal(offeredRelease); });
+handleMain('app:checkUpdate', async () => {
+  if (process.windowsStore) return { status: 'store_managed', currentVersion: app.getVersion() };
+  const result = await checkAppRelease(); offeredRelease = result.status === 'available' ? result.url : null; return result;
+});
+handleMain('app:openRelease', () => {
+  if (process.windowsStore) return shell.openExternal(storeUpdatesUrl);
+  if (!offeredRelease) throw new Error('Check for updates first.'); return shell.openExternal(offeredRelease);
+});
 handleMain('app:external', (_, name) => {
   const target = { source: 'https://github.com/boranseasonnew/zenithw', website: 'https://zenithw.space', sponsor: 'https://github.com/sponsors/boranseasonnew' }[name];
   if (!target) throw new Error('Invalid external link.'); return shell.openExternal(target);

@@ -1,6 +1,6 @@
 # ZenithW Microsoft Store hazırlığı
 
-Ürün: **ZenithW Desktop**, masaüstü sürümü **4.1.0**, Windows x64. Paket formatı APPX: Microsoft Store bu MSIX ailesindeki formatı kabul eder. Mağaza dağıttığı paketi imzalar; ayrıca ücretli sertifika satın almak gerekmez. Mevcut GitHub EXE'si imzasız olduğundan EXE bağlantısı yöntemiyle başvuru yapılmamalıdır.
+Ürün: **ZenithW Desktop**, masaüstü sürümü **4.2.0**, Windows x64. Paket formatı APPX: Microsoft Store bu MSIX ailesindeki formatı kabul eder. Mağaza dağıttığı paketi imzalar; ayrıca ücretli sertifika satın almak gerekmez. Mevcut GitHub EXE'si imzasız olduğundan EXE bağlantısı yöntemiyle başvuru yapılmamalıdır.
 
 ## Hesaba bağlama
 
@@ -27,7 +27,7 @@ npm test
 npm run store
 ```
 
-Çıktı: `ZenithW-Builds/Microsoft-Store-Preparation/ZenithW-4.1.0-Store-x64.appx` ve `SHA256SUMS.txt`.
+Çıktı: `ZenithW-Builds/Microsoft-Store-Preparation/4.2.0/ZenithW-4.2.0-Store-x64.appx` ve `SHA256SUMS.txt`.
 
 Hesap kimliği olmadan yalnızca paketleme denemesi için:
 
@@ -47,7 +47,7 @@ npm run store -- --draft
 
 Fiyatı **Free / Ücretsiz**, cihazı **PC**, dilleri **tr-TR, en-US, de-DE, ru-RU** seç. Açıklamada mevcut özellikleri kullan; tüm kaynaklarda sürekli indirme garantisi verme. Gizlilik URL'si: https://github.com/boranseasonnew/zenithw/blob/main/desktop/store/privacy.md . Destek: https://github.com/boranseasonnew/zenithw/issues . Web sitesi: https://zenithw.space/pc-app .
 
-Paketin yalnızca `runFullTrust` özel izni vardır: yerel yt-dlp, FFmpeg, FFprobe, aria2 ve Deno araçlarını çalıştırır. Yönetici yetkisi, sürücü veya Windows hizmeti istemez. Store'da yt-dlp'nin güncellenebilir kopyası kullanıcı verisi klasöründe tutulur; kurulum klasörüne yazılmaz. Uygulama sürümü Store üzerinden, isteğe bağlı motor güncellemesi resmi yt-dlp GitHub yayınlarından gelir.
+Paketin yalnızca `runFullTrust` özel izni vardır: yerel yt-dlp, FFmpeg, FFprobe, aria2 ve Deno araçlarını çalıştırır. Yönetici yetkisi, sürücü veya Windows hizmeti istemez. Store'da yt-dlp'nin güncellenebilir kopyası kullanıcı verisi klasöründe tutulur; kurulum klasörüne yazılmaz. Uygulama sürümü Store üzerinden, isteğe bağlı motor güncellemesi resmi yt-dlp GitHub yayınlarından gelir. 4.2.0 sürümünde uygulama güncelleme düğmesi doğrudan Store’un indirmeler ve güncellemeler sayfasını açar; GitHub EXE’si önerilmez. Geçmiş kayıtları yerel olarak yeniden açılışlarda korunur (en fazla 300 kayıt).
 
 Göndermeden önce gerçek kimlikli paketi test ortamına yükleyerek Windows App Certification Kit ve indirme/güncelleme kontrollerini tamamla. Masaüstü ekran görüntüleri **PNG, en az 1366×768** olmalı; kişisel URL, kullanıcı adı veya dosya yolunu göstermemeli. Her mağaza dilinde uygun görüntüyü yükle. Adın ayrılabilmesi, kimlik onayı, yaş derecelendirme cevapları ve Microsoft inceleme sonucu hesaptaki başvuru sırasında kesinleşir; hazırlık paketi mağaza onayı anlamına gelmez.
 

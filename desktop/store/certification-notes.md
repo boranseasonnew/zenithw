@@ -8,6 +8,11 @@ On first Store execution, the packaged yt-dlp engine is copied into writable use
 
 For basic testing, choose a publicly accessible media URL you own or are allowed to use, inspect it, select a format, then download to a test folder. Test aria2 enabled and disabled. A given video source may impose temporary authentication or access restrictions; the application does not promise to bypass them. Also verify language selection, playlist options, subtitle/metadata controls and engine update in Settings.
 
-Exit and restart the app: session history resets while preferences and downloaded files remain. Settings → cookie controls can clear the optional app cookie session. Do not include personal cookies or account credentials in test reports. Desktop-specific privacy policy: https://github.com/boranseasonnew/zenithw/blob/main/desktop/store/privacy.md .
+Exit and restart the app: preferences, downloaded files and up to 300 local history entries remain. History can be cleared from the app. Settings → cookie controls can clear the optional app cookie session. Do not include personal cookies or account credentials in test reports. Desktop-specific privacy policy: https://github.com/boranseasonnew/zenithw/blob/main/desktop/store/privacy.md .
 
 Final submission requires the actual Partner Center identity and a Windows App Certification Kit run on the signed/test-installed package. The locally generated DRAFT identity is a packaging check, not a Store submission or certification result.
+
+
+## Version 4.2.0 update
+
+Adds byte-based transfer progress, independent link inspection, batch input (50 URLs), a bounded 100-job queue, playlist selection and verified 3000×3000 square artwork for supported containers. The top-right menu includes About and version details. In the Store distribution the app-update action opens Microsoft Store Downloads and updates; it does not query or offer the GitHub EXE. The package identity and publisher remain the same as the approved 4.1.0 package; package version is 4.2.0.0. This package has been built and inspected locally. No new signed-package runtime or Windows App Certification Kit run was performed for this update; Microsoft certification is still required.

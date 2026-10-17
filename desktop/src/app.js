@@ -9,6 +9,7 @@ $$('[data-icon]').forEach(n=>n.innerHTML=icon(n.dataset.icon));
 const native=!!window.zenith, jobs=new Map(), QUEUE_KEY='zenith.desktop.queue.v4';
 try { localStorage.removeItem(QUEUE_KEY); } catch {}
 let settings={},tools={},media=null,mediaUrl='',kind='video',selection=null,tab='downloads',history=[],inspectId=0,starting=false,welcomeStep=0,pendingTrim=false,saveChain=Promise.resolve();
+let appDistribution=null;
 const t=(a,b)=>localText(a,settings.language||'tr',b);
 const tr=key=>words[key]?.[Math.max(0,['tr','en','ru','de'].indexOf(settings.language||'tr'))]||words[key]?.[0]||key;
 const errorText=e=>String(e?.message||e).replace(/^Error invoking remote method '[^']+': (?:Error: )?/,'');
@@ -47,7 +48,7 @@ function syncSettings(){
  $('#browser-cookie-setting').classList.toggle('hidden-setting',settings.cookieMode!=='browser');
  $('#url').placeholder=t('Bir bağlantı yapıştır…','Paste a link…');$('#inspect').firstElementChild.textContent=t('Hazırla','Prepare');$('#command-note').textContent=t('Enter ile hazırla','Press Enter to prepare');$('#settings-heading').textContent=t('Ayarlar','Settings');$('#download').lastElementChild.textContent=t('İndir','Download');
  $$('.setting').forEach((row,i)=>{const label=row.querySelector('b'),field=row.querySelector('input,select');if(label&&field){label.id||='label-'+i;field.setAttribute('aria-labelledby',label.id);}});
- syncQuickIndicators();if(media)renderFormats();
+ syncQuickIndicators();if(media)renderFormats();syncAppUpdateUi();
 }
 async function save(values){
  if(values.remuxVideo)values={...values,recodeVideo:''};if(values.recodeVideo)values={...values,remuxVideo:''};
@@ -306,11 +307,19 @@ $$('dialog').forEach(dialog=>dialog.addEventListener('click',event=>{
  if(event.target!==dialog)return;const box=dialog.getBoundingClientRect();
  if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();
 }));
-async function refreshAppVersion(){if(native){const info=await api.appInfo();$('#about-version').textContent=info.version;$('#status-version').textContent='Zenith '+info.version;}}
+function syncAppUpdateUi(){
+ if(!appDistribution?.store)return;
+ $('#check-app-update').textContent=t('Microsoft Store’u aç','Open Microsoft Store');
+ $('#release-status').textContent=t('Bu sürüm Microsoft Store üzerinden güncellenir. Güncellemeleri Store kitaplığından kontrol edebilirsin.','This edition is updated through Microsoft Store. Check for updates in the Store library.');
+ $('#open-app-release').hidden=true;
+}
+async function refreshAppVersion(){if(native){const info=await api.appInfo();appDistribution=info;$('#about-version').textContent=info.version;$('#status-version').textContent='Zenith '+info.version;syncAppUpdateUi();}}
 $('#check-app-update').onclick=async()=>{
  const button=$('#check-app-update'),status=$('#release-status');button.disabled=true;$('#open-app-release').hidden=true;
- status.textContent=t('GitHub sürümleri kontrol ediliyor…','Checking GitHub releases…');
- try{requireNative();const release=await api.checkAppUpdate();
+ try{requireNative();appDistribution=appDistribution||await api.appInfo();
+  if(appDistribution.store){await api.openAppRelease();syncAppUpdateUi();return;}
+  status.textContent=t('GitHub sürümleri kontrol ediliyor…','Checking GitHub releases…');
+  const release=await api.checkAppUpdate();
   status.textContent=release.status==='available'?t('Yeni sürüm mevcut:','New version available:')+' '+release.latestVersion:release.status==='ahead'?t('Bu sürüm, yayımlanan son sürümden daha yeni.','This version is newer than the latest published release.'):t('Şu anda güncelleme yok. Güncel sürümü kullanıyorsun.','No updates right now. You are up to date.');
   $('#open-app-release').hidden=release.status!=='available';
  }catch(e){status.textContent=t('Güncelleme kontrol edilemedi. Bağlantını kontrol edip tekrar dene.','Could not check updates. Check your connection and try again.');}

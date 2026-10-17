@@ -1,6 +1,6 @@
 {
   "productName": "ZenithW Desktop",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "architecture": "x64",
   "price": "Free",
   "categorySuggestion": "Photo & video",
@@ -11,31 +11,99 @@
   "listings": {
     "tr-TR": {
       "shortDescription": "Video ve ses bağlantılarını Windows'ta sade bir arayüzle indir.",
-      "description": "ZenithW; desteklenen kaynaklardaki video ve ses bağlantıları için ücretsiz, açık kaynak bir Windows aracıdır. Format ve kalite seç, indirmeleri sıraya al, altyazı ve metadata seçeneklerini düzenle. İşlemler cihazında yt-dlp ve FFmpeg ile yürütülür. Çerez oturumu, proxy, oynatma listesi ve SponsorBlock ayarları isteğe bağlıdır. Ayarlar sonraki açılışlarda korunur; geçmiş her uygulama açılışında temizlenir. Yalnızca indirme ve kullanma hakkına sahip olduğun içerikler için kullan. Kullanılabilir kaynaklar ve formatlar kaynağın erişim koşullarına bağlıdır.",
-      "features": ["Video ve ses için format ve kalite seçimi", "Liste ve kart görünümü, indirme kuyruğu", "Altyazı, metadata, oynatma listesi ve SponsorBlock seçenekleri", "İsteğe bağlı çerez oturumu ve proxy", "Kararlı veya Nightly yt-dlp motoru", "Türkçe, İngilizce, Almanca ve Rusça arayüz"],
-      "releaseNotes": "İndirme kurtarma akışı iyileştirildi. Yeni ayar bölümleri ve kompakt kart görünümü eklendi. Geçmiş yeni oturumda temizlenir; tercihler korunur. Store'da motor güncellemesi kullanıcı klasöründe çalışır.",
-      "keywords": ["video", "ses", "medya", "indirme", "altyazı"]
+      "description": "ZenithW, desteklenen kaynaklardan video ve ses indirmek ve dosyalarını Windows üzerinde düzenlemek için ücretsiz, açık kaynaklı bir medya çalışma alanıdır. Format ve kalite seçebilir, indirmeleri kuyruğa alabilir, altyazı ve metadata ayarlarını düzenleyebilirsin. Tek seferde 50 bağlantıya kadar toplu ekleme, 100 işe kadar kuyruk ve oynatma listesinden ayrı öğe seçimi desteklenir. İndirme devam ederken yeni bağlantı hazırlayabilirsin. İlerleme gerçek aktarılan baytlara dayanır; son işleme ve kaydetme ayrı aşamalar olarak gösterilir. Uygun formatlarda kapak 3000×3000 kare olarak hazırlanır; doğrulama başarısızsa özgün medya korunur. İşlemler cihazında yt-dlp ve FFmpeg ile yürütülür. Reklam veya zorunlu ZenithW hesabı yoktur; medya dosyaların ZenithW sunucusuna yüklenmez. Çerez, proxy, playlist ve SponsorBlock seçenekleri isteğe bağlıdır. Ayarlar ve en fazla 300 geçmiş kaydı yerel olarak saklanır; geçmişi temizleyebilirsin. Uygulama güncellemeleri Microsoft Store üzerinden dağıtılır. Yalnızca indirme ve kullanma hakkına sahip olduğun içerikler için kullan. Kaynakların erişim koşulları ve cihazına göre format desteği ve bekleme süresi değişebilir.",
+      "features": [
+        "Video ve ses için format ve kalite seçimi",
+        "50 bağlantıya kadar toplu ekleme, 100 işe kadar kuyruk",
+        "Oynatma listesinden ayrı öğe seçimi",
+        "Gerçek bayt tabanlı ilerleme ve ayrı son işleme aşamaları",
+        "Desteklenen formatlarda 3000×3000 kare kapak",
+        "Altyazı, metadata ve isteğe bağlı SponsorBlock",
+        "İsteğe bağlı çerez oturumu ve proxy",
+        "Sağ üstte ayarlar/kitaplık menüsü ve Hakkında",
+        "Microsoft Store üzerinden uygulama güncellemeleri",
+        "Türkçe, İngilizce, Almanca ve Rusça arayüz"
+      ],
+      "releaseNotes": "4.2.0: İndirme yüzdesi gerçek aktarılan baytlarla hesaplanıyor; boyut bilinmiyorsa belirsiz ilerleme gösteriliyor. Kalan süre aktarımı kapsıyor, son işleme ve kaydetme ayrı belirtiliyor. İndirme sırasında başka bağlantı hazırlama ve kısa süreli metadata önbelleği eklendi. 50 bağlantıya kadar toplu ekleme, 100 işlik kuyruk ve playlist seçimi geliştirildi. Desteklenen formatlarda 3000×3000 kare kapak doğrulanarak gömülüyor; başarısızlıkta özgün dosya korunuyor. Üst menü, Hakkında, sürüm bilgisi ve kısa arayüz geçişleri eklendi. Geçmiş artık yeniden açılışta korunuyor. Store sürümünde güncelleme düğmesi Microsoft Store’u açıyor. Kaynak ve ağ kısıtlamaları geçerlidir.",
+      "keywords": [
+        "video",
+        "ses",
+        "medya",
+        "indirme",
+        "altyazı"
+      ]
     },
     "en-US": {
       "shortDescription": "Download video and audio links with a simple Windows interface.",
-      "description": "ZenithW is a free, open-source Windows tool for video and audio links from supported sources. Choose formats and quality, queue downloads, and configure subtitles and metadata. Processing runs on your device using yt-dlp and FFmpeg. Cookie sessions, proxy, playlist and SponsorBlock settings are optional. Preferences survive restarts; history clears when a new app session starts. Use only content you have the right to download and use. Available sources and formats depend on the source's access conditions.",
-      "features": ["Video and audio format and quality selection", "List and card views with a download queue", "Subtitle, metadata, playlist and SponsorBlock options", "Optional cookie session and proxy", "Stable or Nightly yt-dlp engine", "Turkish, English, German and Russian interface"],
-      "releaseNotes": "Improved download recovery. Added settings sections and a compact card view. History clears in a new session while preferences remain. The Store edition updates its engine in a writable user folder.",
-      "keywords": ["video", "audio", "media", "download", "subtitles"]
+      "description": "ZenithW is a free, open-source Windows media workspace for downloading video and audio from supported sources and organizing local files. Choose formats and quality, queue downloads, and configure subtitles and metadata. Add up to 50 links per batch, manage a queue of up to 100 jobs, and select individual playlist entries. Prepare another link while a download is running. Progress is based on actual transferred bytes; post-processing and saving appear as separate stages. Supported formats receive 3000×3000 square artwork; original media is retained if verification fails. Processing runs on your device with yt-dlp and FFmpeg. No advertising or mandatory ZenithW account; your media is not uploaded to ZenithW servers. Cookies, proxies, playlists and SponsorBlock are optional. Preferences and up to 300 history entries are stored locally; history can be cleared. Application updates are distributed through Microsoft Store. Only use content you have the right to download and use. Format support and waiting time depend on your device and the source access conditions.",
+      "features": [
+        "Video and audio format and quality selection",
+        "Batch input for up to 50 URLs, queue for up to 100 jobs",
+        "Individual playlist entry selection",
+        "Byte-based progress and separate post-processing stages",
+        "3000×3000 square artwork in supported formats",
+        "Subtitles, metadata and optional SponsorBlock",
+        "Optional cookie sessions and proxy",
+        "Top-right settings/library menu and About",
+        "Application updates through Microsoft Store",
+        "Turkish, English, German and Russian interface"
+      ],
+      "releaseNotes": "4.2.0: Transfer progress uses actual bytes; unknown sizes show indeterminate progress. Remaining time describes transfer, with separate post-processing and saving stages. Prepare another URL during downloads and reuse a short-lived metadata cache. Improved batch input for up to 50 URLs, a 100-job queue and playlist selection. Supported formats receive verified 3000×3000 square artwork; original files are retained on failure. Added a top menu, About, version details and short transitions. History now survives restarts. The Store edition opens Microsoft Store for application updates. Network and source restrictions still apply.",
+      "keywords": [
+        "video",
+        "audio",
+        "media",
+        "download",
+        "subtitles"
+      ]
     },
     "de-DE": {
       "shortDescription": "Video- und Audiolinks mit einer einfachen Windows-Oberfläche herunterladen.",
-      "description": "ZenithW ist ein kostenloses, quelloffenes Windows-Werkzeug für Video- und Audiolinks aus unterstützten Quellen. Wählen Sie Format und Qualität, verwalten Sie die Warteschlange und stellen Sie Untertitel und Metadaten ein. Die Verarbeitung erfolgt auf Ihrem Gerät mit yt-dlp und FFmpeg. Cookie-Sitzungen, Proxy, Wiedergabelisten und SponsorBlock sind optional. Einstellungen bleiben nach einem Neustart erhalten; der Verlauf wird beim Start einer neuen Sitzung gelöscht. Verwenden Sie nur Inhalte, die Sie herunterladen und nutzen dürfen. Verfügbare Quellen und Formate hängen von den Zugangsbedingungen der Quelle ab.",
-      "features": ["Format- und Qualitätsauswahl für Video und Audio", "Listen- und Kartenansicht mit Warteschlange", "Untertitel, Metadaten, Wiedergabelisten und SponsorBlock", "Optionale Cookie-Sitzung und Proxy", "Stabile oder Nightly-Version von yt-dlp", "Türkische, englische, deutsche und russische Oberfläche"],
-      "releaseNotes": "Verbesserte Wiederherstellung fehlgeschlagener Downloads. Neue Einstellungsbereiche und kompakte Kartenansicht. Der Verlauf wird beim Sitzungsstart gelöscht; Einstellungen bleiben erhalten. Die Store-Ausgabe aktualisiert den Motor im beschreibbaren Benutzerordner.",
-      "keywords": ["Video", "Audio", "Medien", "Download", "Untertitel"]
+      "description": "ZenithW ist eine kostenlose, quelloffene Windows-Medienumgebung zum Herunterladen von Video und Audio aus unterstützten Quellen und zur Organisation lokaler Dateien. Wählen Sie Format und Qualität, verwalten Sie Downloads und stellen Sie Untertitel und Metadaten ein. Bis zu 50 Links pro Stapel, eine Warteschlange mit 100 Aufträgen und die Auswahl einzelner Playlist-Einträge werden unterstützt. Weitere Links lassen sich während eines Downloads vorbereiten. Der Fortschritt basiert auf übertragenen Bytes; Nachbearbeitung und Speichern sind getrennte Phasen. Unterstützte Formate erhalten quadratische Cover mit 3000×3000 Pixeln; bei fehlgeschlagener Prüfung bleibt das Original erhalten. Die Verarbeitung erfolgt lokal mit yt-dlp und FFmpeg. Keine Werbung oder verpflichtendes ZenithW-Konto; keine Medienübertragung an ZenithW-Server. Cookies, Proxy und SponsorBlock sind optional. Einstellungen und bis zu 300 Verlaufseinträge bleiben lokal gespeichert; der Verlauf kann gelöscht werden. App-Updates erfolgen über den Microsoft Store. Verwenden Sie nur Inhalte, die Sie herunterladen und nutzen dürfen. Formatunterstützung und Wartezeiten hängen von Gerät und Zugangsbedingungen der Quelle ab.",
+      "features": [
+        "Format- und Qualitätsauswahl für Video und Audio",
+        "Bis zu 50 Links je Stapel und 100 Aufträge in der Warteschlange",
+        "Einzelne Playlist-Einträge auswählen",
+        "Bytebasierter Fortschritt und getrennte Nachbearbeitung",
+        "Quadratische Cover mit 3000×3000 in unterstützten Formaten",
+        "Untertitel, Metadaten und optionales SponsorBlock",
+        "Optionale Cookie-Sitzung und Proxy",
+        "Menü für Einstellungen/Bibliothek oben rechts und Über die App",
+        "App-Updates über den Microsoft Store",
+        "Türkische, englische, deutsche und russische Oberfläche"
+      ],
+      "releaseNotes": "4.2.0: Fortschritt anhand übertragener Bytes, unbestimmte Anzeige bei unbekannter Größe. Restzeit für den Transfer, getrennte Nachbearbeitung und Speicherung. Weitere Links während Downloads vorbereiten und kurzlebigen Metadaten-Cache nutzen. Stapel mit bis zu 50 Links, 100 Aufträge und Playlist-Auswahl verbessert. Geprüfte quadratische Cover mit 3000×3000 in unterstützten Formaten; Original bleibt bei Fehlern erhalten. Neues oberes Menü, Über die App, Versionsanzeige und kurze Übergänge. Verlauf bleibt nach Neustarts erhalten. App-Updates der Store-Ausgabe öffnen den Microsoft Store. Netzwerk- und Quellbeschränkungen gelten weiterhin.",
+      "keywords": [
+        "Video",
+        "Audio",
+        "Medien",
+        "Download",
+        "Untertitel"
+      ]
     },
     "ru-RU": {
       "shortDescription": "Скачивайте видео и аудио по ссылкам через простой интерфейс Windows.",
-      "description": "ZenithW — бесплатный инструмент для Windows с открытым исходным кодом, работающий с видео- и аудиоссылками из поддерживаемых источников. Выбирайте формат и качество, управляйте очередью, настраивайте субтитры и метаданные. Обработка выполняется на вашем устройстве с помощью yt-dlp и FFmpeg. Сеансы с cookies, прокси, плейлисты и SponsorBlock используются по желанию. Настройки сохраняются после перезапуска; история очищается при запуске нового сеанса приложения. Скачивайте только контент, который вы вправе скачивать и использовать. Доступность источников и форматов зависит от условий доступа к источнику.",
-      "features": ["Выбор формата и качества видео и аудио", "Списки, карточки и очередь скачивания", "Субтитры, метаданные, плейлисты и SponsorBlock", "Необязательные cookies и прокси", "Стабильный или Nightly-движок yt-dlp", "Турецкий, английский, немецкий и русский интерфейс"],
-      "releaseNotes": "Улучшено восстановление скачивания после ошибок. Добавлены разделы настроек и компактные карточки. История очищается в новом сеансе, настройки сохраняются. Версия для Store обновляет движок в доступной для записи папке пользователя.",
-      "keywords": ["видео", "аудио", "медиа", "скачивание", "субтитры"]
+      "description": "ZenithW — бесплатная медиаплатформа для Windows с открытым кодом: скачивайте видео и аудио из поддерживаемых источников и управляйте локальными файлами. Выбирайте формат и качество, очередь, субтитры и метаданные. Поддерживаются до 50 ссылок за одно добавление, очередь из 100 задач и выбор отдельных элементов плейлиста. Следующую ссылку можно подготовить во время загрузки. Прогресс основан на переданных байтах; обработка и сохранение показаны отдельно. В поддерживаемых форматах встраивается квадратная обложка 3000×3000; при ошибке проверки сохраняется оригинал. Обработка выполняется на устройстве с yt-dlp и FFmpeg. Нет рекламы и обязательного аккаунта ZenithW; медиа не отправляются на серверы ZenithW. Cookies, прокси и SponsorBlock необязательны. Настройки и до 300 записей истории хранятся локально; историю можно очистить. Обновления приложения распространяются через Microsoft Store. Используйте только контент, который вы вправе скачивать. Поддержка форматов и ожидание зависят от устройства и условий доступа источника.",
+      "features": [
+        "Выбор формата и качества видео и аудио",
+        "До 50 ссылок за добавление и 100 задач в очереди",
+        "Выбор отдельных элементов плейлиста",
+        "Прогресс по байтам и отдельные этапы обработки",
+        "Квадратная обложка 3000×3000 в поддерживаемых форматах",
+        "Субтитры, метаданные и необязательный SponsorBlock",
+        "Необязательные cookies и прокси",
+        "Настройки/библиотека справа вверху и О программе",
+        "Обновления приложения через Microsoft Store",
+        "Турецкий, английский, немецкий и русский интерфейс"
+      ],
+      "releaseNotes": "4.2.0: Прогресс по реальным байтам, неопределённый индикатор при неизвестном размере. Оставшееся время относится к передаче; обработка и сохранение выделены отдельно. Подготовка следующей ссылки во время загрузки и временный кэш метаданных. Улучшены добавление до 50 ссылок, очередь на 100 задач и выбор плейлиста. Проверяемые обложки 3000×3000 в поддерживаемых форматах; при ошибке сохраняется оригинал. Верхнее меню, О программе, версия и короткие переходы. История сохраняется после перезапуска. Кнопка обновлений Store-версии открывает Microsoft Store. Ограничения сети и источников остаются.",
+      "keywords": [
+        "видео",
+        "аудио",
+        "медиа",
+        "скачивание",
+        "субтитры"
+      ]
     }
   }
 }
