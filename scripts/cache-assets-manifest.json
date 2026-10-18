@@ -96,8 +96,8 @@
     "sha256": "47a5841a0abb360dbbc0c41dedbbd26fd5df297c4017296b144d72edf2105710"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.1d14d2a0207c.json",
-    "sha256": "1d14d2a0207c739f3c5260c96457f687d8712f63162ad98023ebe4be7a28ccfd"
+    "url": "/cache-assets/en.f7a8b8f4030a.json",
+    "sha256": "f7a8b8f4030a25e914bcbb8686a5036494c5d021a9d68e79ff12e3877098fab3"
   },
   "locales/fr.json": {
     "url": "/cache-assets/fr.70a757697422.json",
@@ -124,8 +124,8 @@
     "sha256": "34581ae8732d16867825d50257ac4fc8ba026d62d5b4093343701adc8fce4e10"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.b1b5bdaf1724.js",
-    "sha256": "b1b5bdaf1724bae5d8442c3a9b4396cdefbee9bc211d1f386a738400ac1cba45"
+    "url": "/cache-assets/site-language.5d2d1bd1cf35.js",
+    "sha256": "5d2d1bd1cf35b70ddf6870a8e4bd051f604a2c51f584cc3e58033341daa7742e"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.750ddfc30c31.css",
