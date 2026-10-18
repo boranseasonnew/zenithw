@@ -221,3 +221,109 @@ for (const [lang, labels] of Object.entries(hubCopy)) {
 
 const hubAuxiliaryCopy = {"tr": ["Marka künyeleri", "Gezinme menüsünü aç"], "en": ["Brand credits", "Open navigation"], "de": ["Markenhinweise", "Navigation öffnen"], "fr": ["Crédits des marques", "Ouvrir la navigation"], "ru": ["Сведения о брендах", "Открыть меню навигации"], "vi": ["Thông tin thương hiệu", "Mở menu điều hướng"], "zh": ["品牌说明", "打开导航菜单"], "ja": ["ブランド表記", "ナビゲーションを開く"]};
 for (const [lang,labels] of Object.entries(hubAuxiliaryCopy)) { downloadCopy[lang]['Brand credits']=labels[0]; downloadCopy[lang]['Open navigation']=labels[1]; }
+
+const releaseFeatureKeys = [
+  "Windows 10/11, 64-bit. The Microsoft Store package requires Windows 10 version 2004 (build 19041) or newer.",
+  "Android 7.0+ (API 24). Select arm64-v8a, armeabi-v7a or x86_64 to match your device.",
+  "Queue links and playlists, and prepare new downloads while transfers continue.",
+  "Track progress, speed and estimated time, and manage concurrent downloads.",
+  "Choose video, audio and subtitle formats, cover art and metadata before saving.",
+  "Batch downloads have their own screen. Add up to 50 link rows with the + button.",
+  "Select playlist items and adjust quality and formats with dropdown menus.",
+  "Use expandable settings for language, browser sessions, SponsorBlock, network and engine updates.",
+  "Internet access and enough free storage for your media files are required."
+];
+const releaseFeatureCopy = {
+  "en": [
+    "Windows 10/11, 64-bit. The Microsoft Store package requires Windows 10 version 2004 (build 19041) or newer.",
+    "Android 7.0+ (API 24). Select arm64-v8a, armeabi-v7a or x86_64 to match your device.",
+    "Queue links and playlists, and prepare new downloads while transfers continue.",
+    "Track progress, speed and estimated time, and manage concurrent downloads.",
+    "Choose video, audio and subtitle formats, cover art and metadata before saving.",
+    "Batch downloads have their own screen. Add up to 50 link rows with the + button.",
+    "Select playlist items and adjust quality and formats with dropdown menus.",
+    "Use expandable settings for language, browser sessions, SponsorBlock, network and engine updates.",
+    "Internet access and enough free storage for your media files are required."
+  ],
+  "tr": [
+    "Windows 10/11, 64 bit. Microsoft Store paketi için Windows 10 sürüm 2004 (derleme 19041) veya üzeri gerekir.",
+    "Android 7.0+ (API 24). Cihazına uygun arm64-v8a, armeabi-v7a veya x86_64 APK’sını seç.",
+    "Bağlantıları ve oynatma listelerini sıraya al; aktarım sürerken yeni indirmeler hazırla.",
+    "İlerlemeyi, hızı ve tahmini süreyi takip et; eşzamanlı indirmeleri yönet.",
+    "Kaydetmeden önce video, ses ve altyazı biçimlerini, kapak görselini ve medya bilgilerini seç.",
+    "Toplu indirme ayrı bir ekranda. + düğmesiyle en fazla 50 bağlantı satırı ekle.",
+    "Oynatma listesi öğelerini seç; kaliteyi ve biçimleri açılır menülerden ayarla.",
+    "Dil, tarayıcı oturumları, SponsorBlock, bağlantı ve motor güncellemelerini açılır ayarlardan yönet.",
+    "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir."
+  ],
+  "de": [
+    "Windows 10/11, 64 Bit. Das Microsoft-Store-Paket benötigt Windows 10 Version 2004 (Build 19041) oder neuer.",
+    "Android 7.0+ (API 24). Wähle die passende APK: arm64-v8a, armeabi-v7a oder x86_64.",
+    "Stelle Links und Playlists in die Warteschlange und bereite während laufender Downloads neue vor.",
+    "Verfolge Fortschritt, Geschwindigkeit und Restzeit und verwalte gleichzeitige Downloads.",
+    "Wähle vor dem Speichern Video-, Audio- und Untertitelformate, Cover und Metadaten.",
+    "Mehrfachdownloads haben einen eigenen Bildschirm. Füge mit + bis zu 50 Linkzeilen hinzu.",
+    "Wähle Playlist-Einträge sowie Qualität und Formate über Dropdown-Menüs.",
+    "Verwalte Sprache, Browsersitzungen, SponsorBlock, Netzwerk und Engine-Updates in aufklappbaren Einstellungen.",
+    "Internetzugang und ausreichend freier Speicher für deine Mediendateien sind erforderlich."
+  ],
+  "fr": [
+    "Windows 10/11, 64 bits. Le paquet Microsoft Store nécessite Windows 10 version 2004 (build 19041) ou ultérieure.",
+    "Android 7.0+ (API 24). Choisissez l’APK adaptée : arm64-v8a, armeabi-v7a ou x86_64.",
+    "Mettez les liens et les playlists en file et préparez de nouveaux téléchargements pendant les transferts.",
+    "Suivez la progression, la vitesse et le temps estimé et gérez les téléchargements simultanés.",
+    "Choisissez les formats vidéo, audio et de sous-titres, les pochettes et les métadonnées avant l’enregistrement.",
+    "Le téléchargement multiple dispose de son propre écran. Ajoutez jusqu’à 50 liens avec le bouton +.",
+    "Sélectionnez les éléments de playlist et réglez la qualité et les formats avec les menus déroulants.",
+    "Gérez la langue, les sessions du navigateur, SponsorBlock, le réseau et les mises à jour du moteur dans les paramètres dépliables.",
+    "Une connexion Internet et suffisamment d’espace libre pour vos fichiers multimédias sont nécessaires."
+  ],
+  "ru": [
+    "Windows 10/11, 64 бит. Для Microsoft Store требуется Windows 10 версии 2004 (сборка 19041) или новее.",
+    "Android 7.0+ (API 24). Выберите APK для устройства: arm64-v8a, armeabi-v7a или x86_64.",
+    "Добавляйте ссылки и плейлисты в очередь и готовьте новые загрузки во время передачи файлов.",
+    "Следите за прогрессом, скоростью и оставшимся временем и управляйте одновременными загрузками.",
+    "Перед сохранением выбирайте форматы видео, аудио и субтитров, обложки и метаданные.",
+    "Для пакетных загрузок есть отдельный экран. Добавляйте до 50 ссылок кнопкой +.",
+    "Выбирайте элементы плейлиста, качество и форматы в раскрывающихся меню.",
+    "Управляйте языком, сеансами браузера, SponsorBlock, сетью и обновлениями движка в раскрывающихся настройках.",
+    "Необходимы Интернет и достаточно свободного места для медиафайлов."
+  ],
+  "vi": [
+    "Windows 10/11, 64 bit. Gói Microsoft Store yêu cầu Windows 10 phiên bản 2004 (bản dựng 19041) trở lên.",
+    "Android 7.0+ (API 24). Chọn APK phù hợp: arm64-v8a, armeabi-v7a hoặc x86_64.",
+    "Xếp liên kết và danh sách phát vào hàng đợi, chuẩn bị lượt tải mới khi quá trình truyền vẫn tiếp tục.",
+    "Theo dõi tiến độ, tốc độ, thời gian dự kiến và quản lý các lượt tải đồng thời.",
+    "Chọn định dạng video, âm thanh, phụ đề, ảnh bìa và siêu dữ liệu trước khi lưu.",
+    "Tải hàng loạt có màn hình riêng. Thêm tối đa 50 dòng liên kết bằng nút +.",
+    "Chọn mục danh sách phát, chất lượng và định dạng bằng menu thả xuống.",
+    "Quản lý ngôn ngữ, phiên trình duyệt, SponsorBlock, mạng và cập nhật công cụ trong cài đặt có thể mở rộng.",
+    "Cần kết nối Internet và đủ dung lượng trống cho các tệp đa phương tiện."
+  ],
+  "zh": [
+    "64 位 Windows 10/11。Microsoft Store 软件包要求 Windows 10 版本 2004（内部版本 19041）或更高版本。",
+    "Android 7.0+（API 24）。请选择适合设备的 arm64-v8a、armeabi-v7a 或 x86_64 APK。",
+    "将链接和播放列表加入队列，并在传输期间准备新的下载。",
+    "查看进度、速度和预计时间，并管理并发下载。",
+    "保存前选择视频、音频和字幕格式、封面及元数据。",
+    "批量下载有独立页面。使用 + 按钮添加最多 50 行链接。",
+    "选择播放列表项目，并通过下拉菜单设置画质和格式。",
+    "通过可展开设置管理语言、浏览器会话、SponsorBlock、网络和引擎更新。",
+    "需要互联网连接，以及足够存放媒体文件的可用空间。"
+  ],
+  "ja": [
+    "64 ビット Windows 10/11。Microsoft Store 版には Windows 10 バージョン 2004（ビルド 19041）以降が必要です。",
+    "Android 7.0+（API 24）。端末に合う arm64-v8a、armeabi-v7a、x86_64 の APK を選んでください。",
+    "リンクやプレイリストをキューに追加し、転送中も次のダウンロードを準備できます。",
+    "進捗、速度、推定残り時間を確認し、同時ダウンロードを管理できます。",
+    "保存前に動画・音声・字幕の形式、カバー画像、メタデータを選択できます。",
+    "一括ダウンロードは専用画面にあります。+ ボタンで最大 50 行のリンクを追加できます。",
+    "プレイリストの項目を選択し、ドロップダウンメニューで画質や形式を設定できます。",
+    "展開できる設定で言語、ブラウザーのセッション、SponsorBlock、ネットワーク、エンジン更新を管理できます。",
+    "インターネット接続とメディアファイル用の十分な空き容量が必要です。"
+  ]
+};
+for (const [lang, labels] of Object.entries(releaseFeatureCopy)) {
+  if (labels.length !== releaseFeatureKeys.length) throw new Error(`Feature copy mismatch: ${lang}`);
+  releaseFeatureKeys.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
+}

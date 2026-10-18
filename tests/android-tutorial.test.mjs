@@ -7,8 +7,8 @@ import {PAGES_CSP} from '../shared/pages-security.mjs';
 
 const config = JSON.parse(readFileSync(new URL('../shared/site-config.json', import.meta.url), 'utf8'));
 const id = 'N-Xws_fw8xs';
-test('extracts the configured video from supported YouTube HTTPS formats', () => {
-  for (const url of [config.android.tutorial, `https://youtu.be/${id}?si=ignored`, `https://www.youtube.com/watch?v=${id}`, `https://m.youtube.com/shorts/${id}`, `https://youtube.com/embed/${id}`]) assert.equal(youtubeVideoId(url), id);
+test('extracts video IDs from supported YouTube HTTPS formats', () => {
+  for (const url of [`https://youtu.be/${id}?si=ignored`, `https://www.youtube.com/watch?v=${id}`, `https://m.youtube.com/shorts/${id}`, `https://youtube.com/embed/${id}`]) assert.equal(youtubeVideoId(url), id);
 });
 test('rejects untrusted origins, credentials, ports, schemes and malformed IDs', () => {
   for (const url of ['', id, `http://youtu.be/${id}`, `https://youtu.be.evil.example/${id}`, `https://evil.example/watch?v=${id}`, `https://user@youtu.be/${id}`, `https://youtu.be:8080/${id}`, `javascript:alert(1)`, `https://youtu.be/${id}/extra`, 'https://youtube.com/watch?v=<script>', 'https://www.youtube.com/watch?v=short']) assert.equal(youtubeVideoId(url), null, url);
@@ -24,21 +24,23 @@ test('constructs a fixed privacy-enhanced embed without carrying source paramete
   assert.equal(url.searchParams.has('origin'), false);
   assert.equal(tutorialEmbedUrl('https://evil.example/video', 'en'), null);
 });
-test('all eight generated Downloads pages contain translated accessible controls and no eager YouTube resources', () => {
+test('all eight download pages omit the removed Android tutorial and retain release links', () => {
+  assert.equal(config.android.tutorial, undefined);
   for (const lang of ['tr', 'en', 'de', 'fr', 'ru', 'vi', 'zh', 'ja']) {
     const path = '../frontend/' + (lang === 'tr' ? '' : lang + '/') + 'downloads.html';
     const html = readFileSync(new URL(path, import.meta.url), 'utf8');
-    const copy = downloadCopy[lang];
-    assert.ok(html.includes(copy['Watch Android Tutorial']), lang);
-    assert.ok(html.includes(copy['Learn how to use the Android app, step by step.']), lang);
-    assert.ok(html.includes(`aria-label="${copy['Close tutorial']}"`), lang);
-    assert.ok(html.includes('aria-haspopup="dialog"'));
-    assert.ok(html.includes('aria-labelledby="androidTutorialTitle"'));
-    assert.ok(html.includes('closedby="any"'));
-    assert.doesNotMatch(html, /<iframe\b|<[^>]+(?:src|href)="https:\/\/(?:www\.)?(?:youtube|youtu\.be|ytimg)/);
+    assert.doesNotMatch(html, /androidTutorial|android-tutorial|N-Xws_fw8xs|<iframe\b|youtube-nocookie/);
+    assert.ok(html.includes('v' + config.windows.version), lang);
+    assert.ok(html.includes('v' + config.android.version), lang);
     for (const apk of config.android.apks) assert.ok(html.includes('href="' + apk.url + '"'));
+    const windows=/<section[^>]*id="windows"[\s\S]*?<\/section>/.exec(html)[0];
+    const android=/<section[^>]*id="android"[\s\S]*?<\/section>/.exec(html)[0];
+    assert.ok(windows.includes(downloadCopy[lang]['Track progress, speed and estimated time, and manage concurrent downloads.']), lang);
+    assert.ok(android.includes(downloadCopy[lang]['Batch downloads have their own screen. Add up to 50 link rows with the + button.']), lang);
+    assert.ok(android.includes('arm64-v8a') && android.includes('armeabi-v7a') && android.includes('x86_64'), lang);
   }
 });
+
 test('the parent CSP permits only the self origin and privacy-enhanced frame origin', () => {
   assert.ok(PAGES_CSP.includes("frame-src 'self' https://www.youtube-nocookie.com;"));
   assert.doesNotMatch(PAGES_CSP, /script-src[^;]*youtube/);
