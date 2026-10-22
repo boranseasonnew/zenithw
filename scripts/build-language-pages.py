@@ -202,7 +202,9 @@ for path in FRONTEND.rglob('*.html'):
     match=re.search(r'rel="canonical"\s+href="([^"]+)"',source)
     if not match or match[1]!=ORIGIN+route:continue
     url=match[1];entry=f'  <url><loc>{html.escape(url)}</loc>'
-    if url in dates:entry+='<lastmod>'+dates[url]+'</lastmod>'
+    base_route=re.sub(r'^/(?:en|de|fr|ru|vi|zh|ja)(?=/)', '', route)
+    modified=CONFIG.get('contentLastModified',{}).get(base_route,dates.get(url))
+    if modified:entry+='<lastmod>'+modified+'</lastmod>'
     for lang,destination in re.findall(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"',source):entry+=f'<xhtml:link rel="alternate" hreflang="{lang}" href="{html.escape(destination,quote=True)}"/>'
     entries[url]=entry+'</url>'
 write(FRONTEND/'sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'+'\n'.join(entries[k] for k in sorted(entries))+'\n</urlset>\n')

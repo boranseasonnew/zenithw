@@ -7,6 +7,7 @@ import { guides, GUIDE_DATE } from './seo-content.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const frontend = join(root, 'frontend');
+const contentLastModified = JSON.parse(readFileSync(join(root, 'shared/site-config.json'), 'utf8')).contentLastModified || {};
 const origin = 'https://zenithw.space';
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const read = path => readFileSync(join(frontend, path), 'utf8').replaceAll('\r\n', '\n');
@@ -211,7 +212,8 @@ const oldSitemap = read('sitemap.xml');
 const oldDates = new Map([...oldSitemap.matchAll(/<url>\s*<loc>(.*?)<\/loc>(?:\s*<lastmod>(.*?)<\/lastmod>)?/g)].map(match => [match[1], match[2]]));
 const changedContent = new Set(['/', '/app', '/pc-app', '/convert', '/remux', '/about', '/about/privacy', '/about/terms', '/dmca']);
 const entries = [...sitemapPages].sort(([a], [b]) => a.localeCompare(b)).map(([url, details]) => {
-  const date = details.guide || changedContent.has(new URL(url).pathname) ? GUIDE_DATE : oldDates.get(url);
+  const date = contentLastModified[new URL(url).pathname]
+    || (details.guide || changedContent.has(new URL(url).pathname) ? GUIDE_DATE : oldDates.get(url));
   return `  <url><loc>${escape(url)}</loc>${date ? `<lastmod>${date}</lastmod>` : ''}</url>`;
 });
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`);

@@ -54,3 +54,29 @@
 /ja/pc-app /ja/downloads#windows 301
 /ja/pc-app.html /ja/downloads#windows 301
 /ja/pc-app/ /ja/downloads#windows 301
+
+# Singular download URLs discovered in Search Console; preserve the matching language.
+/download /downloads 301
+/download.html /downloads 301
+/download/ /downloads 301
+/en/download /en/downloads 301
+/en/download.html /en/downloads 301
+/en/download/ /en/downloads 301
+/de/download /de/downloads 301
+/de/download.html /de/downloads 301
+/de/download/ /de/downloads 301
+/fr/download /fr/downloads 301
+/fr/download.html /fr/downloads 301
+/fr/download/ /fr/downloads 301
+/ru/download /ru/downloads 301
+/ru/download.html /ru/downloads 301
+/ru/download/ /ru/downloads 301
+/vi/download /vi/downloads 301
+/vi/download.html /vi/downloads 301
+/vi/download/ /vi/downloads 301
+/zh/download /zh/downloads 301
+/zh/download.html /zh/downloads 301
+/zh/download/ /zh/downloads 301
+/ja/download /ja/downloads 301
+/ja/download.html /ja/downloads 301
+/ja/download/ /ja/downloads 301

@@ -156,3 +156,23 @@ notification of 27 updated public pages returned **HTTP 202** on 7 October 2026.
 Key validation is pending at the participating service; this is not proof that
 any of the pages have been indexed. Do not repeat the same submission just to
 change its status.
+
+## Sitemap maintenance — 23 October 2026
+
+`shared/site-config.json` now records reviewed `contentLastModified` dates for
+Downloads, the current release notes and the audio separator. Both SEO
+generators apply these dates to the actual canonical routes and all eight
+language variants. Change a date only when the page's main content, product
+links or structured data meaningfully changes; do not substitute build or
+submission time. Unknown archive dates remain omitted.
+
+The singular `/download` address and its language, `.html` and trailing-slash
+variants permanently redirect to the corresponding `/downloads` page. The
+Pages Function and static redirect fallback agree; query parameters survive.
+The API endpoint on the separate API origin is unaffected. `/info` has no
+public content counterpart and keeps its genuine 404 response. Settings and
+history remain noindex and stay outside the sitemap.
+
+A successful sitemap read or accepted indexing request is not proof that
+Google has indexed every submitted URL. Use current per-URL inspection when
+an older aggregate report disagrees with a page's current index state.

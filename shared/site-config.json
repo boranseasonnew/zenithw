@@ -1,5 +1,10 @@
 {
   "origin": "https://zenithw.space",
+  "contentLastModified": {
+    "/downloads": "2026-10-18",
+    "/updates": "2026-10-14",
+    "/audio-separator": "2026-10-14"
+  },
   "telegram": "https://t.me/zenithwon",
   "windows": {
     "version": "4.2.0",

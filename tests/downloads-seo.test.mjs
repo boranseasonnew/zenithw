@@ -76,13 +76,17 @@ test('the sitemap includes every real localized route and excludes aliases, priv
  for(const route of routes)for(const lang of languages)assert.ok(urls.includes(config.origin+languagePath(route,lang)));
  for(const lang of languages.filter(l=>l!=='tr'))assert.ok(!urls.includes(config.origin+'/'+lang+'/about/privacy'));
  assert.ok(!sitemap.includes('<lastmod>2026-10-10</lastmod>'));
+ for(const [route,date] of Object.entries(config.contentLastModified))for(const lang of languages){
+  const url=config.origin+languagePath(route,lang);
+  assert.ok(sitemap.includes(`<loc>${url}</loc><lastmod>${date}</lastmod>`),`Real content date missing: ${url}`);
+ }
 });
 
 test('legacy Android and Windows requests permanently redirect to the right language and anchor, preserving queries',async()=>{
- for(const lang of languages)for(const [old,anchor] of [['app','android'],['pc-app','windows']])for(const suffix of ['','.html','/'])for(const method of ['GET','HEAD']) {
+ for(const lang of languages)for(const [old,anchor] of [['app','android'],['pc-app','windows'],['download','']])for(const suffix of ['','.html','/'])for(const method of ['GET','HEAD']) {
   const prefix=lang==='tr'?'':'/'+lang, url='https://zenithw.space'+prefix+'/'+old+suffix+'?source=old';
   const response=await onRequest({request:new Request(url,{method}),env:{},next(){throw new Error('Alias must not request an asset');}});
-  assert.equal(response.status,301);assert.equal(response.headers.get('Location'),'https://zenithw.space'+prefix+'/downloads?source=old#'+anchor);assert.equal(await response.text(),'');
+  assert.equal(response.status,301);assert.equal(response.headers.get('Location'),'https://zenithw.space'+prefix+'/downloads?source=old'+(anchor?'#'+anchor:''));assert.equal(await response.text(),'');
  }
 });
 
