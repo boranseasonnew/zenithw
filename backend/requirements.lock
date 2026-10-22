@@ -118,10 +118,12 @@ brotli==1.2.0 \
     --hash=sha256:fc1530af5c3c275b8524f2e24841cbe2599d74462455e9bae5109e9ff42e9361 \
     --hash=sha256:ff09cd8c5eec3b9d02d2408db41be150d8891c5566addce57513bf546e3d6c6d
     # via -r backend/requirements.txt
-certifi==2026.7.22 \
-    --hash=sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775 \
-    --hash=sha256:741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55
-    # via requests
+certifi==2026.10.19 \
+    --hash=sha256:035c1e85572b141bf1c3a3eff0e33a8eb74917522f2559075ff8d2fea780a1ae \
+    --hash=sha256:42d35340cc5b9ba78e818ddbff0c5b1c2b779de448a340fd1b989f5fa8670e1b
+    # via
+    #   -r backend/requirements.txt
+    #   requests
 cffi==2.1.1 \
     --hash=sha256:046bfc24911b37851ee1b51aab8bffe713d89c68c6a057b09484ce9fd5f69b4e \
     --hash=sha256:06c72bb76605a4b0cd0aad6930b69d4baf7dd5d806cfc409b824191099700e66 \
@@ -836,9 +838,9 @@ wsproto==1.3.2 \
     --hash=sha256:61eea322cdf56e8cc904bd3ad7573359a242ba65688716b0710a5eb12beab584 \
     --hash=sha256:b86885dcf294e15204919950f666e06ffc6c7c114ca900b060d6e16293528294
     # via simple-websocket
-yt-dlp==2026.8.19 \
-    --hash=sha256:1d57897e94c6665a0a6f9bc54b34e584284e32c034ffab3a7df25d8f7b24eedf \
-    --hash=sha256:9e213e48cea35c66b378e4447903f118f6392a5fa380a2b6d7070ec86f4e0af1
+yt-dlp==2026.10.21 \
+    --hash=sha256:94a3a3e2c423129d0bbd2f1be000c4171fa1226c29e251c84aff868f2851c247 \
+    --hash=sha256:cbf748d7d17cd37647c4b9f07b6c25f24384bfd4361407ee5ec519e753d22539
     # via -r backend/requirements.txt
 yt-dlp-ejs==0.8.0 \
     --hash=sha256:79300e5fca7f937a1eeede11f0456862c1b41107ce1d726871e0207424f4bdb4 \

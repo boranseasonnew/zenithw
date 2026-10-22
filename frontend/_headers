@@ -266,6 +266,12 @@
 /vendor/mediabunny-LICENSE.txt
   Cache-Control: public, max-age=3600, must-revalidate
 
+/vendor/socket.io-4.7.2.min.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/socket.io-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /version.js
   Cache-Control: public, max-age=0, must-revalidate
   CDN-Cache-Control: no-store

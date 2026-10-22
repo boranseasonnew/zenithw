@@ -11,7 +11,9 @@ requests==2.33.0
 # Yalnizca ilgili extractor cagrildiginda kullanilir; diger platformlarin
 # mevcut requests akisini degistirmez.
 curl-cffi==0.16.3
-yt-dlp==2026.08.19
+yt-dlp==2026.10.21
+# Stable engine default dependency: refresh the CA bundle with the engine.
+certifi==2026.10.19
 yt-dlp-ejs==0.8.0
 deno==2.8.3
 # Keep the Python plugin and the separately deployed JS provider server on

@@ -302,6 +302,8 @@ export const STATIC_ASSET_PATHS = new Set([
   "/vendor/lilith-engine/separation-worker.js",
   "/vendor/local-media-worker.js",
   "/vendor/mediabunny-LICENSE.txt",
+  "/vendor/socket.io-4.7.2.min.js",
+  "/vendor/socket.io-LICENSE.txt",
   "/version.js",
   "/workspace-choices.js",
   "/zenithw-promo-poster.png",
