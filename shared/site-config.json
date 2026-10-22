@@ -1,7 +1,7 @@
 {
   "origin": "https://zenithw.space",
   "contentLastModified": {
-    "/downloads": "2026-10-18",
+    "/downloads": "2026-10-23",
     "/updates": "2026-10-14",
     "/audio-separator": "2026-10-14"
   },
@@ -36,28 +36,28 @@
     }
   },
   "android": {
-    "version": "2.3.0",
+    "version": "2.3.1",
     "requirements": "Android 7.0+ (API 24)",
-    "release": "https://github.com/boranseasonnew/zenithw-android/releases/tag/v2.3.0",
-    "checksums": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.0/SHA256SUMS.txt",
+    "release": "https://github.com/boranseasonnew/zenithw-android/releases/tag/v2.3.1",
+    "checksums": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.1/SHA256SUMS.txt",
     "apks": [
       {
         "abi": "arm64-v8a",
-        "name": "Zenith-2.3.0-stable-arm64-v8a.apk",
-        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.0/Zenith-2.3.0-stable-arm64-v8a.apk",
-        "bytes": 73476378
+        "name": "Zenith-2.3.1-stable-arm64-v8a.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.1/Zenith-2.3.1-stable-arm64-v8a.apk",
+        "bytes": 73495618
       },
       {
         "abi": "armeabi-v7a",
-        "name": "Zenith-2.3.0-stable-armeabi-v7a.apk",
-        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.0/Zenith-2.3.0-stable-armeabi-v7a.apk",
-        "bytes": 66307636
+        "name": "Zenith-2.3.1-stable-armeabi-v7a.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.1/Zenith-2.3.1-stable-armeabi-v7a.apk",
+        "bytes": 66326876
       },
       {
         "abi": "x86_64",
-        "name": "Zenith-2.3.0-stable-x86_64.apk",
-        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.0/Zenith-2.3.0-stable-x86_64.apk",
-        "bytes": 76483459
+        "name": "Zenith-2.3.1-stable-x86_64.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.3.1/Zenith-2.3.1-stable-x86_64.apk",
+        "bytes": 76502699
       }
     ],
     "stores": {

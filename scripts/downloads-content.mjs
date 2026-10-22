@@ -327,3 +327,43 @@ for (const [lang, labels] of Object.entries(releaseFeatureCopy)) {
   if (labels.length !== releaseFeatureKeys.length) throw new Error(`Feature copy mismatch: ${lang}`);
   releaseFeatureKeys.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
 }
+
+// Android 2.3.1 download flow.
+const android231Copy = {
+  "en": [
+    "Track downloads on the home screen with cover art, duration, file size and live progress.",
+    "Select playlist items without slowing individual downloads, and return to your previous position in settings."
+  ],
+  "tr": [
+    "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.",
+    "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et."
+  ],
+  "de": [
+    "Verfolge Downloads auf dem Startbildschirm mit Titelbild, Dauer, Dateigröße und Live-Fortschritt.",
+    "Wähle Playlist-Einträge ohne langsamere Einzeldownloads und kehre zur vorherigen Position in den Einstellungen zurück."
+  ],
+  "fr": [
+    "Suivez les téléchargements sur l’accueil avec miniature, durée, taille du fichier et progression en direct.",
+    "Sélectionnez les éléments des listes sans ralentir les téléchargements individuels et retrouvez votre position dans les paramètres."
+  ],
+  "ru": [
+    "Следите за загрузками на главном экране: обложка, длительность, размер файла и текущий прогресс.",
+    "Выбирайте элементы плейлиста без замедления отдельных загрузок и возвращайтесь к прежней позиции в настройках."
+  ],
+  "vi": [
+    "Theo dõi tải xuống trên màn hình chính với ảnh bìa, thời lượng, dung lượng và tiến trình trực tiếp.",
+    "Chọn mục danh sách phát mà không làm chậm tải đơn lẻ và trở lại vị trí trước đó trong cài đặt."
+  ],
+  "zh": [
+    "在主屏幕查看下载封面、时长、文件大小和实时进度。",
+    "选择播放列表项目，不拖慢单个视频下载；返回设置时保留原来的滚动位置。"
+  ],
+  "ja": [
+    "ホーム画面でカバー画像、再生時間、ファイルサイズ、進捗を確認できます。",
+    "単体ダウンロードを遅くせずプレイリストの項目を選べます。設定に戻ると前の位置が保持されます。"
+  ]
+};
+const android231Keys = ["Track downloads on the home screen with cover art, duration, file size and live progress.", "Select playlist items without slowing individual downloads, and return to your previous position in settings."];
+for (const [lang, labels] of Object.entries(android231Copy)) {
+  android231Keys.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
+}

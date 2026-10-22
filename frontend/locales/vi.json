@@ -3626,5 +3626,9 @@
   "Use expandable settings for language, browser sessions, SponsorBlock, network and engine updates.": "Quản lý ngôn ngữ, phiên trình duyệt, SponsorBlock, mạng và cập nhật công cụ trong cài đặt có thể mở rộng.",
   "Dil, tarayıcı oturumları, SponsorBlock, bağlantı ve motor güncellemelerini açılır ayarlardan yönet.": "Quản lý ngôn ngữ, phiên trình duyệt, SponsorBlock, mạng và cập nhật công cụ trong cài đặt có thể mở rộng.",
   "Internet access and enough free storage for your media files are required.": "Cần kết nối Internet và đủ dung lượng trống cho các tệp đa phương tiện.",
-  "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir.": "Cần kết nối Internet và đủ dung lượng trống cho các tệp đa phương tiện."
+  "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir.": "Cần kết nối Internet và đủ dung lượng trống cho các tệp đa phương tiện.",
+  "Track downloads on the home screen with cover art, duration, file size and live progress.": "Theo dõi tải xuống trên màn hình chính với ảnh bìa, thời lượng, dung lượng và tiến trình trực tiếp.",
+  "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.": "Theo dõi tải xuống trên màn hình chính với ảnh bìa, thời lượng, dung lượng và tiến trình trực tiếp.",
+  "Select playlist items without slowing individual downloads, and return to your previous position in settings.": "Chọn mục danh sách phát mà không làm chậm tải đơn lẻ và trở lại vị trí trước đó trong cài đặt.",
+  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "Chọn mục danh sách phát mà không làm chậm tải đơn lẻ và trở lại vị trí trước đó trong cài đặt."
 }

@@ -53,8 +53,8 @@ const featureItems = {
   ],
   "android": [
     "Batch downloads have their own screen. Add up to 50 link rows with the + button.",
-    "Select playlist items and adjust quality and formats with dropdown menus.",
-    "Use expandable settings for language, browser sessions, SponsorBlock, network and engine updates."
+    "Track downloads on the home screen with cover art, duration, file size and live progress.",
+    "Select playlist items without slowing individual downloads, and return to your previous position in settings."
   ]
 };
 const features = (platform, includeImage=false) => `<details class="download-details"><summary>${icon('settings')}<span ${label('Features and requirements')}>${t('Features and requirements')}</span><span class="details-plus" aria-hidden="true">+</span></summary><div class="details-content"><p>${t(platform==='android'?"Android 7.0+ (API 24). Select arm64-v8a, armeabi-v7a or x86_64 to match your device.":"Windows 10/11, 64-bit. The Microsoft Store package requires Windows 10 version 2004 (build 19041) or newer.")}</p><ul>${featureItems[platform].map(key=>text('li',key)).join('')}${text('li',"Internet access and enough free storage for your media files are required.")}${text('li','Downloads use your device’s connection. Source availability and access conditions still apply.')}</ul>${includeImage?`<figure class="download-preview"><img src="/desktop-preview/workspace.png" width="1222" height="791" alt="${t('Windows interface')}" loading="lazy" decoding="async"><figcaption ${label('Windows interface')}>${t('Windows interface')}</figcaption></figure>`:''}</div></details>`;

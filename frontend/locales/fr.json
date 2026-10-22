@@ -3626,5 +3626,9 @@
   "Use expandable settings for language, browser sessions, SponsorBlock, network and engine updates.": "Gérez la langue, les sessions du navigateur, SponsorBlock, le réseau et les mises à jour du moteur dans les paramètres dépliables.",
   "Dil, tarayıcı oturumları, SponsorBlock, bağlantı ve motor güncellemelerini açılır ayarlardan yönet.": "Gérez la langue, les sessions du navigateur, SponsorBlock, le réseau et les mises à jour du moteur dans les paramètres dépliables.",
   "Internet access and enough free storage for your media files are required.": "Une connexion Internet et suffisamment d’espace libre pour vos fichiers multimédias sont nécessaires.",
-  "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir.": "Une connexion Internet et suffisamment d’espace libre pour vos fichiers multimédias sont nécessaires."
+  "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir.": "Une connexion Internet et suffisamment d’espace libre pour vos fichiers multimédias sont nécessaires.",
+  "Track downloads on the home screen with cover art, duration, file size and live progress.": "Suivez les téléchargements sur l’accueil avec miniature, durée, taille du fichier et progression en direct.",
+  "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.": "Suivez les téléchargements sur l’accueil avec miniature, durée, taille du fichier et progression en direct.",
+  "Select playlist items without slowing individual downloads, and return to your previous position in settings.": "Sélectionnez les éléments des listes sans ralentir les téléchargements individuels et retrouvez votre position dans les paramètres.",
+  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "Sélectionnez les éléments des listes sans ralentir les téléchargements individuels et retrouvez votre position dans les paramètres."
 }

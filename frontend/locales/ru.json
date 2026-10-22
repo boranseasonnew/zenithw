@@ -3626,5 +3626,9 @@
   "Use expandable settings for language, browser sessions, SponsorBlock, network and engine updates.": "Управляйте языком, сеансами браузера, SponsorBlock, сетью и обновлениями движка в раскрывающихся настройках.",
   "Dil, tarayıcı oturumları, SponsorBlock, bağlantı ve motor güncellemelerini açılır ayarlardan yönet.": "Управляйте языком, сеансами браузера, SponsorBlock, сетью и обновлениями движка в раскрывающихся настройках.",
   "Internet access and enough free storage for your media files are required.": "Необходимы Интернет и достаточно свободного места для медиафайлов.",
-  "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir.": "Необходимы Интернет и достаточно свободного места для медиафайлов."
+  "İnternet bağlantısı ve medya dosyaların için yeterli boş depolama alanı gerekir.": "Необходимы Интернет и достаточно свободного места для медиафайлов.",
+  "Track downloads on the home screen with cover art, duration, file size and live progress.": "Следите за загрузками на главном экране: обложка, длительность, размер файла и текущий прогресс.",
+  "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.": "Следите за загрузками на главном экране: обложка, длительность, размер файла и текущий прогресс.",
+  "Select playlist items without slowing individual downloads, and return to your previous position in settings.": "Выбирайте элементы плейлиста без замедления отдельных загрузок и возвращайтесь к прежней позиции в настройках.",
+  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "Выбирайте элементы плейлиста без замедления отдельных загрузок и возвращайтесь к прежней позиции в настройках."
 }
