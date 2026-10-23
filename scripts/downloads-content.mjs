@@ -367,3 +367,6 @@ const android231Keys = ["Track downloads on the home screen with cover art, dura
 for (const [lang, labels] of Object.entries(android231Copy)) {
   android231Keys.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
 }
+
+const android240Copy = {"en": "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.", "tr": "İndirme panelini hemen aç; yeniden kullanılan analiz ortamıyla gerçek medya bilgilerini aşamalı gör.", "de": "Die Download-Konfiguration öffnet sofort und zeigt echte Metadaten schrittweise mit wiederverwendbarer Analyseumgebung.", "fr": "Ouvrez immédiatement les options et affichez progressivement les métadonnées réelles grâce au moteur réutilisable.", "ru": "Панель открывается сразу, реальные метаданные появляются постепенно; среда анализа используется повторно.", "vi": "Mở bảng tải xuống ngay và hiển thị dần siêu dữ liệu thực bằng môi trường phân tích tái sử dụng.", "zh": "立即打开下载设置，通过可复用的分析环境逐步显示真实元数据。", "ja": "設定画面をすぐに開き、解析環境を再利用して実際のメタデータを段階的に表示します。"};
+for (const [lang, value] of Object.entries(android240Copy)) downloadCopy[lang]["Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime."] = value;

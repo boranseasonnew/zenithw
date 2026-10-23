@@ -52,6 +52,7 @@ const featureItems = {
     "Choose video, audio and subtitle formats, cover art and metadata before saving."
   ],
   "android": [
+    "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.",
     "Batch downloads have their own screen. Add up to 50 link rows with the + button.",
     "Track downloads on the home screen with cover art, duration, file size and live progress.",
     "Select playlist items without slowing individual downloads, and return to your previous position in settings."

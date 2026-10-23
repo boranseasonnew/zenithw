@@ -3630,5 +3630,7 @@
   "Track downloads on the home screen with cover art, duration, file size and live progress.": "ホーム画面でカバー画像、再生時間、ファイルサイズ、進捗を確認できます。",
   "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.": "ホーム画面でカバー画像、再生時間、ファイルサイズ、進捗を確認できます。",
   "Select playlist items without slowing individual downloads, and return to your previous position in settings.": "単体ダウンロードを遅くせずプレイリストの項目を選べます。設定に戻ると前の位置が保持されます。",
-  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "単体ダウンロードを遅くせずプレイリストの項目を選べます。設定に戻ると前の位置が保持されます。"
+  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "単体ダウンロードを遅くせずプレイリストの項目を選べます。設定に戻ると前の位置が保持されます。",
+  "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.": "設定画面をすぐに開き、解析環境を再利用して実際のメタデータを段階的に表示します。",
+  "İndirme panelini hemen aç; yeniden kullanılan analiz ortamıyla gerçek medya bilgilerini aşamalı gör.": "設定画面をすぐに開き、解析環境を再利用して実際のメタデータを段階的に表示します。"
 }

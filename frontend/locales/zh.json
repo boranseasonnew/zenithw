@@ -3630,5 +3630,7 @@
   "Track downloads on the home screen with cover art, duration, file size and live progress.": "在主屏幕查看下载封面、时长、文件大小和实时进度。",
   "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.": "在主屏幕查看下载封面、时长、文件大小和实时进度。",
   "Select playlist items without slowing individual downloads, and return to your previous position in settings.": "选择播放列表项目，不拖慢单个视频下载；返回设置时保留原来的滚动位置。",
-  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "选择播放列表项目，不拖慢单个视频下载；返回设置时保留原来的滚动位置。"
+  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "选择播放列表项目，不拖慢单个视频下载；返回设置时保留原来的滚动位置。",
+  "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.": "立即打开下载设置，通过可复用的分析环境逐步显示真实元数据。",
+  "İndirme panelini hemen aç; yeniden kullanılan analiz ortamıyla gerçek medya bilgilerini aşamalı gör.": "立即打开下载设置，通过可复用的分析环境逐步显示真实元数据。"
 }

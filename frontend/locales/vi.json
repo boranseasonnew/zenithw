@@ -3630,5 +3630,7 @@
   "Track downloads on the home screen with cover art, duration, file size and live progress.": "Theo dõi tải xuống trên màn hình chính với ảnh bìa, thời lượng, dung lượng và tiến trình trực tiếp.",
   "İndirmeleri ana ekranda kapak, süre, dosya boyutu ve canlı ilerlemeyle takip et.": "Theo dõi tải xuống trên màn hình chính với ảnh bìa, thời lượng, dung lượng và tiến trình trực tiếp.",
   "Select playlist items without slowing individual downloads, and return to your previous position in settings.": "Chọn mục danh sách phát mà không làm chậm tải đơn lẻ và trở lại vị trí trước đó trong cài đặt.",
-  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "Chọn mục danh sách phát mà không làm chậm tải đơn lẻ và trở lại vị trí trước đó trong cài đặt."
+  "Tekli indirmeleri yavaşlatmadan oynatma listesi öğelerini seç; ayarlara döndüğünde kaldığın yerden devam et.": "Chọn mục danh sách phát mà không làm chậm tải đơn lẻ và trở lại vị trí trước đó trong cài đặt.",
+  "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.": "Mở bảng tải xuống ngay và hiển thị dần siêu dữ liệu thực bằng môi trường phân tích tái sử dụng.",
+  "İndirme panelini hemen aç; yeniden kullanılan analiz ortamıyla gerçek medya bilgilerini aşamalı gör.": "Mở bảng tải xuống ngay và hiển thị dần siêu dữ liệu thực bằng môi trường phân tích tái sử dụng."
 }
