@@ -175,6 +175,7 @@ export const STATIC_ASSET_PATHS = new Set([
   "/cache-assets/site-language.9b758e0850a1.css",
   "/cache-assets/site-language.9eeb2c11c265.js",
   "/cache-assets/site-language.a74137be5675.js",
+  "/cache-assets/site-language.acc837490855.js",
   "/cache-assets/site-language.b1b5bdaf1724.js",
   "/cache-assets/site-language.e47afab6d85b.js",
   "/cache-assets/site-language.eb5509a0a82c.js",

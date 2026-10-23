@@ -7,6 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 FRONTEND=ROOT/'frontend'
 CONFIG=json.loads((ROOT/'shared/site-config.json').read_text(encoding='utf-8'))
 ORIGIN=CONFIG['origin']
+SEO_METADATA=json.loads((ROOT/'shared/seo-metadata.json').read_text(encoding='utf-8'))
 LANGUAGES=['tr','en','de','fr','ru','vi','zh','ja']
 CATALOGS={lang:json.loads((FRONTEND/f'locales/{lang}.json').read_text(encoding='utf-8')) for lang in LANGUAGES}
 SUPPORT_COPY=json.loads((FRONTEND/'support-copy.json').read_text(encoding='utf-8'))
@@ -109,9 +110,8 @@ def metadata(source,route,lang):
     title=body_text(re.search(r'<title[^>]*>(.*?)</title>',source,re.S)[1])
     description=html.unescape(re.search(r'<meta\b[^>]*name="description"[^>]*content="([^"]*)"',source)[1])
     heading=body_text(re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)[1])
-    if route=='/downloads':
-        title=translate('Download ZenithW',lang)+' | Windows & Android'
-        description=translate('Your downloader. Your platform. Your choice.',lang)+f" Windows {CONFIG['windows']['version']} · Android {CONFIG['android']['version']}"
+    if route in SEO_METADATA:
+        title,description=SEO_METADATA[route][lang]
     elif route.startswith('/updates'):
         version=re.search(r'id="updBadge"[^>]*>(.*?)</span>',source,re.S)
         post=re.search(r'id="updPostTitle"[^>]*>(.*?)</h2>',source,re.S)
@@ -133,7 +133,12 @@ def metadata(source,route,lang):
     page={'@type':'TechArticle' if route.startswith('/guides/') else 'WebPage','@id':canonical+'#webpage','name':title,'description':description,'url':canonical,'inLanguage':HTML_LANG(lang),'isPartOf':{'@id':website['@id']}}
     if route.startswith('/guides/'):page['headline']=heading
     graph=[org,website,page]
-    if route!='/':graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':translate('Home',lang),'item':ORIGIN+language_path('/',lang)},{'@type':'ListItem','position':2,'name':heading,'item':canonical}]})
+    if route!='/':
+        crumbs=[{'@type':'ListItem','position':1,'name':translate('Home',lang),'item':ORIGIN+language_path('/',lang)}]
+        parent=next((parent for parent in ['/guides','/about','/updates'] if route.startswith(parent+'/')),None)
+        if parent:crumbs.append({'@type':'ListItem','position':2,'name':translate({'/guides':'Guides','/about':'About','/updates':'Updates'}[parent],lang),'item':ORIGIN+language_path(parent,lang)})
+        crumbs.append({'@type':'ListItem','position':len(crumbs)+1,'name':heading,'item':canonical})
+        graph.append({'@type':'BreadcrumbList','itemListElement':crumbs})
     if route=='/downloads':
         for platform in ['windows','android']:
             graph.append({'@type':'SoftwareApplication','@id':canonical+'#'+platform+'-app','name':'ZenithW '+platform.title(),'url':canonical+'#'+platform,'operatingSystem':CONFIG[platform]['requirements'],'softwareVersion':CONFIG[platform]['version'],'applicationCategory':'MultimediaApplication','isAccessibleForFree':True,'offers':{'@type':'Offer','price':'0','priceCurrency':'USD'},'publisher':{'@id':org['@id']}})
@@ -147,7 +152,7 @@ def metadata(source,route,lang):
     return head.rstrip()+seo+source[head_end:]
 
 # Legal terms are intentionally excluded until their translations receive a legal review.
-BASE_ROUTES=['/','/downloads','/media-tools','/audio-separator','/about','/about/community','/about/credit','/support','/updates','/guides','/convert','/remux']
+BASE_ROUTES=['/','/downloads','/audio-separator','/about','/about/community','/about/credit','/support','/updates','/guides','/convert','/remux']
 sources={}
 for route in BASE_ROUTES:
     path=FRONTEND/('index.html' if route=='/' else route[1:]+'.html');sources[route]=path.read_text(encoding='utf-8')
@@ -170,8 +175,9 @@ def navigation(source,lang):
             return attr+'="'+('/'+value.lstrip('/') if value else value)+'"'
         parsed=urlsplit('/'+value.lstrip('/'));path=re.sub(r'^/(?:en|de|fr|ru|vi|zh|ja)(?=/|$)','',parsed.path) or '/'
         path=re.sub(r'\.html$','',path)
+        if path=='/media-tools':path='/audio-separator'
         if path in ['/app','/pc-app']:
-            path='/downloads';fragment='android' if '/app'==re.sub(r'\.html$','',parsed.path) else 'windows'
+            fragment='android' if path=='/app' else 'windows';path='/downloads'
         else:fragment=parsed.fragment
         if path not in routes:return match[0]
         result=language_path(path,lang)+('?' +parsed.query if parsed.query else '')+('#'+fragment if fragment else '')
@@ -185,6 +191,12 @@ for route,source in sources.items():
         if route.endswith('/'):filename=route[1:]+'index.html'
         destination=FRONTEND/(filename if lang=='tr' else lang+'/'+filename)
         write(destination,output)
+# The old tool URL has the same UI as the separator, so consolidate its search identity.
+for lang in LANGUAGES:
+    destination=language_path('/audio-separator',lang)
+    source=(FRONTEND/('audio-separator.html' if lang=='tr' else lang+'/audio-separator.html')).read_text(encoding='utf-8')
+    write(FRONTEND/('media-tools.html' if lang=='tr' else lang+'/media-tools.html'),source)
+
 # A single list also powers safe counterpart navigation; it contains only generated routes.
 write(ROOT/'shared/localized-routes.json',json.dumps(sorted(routes),indent=2)+'\n')
 language_script=FRONTEND/'site-language.js';runtime=language_script.read_text(encoding='utf-8')

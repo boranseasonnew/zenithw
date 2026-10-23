@@ -19,7 +19,7 @@ const fileFor=route=>'frontend/'+(route.endsWith('/')?route.slice(1)+'index.html
 const decode=value=>value.replaceAll('&quot;','"').replaceAll('&#39;',"'").replaceAll('&#x27;',"'").replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&');
 const visible=html=>decode(html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replace(/<[^>]+>/g,'')).replace(/\s+/g,' ');
 
-test('all 600 localized pages have self-canonicals, complete reciprocal hreflang and valid translated metadata',()=>{
+test('all generated localized pages have self-canonicals, complete reciprocal hreflang and valid translated metadata',()=>{
  for(const route of routes)for(const lang of languages){
   const localized=languagePath(route,lang), html=read(fileFor(localized)), expected=config.origin+localized;
   assert.match(html,new RegExp('<html lang="'+(lang==='zh'?'zh-CN':lang)+'"'),localized);
@@ -139,4 +139,25 @@ test('explicit locale URLs win over preferences; navigation preserves queries/an
  assert.equal(api.path('/app'),'/de/downloads#android');assert.equal(api.path('/pc-app.html'),'/de/downloads#windows');
  assert.equal(api.path('/en/'),'/de/');assert.equal(api.path('/about/privacy'),'/about/privacy');assert.equal(api.path('//evil.example'),'//evil.example');
  const settings=languageRuntime('https://zenithw.space/settings?return=%2Fde%2Fdownloads%23windows');await settings.api.ready;assert.equal(settings.api.current,'de');await settings.api.use('ja');assert.deepEqual(settings.assigned,['/ja/downloads#windows']);
+});
+
+test('focused search metadata is translated and consistent with social previews in every language',()=>{
+ const copy=JSON.parse(read('shared/seo-metadata.json'));
+ for(const [route,translations] of Object.entries(copy))for(const lang of languages){
+  const html=read(fileFor(languagePath(route,lang))), [title,description]=translations[lang];
+  assert.equal(decode(/<title[^>]*>(.*?)<\/title>/s.exec(html)[1]),title);
+  assert.equal(decode(/name="description"[^>]*content="([^"]*)"/.exec(html)[1]),description);
+  const graph=JSON.parse(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html)[1]);
+  assert.equal(graph['@graph'].find(item=>item['@type']==='WebPage').description,description);
+ }
+});
+
+test('duplicate media-tools addresses consolidate to the translated separator and stay out of the sitemap',()=>{
+ const sitemap=read('frontend/sitemap.xml');
+ assert.ok(!routes.includes('/media-tools'));
+ for(const lang of languages){
+  const html=read(fileFor(languagePath('/media-tools',lang)));
+  assert.ok(html.includes('rel="canonical" href="'+config.origin+languagePath('/audio-separator',lang)+'"'));
+  assert.ok(!sitemap.includes('<loc>'+config.origin+languagePath('/media-tools',lang)+'</loc>'));
+ }
 });

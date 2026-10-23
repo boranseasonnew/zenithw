@@ -1,0 +1,104 @@
+{
+  "/downloads": {
+    "tr": [
+      "Video İndirici Uygulamasını İndir: Android ve Windows | ZenithW",
+      "Android için imzalı APK veya Windows için kurulum ve taşınabilir sürümü indir. Ücretsiz, açık kaynak ve reklamsız ZenithW ile video ve ses kaydet."
+    ],
+    "en": [
+      "Download Video Downloader for Android & Windows | ZenithW",
+      "Get the signed Android APK or the Windows installer and portable app. Download video and audio with ZenithW, free, open source and ad-free."
+    ],
+    "de": [
+      "Video-Downloader für Android und Windows herunterladen | ZenithW",
+      "Lade die signierte Android-APK, den Windows-Installer oder die portable App herunter. Videos und Audio mit ZenithW speichern: kostenlos, quelloffen und werbefrei."
+    ],
+    "fr": [
+      "Télécharger le téléchargeur vidéo Android et Windows | ZenithW",
+      "Téléchargez l’APK Android signé, le programme Windows ou sa version portable. Enregistrez vidéos et audio avec ZenithW, gratuit, libre et sans publicité."
+    ],
+    "ru": [
+      "Скачать загрузчик видео для Android и Windows | ZenithW",
+      "Скачайте подписанный APK для Android, установщик Windows или переносную версию. Сохраняйте видео и аудио с ZenithW: бесплатно, без рекламы, с открытым кодом."
+    ],
+    "vi": [
+      "Tải ứng dụng tải video cho Android và Windows | ZenithW",
+      "Tải APK Android có chữ ký, bộ cài Windows hoặc bản di động. Lưu video và âm thanh bằng ZenithW miễn phí, mã nguồn mở và không quảng cáo."
+    ],
+    "zh": [
+      "下载 Android 和 Windows 视频下载器 | ZenithW",
+      "下载已签名的 Android APK、Windows 安装程序或便携版。使用免费、开源且无广告的 ZenithW 保存视频和音频，查看设备要求、版本和校验文件。"
+    ],
+    "ja": [
+      "Android・Windows 動画ダウンローダーをダウンロード | ZenithW",
+      "署名済み Android APK、Windows インストーラー、ポータブル版をダウンロード。無料・オープンソース・広告なしの ZenithW で動画と音声を保存。動作要件と検証用ファイルも確認できます。"
+    ]
+  },
+  "/support": {
+    "tr": [
+      "ZenithW Destek: Hata Bildir, İletişime Geç ve Katkıda Bulun",
+      "ZenithW için hata bildirme, proje iletişimi ve topluluk bağlantılarını bul. Açık kaynak video ve ses araçlarının geliştirilmesine katkıda bulun."
+    ],
+    "en": [
+      "ZenithW Support: Report Issues, Contact & Contribute",
+      "Find ZenithW issue reporting, project contact and community links. Help improve the open-source video and audio tools or support their development."
+    ],
+    "de": [
+      "ZenithW Support: Fehler melden, Kontakt und Mitwirken",
+      "Finde Kontakt- und Community-Links zu ZenithW und melde Probleme. Hilf, die quelloffenen Video- und Audiowerkzeuge zu verbessern und ihre Entwicklung zu unterstützen."
+    ],
+    "fr": [
+      "Assistance ZenithW : signaler un problème et contribuer",
+      "Retrouvez les contacts du projet ZenithW, le signalement de problèmes et la communauté. Contribuez à ses outils vidéo et audio libres ou soutenez leur développement."
+    ],
+    "ru": [
+      "Поддержка ZenithW: сообщить об ошибке и помочь проекту",
+      "Найдите контакты проекта ZenithW, ссылки на сообщество и сообщения об ошибках. Помогите улучшить открытые инструменты для видео и аудио."
+    ],
+    "vi": [
+      "Hỗ trợ ZenithW: báo lỗi, liên hệ và đóng góp",
+      "Tìm liên hệ dự án ZenithW, liên kết cộng đồng và nơi báo lỗi. Đóng góp để cải thiện các công cụ video và âm thanh mã nguồn mở hoặc hỗ trợ phát triển."
+    ],
+    "zh": [
+      "ZenithW 支持：报告问题、联系项目和参与贡献",
+      "查找 ZenithW 项目联系信息、问题反馈入口和社区链接。帮助改进开源视频与音频工具，参与代码贡献、报告错误或支持项目开发。"
+    ],
+    "ja": [
+      "ZenithW サポート：不具合報告・連絡・開発への協力",
+      "ZenithW の不具合報告先、プロジェクトの連絡先、コミュニティへのリンクを確認。オープンソースの動画・音声ツールの改善に参加したり、開発を支援したりできます。"
+    ]
+  },
+  "/about/community": {
+    "tr": [
+      "ZenithW Topluluğu: Kaynak Kod, Duyurular ve Güncellemeler",
+      "ZenithW kaynak koduna, sürüm duyurularına ve resmi topluluk kanallarına ulaş. Açık kaynak video indiricinin gelişimini takip et ve katkıda bulun."
+    ],
+    "en": [
+      "ZenithW Community: Source Code, News & Updates",
+      "Explore ZenithW source code, release announcements and official community channels. Follow the open-source video downloader and contribute to its development."
+    ],
+    "de": [
+      "ZenithW Community: Quellcode, Neuigkeiten und Updates",
+      "Entdecke den ZenithW-Quellcode, neue Versionen und offizielle Community-Kanäle. Verfolge die Entwicklung des quelloffenen Video-Downloaders und wirke mit."
+    ],
+    "fr": [
+      "Communauté ZenithW : code source, actualités et versions",
+      "Découvrez le code source de ZenithW, les annonces de versions et les canaux officiels. Suivez ce téléchargeur vidéo libre et contribuez à son développement."
+    ],
+    "ru": [
+      "Сообщество ZenithW: исходный код, новости и обновления",
+      "Найдите исходный код ZenithW, объявления о версиях и официальные каналы сообщества. Следите за развитием открытого загрузчика видео и участвуйте в проекте."
+    ],
+    "vi": [
+      "Cộng đồng ZenithW: mã nguồn, tin tức và cập nhật",
+      "Khám phá mã nguồn ZenithW, thông báo phiên bản và các kênh cộng đồng chính thức. Theo dõi ứng dụng tải video mã nguồn mở và tham gia phát triển."
+    ],
+    "zh": [
+      "ZenithW 社区：源代码、项目新闻和版本更新",
+      "获取 ZenithW 源代码、版本发布公告和官方社区渠道。了解这款开源视频下载器的开发进展，参与问题反馈与代码贡献。"
+    ],
+    "ja": [
+      "ZenithW コミュニティ：ソースコード・ニュース・更新情報",
+      "ZenithW のソースコード、リリース情報、公式コミュニティをご紹介。オープンソースの動画ダウンローダーの開発状況を確認し、改善に参加できます。"
+    ]
+  }
+}
