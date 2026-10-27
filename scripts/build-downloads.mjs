@@ -1,0 +1,73 @@
+import { writeFileWithRetry as writeFileSync } from '../shared/build-files.mjs';
+import { readFileSync, mkdirSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { downloadCopy } from './downloads-content.mjs';
+const root = fileURLToPath(new URL('../', import.meta.url));
+const frontend = join(root,'frontend');
+const config = JSON.parse(readFileSync(join(root,'shared/site-config.json'),'utf8'));
+const escape = value => String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const write = (file, text) => { const path=join(frontend,file); if(existsSync(path)&&readFileSync(path,'utf8')===text)return; mkdirSync(dirname(path),{recursive:true});writeFileSync(path,text); };
+for(const value of [config.telegram,config.windows.release,config.windows.installer.url,config.windows.portable.url,config.android.release,...config.android.apks.map(apk=>apk.url)].filter(Boolean)) {
+ const url=new URL(value);if(url.protocol!=='https:')throw new Error('Downloads require HTTPS URLs');
+}
+for(const platform of ['windows','android'])for(const store of Object.values(config[platform].stores)) {
+ if(!['available','coming','review'].includes(store.status))throw new Error('Unknown store status');
+ if(store.status==='available'&&!store.url&& !store.packageId)throw new Error('Available store requires a destination');
+}
+for(const [lang,copy] of Object.entries(downloadCopy)) {
+ const path=join(frontend,'locales',lang+'.json');const catalog=JSON.parse(readFileSync(path,'utf8'));
+ for(const [key,value] of Object.entries(copy)){catalog[key]=value;catalog[downloadCopy.tr[key]]=value;}
+ write('locales/'+lang+'.json',JSON.stringify(catalog,null,2)+'\n');
+}
+const copy=downloadCopy.tr;
+const t=key=>escape(copy[key]||key);
+const label=(key)=>`data-l10n="${escape(JSON.stringify({'text:0':key}))}"`;
+const text=(tag,key,attrs='')=>`<${tag} ${attrs} ${label(key)}>${t(key)}</${tag}>`;
+const external=(url,key,cls='download-action')=>`<a class="${cls}" href="${escape(url)}" target="_blank" rel="noopener noreferrer" ${label(key)}>${t(key)}</a>`;
+const status=state=>text('span',({available:'Available',coming:'Coming Soon',review:'Under Review'})[state],`class="status status-${state}"`);
+
+const size = bytes => (bytes / 1e6).toFixed(1) + ' MB';
+const icon = (name, extra='') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${{
+ download:'<path d="M12 3v12m-5-5 5 5 5-5M5 16v4h14v-4"/>',
+ file:'<path d="M14 3H6v18h12V7l-4-4Zm0 0v5h4M9 12h6m-6 4h6"/>',
+ device:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/>',
+ settings:'<path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3H9Z"/><circle cx="12" cy="12" r="3"/>',
+ menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+ chevron:'<path d="m9 5 7 7-7 7"/>'
+}[name]}</svg>`;
+const brand = (file, cls='') => `<img class="brand-logo ${cls}" src="/brands/${file}" width="32" height="32" alt="" aria-hidden="true" decoding="async">`;
+const rowHeading = (name, file, state, wordmark=false) => `<span class="channel-brand">${brand(file,wordmark?'wordmark':'')}<span${wordmark?' class="sr-only"':''}>${escape(name)}</span></span>${state?status(state):''}${icon('chevron','class="row-chevron"')}`;
+function storeRow(name, store, logo, wordmark=false) {
+ const destination=store.status==='available'?store.url:store.reviewUrl;
+ return destination ? `<a class="channel-row" href="${escape(destination)}" target="_blank" rel="noopener noreferrer">${rowHeading(name,logo,store.status,wordmark)}</a>` : `<div class="channel-row channel-pending">${rowHeading(name,logo,store.status,wordmark)}</div>`;
+}
+const command=`winget install --id ${config.windows.stores.winget.packageId} --exact --source winget`;
+const winget=`<details class="channel-details"><summary>${rowHeading('WinGet','winget.png',config.windows.stores.winget.status)}</summary><div class="channel-content">${config.windows.stores.winget.status==='available'?'':text('p','This command will be available after the WinGet package is approved.')}<div class="command"><code>${escape(command)}</code><button type="button" data-copy-command="${escape(command)}" hidden ${label('Copy')}>${t('Copy')}</button></div>${config.windows.stores.winget.reviewUrl?external(config.windows.stores.winget.reviewUrl,'View submission'):''}</div></details>`;
+const github = platform => `<details class="channel-details"><summary>${rowHeading('GitHub Releases','github.svg')}</summary><div class="channel-content">${external(platform.release,'View release')}${external(platform.checksums,'Checksums')}</div></details>`;
+const featureItems = {
+  "windows": [
+    "Queue links and playlists, and prepare new downloads while transfers continue.",
+    "Track progress, speed and estimated time, and manage concurrent downloads.",
+    "Choose video, audio and subtitle formats, cover art and metadata before saving."
+  ],
+  "android": [
+    "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.",
+    "Batch downloads have their own screen. Add up to 50 link rows with the + button.",
+    "Track downloads on the home screen with cover art, duration, file size and live progress.",
+    "Select playlist items without slowing individual downloads, and return to your previous position in settings."
+  ]
+};
+const features = (platform, includeImage=false) => `<details class="download-details"><summary>${icon('settings')}<span ${label('Features and requirements')}>${t('Features and requirements')}</span><span class="details-plus" aria-hidden="true">+</span></summary><div class="details-content"><p>${t(platform==='android'?"Android 7.0+ (API 24). Select arm64-v8a, armeabi-v7a or x86_64 to match your device.":"Windows 10/11, 64-bit. The Microsoft Store package requires Windows 10 version 2004 (build 19041) or newer.")}</p><ul>${featureItems[platform].map(key=>text('li',key)).join('')}${text('li',"Internet access and enough free storage for your media files are required.")}${text('li','Downloads use your device’s connection. Source availability and access conditions still apply.')}</ul>${includeImage?`<figure class="download-preview"><img src="/desktop-preview/workspace.png" width="1222" height="791" alt="${t('Windows interface')}" loading="lazy" decoding="async"><figcaption ${label('Windows interface')}>${t('Windows interface')}</figcaption></figure>`:''}</div></details>`;
+const heading=(name,key,file)=>`<header class="platform-heading"><span class="platform-icon">${brand(file)}</span><div><h2 id="${key}-title">${name}</h2><p>v${config[key].version} · ${escape(config[key].requirements)}</p></div></header>`;
+const windows=`<section class="platform" id="windows" aria-labelledby="windows-title">${heading('Windows','windows','windows.svg')}<div class="primary-download"><a class="download-primary" href="${escape(config.windows.installer.url)}">${icon('download')}<span ${label('Download for Windows')}>${t('Download for Windows')}</span></a><p><span ${label('Installation file')}>${t('Installation file')}</span> · ${size(config.windows.installer.bytes)}</p><a class="download-secondary" href="${escape(config.windows.portable.url)}">${icon('file')}<span ${label('Portable version')}>${t('Portable version')}</span></a></div><div class="channel-group">${text('p','Alternative download sources','class="channel-label"')}${storeRow('Microsoft Store',config.windows.stores.microsoft,'microsoft-store-icon.svg')}${winget}${github(config.windows)}</div>${features('windows',true)}</section>`;
+const otherApks=`<details class="file-picker"><summary>${icon('device')}<span ${label('Other device options')}>${t('Other device options')}</span><span aria-hidden="true">⌄</span></summary><ul class="file-list">${config.android.apks.map((apk,index)=>`<li><a href="${escape(apk.url)}"><span>${escape(apk.abi)}<span ${label(['Most modern Android phones','Older 32-bit Android devices','Android x64 devices and emulators'][index])}>${t(['Most modern Android phones','Older 32-bit Android devices','Android x64 devices and emulators'][index])}</span></span><small>${size(apk.bytes)}${icon('download')}</small></a></li>`).join('')}</ul>${features('android')}</details>`;
+
+const android=`<section class="platform" id="android" aria-labelledby="android-title">${heading('Android','android','android.svg')}<div class="primary-download"><a class="download-primary" href="${escape(config.android.apks[0].url)}">${icon('download')}<span ${label('Download for Android')}>${t('Download for Android')}</span></a><p>APK · ${escape(config.android.apks[0].abi)} · ${size(config.android.apks[0].bytes)}</p>${otherApks}</div><div class="channel-group">${text('p','Alternative download sources','class="channel-label"')}${storeRow('F-Droid',config.android.stores.fdroid,'f-droid-icon.svg')}${storeRow('Uptodown',config.android.stores.uptodown,'uptodown-icon.svg')}${github(config.android)}</div></section>`;
+const languages={tr:'Türkçe',en:'English',de:'Deutsch',fr:'Français',ru:'Русский',vi:'Tiếng Việt',zh:'中文',ja:'日本語'};
+const languageSelect=`<a class="downloads-language" href="/settings" aria-label="Ayarlar">${icon('settings')}</a>`;
+const tabs=`<div class="platform-tabs" id="platformTabs" hidden aria-label="${t('Choose your platform')}" data-l10n="${escape(JSON.stringify({'aria-label':'Choose your platform'}))}"><button id="androidTab" type="button" data-platform="android" aria-controls="android">${brand('android.svg')}Android</button><button id="windowsTab" type="button" data-platform="windows" aria-controls="windows">${brand('windows.svg')}Windows</button></div>`;
+const telegram=config.telegram?`<section class="telegram-updates" data-community="downloads">${brand('telegram.svg','telegram-mark')}<div>${text('h2','New releases, in the loop.')}${text('p','Follow development and be the first to hear about releases.')}</div><a class="download-secondary telegram-link" href="${escape(config.telegram)}" target="_blank" rel="noopener noreferrer">${brand('telegram.svg')}<span ${label('Join Telegram')}>${t('Join Telegram')}</span></a></section>`:'';
+write('downloads.html',`<!DOCTYPE html>
+<html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${t('Download ZenithW')} | Windows &amp; Android</title><meta name="description" content="${t('Windows or Android. Free, open source and ad-free.')} Windows ${config.windows.version} · Android ${config.android.version}"><link rel="canonical" href="${config.origin}/downloads"><meta name="robots" content="index, follow"><meta name="theme-color" content="#0d0e10"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/downloads.css"><link rel="stylesheet" href="/site-language.css"><script src="/site-language.js"></script><script src="/downloads.js" defer></script></head><body><a class="downloads-skip" href="#main">İçeriğe geç</a><div class="downloads-shell"><header class="downloads-header"><a class="downloads-brand" href="/"><img src="/zenithw.png" width="32" height="32" alt="">ZenithW</a><nav class="downloads-nav" aria-label="ZenithW"><a href="/guides">Rehberler</a><a href="/updates">Güncellemeler</a><a href="/support">Destek</a></nav>${languageSelect}<details class="downloads-menu"><summary aria-label="${t('Open navigation')}" data-l10n="${escape(JSON.stringify({'aria-label':'Open navigation'}))}">${icon('menu')}</summary><nav aria-label="ZenithW"><a href="/guides">Rehberler</a><a href="/updates">Güncellemeler</a><a href="/support">Destek</a><a href="/settings">Ayarlar</a></nav></details></header><main id="main"><header class="downloads-hero"><span class="downloads-eyebrow">ZENITHW / DOWNLOADS</span>${text('h1','Your device. Your ZenithW.')}${text('p','Windows or Android. Free, open source and ad-free.')}</header>${tabs}<div class="platform-grid">${windows}${android}</div><p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>${telegram}</main><footer class="downloads-footer"><a class="downloads-brand" href="/"><img src="/zenithw.png" width="25" height="25" alt="">ZenithW</a>${text('p','Free. Open source. In your control.')}<nav aria-label="ZenithW"><a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">GitHub</a><a href="/about/privacy">Gizlilik</a><a href="/support">Destek</a><a href="/settings">Ayarlar</a></nav></footer><details class="brand-credits">${text('summary','Brand credits')}<p>Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">Creative Commons 3.0 Attribution License</a>.</p><p>Windows, Microsoft Store and WinGet marks belong to Microsoft. GitHub, F-Droid, Uptodown and Telegram marks belong to their respective owners.</p></details></div></body></html>\n`);
+console.log('Downloads hub generated with current release features, requirements and eight catalogs.');

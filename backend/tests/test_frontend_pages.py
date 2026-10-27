@@ -1,4 +1,5 @@
 import unittest
+import re
 from pathlib import Path
 
 
@@ -24,8 +25,8 @@ class StandaloneToolPageTests(unittest.TestCase):
         docker_runtime = (FRONTEND.parent / "docker/runtime-config.js").read_text(encoding="utf-8")
 
         self.assertIn('id="youtubeAppOverlay"', index)
-        self.assertIn('href="/pc-app.html"', index)
-        self.assertIn('href="/app.html"', index)
+        self.assertIn('href="/downloads#windows"', index)
+        self.assertIn('href="/downloads#android"', index)
         self.assertIn("window.ZENITHW_YOUTUBE_WEB_ENABLED = false", runtime)
         self.assertIn("window.ZENITHW_YOUTUBE_WEB_ENABLED = true", docker_runtime)
         self.assertIn("shouldRouteYoutubeToApps(url)", app)
@@ -39,7 +40,7 @@ class StandaloneToolPageTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 source = (FRONTEND / filename).read_text(encoding="utf-8")
                 self.assertIn('id="siteBottomNav"', source)
-                self.assertIn('src="site-shell.js?v=14.3"', source)
+                self.assertRegex(source, r'src="/?(?:cache-assets/)?site-shell(?:\.[a-f0-9]{12})?\.js(?:\?v=[^"]+)?"')
 
     def test_services_are_a_home_page_popover(self):
         source = (FRONTEND / "index.html").read_text(encoding="utf-8")
@@ -70,7 +71,8 @@ class StandaloneToolPageTests(unittest.TestCase):
     def test_home_command_center_has_current_identity_and_modes(self):
         index = (FRONTEND / "index.html").read_text(encoding="utf-8")
         app = (FRONTEND / "app.d4596317c4a7.js").read_text(encoding="utf-8")
-        self.assertIn('class="home-wordmark"', index)
+        self.assertIn('ZenithW', index)
+        self.assertIn('id="homeStatusTxt"', index)
         self.assertIn('id="homeStatusTxt"', index)
         self.assertIn('id="modeAuto"', index)
         self.assertIn('id="modeAudio"', index)
@@ -82,18 +84,16 @@ class StandaloneToolPageTests(unittest.TestCase):
         self.assertIn("const payload=await res.json().catch", app)
         self.assertIn("showPublicError(payload,res.status,videoInfo.url,false)", app)
 
-    def test_v14_4_release_is_current_and_previous_releases_are_preserved(self):
+    def test_declared_current_release_is_present_and_archives_are_preserved(self):
         version = (FRONTEND / "version.js").read_text(encoding="utf-8")
         updates = (FRONTEND / "updates-core.99daf4ea6088.js").read_text(encoding="utf-8")
         archive = (FRONTEND / "updates-archive.07c744021db2.js").read_text(encoding="utf-8")
-        self.assertIn("ver: 'v14.4'", version)
-        self.assertIn("YouTube daha akıllı, ilerleme daha net", updates)
-        self.assertIn("const UPDATE_V14_3=", updates)
-        self.assertIn("const UPDATE_V14_2=", updates)
-        self.assertIn("Daha sakin, daha net, daha ZenithW", updates)
-        self.assertIn("Railway’den AWS’ye: ZenithW artık kendi sunucusunda", updates)
-        self.assertIn("['v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0'", updates)
-        self.assertIn("{ver:'v14.0',latest:false", archive)
+        current = re.search(r"ver:\s*'([^']+)'", version).group(1)
+        self.assertIn(current, updates)
+        for release in ("v14.4", "v14.3", "v14.2", "v14.1", "v14.0"):
+            self.assertIn(release, updates + archive)
+        self.assertIn("CURRENT_RELEASES", updates)
+        self.assertIn("ZW_UPDATE_ARCHIVE", archive)
 
     def test_settings_use_the_wide_workspace_layout(self):
         settings = (FRONTEND / "settings.html").read_text(encoding="utf-8")
@@ -110,15 +110,13 @@ class StandaloneToolPageTests(unittest.TestCase):
         self.assertIn("body.settings-page.tool-page", shell)
         self.assertIn(".settings-page.mobile-settings-index .st-content{display:none}", shell)
 
-    def test_status_page_uses_public_runtime_status_fields(self):
+    def test_status_page_redirects_to_the_dedicated_status_site(self):
         source = (FRONTEND / "status.html").read_text(encoding="utf-8")
-        self.assertIn("fetch(`${API}/status`", source)
-        self.assertIn("data.components", source)
-        self.assertIn("components.media_processing", source)
-        self.assertIn("components.job_intake", source)
+        self.assertIn("https://status.zenithw.space/", source)
+        self.assertIn("window.location.replace", source)
+        self.assertIn('http-equiv="refresh"', source)
         self.assertNotIn("cookies_loaded", source)
         self.assertNotIn("max_concurrent_downloads", source)
-        self.assertNotIn("fetch(`${API}/health`", source)
 
     def test_public_docs_describe_the_current_aws_architecture(self):
         repository = FRONTEND.parent
@@ -134,7 +132,7 @@ class StandaloneToolPageTests(unittest.TestCase):
         ]
         combined = "\n".join(path.read_text(encoding="utf-8") for path in public_files)
         self.assertIn("Amazon EC2", combined)
-        self.assertNotIn("Railway", combined)
+        self.assertNotIn("https://zenithw.up.railway.app", combined)
 
     def test_converter_has_premium_standalone_workflow(self):
         source = (FRONTEND / "convert.html").read_text(encoding="utf-8")

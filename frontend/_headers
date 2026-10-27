@@ -12,10 +12,58 @@
 /167845b79089edc80bec2cdad1b9c9ee.txt
   Cache-Control: public, max-age=3600, must-revalidate
 
+/android-tutorial.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /app-pages.js
   Cache-Control: public, max-age=3600, must-revalidate
 
 /app.d4596317c4a7.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/audio-tools-link.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/audio-tools.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/audio-tools.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/android.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/credits.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/f-droid-icon.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/f-droid.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/github.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/microsoft-store-icon.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/microsoft-store.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/telegram.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/uptodown-icon.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/uptodown.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/windows.svg
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/winget.png
   Cache-Control: public, max-age=3600, must-revalidate
 
 /compare.a0575b77ab4c.css
@@ -37,6 +85,15 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /desktop-promo.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/download-safety.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/downloads.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/downloads.js
   Cache-Control: public, max-age=3600, must-revalidate
 
 /favicon.ico
@@ -102,6 +159,9 @@
 /premium-pages.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/premium-workspaces.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /remux-studio.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -112,6 +172,9 @@
   Cache-Control: no-store, max-age=0, must-revalidate
   CDN-Cache-Control: no-store
   Cloudflare-CDN-Cache-Control: no-store
+
+/site-community.css
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /site-language.css
   Cache-Control: public, max-age=3600, must-revalidate
@@ -131,6 +194,39 @@
 /style.487d49f0164d.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/support-copy.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/support-sponsor.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/support-sponsor.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-companions.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-config.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-duels.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-focus.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-i18n.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-online.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-profiles.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /updates-archive.07c744021db2.js
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -146,10 +242,19 @@
 /vendor/mediabunny-LICENSE.txt
   Cache-Control: public, max-age=3600, must-revalidate
 
+/vendor/socket.io-4.7.2.min.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/vendor/socket.io-LICENSE.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /version.js
   Cache-Control: public, max-age=0, must-revalidate
   CDN-Cache-Control: no-store
   Cloudflare-CDN-Cache-Control: no-store
+
+/workspace-choices.js
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /zenithw-promo-poster.png
   Cache-Control: public, max-age=3600, must-revalidate

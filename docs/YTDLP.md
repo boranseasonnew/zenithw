@@ -1,18 +1,43 @@
-# yt-dlp dependency review — 7 October 2026
+# yt-dlp dependency review — 23 October 2026
 
-## Version decision
+## Stable engine update
 
-The project pins yt-dlp `2026.08.19`. The official GitHub latest stable release
-and PyPI both report that same release. PyPI and the lock file normalize it to
-`2026.8.19`; these are the same version. Its wheel and source archive SHA-256
-values match the existing lock entry. No yt-dlp upgrade is necessary today.
+The official GitHub stable release and PyPI both report **2026.10.21**.
+The repository now pins that release and `certifi==2026.10.19`, the CA bundle
+required by the current default extra. Both wheels and source archive hashes
+were checked against PyPI and retained in `backend/requirements.lock`.
+`yt-dlp-ejs==0.8.0` remains the exact EJS version required by this release.
+Unrelated runtime and provider packages were not upgraded.
 
-The pinned `yt-dlp-ejs==0.8.0` is also current and is exactly the EJS version
-required by yt-dlp's default extra. The pinned requests, websockets and curl-cffi
-versions satisfy this release's declared ranges. Deno `2.8.3` exceeds EJS's
-documented 2.3.0 runtime minimum; a newer Deno exists, but it is a separate runtime
-upgrade and was not bundled into this targeted change. Nightly yt-dlp builds
-exist, but no diagnosed extraction failure here requires changing release channel.
+## Reported Pornhub failure
+
+The existing EC2 service was inspected through its existing Instance Connect
+session. Its installed versions were yt-dlp 2026.8.19 and certifi 2026.7.22.
+The reported request failed on the source webpage with HTTP 410, before a
+video download was started. The public `platform_restricted` response had
+hidden this distinction. The same URL produced source formats locally with
+2026.10.21; that does not establish success from the EC2 egress address.
+
+The Pornhub extractor source is identical in 2026.08.19 and 2026.10.21, so
+an engine upgrade alone must not be described as a verified fix for this
+provider. `SafeYoutubeDL` continues to exclude native libcurl handlers:
+these bypass the Python socket SSRF boundary. That boundary must not be
+removed to make impersonation work. The staged EC2 check still returned 410 with the guarded Python handler and
+403 with a diagnostic browser-impersonation profile. Supported alternate
+provider domains were also rejected. This is consistent with an upstream
+restriction on the server/network, but does not prove the exact blocking rule.
+The production request path and SSRF guard were left intact.
+
+## Browser console
+
+Socket.IO 4.7.2 is now served from the site itself. Its original CDN bytes
+were checked against the existing SHA-512 integrity value, the development
+source-map URL was removed, and the script integrity value was recalculated.
+The upstream MIT license is included. No CSP network permission was added.
+
+The screenshot's blocked Cloudflare analytics beacon is an extension/client
+block, and the unsupported Permissions-Policy features are browser warnings.
+Neither records the failed backend extraction request.
 
 ## Companion provider update
 
@@ -29,33 +54,34 @@ JavaScript server. Updating requirements alone does **not** patch that server.
 The app's existing `youtubepot-bgutilhttp:base_url` option remains supported.
 The public site's YouTube web restriction remains in place.
 
-## AWS deployment requirements
+## EC2 engine update and verification
 
-The expired AWS CLI session prevented a fresh production package inventory in
-this review. The repository pin is not evidence of the installed AWS version.
-The public API health endpoint still returned 204 with private/no-store caching.
+The existing instance and AWS account were verified before use. Only yt-dlp,
+certifi and their requirement/lock entries were changed; the server's modified
+application code, proxy configuration, cookies, environment and provider were
+preserved. Official old wheels and both previous requirements files were saved
+under `/home/ubuntu/zenithw-stage-20261023/rollback/` on that server.
 
-Before changing production:
+After installation, `pip check` reported no broken requirements. The backend
+service was restarted and returned active, `/health` returned 204 and `/ready`
+returned `{"status":"ready"}`. The interpreter reports yt-dlp 2026.10.21 and
+certifi 2026.10.19. This is an engine/CA update, not a verified resolution of the
+Pornhub source rejection and not an update of the separately deployed PO provider.
 
-1. Renew the existing AWS login and verify the account and instance against
-   `docs/LOCAL_DEPLOYMENT.md`.
-2. Read the actual service interpreter and installed package versions. Locate
-   the PO Token provider service/container, its version and its listening address.
-3. If the HTTP provider is in use, update its server and Python plugin together
-   to 2.0.1. Native servers should bind to loopback. Docker port publishing must
-   use `127.0.0.1:4416:4416`, as the maintainer specifies. Do not expose port 4416.
-4. Prepare backups and a separate dependency environment; compare files before
-   replacing them. Preserve environment secrets, cookies and download state.
-5. Apply only the reviewed changes, then check service startup and the existing
-   health/readiness/status endpoints. Use the previous environment and server
-   version for rollback if startup or provider connectivity fails.
+Rollback uses the retained wheels with `pip install --no-index --find-links`
+and the hashed rollback requirements, restores the two saved requirements
+files, then restarts the existing backend service and checks its readiness.
 
-No production server upgrade or full backend deployment is claimed by this note.
+Relevant local download/security checks passed (67 + 14 tests), as did the
+8 frontend cache/CSP tests. Local browser inspection loaded the self-hosted
+Socket.IO client successfully with its new SRI and produced no console errors.
+The entire historical frontend test suite is not claimed to pass; it includes
+outdated release/status-page expectations unrelated to this change.
 
 ## Primary sources
 
 - [yt-dlp latest stable release](https://github.com/yt-dlp/yt-dlp/releases/latest)
-- [yt-dlp PyPI metadata](https://pypi.org/pypi/yt-dlp/2026.8.19/json)
+- [yt-dlp PyPI metadata](https://pypi.org/pypi/yt-dlp/2026.10.21/json)
 - [EJS runtime guidance](https://github.com/yt-dlp/yt-dlp/wiki/EJS)
 - [Provider 2.0.1 installation and compatibility](https://github.com/Brainicism/bgutil-ytdlp-pot-provider/blob/2.0.1/README.md)
 - [Provider security advisory](https://github.com/Brainicism/bgutil-ytdlp-pot-provider/security/advisories/GHSA-qpv9-8xfj-xx9m)

@@ -1,0 +1,75 @@
+{
+  "origin": "https://zenithw.space",
+  "contentLastModified": {
+    "/downloads": "2026-10-23",
+    "/updates": "2026-10-14",
+    "/audio-separator": "2026-10-14"
+  },
+  "telegram": "https://t.me/zenithwon",
+  "windows": {
+    "version": "4.2.0",
+    "requirements": "Windows 10/11 · x64",
+    "storeMinimum": "Windows 10 version 2004 (build 19041)",
+    "release": "https://github.com/boranseasonnew/zenithw/releases/tag/v4.2.0",
+    "installer": {
+      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/Zenith-4.2.0-Windows-Setup.exe",
+      "name": "Zenith-4.2.0-Windows-Setup.exe",
+      "bytes": 214723677
+    },
+    "portable": {
+      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/Zenith-4.2.0-Windows.exe",
+      "name": "Zenith-4.2.0-Windows.exe",
+      "bytes": 214567377
+    },
+    "checksums": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/SHA256SUMS.txt",
+    "stores": {
+      "microsoft": {
+        "status": "available",
+        "productId": "9NVWM7S7MJP7",
+        "url": "https://apps.microsoft.com/store/detail/9NVWM7S7MJP7?cid=DevShareMCLPCS"
+      },
+      "winget": {
+        "status": "review",
+        "packageId": "ZenithW.Desktop",
+        "reviewUrl": "https://github.com/microsoft/winget-pkgs/pull/449816"
+      }
+    }
+  },
+  "android": {
+    "version": "2.4.0",
+    "requirements": "Android 7.0+ (API 24)",
+    "release": "https://github.com/boranseasonnew/zenithw-android/releases/tag/v2.4.0",
+    "checksums": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.4.0/SHA256SUMS.txt",
+    "apks": [
+      {
+        "abi": "arm64-v8a",
+        "name": "Zenith-2.4.0-stable-arm64-v8a.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.4.0/Zenith-2.4.0-stable-arm64-v8a.apk",
+        "bytes": 73523345
+      },
+      {
+        "abi": "armeabi-v7a",
+        "name": "Zenith-2.4.0-stable-armeabi-v7a.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.4.0/Zenith-2.4.0-stable-armeabi-v7a.apk",
+        "bytes": 66354599
+      },
+      {
+        "abi": "x86_64",
+        "name": "Zenith-2.4.0-stable-x86_64.apk",
+        "url": "https://github.com/boranseasonnew/zenithw-android/releases/download/v2.4.0/Zenith-2.4.0-stable-x86_64.apk",
+        "bytes": 76530426
+      }
+    ],
+    "stores": {
+      "fdroid": {
+        "status": "review",
+        "url": null,
+        "reviewUrl": "https://gitlab.com/fdroid/rfp/-/work_items/4542"
+      },
+      "uptodown": {
+        "status": "review",
+        "url": null
+      }
+    }
+  }
+}

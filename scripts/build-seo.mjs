@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
+import { writeFileWithRetry as writeFileSync } from '../shared/build-files.mjs';
+import { readFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
@@ -6,6 +7,7 @@ import { guides, GUIDE_DATE } from './seo-content.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const frontend = join(root, 'frontend');
+const contentLastModified = JSON.parse(readFileSync(join(root, 'shared/site-config.json'), 'utf8')).contentLastModified || {};
 const origin = 'https://zenithw.space';
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const read = path => readFileSync(join(frontend, path), 'utf8').replaceAll('\r\n', '\n');
@@ -93,7 +95,7 @@ const homeBlock = `<!-- generated discovery content -->
   <span class="guide-kicker">ZENITHW / WEB · ANDROID · WINDOWS</span>
   <h1 id="discovery-title">Ücretsiz video ve ses indirici.</h1>
   <p class="discovery-lead">TikTok, Instagram, X, Reddit, Pinterest ve SoundCloud gibi desteklenen kaynaklardan video veya ses kaydet. Bağlantını yukarıya yapıştır, uygun modu seç ve dosyanı indir.</p>
-  <div class="discovery-platforms"><a href="/app">Android uygulaması ↗</a><a href="/pc-app">Windows uygulaması ↗</a><a href="/convert">Video ve ses dönüştür ↗</a><a href="/remux">Kayıpsız remux ↗</a></div>
+  <div class="discovery-platforms"><a href="/app">Android uygulaması ↗</a><a href="/pc-app">Windows uygulaması ↗</a><a href="/convert">Video ve ses dönüştür ↗</a><a href="/remux">Kayıpsız remux ↗</a><a href="/downloads#android-tutorial" data-l10n="{&quot;text:0&quot;:&quot;Watch Tutorial&quot;}">Eğitimi izle</a></div>
   <section class="discovery-how"><h2>Nasıl kullanılır?</h2><ol class="guide-steps"><li>Profil adresi yerine kaydetmek istediğin paylaşımın bağlantısını kopyala.</li><li>Bağlantıyı yapıştırıp devam et. Video ve ses için otomatik, yalnızca ses için ses modunu kullan.</li><li>İndirme planını kontrol et ve indir. Kullanılabilir kalite, kaynak paylaşımın sunduğu akışlara bağlıdır.</li></ol></section>
   <div class="discovery-heading"><h2>İlk bağlantından son dosyana.</h2><a href="/guides">Tüm rehberler ↗</a></div>
   ${cards('tr')}
@@ -157,6 +159,7 @@ const sitemapPages = new Map();
 for (const file of walk(frontend).filter(file => file.endsWith('.html'))) {
   const path = relative(frontend, file).replaceAll('\\', '/');
   let source = read(path);
+  if ((source.includes('data-static-language=') && /^(en|de|fr|ru|vi|zh|ja)\//.test(path)) || ['/app','/pc-app'].includes(routeFor(path))) continue;
   if (/name="robots"[^>]*content="[^"]*noindex/.test(source)) continue;
   const canonical = /rel="canonical"\s+href="([^"]+)"/.exec(source)?.[1];
   if (!canonical?.startsWith(origin)) continue;
@@ -177,10 +180,12 @@ for (const file of walk(frontend).filter(file => file.endsWith('.html'))) {
   const separator = source.indexOf('</head>');
   let head = source.slice(0, separator);
   head = head.replace(/\s*<!-- generated SEO metadata -->[\s\S]*?<!-- end generated SEO metadata -->/g, '')
+    .replace(/\s*<link\b[^>]*rel="canonical"[^>]*>/g, '')
     .replace(/\s*<meta\s+(?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>/g, '')
     .replace(/\s*<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
   const schema = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2).replaceAll('<', '\\u003c');
   const metadata = `\n<!-- generated SEO metadata -->
+<link rel="canonical" href="${canonical}">
 <meta property="og:type" content="${guide ? 'article' : 'website'}">
 <meta property="og:title" content="${escape(title)}">
 <meta property="og:description" content="${escape(description)}">
@@ -207,7 +212,8 @@ const oldSitemap = read('sitemap.xml');
 const oldDates = new Map([...oldSitemap.matchAll(/<url>\s*<loc>(.*?)<\/loc>(?:\s*<lastmod>(.*?)<\/lastmod>)?/g)].map(match => [match[1], match[2]]));
 const changedContent = new Set(['/', '/app', '/pc-app', '/convert', '/remux', '/about', '/about/privacy', '/about/terms', '/dmca']);
 const entries = [...sitemapPages].sort(([a], [b]) => a.localeCompare(b)).map(([url, details]) => {
-  const date = details.guide || changedContent.has(new URL(url).pathname) ? GUIDE_DATE : oldDates.get(url);
+  const date = contentLastModified[new URL(url).pathname]
+    || (details.guide || changedContent.has(new URL(url).pathname) ? GUIDE_DATE : oldDates.get(url));
   return `  <url><loc>${escape(url)}</loc>${date ? `<lastmod>${date}</lastmod>` : ''}</url>`;
 });
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`);

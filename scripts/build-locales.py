@@ -56,6 +56,10 @@ class Markup(HTMLParser):
 
 count=0
 for path in frontend.rglob('*.html'):
+    # Zenith Type owns its browser-language UI and must never load the shared
+    # saved-language runtime or its document-wide navigation observer.
+    if path == frontend / 'typing.html':
+        continue
     source=path.read_text(encoding='utf-8')
     parser=Markup(source);parser.feed(source);output=parser.result()
     if 'site-language.js' not in output and not re.search(r'/cache-assets/site-language\.[a-f0-9]+\.js',output):

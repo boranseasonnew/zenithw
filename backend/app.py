@@ -23,7 +23,10 @@ from collections import defaultdict, OrderedDict, deque
 from contextlib import contextmanager
 from importlib.metadata import PackageNotFoundError, version as package_version
 from urllib.parse import urlparse
-from urllib.request import Request as UrlRequest, urlopen
+from urllib.request import (
+    Request as UrlRequest, OpenerDirector, ProxyHandler, HTTPHandler, HTTPSHandler,
+    HTTPDefaultErrorHandler, HTTPRedirectHandler, HTTPErrorProcessor,
+)
 
 from flask import Flask, request, jsonify, send_file, g
 from flask_cors import CORS
@@ -37,6 +40,18 @@ from youtube_health import YouTubeHealth
 from safe_ytdlp import SafeYoutubeDL
 
 youtube_health = YouTubeHealth()
+
+
+def open_http_resource(request_obj, timeout):
+    """HTTP(S) only: local files and FTP have no installed protocol handlers."""
+    address = request_obj.full_url if isinstance(request_obj, UrlRequest) else str(request_obj)
+    if urlparse(address).scheme.lower() not in {"http", "https"}:
+        raise ValueError("Only HTTP(S) resources are supported")
+    opener = OpenerDirector()
+    for handler in (ProxyHandler(), HTTPHandler(), HTTPSHandler(),
+                    HTTPDefaultErrorHandler(), HTTPRedirectHandler(), HTTPErrorProcessor()):
+        opener.add_handler(handler)
+    return opener.open(request_obj, timeout=timeout)
 
 
 @contextmanager
@@ -62,7 +77,7 @@ def youtube_provider_health():
             status = "unreachable"
             try:
                 with _pot_provider_network_scope("https://www.youtube.com/"):
-                    with urlopen(UrlRequest(POT_PROVIDER_URL + "/ping"), timeout=2) as response:
+                    with open_http_resource(UrlRequest(POT_PROVIDER_URL + "/ping"), timeout=2) as response:
                         status = "ok" if response.status == 200 else "unhealthy"
             except Exception:
                 pass  # Only the status is exposed, never provider response/token data.
@@ -3904,7 +3919,7 @@ def download_thumbnail_from_url(thumbnail_url):
             thumbnail_url,
             headers={"User-Agent": "ZenithW/1.0 (thumbnail fetch)"},
         )
-        with urlopen(request_obj, timeout=min(THUMBNAIL_TIMEOUT_SECONDS, 20)) as upstream:
+        with open_http_resource(request_obj, timeout=min(THUMBNAIL_TIMEOUT_SECONDS, 20)) as upstream:
             content_type = (upstream.headers.get_content_type() or "").lower()
             if not content_type.startswith("image/"):
                 raise ValueError("Thumbnail source did not return an image")

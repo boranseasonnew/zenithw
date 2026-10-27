@@ -1,0 +1,52 @@
+{
+  "android.svg": {
+    "source": "https://developer.android.com/static/images/brand/android-head_flat.svg",
+    "owner": "Google LLC",
+    "license": "CC BY 3.0",
+    "attribution": "The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License."
+  },
+  "windows.svg": {
+    "source": "https://commons.wikimedia.org/wiki/File:Windows_11_logo.svg",
+    "owner": "Microsoft",
+    "note": "Unchanged blue pictogram isolated from the Windows wordmark."
+  },
+  "winget.png": {
+    "source": "https://github.com/microsoft/winget-cli/tree/master/.github/images/WindowsPackageManager_Assets/UWP",
+    "owner": "Microsoft",
+    "license": "MIT",
+    "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
+    "licenseText": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the Software), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+  },
+  "github.svg": {
+    "source": "https://brand.github.com/GitHub_Logos.zip",
+    "owner": "GitHub, Inc.",
+    "note": "Unmodified official white Invertocat."
+  },
+  "microsoft-store-icon.svg": {
+    "source": "Existing official Microsoft Store download badge in microsoft-store.svg",
+    "owner": "Microsoft",
+    "note": "Badge pictogram shown at its original aspect ratio."
+  },
+  "f-droid.svg": {
+    "source": "https://f-droid.org/",
+    "owner": "F-Droid"
+  },
+  "uptodown.svg": {
+    "source": "https://www.uptodown.com/",
+    "owner": "Uptodown"
+  },
+  "telegram.svg": {
+    "source": "https://telegram.org/",
+    "owner": "Telegram"
+  },
+  "f-droid-icon.svg": {
+    "source": "Existing F-Droid brand asset in f-droid.svg",
+    "owner": "F-Droid",
+    "note": "Unchanged pictogram isolated from the wordmark."
+  },
+  "uptodown-icon.svg": {
+    "source": "Existing Uptodown brand asset in uptodown.svg",
+    "owner": "Uptodown",
+    "note": "Unchanged pictogram isolated from the wordmark."
+  }
+}

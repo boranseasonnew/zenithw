@@ -1,6 +1,7 @@
+import { writeFileWithRetry as writeFileSync } from '../shared/build-files.mjs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -14,7 +15,11 @@ execFileSync(process.platform === 'win32' ? 'python' : 'python3',
 // Keep the checked-in source URLs available for old pages and development.
 // Only generated, content-hashed copies receive immutable response headers.
 const sources = [
-  'site-language.js', 'site-language.css', ...['tr','en','fr','de','ru','vi','zh','ja'].map(lang=>'locales/'+lang+'.json'),
+  'download-safety.js', 'audio-tools.js', 'audio-tools.css', 'audio-tools-link.css',
+  'local-media.js', 'workspace-choices.js', 'premium-workspaces.css', 'downloads.js', 'android-tutorial.js', 'downloads.css', 'site-community.css', ...['microsoft-store','f-droid','uptodown','telegram'].map(brand=>'brands/'+brand+'.svg'), ...['f-droid-icon.svg','uptodown-icon.svg','windows.svg','android.svg','github.svg','microsoft-store-icon.svg','winget.png','credits.json'].map(file=>'brands/'+file),
+  'site-language.js', 'site-language.css', 'site-shell.css',
+  'support-copy.json', 'support-sponsor.css', 'support-sponsor.js',
+  ...['tr','en','fr','de','ru','vi','zh','ja'].map(lang=>'locales/'+lang+'.json'),
   'app.d4596317c4a7.js', 'style.487d49f0164d.css',
   'updates-core.99daf4ea6088.js', 'updates-archive.07c744021db2.js',
   'updates.4afebabda436.css', 'info.6c44eb6f52e7.css',
@@ -50,6 +55,7 @@ function fingerprint(source) {
   if (building.has(source)) throw new Error('Circular static asset dependency: ' + source);
   building.add(source);
   let bytes = readFileSync(join(frontend, source));
+  if (extname(source) === '.json') bytes = Buffer.from(bytes.toString('utf8').replaceAll('\r\n', '\n'));
   if (['.js', '.css'].includes(extname(source))) {
     let text = bytes.toString('utf8').replaceAll('\r\n', '\n');
     for (const dependency of sources) {
@@ -95,7 +101,7 @@ if (existsSync(output)) {
 const assetExtensions = new Set(['.js', '.css', '.woff', '.woff2', '.ttf', '.otf', '.ico', '.png', '.jpg', '.jpeg', '.webp', '.avif', '.svg', '.txt', '.xml']);
 const ordinary = walk(frontend)
   .map(path => '/' + relative(frontend, path).replaceAll('\\', '/'))
-  .filter(url => !url.startsWith('/cache-assets/') && (assetExtensions.has(extname(url)) || (url.startsWith('/locales/') && extname(url)==='.json')))
+  .filter(url => !url.startsWith('/cache-assets/') && (assetExtensions.has(extname(url)) || (url.startsWith('/locales/') && extname(url)==='.json') || ['/brands/credits.json','/support-copy.json'].includes(url)))
   .sort();
 const noStore = new Set(['/runtime-config.js']);
 const revalidate = new Set(['/version.js']);
@@ -126,7 +132,7 @@ const headers = blocks.join('\n\n') + '\n';
 if (headers.split('\n').some(line => line.length > 2000)) throw new Error('A Pages _headers line exceeds 2000 characters.');
 if (blocks.filter(block => block.startsWith('/')).length > 100) throw new Error('Pages _headers exceeds 100 rules. Review retained immutable assets.');
 write(join(frontend, '_headers'), headers);
-const exclude = [...new Set(['/cache-assets/*', '/fonts/*', '/vendor/*', ...ordinary.filter(url => !url.startsWith('/fonts/') && !url.startsWith('/vendor/'))])];
+const exclude = [...new Set(['/cache-assets/*', '/fonts/*', '/vendor/*', ...ordinary.filter(url => !['/audio-separator-worker.js','/audio-export-worker.js'].includes(url) && !url.startsWith('/fonts/') && !url.startsWith('/vendor/'))])];
 if (exclude.length + 1 > 100 || exclude.some(url => url.length > 100)) throw new Error('Pages Function route limits exceeded.');
 write(join(frontend, '_routes.json'), JSON.stringify({ version: 1, include: ['/*'], exclude }, null, 2) + '\n');
 write(join(repository, 'shared/pages-cache-assets.mjs'),

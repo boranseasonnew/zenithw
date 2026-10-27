@@ -5,6 +5,9 @@ const os = require('node:os');
 const test = require('node:test');
 const vm = require('node:vm');
 const { spawn } = require('node:child_process');
+if (!fs.existsSync(path.join(__dirname, '..', 'desktop'))) {
+  test('Desktop security checks require the desktop source checkout', {skip:true},()=>{});
+} else {
 const { createProgressTracker } = require('../desktop/src/progress.cjs');
 const { videoFormats } = require('../desktop/src/formats.cjs');
 
@@ -118,3 +121,5 @@ test('Desktop preserves downloaded streams when postprocessing cannot publish a 
   assert.ok(fs.existsSync(path.join(recovery, 'video.f299.mp4')));
   assert.equal(fs.existsSync(workDir), false);
 });
+
+}

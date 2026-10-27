@@ -51,6 +51,35 @@ Then open:
 http://localhost:8080
 ```
 
+## Optional server monitoring with Beszel
+
+The optional Beszel overlay adds a monitoring Hub and an agent for the Docker
+host running ZenithW. Run it on a Linux Docker host:
+
+```bash
+docker compose -f compose.yml -f compose.beszel.yml --profile monitoring up -d beszel
+```
+
+The Hub binds to loopback by default. Connect using an SSH tunnel:
+ssh -L 8090:127.0.0.1:8090 user@server, then open http://127.0.0.1:8090
+and create the Beszel admin account. In the
+Hub, add a system and select the Unix socket connection. Use
+`/beszel_socket/beszel.sock` as the host, then copy the system's public key and
+the Hub token into `BESZEL_KEY` and `BESZEL_TOKEN` in `.env`. Start the local
+agent:
+
+```bash
+docker compose -f compose.yml -f compose.beszel.yml --profile monitoring up -d beszel-agent
+```
+
+To monitor additional ZenithW servers, add a system in the same Hub for each
+host and deploy the agent configuration Beszel provides on that host. Set
+`HUB_URL` to the Hub's reachable HTTPS address when connecting agents over
+WebSocket. Keep port 8090 private or behind HTTPS and a trusted access layer.
+The Docker agent needs read access to `/var/run/docker.sock` to report
+container metrics. A read-only socket mount still permits Docker API calls; run only a trusted agent image. This overlay expects Linux Docker hosts; the local Unix
+socket agent is not suitable for Docker Desktop on Windows or macOS.
+
 If another port or public domain is used, update both:
 
 - `ZENITHW_PORT`

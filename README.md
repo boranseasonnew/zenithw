@@ -48,3 +48,7 @@ Built with yt-dlp, FFmpeg, Mediabunny and other open-source projects. Thanks to 
 ## License
 
 [AGPL-3.0-only](LICENSE). Third-party components retain their own licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## Hosted infrastructure
+
+The public frontend is served through Cloudflare Pages; the hosted API runs on Amazon EC2. The dedicated status site is https://status.zenithw.space/. Self-hosting remains supported through Docker Compose.

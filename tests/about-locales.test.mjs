@@ -26,7 +26,7 @@ test('Every About section uses the current static copy and translates in all eig
       const window={dispatchEvent(){}};
       vm.runInNewContext(read('site-language.js'),{window,document,navigator:{languages:[`${language}-XX`]},CustomEvent:class{},localStorage:{getItem:()=>null},fetch:async()=>({ok:true,json:async()=>catalog}),console});
       await window.ZWLanguage.ready;
-      assert.equal(document.documentElement.lang,language);
+      assert.equal(document.documentElement.lang,language==='zh'?'zh-CN':language);
       fields.forEach((field,index)=>{
         for(const [key,original] of Object.entries(field)){
           const translated=catalog[original.trim()];

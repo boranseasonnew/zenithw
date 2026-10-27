@@ -1,0 +1,2 @@
+[functions.typing-api]
+verify_jwt = false

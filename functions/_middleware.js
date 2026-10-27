@@ -1,4 +1,6 @@
+import { legacyDownloadRoute } from '../shared/download-routes.mjs';
 import { PAGES_CSP } from "../shared/pages-security.mjs";
+import { TYPING_CSP } from "../shared/typing-security.mjs";
 import { STATIC_ASSET_PATHS } from "../shared/pages-cache-assets.mjs";
 
 const NO_STORE = "private, no-store, max-age=0";
@@ -104,7 +106,10 @@ async function pageResponse(context) {
     context.request.headers.has("Cookie") ||
     headers.has("Set-Cookie");
 
-  if (isHtml) headers.set("Content-Security-Policy", PAGES_CSP);
+  if (isHtml) {
+    const typing = /^\/typing(?:\.html)?\/?$/.test(new URL(context.request.url).pathname);
+    headers.set("Content-Security-Policy", typing ? TYPING_CSP : PAGES_CSP);
+  }
   headers.set("Cache-Control", isPrivate || response.status >= 400 || !isHtml
     ? NO_STORE
     : "public, max-age=0, must-revalidate");
@@ -121,6 +126,12 @@ async function pageResponse(context) {
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+  const destination = legacyDownloadRoute(url.pathname);
+  if (destination && ['GET','HEAD'].includes(context.request.method)) {
+    const target = new URL(destination, url.origin);
+    target.search = url.search;
+    return Response.redirect(target.href,301);
+  }
   // Backstop if a deployment forgets _routes.json. Only known public assets
   // skip the gate; an API path ending in .js/.png never matches this allowlist.
   if (["GET", "HEAD"].includes(context.request.method) && STATIC_ASSET_PATHS.has(url.pathname)) {

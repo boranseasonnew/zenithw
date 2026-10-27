@@ -11,7 +11,9 @@ requests==2.33.0
 # Yalnizca ilgili extractor cagrildiginda kullanilir; diger platformlarin
 # mevcut requests akisini degistirmez.
 curl-cffi==0.16.3
-yt-dlp==2026.08.19
+yt-dlp==2026.10.21
+# Stable engine default dependency: refresh the CA bundle with the engine.
+certifi==2026.10.19
 yt-dlp-ejs==0.8.0
 deno==2.8.3
 # Keep the Python plugin and the separately deployed JS provider server on
@@ -20,8 +22,12 @@ bgutil-ytdlp-pot-provider==2.0.1
 # yt-dlp[default] extra'sının parçaları: eksik olsalar da EJS/n-challenge
 # çalışır, ama brotli/mutagen/pycryptodomex/websockets olmadan yt-dlp bazı
 # durumlarda sessizce daha yavaş/eksik code path'lere düşüyor.
-brotli==1.2.0
+brotli==1.2.1
 mutagen==1.47.0
 pycryptodomex==3.21.0
 websockets==15.0.1
 psutil==7.0.0
+
+# Security fixes for untrusted HTTP streaming and safe filesystem serving.
+urllib3==2.8.0
+werkzeug==3.1.9

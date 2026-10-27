@@ -76,3 +76,7 @@ ZenithW-Builds/
 
 # Account-specific Microsoft Store package identity
 desktop/store/identity.json
+
+.playwright-mcp/
+
+zenithw-promo/out/

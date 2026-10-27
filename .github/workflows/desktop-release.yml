@@ -13,7 +13,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  source-check:
+    runs-on: ubuntu-latest
+    outputs:
+      present: ${{ steps.source.outputs.present }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - id: source
+        run: |
+          if test -f desktop/package.json; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
   build-release:
+    needs: source-check
+    if: needs.source-check.outputs.present == 'true'
     runs-on: windows-latest
     steps:
       - name: Check out source
