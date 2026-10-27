@@ -123,11 +123,16 @@ async function handler(req:Request){
    const session=await signIn(account.auth_email,pass);check(await admin.auth.admin.signOut(session.access_token,'global'));
    return json({recoveryCode:nextCode});
   }
+  if(action==='season'){
+   await rate(req,'season',120);
+   return json({season:check(await admin.rpc('typing_roll_season'))});
+  }
   if(action==='leaderboard'){
    const opts=options(body);await rate(req,'leaderboard',120);
-   const entries=check(await admin.rpc('typing_leaderboard',{p_duration:opts.duration,p_language:opts.language,p_difficulty:opts.difficulty}));
+   const board=check(await admin.rpc('typing_season_board',{p_duration:opts.duration,p_language:opts.language,p_difficulty:opts.difficulty}));
+   const entries=board.entries;
    const badges=entries.length?check(await admin.from('typing_profiles').select('user_id,is_verified,is_developer').in('user_id',entries.map(entry=>entry.user_id))):[];
-   return json({entries:entries.map(entry=>({...entry,...badges.find(profile=>profile.user_id===entry.user_id)}))});
+   return json({entries:entries.map(entry=>({...entry,...badges.find(profile=>profile.user_id===entry.user_id)})),season:board.season});
   }
   if(action==='profile-public'){
    await rate(req,'profile-public',90);
@@ -136,7 +141,7 @@ async function handler(req:Request){
    const offset=Math.max(0,Math.min(10000,Math.floor(Number(body.offset)||0)));
    const stats=check(await admin.rpc('typing_public_stats',{p_user:p.user_id}));
    const results=check(await admin.from('typing_scores').select('id,wpm,accuracy,errors,characters,duration,language,difficulty,created_at').eq('user_id',p.user_id).eq('board_eligible',true).order('created_at',{ascending:false}).order('id').range(offset,offset+19));
-   const rating=check(await admin.from('typing_ratings').select('mmr,wins,losses,draws').eq('user_id',p.user_id).maybeSingle());
+   const rating=check(await admin.rpc('typing_rating_current',{p_user:p.user_id})).rating;
    return json({profile:p,stats,results,rating,hasMore:offset+results.length<Number(stats.tests)});
   }
   if(action==='profiles-search'){

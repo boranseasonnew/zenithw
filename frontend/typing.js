@@ -318,8 +318,8 @@ async function renderRanking(){
  $('rank-explanation').textContent=global?'Her oyuncunun en iyi doğrulanmış sonucu.':'Son 200 yerel test. Antrenmanlar dahil değil.';
  if(global){
   if(![15,30,60,120].includes(duration)){$('ranking-status').textContent='Bu süre yalnızca yerel.';}
-  else try{const result=await online.request('leaderboard',{duration,language,difficulty},false);if(ticket!==rankingGeneration)return;runs=result.entries.map(r=>({...r,name:r.display_name,date:r.created_at}));$('ranking-status').textContent='';}catch(error){if(ticket!==rankingGeneration)return;$('ranking-status').textContent=error.message;}
- }else runs=records.filter(r=>r.duration===duration&&r.language===language&&r.difficulty===difficulty).sort(sortRecords);
+  else try{const result=await online.request('leaderboard',{duration,language,difficulty},false);if(ticket!==rankingGeneration)return;window.TypeSeason?.sync(result.season);runs=result.entries.map(r=>({...r,name:r.display_name,date:r.created_at}));$('ranking-status').textContent='';}catch(error){if(ticket!==rankingGeneration)return;$('ranking-status').textContent=error.message;}
+ }else runs=records.filter(r=>r.duration===duration&&r.language===language&&r.difficulty===difficulty&&(!window.TypeSeason||window.TypeSeason.contains(r.date))).sort(sortRecords);
  if(ticket!==rankingGeneration)return;
  const avatar=r=>r&&global&&online.avatarURL(r)?'<img class="rank-avatar" src="'+escapeHTML(online.avatarURL(r))+'" alt="" loading="lazy">':'';
  const labels=['Altın','Gümüş','Bronz'],colors=['gold','','bronze'];
@@ -327,6 +327,8 @@ async function renderRanking(){
  $('rank-rows').innerHTML=runs.slice(0,global?100:20).map((r,i)=>`<tr><td>${i<3?'<span class="accent">'+(i+1)+'</span>':i+1}</td><td><span class="rank-profile">${avatar(r)}${global?'<button class="profile-link" data-profile="'+escapeHTML(r.account_tag)+'">'+escapeHTML(r.name)+'<small>#'+escapeHTML(r.account_tag)+'</small></button>'+window.TypeBadges.markup(r):'<span data-player-name>'+escapeHTML(r.name)+'</span>'}</span></td><td>${r.wpm}</td><td>${r.accuracy}%</td><td>${new Date(r.date).toLocaleString(window.TypeI18n?.locale||'tr-TR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('');
  $('rank-empty').hidden=runs.length>0;
 }
+
+window.addEventListener('type:season',()=>{if(view==='ranking')void renderRanking();});
 
 function updateTraining(){
  const weak=weakKeys();

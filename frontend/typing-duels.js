@@ -12,12 +12,13 @@ function showRating(rating){
 }
 async function refreshRating(){
  if(!api.signedIn){showRating(null);return;}
- try{const data=await api.request('rating');showRating(data.rating);}catch{}
+ try{const data=await api.request('rating');window.TypeSeason?.sync(data.season);showRating(data.rating);}catch{}
 }
 function face(el,profile){
  el.replaceChildren();if(!profile){el.textContent='?';return;}
  const url=api.avatarURL(profile);if(url){const image=new Image();image.src=url;image.alt='';el.append(image);}else el.textContent=profile.display_name[0].toLocaleUpperCase('tr-TR');
 }
+window.addEventListener('type:season',event=>{if(event.detail.changed)void refreshRating();});
 function showRoom(room,clockOffset=0){
  if(active?.code!==room.code)rematchDeadline=0;
  active={...room,clockOffset};pendingCode=room.code;

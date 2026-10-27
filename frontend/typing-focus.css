@@ -36,3 +36,5 @@ body:not(.reduce-motion) dialog.closing{animation:panel-out .17s ease forwards!i
 dialog:modal{overscroll-behavior:contain}dialog::backdrop{overflow:hidden;overscroll-behavior:contain}#profile-duels{margin:26px 0 32px}#profile-duels .dialog-note{margin:10px 0}.profile-table-wrap:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 .account-badge--developer{position:relative;overflow:hidden;background:#000}.account-badge--developer img{position:absolute;left:50%;top:50%;width:48px;height:48px;max-width:none;transform:translate(-50%,-50%);pointer-events:none}
+
+.rank-footer-right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}.season-clock{font:10px var(--font);color:var(--muted);text-align:right;line-height:1.7}.season-clock time{font-variant-numeric:tabular-nums;color:var(--accent);white-space:nowrap}.rank-footer{flex-wrap:wrap}.season-clock[data-state=error] time{color:var(--muted)}

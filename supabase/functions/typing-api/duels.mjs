@@ -35,8 +35,7 @@ export async function handleDuels(action,req,body,user,ctx){
  };
  if(action==='rating'){
   await rate(req,'rating',60,60,user.id);
-  check(await admin.from('typing_ratings').upsert({user_id:user.id},{onConflict:'user_id',ignoreDuplicates:true}));
-  return {rating:check(await admin.from('typing_ratings').select('mmr,wins,losses,draws').eq('user_id',user.id).single())};
+  return check(await admin.rpc('typing_rating_current',{p_user:user.id}));
  }
  if(action==='room-history'){
   await rate(req,'room-history',60,60,user.id);
@@ -46,10 +45,11 @@ export async function handleDuels(action,req,body,user,ctx){
   const offset=Math.max(0,Math.min(10000,Math.floor(Number(body.offset)||0)));
   const history=check(await admin.rpc('typing_match_history',{p_user:user.id,p_opponent:opponent,p_offset:offset}));
   if(history.results.length){
-   const rooms=check(await admin.from('typing_duels').select('room_code,host_id,guest_id,host_delta,guest_delta').in('room_code',history.results.map(result=>result.code)).eq('status','finished').or('host_id.eq.'+user.id+',guest_id.eq.'+user.id));
+   const rooms=check(await admin.from('typing_duels').select('room_code,host_id,guest_id,host_delta,guest_delta,season_id').in('room_code',history.results.map(result=>result.code)).eq('status','finished').or('host_id.eq.'+user.id+',guest_id.eq.'+user.id));
    for(const result of history.results){
     const room=rooms.find(row=>row.room_code===result.code&&(row.host_id===user.id||row.guest_id===user.id));
     result.opponentRatingDelta=room?(room.host_id===user.id?room.guest_delta:room.host_delta):null;
+    result.seasonId=room?.season_id??null;
    }
   }
   return history;
