@@ -1,6 +1,7 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id),api=window.TypeOnline,test=window.TypeTest;
+let mutation=false,roomGeneration=0,settingsKey='';
 let active=null,pendingCode=null,pollTimer=null,queueTimer=null,polling=false,searching=false,startedCode=null,joining=false,view='test',rematchDeadline=0,settledCode=null;
 const toast=message=>window.dispatchEvent(new CustomEvent('type:toast',{detail:message}));
 const opts=()=>({duration:Number($('duel-duration').value),language:$('duel-language').value,difficulty:$('duel-difficulty').value});
@@ -22,6 +23,12 @@ window.addEventListener('type:season',event=>{if(event.detail.changed)void refre
 function showRoom(room,clockOffset=0){
  if(active?.code!==room.code)rematchDeadline=0;
  active={...room,clockOffset};pendingCode=room.code;
+ const key=room.code+':'+room.duration+':'+room.language+':'+room.difficulty;
+ if(key!==settingsKey){settingsKey=key;$('room-duration').value=String(room.duration);$('room-language').value=room.language;$('room-difficulty').value=room.difficulty;}
+ $('room-settings-form').hidden=!room.canEditSettings;
+ $('room-settings-summary').textContent=room.duration+'s · '+room.language+' · '+(window.TypeI18n?.t({easy:'kolay',normal:'normal',hard:'zor'}[room.difficulty])||room.difficulty);
+ $('duel-assist-button').hidden=!room.canAssist||room.status!=='racing';$('duel-assist-button').setAttribute('aria-pressed',String(room.assisted===true));
+ $('duel-assist-button').textContent=window.TypeI18n?.t(room.assisted?'Doğru tuş yardımı: açık':'Doğru tuş yardımı: kapalı')||(room.assisted?'Doğru tuş yardımı: açık':'Doğru tuş yardımı: kapalı');
  $('room-assist-row').hidden=!room.canAssist;$('room-assist-toggle').checked=room.assisted===true;
  $('duel-home').hidden=true;$('duel-room').hidden=false;$('room-code-label').textContent=room.code;$('room-kind').textContent=room.competitive?'dereceli düello':'özel oda';
  const link=new URL(location.href);link.hash='room='+room.code;
@@ -39,7 +46,7 @@ function showRoom(room,clockOffset=0){
  if(room.status==='finished'){
   $('host-score').textContent=(room.hostResult?.wpm||0)+' wpm · '+(room.hostResult?.accuracy||0)+'%';$('guest-score').textContent=(room.guestResult?.wpm||0)+' wpm · '+(room.guestResult?.accuracy||0)+'%';
   const draw=!room.winnerId,won=room.winnerId===api.profile?.user_id,delta=mine?room.hostDelta:room.guestDelta;
-  $('duel-outcome').hidden=false;$('duel-outcome').textContent=(draw?'Berabere.':won?'Bu tur senin. Kazandın.':'Bu tur rakibinin. Bir sonraki turda görüşürüz.')+(room.rated?' '+(delta>=0?'+':'')+delta+' RP':' · maç puanı '+room.hostPoints+'–'+room.guestPoints);
+  $('duel-outcome').hidden=false;$('duel-outcome').textContent=(draw?'Berabere.':won?'Bu tur senin. Kazandın.':'Bu tur rakibinin. Bir sonraki turda görüşürüz.')+(room.rated?' '+(delta>=0?'+':'')+delta+' RP':room.privateRated?' '+((mine?room.hostPrivateDelta:room.guestPrivateDelta)>=0?'+':'')+(mine?room.hostPrivateDelta:room.guestPrivateDelta)+' '+(window.TypeI18n?.t('Özel oda Elo')||'Özel oda Elo'):' · maç puanı '+room.hostPoints+'–'+room.guestPoints);
  }else $('duel-outcome').hidden=true;
  updateLive(room);
  window.dispatchEvent(new CustomEvent('type:room',{detail:room}));
@@ -50,9 +57,10 @@ function updateLive(room){
  $('duel-live-my-wpm').textContent=String((mine?room.hostLive:room.guestLive)?.wpm||0);$('duel-live-their-wpm').textContent=String((mine?room.guestLive:room.hostLive)?.wpm||0);
 }
 async function pollRoom(){
- if(!active||polling||!api.signedIn)return;polling=true;
+ if(!active||polling||mutation||!api.signedIn)return;polling=true;const ticket=roomGeneration;
  try{
   const before=Date.now(),room=await api.request('room-state',{code:active.code});const clockOffset=room.serverNow+(Date.now()-before)/2-Date.now();
+  if(ticket!==roomGeneration||!active||active.code!==room.code)return;
   showRoom(room,clockOffset);
   if(room.status==='finished'&&room.rematchCode){clearInterval(pollTimer);pollTimer=null;await enterRoom(room.rematchCode);return;}
   if(room.status==='racing'&&startedCode!==room.code){startedCode=room.code;await test.loadDuel({...room,clockOffset});}
@@ -66,7 +74,7 @@ async function pollRoom(){
 }
 function startPolling(){clearInterval(pollTimer);pollTimer=setInterval(()=>void pollRoom(),1500);void pollRoom();}
 async function enterRoom(code){
- if(joining)return;
+ if(joining)return;roomGeneration++;
  pendingCode=String(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
  if(!/^[A-Z0-9]{10}$/.test(pendingCode)){$('duel-error').textContent='10 karakterlik oda kodunu yaz.';return;}
  if(!api.signedIn){test.showView('duel');api.openLogin();return;}
@@ -97,12 +105,25 @@ $('create-room').addEventListener('click',async()=>{
 });
 $('join-room-form').addEventListener('submit',event=>{event.preventDefault();void enterRoom($('room-code-input').value);});
 $('copy-invite').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('room-invite').value);toast('Davet kopyalandı.');}catch{$('room-invite').select();toast('Ctrl+C ile kopyalayabilirsin.');}});
-$('room-assist-toggle').addEventListener('change',async()=>{
- if(!active)return;const toggle=$('room-assist-toggle');toggle.disabled=true;
- try{showRoom(await api.request('room-assist',{code:active.code,enabled:toggle.checked}),active.clockOffset);}catch(error){toggle.checked=active.assisted===true;$('duel-error').textContent=error.message;}finally{toggle.disabled=false;}
+async function changeAssist(enabled,fromGame=false){
+ if(!active||mutation)return;
+ const code=active.code;mutation=true;roomGeneration++;
+ $('room-assist-toggle').disabled=true;$('duel-assist-button').disabled=true;
+ try{const room=await api.request('room-assist',{code,enabled});if(active?.code===code){showRoom(room,active.clockOffset);$('duel-assist-status').textContent='';}}
+ catch(error){if(active?.code===code){$('room-assist-toggle').checked=active.assisted===true;$('duel-error').textContent=error.message;$('duel-assist-status').hidden=false;$('duel-assist-status').textContent=error.message;}}
+ finally{mutation=false;$('room-assist-toggle').disabled=false;$('duel-assist-button').disabled=false;if(fromGame)test.focusInput();}
+}
+$('room-assist-toggle').addEventListener('change',()=>void changeAssist($('room-assist-toggle').checked));
+$('duel-assist-button').addEventListener('click',()=>void changeAssist(!active?.assisted,true));
+$('room-settings-form').addEventListener('submit',async event=>{
+ event.preventDefault();if(!active||mutation)return;
+ const code=active.code;mutation=true;roomGeneration++;$('room-settings-save').disabled=true;$('room-ready').disabled=true;$('duel-error').textContent='';
+ try{const room=await api.request('room-settings',{code,duration:Number($('room-duration').value),language:$('room-language').value,difficulty:$('room-difficulty').value});if(active?.code===code){showRoom(room,active.clockOffset);toast('Oda ayarları güncellendi.');}}
+ catch(error){if(active?.code===code)$('duel-error').textContent=error.message;}
+ finally{mutation=false;$('room-settings-save').disabled=false;$('room-ready').disabled=!active?.guest;}
 });
 $('room-ready').addEventListener('click',async()=>{
- if(!active)return;$('room-ready').disabled=true;
+ if(!active||mutation)return;$('room-ready').disabled=true;
  const mine=active.host.user_id===api.profile?.user_id,ready=!(mine?active.hostReady:active.guestReady);
  try{const before=Date.now(),room=await api.request('room-ready',{code:active.code,ready});showRoom(room,room.serverNow+(Date.now()-before)/2-Date.now());await pollRoom();}catch(error){$('duel-error').textContent=error.message;}finally{$('room-ready').disabled=!active?.guest;}
 });
@@ -115,11 +136,11 @@ $('room-rematch').addEventListener('click',async()=>{
 });
 $('leave-room').addEventListener('click',async()=>{
  if(!active)return;
- try{await api.request('room-leave',{code:active.code});clearInterval(pollTimer);pollTimer=null;active=null;pendingCode=null;startedCode=null;history.replaceState(null,'','#duel');$('duel-room').hidden=true;$('duel-home').hidden=false;$('duel-error').textContent='';test.showView('duel');}catch(error){$('duel-error').textContent=error.message;}
+ try{await api.request('room-leave',{code:active.code});clearInterval(pollTimer);pollTimer=null;roomGeneration++;active=null;pendingCode=null;startedCode=null;history.replaceState(null,'','#duel');$('duel-room').hidden=true;$('duel-home').hidden=false;$('duel-error').textContent='';test.showView('duel');}catch(error){$('duel-error').textContent=error.message;}
 });
-$('room-again').addEventListener('click',()=>{clearInterval(pollTimer);active=null;pendingCode=null;startedCode=null;history.replaceState(null,'','#duel');$('duel-room').hidden=true;$('duel-home').hidden=false;$('duel-error').textContent='';});
+$('room-again').addEventListener('click',()=>{clearInterval(pollTimer);roomGeneration++;active=null;pendingCode=null;startedCode=null;history.replaceState(null,'','#duel');$('duel-room').hidden=true;$('duel-home').hidden=false;$('duel-error').textContent='';});
 window.addEventListener('type:view',event=>{view=event.detail;if(view==='duel')void refreshRating();if(view!=='duel'&&searching){stopSearch();void api.request('queue-cancel').catch(()=>{});}});
-window.addEventListener('type:auth',()=>{void refreshRating();if(pendingCode&&api.signedIn&&!active)void enterRoom(pendingCode);if(!api.signedIn){clearInterval(pollTimer);stopSearch();active=null;$('duel-room').hidden=true;$('duel-home').hidden=false;}});
+window.addEventListener('type:auth',()=>{void refreshRating();if(pendingCode&&api.signedIn&&!active)void enterRoom(pendingCode);if(!api.signedIn){clearInterval(pollTimer);stopSearch();roomGeneration++;active=null;$('duel-assist-button').hidden=true;$('duel-room').hidden=true;$('duel-home').hidden=false;}});
 window.addEventListener('type:duel-submitted',()=>void pollRoom());
 const checkInvite=()=>{if(location.hash.startsWith('#room='))void enterRoom(location.hash.slice(6));};
 window.addEventListener('hashchange',checkInvite);

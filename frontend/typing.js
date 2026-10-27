@@ -95,7 +95,7 @@ function mergeSession(){
 }
 function progress(value){value=Math.max(0,Math.min(100,value));$('progress-fill').style.width=value+'%';$('progress').setAttribute('aria-valuenow',String(Math.round(value)));}
 async function reset(focus=false){
- clearInterval(countdownTimer);$('duel-countdown').hidden=true;$('duel-live').hidden=true;
+ clearInterval(countdownTimer);$('duel-countdown').hidden=true;$('duel-live').hidden=true;$('duel-assist-button').hidden=true;$('duel-assist-status').hidden=true;
  const ticket=++generation;
  if(rankedRun)rankedRun.cancelled=true;
  clearInterval(flushTimer);flushTimer=null;rankedRun=null;
@@ -371,7 +371,7 @@ function prepareReset(){closeDialogs();reset(true);}
 input.addEventListener('input',onInput);
 input.addEventListener('compositionend',()=>onInput({isComposing:false}));
 input.addEventListener('beforeinput',event=>{
- if(rankedRun?.duel&&rankedRun.assisted&&phase==='running'&&event.inputType==='insertText'&&!event.isComposing){event.preventDefault();if(typed.length<target.length){input.value=typed+target[typed.length];void onInput({isComposing:false});}return;}
+ if(rankedRun?.duel&&rankedRun.assistEnabled&&phase==='running'&&event.inputType==='insertText'&&!event.isComposing){event.preventDefault();if(typed.length<target.length){input.value=typed+target[typed.length];void onInput({isComposing:false});}return;}
  if(['insertFromPaste','insertFromDrop','insertLineBreak','insertParagraph'].includes(event.inputType))event.preventDefault();});
 input.addEventListener('paste',event=>{event.preventDefault();toast('Burada iş parmaklarında. Yapıştırma testte kapalı.');});
 input.addEventListener('drop',event=>event.preventDefault());
@@ -439,9 +439,9 @@ async function loadDuel(data){
  state.duration=data.duration;state.language=data.language;state.difficulty=data.difficulty;
  const previousRanked=state.ranked;state.ranked=false;await reset();state.ranked=previousRanked;
  view='test';$('typing-page').hidden=false;$('ranking-page').hidden=true;$('duel-page').hidden=true;$('training-tools').hidden=true;
- generation++;clearInterval(countdownTimer);$('duel-live').hidden=false;
+ generation++;clearInterval(countdownTimer);$('duel-live').hidden=false;$('duel-assist-button').hidden=!data.canAssist;
  target=data.target;chars=[];track.replaceChildren();renderNextChunk();$('accessible-prompt').textContent=target;
- rankedRun={id:data.myChallenge,events:[],sent:0,failed:false,cancelled:false,flushing:null,prestarted:true,duel:data.code,assisted:data.assisted===true};
+ rankedRun={id:data.myChallenge,events:[],sent:0,failed:false,cancelled:false,flushing:null,prestarted:true,duel:data.code,assisted:data.assisted===true,assistEnabled:data.assisted===true};
  $('session-mode').textContent='düello';$('online-dot').hidden=false;phase='countdown';input.disabled=true;
  const countdown=$('duel-countdown');countdown.hidden=false;
  const update=()=>{
@@ -452,7 +452,8 @@ async function loadDuel(data){
  update();if(phase==='countdown')countdownTimer=setInterval(update,50);
  requestAnimationFrame(moveCaret);
 }
-window.TypeTest={loadDuel,showView:switchView,reset:prepareReset,get running(){return phase==='running';}};
+window.TypeTest={focusInput(){if(phase==='running')input.focus({preventScroll:true});},loadDuel,showView:switchView,reset:prepareReset,get running(){return phase==='running';}};
+window.addEventListener('type:room',event=>{const room=event.detail;if(rankedRun?.duel===room.code){rankedRun.assistEnabled=room.assisted===true;if(room.assisted)rankedRun.assisted=true;}});
 window.addEventListener('type:toast',event=>toast(event.detail));
 window.addEventListener('type:auth',()=>{applySettings();if(phase==='ready'&&view==='test')void reset();});
 $('ranked-toggle').addEventListener('change',()=>{

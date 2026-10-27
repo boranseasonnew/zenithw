@@ -14,6 +14,8 @@ async function loadMore(reset=false){
   $('public-profile-name').textContent=data.profile.display_name;$('public-profile-tag').textContent='#'+data.profile.account_tag;face($('public-profile-avatar'),data.profile);
   window.TypeBadges.render($('public-profile-badges'),data.profile);
   if(reset){currentProfile=data.profile;window.dispatchEvent(new CustomEvent('type:profile-loaded',{detail:data.profile}));}
+  const pr=data.privateRating;
+  $('public-profile-private-rating').textContent=pr?(window.TypeI18n?.t('Özel oda Elo')||'Özel oda Elo')+': '+pr.mmr.toLocaleString(window.TypeI18n?.locale||'tr-TR')+' · '+pr.wins+' '+(window.TypeI18n?.t('galibiyet')||'galibiyet')+' · '+pr.losses+' '+(window.TypeI18n?.t('mağlubiyet')||'mağlubiyet')+' · '+pr.draws+' '+(window.TypeI18n?.t('beraberlik')||'beraberlik'):'';
   const s=data.stats;$('public-profile-stats').replaceChildren(stat('en iyi wpm',s.bestWpm),stat('ortalama wpm',s.averageWpm),stat('doğruluk',s.accuracy+'%'),stat('testler',s.tests));
   for(const result of data.results){const row=document.createElement('tr');for(const value of [result.wpm,result.accuracy+'%',result.duration+'s · '+result.language+' · '+(window.TypeI18n?.t({easy:'kolay',normal:'normal',hard:'zor'}[result.difficulty]||result.difficulty)||result.difficulty),formatDate(result.created_at)]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}$('public-profile-history').append(row);}
   offset+=data.results.length;$('public-profile-more').hidden=!data.hasMore;
@@ -23,7 +25,7 @@ async function loadMore(reset=false){
 }
 function openProfile(tag){
  if(!/^[A-F0-9]{12}$/i.test(tag||''))return;
- currentProfile=null;$('match-history-dialog').close();
+ currentProfile=null;$('public-profile-private-rating').textContent='';$('match-history-dialog').close();
  window.dispatchEvent(new CustomEvent('type:profile-opening'));
  currentTag=tag.toUpperCase();offset=0;$('public-profile-name').textContent=window.TypeI18n?.t('oyuncu')||'oyuncu';$('public-profile-tag').textContent='#'+currentTag;$('public-profile-stats').replaceChildren();$('public-profile-history').replaceChildren();$('public-profile-more').hidden=true;
  if(!dialog.open)dialog.showModal();void loadMore(true);

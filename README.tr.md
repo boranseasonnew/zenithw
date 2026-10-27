@@ -19,7 +19,7 @@
 
 Web v16.1 · ZenithW Desktop v4.2.0
 
-[Zenith Type](https://zenithw.space/typing), yazma pratiği ve düellolar sunar. Dereceli oyunda 50.000 Elo sınırı, karşılıklı onayla tekrar maç ve ikili galibiyet kayıtlarını içeren maç geçmişi bulunur. Çevrimiçi oyun için hesap gerekir. Kurallar ve yayın durumu için [Zenith Type belgesine](docs/TYPING.md) bak. WPM sıralaması ve düello Elo’su 30 günde bir yenilenir; sezonun kalan süresi canlı sayaçta gösterilir.
+[Zenith Type](https://zenithw.space/typing), yazma pratiği ve düellolar sunar. Dereceli oyunda 50.000 Elo sınırı, karşılıklı onayla tekrar maç ve ikili galibiyet kayıtlarını içeren maç geçmişi bulunur. Çevrimiçi oyun için hesap gerekir. Kurallar ve yayın durumu için [Zenith Type belgesine](docs/TYPING.md) bak. WPM sıralaması ve dereceli düello Elo’su 30 günde bir yenilenir; sezonun kalan süresi canlı sayaçta gösterilir. Özel oda sahibi maç öncesinde ayarları değiştirebilir; sana özel doğru tuş yardımı oyun sırasında açılıp kapatılabilir. Özel odalarda yalnızca profilde görünen, sezonla sıfırlanmayan ayrı bir Elo vardır; sıralamayı etkilemez.
 
 ZenithW; video ve ses indirme, ses ayıklama, dönüştürme ve remux için açık kaynaklı bir medya aracıdır. Reklam, abonelik veya zorunlu hesap yok.
 

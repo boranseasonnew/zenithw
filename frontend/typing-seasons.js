@@ -14,7 +14,7 @@ function sync(season){
  current={...season,starts,ends};serverAt=server;receivedAt=monotonic();nextSync=receivedAt+60000;
  $('season-clock').dataset.state='active';
  $('season-label').textContent=t('Sezon')+' '+(season.id+1);
- $('season-clock').title=t('WPM ve Elo her 30 günde bir sıfırlanır.')+' '+new Date(ends).toLocaleString(window.TypeI18n?.locale);
+ $('season-clock').title=t('WPM ve dereceli Elo her 30 günde bir sıfırlanır.')+' '+new Date(ends).toLocaleString(window.TypeI18n?.locale);
  tick();
  if(first||changed)window.dispatchEvent(new CustomEvent('type:season',{detail:{season:current,changed}}));
 }

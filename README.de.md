@@ -19,7 +19,7 @@
 
 Web v16.1 · ZenithW Desktop v4.2.0
 
-[Zenith Type](https://zenithw.space/typing) bietet Tipptraining und Duelle. Ranglistenspiele unterstützen bis zu 50.000 Elo, beidseitig bestätigte Rückspiele und einen Spielverlauf mit direkten Vergleichswerten. Für das Online-Spiel ist ein Konto erforderlich. Regeln und Veröffentlichungsstatus stehen in der [Dokumentation](docs/TYPING.md). Die WPM-Rangliste und Duell-Elo werden alle 30 Tage zurückgesetzt; ein Countdown zeigt die verbleibende Saisonzeit.
+[Zenith Type](https://zenithw.space/typing) bietet Tipptraining und Duelle. Ranglistenspiele unterstützen bis zu 50.000 Elo, beidseitig bestätigte Rückspiele und einen Spielverlauf mit direkten Vergleichswerten. Für das Online-Spiel ist ein Konto erforderlich. Regeln und Veröffentlichungsstatus stehen in der [Dokumentation](docs/TYPING.md). Die WPM-Rangliste und Elo der Ranglistenduelle werden alle 30 Tage zurückgesetzt; ein Countdown zeigt die verbleibende Saisonzeit. Gastgeber können private Räume vor dem Spiel konfigurieren. Die nur für den Besitzer verfügbare Tastenhilfe lässt sich während des Spiels umschalten. Private Räume haben einen separaten, dauerhaften Elo-Wert im Profil, ohne Einfluss auf die Rangliste.
 
 ZenithW ist ein quelloffenes Medienwerkzeug zum Herunterladen von Videos und Audio sowie zum Extrahieren, Konvertieren und Remuxen. Ohne Werbung, Abonnement oder verpflichtendes Konto.
 

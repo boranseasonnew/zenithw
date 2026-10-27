@@ -142,7 +142,8 @@ async function handler(req:Request){
    const stats=check(await admin.rpc('typing_public_stats',{p_user:p.user_id}));
    const results=check(await admin.from('typing_scores').select('id,wpm,accuracy,errors,characters,duration,language,difficulty,created_at').eq('user_id',p.user_id).eq('board_eligible',true).order('created_at',{ascending:false}).order('id').range(offset,offset+19));
    const rating=check(await admin.rpc('typing_rating_current',{p_user:p.user_id})).rating;
-   return json({profile:p,stats,results,rating,hasMore:offset+results.length<Number(stats.tests)});
+   const privateRating=check(await admin.rpc('typing_private_rating_current',{p_user:p.user_id}));
+   return json({profile:p,stats,results,rating,privateRating,hasMore:offset+results.length<Number(stats.tests)});
   }
   if(action==='profiles-search'){
    await rate(req,'profiles-search',40);

@@ -20,4 +20,6 @@ try {
  await db.exec(readFileSync('supabase/migrations/20261027184503_typing_thirty_day_seasons.sql','utf8'));
  await db.exec("set app.typing_local_test='true'");
  console.log((await db.exec(readFileSync('supabase/tests/typing-seasons.sql','utf8'))).at(-1).rows);
+ await db.exec(readFileSync('supabase/migrations/20261027192920_typing_private_room_controls.sql','utf8'));
+ console.log((await db.exec(readFileSync('supabase/tests/typing-private-rooms.sql','utf8'))).at(-1).rows);
 } catch(error){console.error(error.message);if(error.where)console.error(error.where);process.exitCode=1;} finally {await db.close();}

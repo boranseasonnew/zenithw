@@ -23,9 +23,9 @@ Hesap/oyuncu adları, hesap ve kurtarma kodları, yazılacak metin çeviriden d�
 
 ## Özel oda admin yardımı
 
-Yetki sunucunun yönettiği `typing_private.roles` tablosundan gelir; isim, istemci ayarı veya kullanıcı metadata'sı yetki vermez. Admin doğru tuş yardımını yalnızca başlamamış özel odada açabilir. Her yazılabilir tuş sıradaki doğru karakteri üretir; hız gerçek vuruş zamanlarına dayanır. Rakip yanıtına iç yardım alanları gönderilmez; her oyuncu yalnızca kendisinin `assisted` durumunu alır.
+Yetki sunucunun yönettiği `typing_private.roles` tablosundan gelir; isim, istemci ayarı veya kullanıcı metadata'sı yetki vermez. Admin doğru tuş yardımını özel odada maç öncesinde veya oyun ekranındaki düğmeden fare/dokunmayla açıp kapatabilir. Her yazılabilir tuş sıradaki doğru karakteri üretir; hız gerçek vuruş zamanlarına dayanır. Her oyuncu yalnızca kendisinin `assisted` durumunu alır. Maç sırasında yardım bir kez açıldığında `assist_used` ve challenge'ın `assisted` alanları kalıcı işaretlenir; sonradan kapatmak bu maça özel Elo kazandırmaz. Dereceli odada yardım kapalıdır.
 
-Bütün düello testleri `board_eligible=false` olur. Yardımlı skorlar ayrıca `assisted=true` taşır. Skor kayıt fonksiyonu ve `typing_scores_assistance_unranked` constraint'i yardımlı skorların dünya sıralamasına girmesini engeller. Özel oda Elo değiştirmez; yardım dereceli eşleştirmede kullanılamaz. Maç başladıktan sonra yardım değiştirilemez.
+Bütün düello testleri `board_eligible=false` olur. Yardımlı skorlar ayrıca `assisted=true` taşır. Skor kayıt fonksiyonu ve `typing_scores_assistance_unranked` constraint'i yardımlı skorların dünya sıralamasına girmesini engeller. Özel maçlar yalnızca ayrı, kalıcı özel oda Elo puanını etkiler; yardımlı maçlar bu puandan da dışlanır. Yardım dereceli eşleştirmede kullanılamaz.
 
 ## Canlı backend
 
@@ -99,7 +99,7 @@ Geliştirici rozeti, ana frontend'in orijinal `/zenithw.png` siyah zeminli beyaz
 
 ## 30 günlük sezonlar
 
-WPM sıralaması ve düello Elo'su aynı sunucu sezonunu kullanır. İlk 30 günlük süre migration'ın uygulandığı anda başlar; mevcut sonuçlar ve Elo ilk sezon boyunca korunur. Sonraki sezonlarda WPM tablosu boş başlar, Elo 1.000'e ve sezonluk galibiyet/mağlubiyet/beraberlik sayıları sıfıra döner. Önceki Elo değerleri `typing_rating_seasons` tablosunda arşivlenir; testler ve maç geçmişi silinmez. Kişisel yerel sıralama da yeni sezonun tarih aralığını gösterir; yerel kayıtların kendisi saklanır. Geliştirici/doğrulama rozetleri sezon sıfırlamasından etkilenmez.
+WPM sıralaması ve dereceli düello Elo'su aynı sunucu sezonunu kullanır. Kalıcı özel oda Elo puanı sezon dışında tutulur. İlk 30 günlük süre migration'ın uygulandığı anda başlar; mevcut sonuçlar ve Elo ilk sezon boyunca korunur. Sonraki sezonlarda WPM tablosu boş başlar, Elo 1.000'e ve sezonluk galibiyet/mağlubiyet/beraberlik sayıları sıfıra döner. Önceki Elo değerleri `typing_rating_seasons` tablosunda arşivlenir; testler ve maç geçmişi silinmez. Kişisel yerel sıralama da yeni sezonun tarih aralığını gösterir; yerel kayıtların kendisi saklanır. Geliştirici/doğrulama rozetleri sezon sıfırlamasından etkilenmez.
 
 Sezon tam 2.592.000 saniyedir. `typing_season_config.epoch` sunucuda tutulur; tarayıcı veya kullanıcı metadata'sı bunu değiştiremez. Süresi dolan sezonun ardından ilk sezon/sıralama/Elo/eşleştirme/settle çağrısı, advisory transaction lock altında arşivleme ve sıfırlamayı atomik yapar. Açık sekmelerde sayaç sıfıra geldiğinde bu çağrı otomatik yapılır; ayrıca cron veya açık bir tarayıcı olmadan çalışan bir ajan gerekmez. Birkaç sezon boyunca istek gelmezse doğrudan güncel sezona geçilir.
 
@@ -116,3 +116,10 @@ Sezon yayını 27 Ekim 2026'da kullanıcının açık canlı işlem onayından s
 Yerel PostgreSQL/PGlite sınır ve arşivleme testleri, 95 Node testi ve mobil sezon geçişi kontrolü başarılı. Yerel SQL testi için `PGLITE_MODULE` mevcut PGlite modülüne ayarlanıp `node tests/typing-seasons-db.mjs` çalıştırılabilir; bu runner yalnızca bellekteki PostgreSQL'i kullanır. Temizlik isteğiyle isteğe bağlı yerel PGlite/WebKit kurulum önbellekleri kaldırılmıştır; tekrar çalıştırmak için bu araçların yeniden kurulması gerekebilir.
 
 Etkinleştirme kontrolünde yerel arayüz doğrudan canlı API'den Sezon 1 bilgisini aldı; sayaç 29 gün 23:57:55 → 29 gün 23:57:53 ilerledi, sıralama yüklendi, yatay taşma ve console hatası görülmedi. Canlı v9'un dört kaynak dosyası yerel dosyalarla eşleşti. Security advisor'daki yedi [deny-all RLS INFO](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) kaydı iç tablolara kapalı erişimle uyumludur; yeni arşiv tablosu bunlardan biridir. Önceden var olan sızmış şifre koruması WARN kaydı değişmedi.
+
+
+## Özel oda ayarları ve kalıcı Elo
+
+Oda sahibi maç başlamadan süreyi, dili ve zorluğu düzenleyebilir. Değişiklik iki oyuncunun hazır durumunu kaldırır. Konuk ayarları görür; dereceli odalar ve başlamış turlar değiştirilemez.
+
+`typing_private_ratings` tablosundaki özel oda puanı 1.000 ile başlar, 0–50.000 aralığındadır ve K=24 kullanır. Sezon sonunda sıfırlanmaz. Toplam puan yalnızca profilde görünür; sonuç/geçmiş gerçek özel puan farkını gösterir. Aynı ikilinin son 24 saatte ilk üç temiz özel maçı puan getirir. Yardımlı turlar puansızdır; önceki maçlara geriye dönük puan verilmez. Rekabetçi Elo, eşleştirme ve WPM sıralaması ayrıdır. Detay ve doğrulama: [özel oda incelemesi](TYPING-PRIVATE-ROOMS-REVIEW-2026-10-27.md).
