@@ -44,7 +44,15 @@ export async function handleDuels(action,req,body,user,ctx){
   if(opponent!==null&&!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(opponent))fail(400,'Geçersiz oyuncu.');
   if(opponent===user.id)fail(400,'Başka bir oyuncu seç.');
   const offset=Math.max(0,Math.min(10000,Math.floor(Number(body.offset)||0)));
-  return check(await admin.rpc('typing_match_history',{p_user:user.id,p_opponent:opponent,p_offset:offset}));
+  const history=check(await admin.rpc('typing_match_history',{p_user:user.id,p_opponent:opponent,p_offset:offset}));
+  if(history.results.length){
+   const rooms=check(await admin.from('typing_duels').select('room_code,host_id,guest_id,host_delta,guest_delta').in('room_code',history.results.map(result=>result.code)).eq('status','finished').or('host_id.eq.'+user.id+',guest_id.eq.'+user.id));
+   for(const result of history.results){
+    const room=rooms.find(row=>row.room_code===result.code&&(row.host_id===user.id||row.guest_id===user.id));
+    result.opponentRatingDelta=room?(room.host_id===user.id?room.guest_delta:room.host_delta):null;
+   }
+  }
+  return history;
  }
  if(action==='matchmake'){
   const opts=settings();await rate(req,'matchmake',90,60,user.id);

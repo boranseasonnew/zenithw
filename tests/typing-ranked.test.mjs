@@ -49,3 +49,38 @@ test('rematch requests reject nonmembers and unfinished matches',async()=>{
   assert.equal(ctx.calls.length,0);
  }
 });
+
+
+test('history returns actual opponent delta at the rating cap, never a negated estimate',async()=>{
+ const ctx=context(),filters=[];
+ ctx.admin.rpc=async()=>({data:{stats:{total:1},results:[{code:'HISTORY001',ratingDelta:1}]}});
+ ctx.admin.from=()=>({select(){return this;},in(...args){filters.push(args);return this;},eq(...args){filters.push(args);return this;},or(...args){filters.push(args);return Promise.resolve({data:[{room_code:'HISTORY001',host_id:'viewer',guest_id:'opponent',host_delta:1,guest_delta:-12}]});}});
+ const result=await handleDuels('room-history',{}, {},{id:'viewer'},ctx);
+ assert.equal(result.results[0].ratingDelta,1);
+ assert.equal(result.results[0].opponentRatingDelta,-12);
+ assert.deepEqual(filters[0],['room_code',['HISTORY001']]);
+ assert.deepEqual(filters[2],['host_id.eq.viewer,guest_id.eq.viewer']);
+});
+
+test('opponent profile displays that player’s results, score, opponent link and true Elo delta',async()=>{
+ const elements=new Map(),listeners=new Map();
+ const element=()=>({children:[],textContent:'',hidden:false,disabled:false,open:true,dataset:{},append(...items){this.children.push(...items);},replaceChildren(){this.children=[];},addEventListener(){},close(){},showModal(){}});
+ const document={getElementById(id){if(!elements.has(id))elements.set(id,element());return elements.get(id);},createElement:element};
+ const viewer={user_id:'viewer',account_tag:'AAAAAAAAAAAA',display_name:'Me'},other={user_id:'other',account_tag:'BBBBBBBBBBBB',display_name:'Opponent'};
+ const result={code:'HISTORY001',date:'2026-10-27T18:00:00Z',competitive:true,duration:30,outcome:'win',wpm:145,opponentWpm:32,ratingDelta:1,opponentRatingDelta:-12,opponent:other};
+ const api={profile:viewer,signedIn:true,request:async()=>({stats:{total:1,wins:1,losses:0,draws:0},results:[result],hasMore:false})};
+ const window={TypeOnline:api,TypeI18n:{t:value=>value,locale:'tr-TR'},TypeBadges:{render(){}},addEventListener(name,listener){listeners.set(name,listener);}};
+ vm.runInNewContext(readFileSync(new URL('../frontend/typing-history.js',import.meta.url),'utf8'),{window,document,Number,Date});
+ const show=async profile=>{listeners.get('type:profile-loaded')({detail:profile});await new Promise(resolve=>setImmediate(resolve));return elements.get('profile-duels-rows').children[0];};
+ const row=await show(other);
+ assert.equal(elements.get('profile-duels-summary').textContent,'0 galibiyet · 1 mağlubiyet · 0 beraberlik');
+ assert.equal(row.children[1].children[0].dataset.profile,viewer.account_tag);
+ assert.equal(row.children[3].textContent,'mağlubiyet');
+ assert.equal(row.children[4].textContent,'32 / 145');
+ assert.equal(row.children[5].textContent,'-12');
+ const own=await show(viewer);
+ assert.equal(own.children[1].children[0].dataset.profile,other.account_tag);
+ assert.equal(own.children[3].textContent,'galibiyet');
+ assert.equal(own.children[4].textContent,'145 / 32');
+ assert.equal(own.children[5].textContent,'+1');
+});

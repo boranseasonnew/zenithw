@@ -23,7 +23,7 @@ function rankMarkup(value){
 function markup(profile){
  let html='';
  if(profile?.is_verified===true)html+='<button type="button" class="account-badge account-badge--verified" data-account-badge="verified" aria-label="'+t('Onaylanmış hesap')+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 1 3 2.1 3.6.3 1.4 3.3 2.5 2.6-.8 3.5.8 3.5-2.5 2.6-1.4 3.3-3.6.3L12 24l-3-2.1-3.6-.3L4 18.3l-2.5-2.6.8-3.5-.8-3.5L4 6.1l1.4-3.3L9 2.5Z" fill="#3599ff"/><path d="m6.8 12.3 3.1 3.1 7-7" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
- if(profile?.is_developer===true)html+='<button type="button" class="account-badge account-badge--developer" data-account-badge="developer" aria-label="'+t('Geliştirici')+'"><svg viewBox="0 0 36 36" aria-hidden="true"><rect x="1" y="1" width="34" height="34" rx="9" fill="#24202f" stroke="#ba9af2"/><path d="M8 10h21L9 26h20M8 17h9" fill="none" stroke="#ddcaff" stroke-width="2.7" stroke-linejoin="round"/></svg></button>';
+ if(profile?.is_developer===true)html+='<button type="button" class="account-badge account-badge--developer" data-account-badge="developer" aria-label="'+t('Geliştirici')+'"><img src="/zenithw.png" alt="" aria-hidden="true" width="48" height="48" draggable="false"></button>';
  return html?'<span class="account-badges">'+html+'</span>':'';
 }
 function render(element,profile){if(element)element.innerHTML=markup(profile);}

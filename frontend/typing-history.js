@@ -17,7 +17,7 @@ function resultRow(result){
  const row=document.createElement('tr'),player=document.createElement('td'),link=document.createElement('button'),badges=document.createElement('span');
  link.type='button';link.className='profile-link';link.dataset.profile=result.opponent.account_tag;link.textContent=result.opponent.display_name+' #'+result.opponent.account_tag;window.TypeBadges.render(badges,result.opponent);player.append(link,badges);
  row.append(cell(new Date(result.date).toLocaleString(window.TypeI18n.locale,{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})),player,
-  cell(t(result.competitive?'dereceli':'özel oda')+' · '+result.duration+'s'),cell(t({win:'galibiyet',loss:'mağlubiyet',draw:'beraberlik'}[result.outcome])),cell(result.wpm+' / '+result.opponentWpm),cell(result.competitive?(result.ratingDelta>=0?'+':'')+result.ratingDelta:'—'));
+  cell(t(result.competitive?'dereceli':'özel oda')+' · '+result.duration+'s'),cell(t({win:'galibiyet',loss:'mağlubiyet',draw:'beraberlik'}[result.outcome])),cell(result.wpm+' / '+result.opponentWpm),cell(result.competitive&&Number.isFinite(result.ratingDelta)?(result.ratingDelta>=0?'+':'')+result.ratingDelta:'—'));
  return row;
 }
 function clearProfile(){profileGeneration++;profileOffset=0;profileLoading=false;$('profile-duels-rows').replaceChildren();$('profile-duels-summary').textContent='';$('profile-duels-status').textContent='';$('profile-duels-more').hidden=true;}
@@ -25,7 +25,7 @@ async function loadProfile(reset=false){
  if(!profile||profileLoading&&!reset)return;
  if(reset)clearProfile();
  $('profile-duels').hidden=false;
- const own=profile.user_id===api.profile?.user_id;
+ const viewer=api.profile,own=profile.user_id===viewer?.user_id;
  $('profile-duels-title').textContent=t(own?'düello geçmişi':'aranızdaki düellolar');
  if(!api.signedIn){$('profile-duels-status').textContent=t('Düello geçmişini görmek için giriş yap.');return;}
  profileLoading=true;const ticket=++profileGeneration;
@@ -33,8 +33,11 @@ async function loadProfile(reset=false){
  try{
   const data=await api.request('room-history',{opponentId:own?null:profile.user_id,offset:profileOffset});
   if(ticket!==profileGeneration)return;
-  $('profile-duels-summary').textContent=summary(data.stats);
-  for(const result of data.results)$('profile-duels-rows').append(resultRow(result));
+  $('profile-duels-summary').textContent=summary(own?data.stats:{...data.stats,wins:data.stats.losses,losses:data.stats.wins});
+  for(const result of data.results){
+   const viewed=own?result:{...result,outcome:{win:'loss',loss:'win',draw:'draw'}[result.outcome],wpm:result.opponentWpm,opponentWpm:result.wpm,ratingDelta:result.opponentRatingDelta,opponent:viewer};
+   $('profile-duels-rows').append(resultRow(viewed));
+  }
   profileOffset+=data.results.length;$('profile-duels-more').hidden=!data.hasMore;
   $('profile-duels-status').textContent=data.stats.total?'':t('Henüz tamamlanmış düello yok.');
  }catch(error){if(ticket===profileGeneration)$('profile-duels-status').textContent=t(error.message);}

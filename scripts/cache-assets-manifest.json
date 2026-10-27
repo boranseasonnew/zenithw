@@ -1,11 +1,11 @@
 {
   "typing-i18n.js": {
-    "url": "/cache-assets/typing-i18n.42495f0d569f.js",
-    "sha256": "42495f0d569f876900270d207869eb72db3f8ddd462a60c03808b45d955f8598"
+    "url": "/cache-assets/typing-i18n.55c7b39db288.js",
+    "sha256": "55c7b39db2882d7522346708dabb14469de3fc05cd4ecda5eccb9069535553ff"
   },
   "typing-badges.js": {
-    "url": "/cache-assets/typing-badges.a4f2869ad600.js",
-    "sha256": "a4f2869ad600da411bb88d8b12f78b37c06d568036e0141df99271cbb56b35e0"
+    "url": "/cache-assets/typing-badges.777c147ec29e.js",
+    "sha256": "777c147ec29ee908e7ecfc6df45163a92e7e2c283940599860d867514bbe9c54"
   },
   "typing-config.js": {
     "url": "/cache-assets/typing-config.34b397ae7fc3.js",
@@ -32,12 +32,12 @@
     "sha256": "5508eeb459051404d8a21c7960a9dac3613c7cd8133e15679b540e265deb9766"
   },
   "typing-history.js": {
-    "url": "/cache-assets/typing-history.601b98b6cf91.js",
-    "sha256": "601b98b6cf91ba264e098f3e207865668f6206f26c699aa89f0c1b22e63d7fba"
+    "url": "/cache-assets/typing-history.abb9ebfe97b4.js",
+    "sha256": "abb9ebfe97b432952426663c0bf39dbb78b173dea2380f782fabf8e417e6951c"
   },
   "typing-focus.css": {
-    "url": "/cache-assets/typing-focus.8ff40cdfa536.css",
-    "sha256": "8ff40cdfa536a6013889cdb1324698fd17be18c20c4169f46ae5a119a9743133"
+    "url": "/cache-assets/typing-focus.7134524a8c77.css",
+    "sha256": "7134524a8c77060f83cb281a6c40c98c69f72c473bc933900942a07e6049a23e"
   },
   "download-safety.js": {
     "url": "/cache-assets/download-safety.f8da11af7c3c.js",

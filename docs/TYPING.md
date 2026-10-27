@@ -90,3 +90,9 @@ Hesap → profilimi görüntüle yoluyla açılan profil, tamamlanmış düellol
 ## Rozet güncellemeleri ve tarayıcı önbelleği
 
 Type JavaScript ve CSS dosyaları artık içerik hash'i taşıyan `/cache-assets/` URL'leriyle yüklenir. Yeni HTML eski bir saatlik JS/CSS kopyasını kullanmaz; eski sürümler için kaynak URL'ler korunur. Hesap penceresi açılınca `me` verisi yeniden alınarak uzun süre açık kalan sekmelerde sunucu tarafından değiştirilen rozetler yenilenir. Kullanıcı oturumu değişmişse bekleyen yanıt uygulanmaz. Yerel mobil kontrolde iki rozetin hesap penceresinde görünürlüğü, geliştirici açıklaması ve rozet içermeyen eski profil verisinin pencere açıldığında yenilenmesi doğrulandı.
+
+## Profil bakış açısı ve geliştirici logosu düzeltmesi
+
+Düello satırları ve toplam kazanma/kaybetme sayıları profil sahibinin bakış açısından gösterilir. Rakibin profiline geçince sonuç, WPM sırası ve rakip profil bağlantısı da ters oyuncuya göre güncellenir. Elo, karşı tarafın gerçekten kaydedilen `host_delta`/`guest_delta` değerinden alınır; tavan/taban yüzünden mevcut kullanıcının puanını eksiyle çarparak tahmin edilmez. API v8 bu ek değeri yalnızca oturum sahibinin kendi geçmişindeki tamamlanmış maçlar için döndürür; geçmiş erişim kapsamı korunur.
+
+Geliştirici rozeti, ana frontend'in orijinal `/zenithw.png` siyah zeminli beyaz Z! görselini kullanır. Geliştirici açıklaması ve mavi doğrulama rozeti korunur. 84 Node testi, cache/CSP kontrolü, mobil logo yüklenmesi ve iki profil arasında sonuç/WPM/Elo dönüşümü doğrulandı.
