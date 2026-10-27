@@ -218,6 +218,7 @@ export const STATIC_ASSET_PATHS = new Set([
   "/cache-assets/typing-badges.a4f2869ad600.js",
   "/cache-assets/typing-companions.06d5ba3f06d4.js",
   "/cache-assets/typing-config.34b397ae7fc3.js",
+  "/cache-assets/typing-config.3f640e189630.js",
   "/cache-assets/typing-config.b8a4233e726d.js",
   "/cache-assets/typing-duels.2d2bbc73d73d.js",
   "/cache-assets/typing-duels.5e47983e643a.js",
