@@ -1,6 +1,6 @@
 # Zenith Type: ranked, rematch ve rozet kontrolü
 
-Bu kayıt v16.1 tesliminden sonraki değişiklikleri kapsar. Canlı migration, Edge Function deploy'u ve frontend push'u henüz yapılmadı.
+Bu kayıt v16.1 tesliminden sonraki değişiklikleri kapsar. Kullanıcının sonraki yayın onayıyla canlı migration ve Edge Function v7 deploy'u tamamlandı; frontend aynı yayın adımında main'e gönderilir.
 
 ## Davranış
 
@@ -38,4 +38,13 @@ Tarayıcıdaki Supabase istekleri yerel fixture tarafından yakalandı. PostgreS
 
 Frontend commit'i `git revert` ile geri alınabilir. Yeni kolonlar ve geçmiş verileri geri almada silinmez. Puanlar 10.000'i geçtikten sonra eski 10.000 tavanlı settle fonksiyonunu geri yüklemek puan kaybı yaratabilir; backend için veri koruyan ileri düzeltme gerekir. Yayın sırasında backend ile frontend ayrı ayrı kontrol edilir.
 
-Canlı SQL preflight, rollback içerse bile üretim DDL/veri/fonksiyon değişikliği yaptığı ve açık canlı işlem izni bulunmadığı için otomatik onay incelemesince reddedildi. Canlıda uygulanmadı ve başka bir yolla yeniden denenmedi. Migration ve API deploy'u açık kullanıcı onayı bekler; backend hazır olmadan yeni frontend yayımlanmaz.
+Canlı SQL preflight, rollback içerse bile üretim DDL/veri/fonksiyon değişikliği yaptığı ve açık canlı işlem izni bulunmadığı için otomatik onay incelemesince reddedildi. İlk reddin ardından işlem başka bir yolla denenmedi. Kullanıcı sonraki mesajında yayını onayladı; bu onaydan sonra migration ve API deploy'u tamamlandı. Backend doğrulandıktan sonra frontend gönderilir.
+
+## Canlı yayın kontrolü
+
+- Migration geçmişinde `20261027180111_typing_ranked_matchmaking_and_badges` mevcut.
+- `typing-api` v7 ACTIVE; uygulama içi oturum doğrulaması korunuyor.
+- Canlı constraint 0–50.000; aralık fonksiyonu 100/200/1.000 beklenen sonuçlarını döndürüyor.
+- Yalnızca sahip hesabında iki rozet var; tek admin hesabı değişmedi. Anon geçmiş RPC'si ve authenticated rematch RPC'si kapalı, service_role geçmiş çağrısı açık, authenticated rozet yazımı kapalı.
+- Herkese açık profil API'si 200 ve iki rozet alanı true; oturumsuz geçmiş isteği 401. Gerçek iki hesapla yeni maç oynanmadı.
+- Security advisor önceki altı deny-all RLS INFO ve sızmış şifre koruması WARN kayıtlarını gösteriyor; yeni güvenlik bulgusu yok.
