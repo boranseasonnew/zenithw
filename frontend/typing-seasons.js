@@ -1,6 +1,8 @@
 (() => {
 'use strict';
 const api=window.TypeOnline,$=id=>document.getElementById(id),t=value=>window.TypeI18n?.t(value)||value;
+// Enable only after the production migration and matching API are deployed.
+if(window.ZENITH_TYPE_CONFIG?.seasonsEnabled!==true){$('season-clock').hidden=true;return;}
 let current=null,receivedAt=0,serverAt=0,timer=null,loading=false,nextSync=0,expiredSeason=null;
 const monotonic=()=>performance.now();
 function sync(season){

@@ -13,7 +13,7 @@
 
 Web v16.1 · ZenithW Desktop v4.2.0
 
-[Zenith Type](https://zenithw.space/typing) adds typing practice and duels. Ranked play supports Elo up to 50,000, mutual rematches and match history with head-to-head records. An account is required for online play. See the [typing documentation](docs/TYPING.md) for rules and deployment status. WPM standings and duel Elo reset every 30 days, with a live season countdown.
+[Zenith Type](https://zenithw.space/typing) adds typing practice and duels. Ranked play supports Elo up to 50,000, mutual rematches and match history with head-to-head records. An account is required for online play. See the [typing documentation](docs/TYPING.md) for rules and deployment status. The 30-day season feature is prepared; activation is pending production migration approval.
 
 ZenithW is an open-source media downloader with tools for audio extraction, conversion and remuxing. No ads, subscription or mandatory account.
 

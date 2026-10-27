@@ -5,14 +5,17 @@ import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../frontend/typing-seasons.js',import.meta.url),'utf8');
 const span=2592000000,anchor=Date.parse('2026-10-27T18:00:00Z');
 const season=(id,server=anchor+id*span)=>({id,startsAt:new Date(anchor+id*span).toISOString(),endsAt:new Date(anchor+(id+1)*span).toISOString(),serverNow:new Date(server).toISOString()});
-async function setup(){
+async function setup(enabled=true){
  const nodes=new Map(),events=[],visibility=new Map();let clock=0,interval,calls=0,response={};
  const document={hidden:false,getElementById(id){if(!nodes.has(id))nodes.set(id,{textContent:'',dataset:{}});return nodes.get(id);},addEventListener(name,fn){visibility.set(name,fn);}};
- const window={TypeOnline:{async request(){calls++;if(response instanceof Error)throw response;return response;}},TypeI18n:{t:value=>value,locale:'tr-TR'},dispatchEvent(event){events.push(event);}};
+ const window={ZENITH_TYPE_CONFIG:{seasonsEnabled:enabled},TypeOnline:{async request(){calls++;if(response instanceof Error)throw response;return response;}},TypeI18n:{t:value=>value,locale:'tr-TR'},dispatchEvent(event){events.push(event);}};
  const ctx={window,document,performance:{now:()=>clock},Date,Number,String,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail;}},setInterval(fn){interval=fn;return 1;},clearInterval(){}};
  vm.runInNewContext(source,ctx);await new Promise(resolve=>setImmediate(resolve));
  return {api:window.TypeSeason,nodes,events,document,setClock:value=>clock=value,setResponse:value=>response=value,tick:()=>interval(),get calls(){return calls;}};
 }
+test('disabled rollout keeps the clock hidden and makes no season API requests',async()=>{
+ const f=await setup(false);assert.equal(f.api,undefined);assert.equal(f.nodes.get('season-clock').hidden,true);assert.equal(f.calls,0);
+});
 test('season countdown uses server time and monotonic seconds, not the device calendar',async()=>{
  const f=await setup();f.api.sync(season(0));assert.equal(f.nodes.get('season-remaining').textContent,'30 gün 00:00:00');
  f.setClock(1100);f.tick();assert.equal(f.nodes.get('season-remaining').textContent,'29 gün 23:59:59');
