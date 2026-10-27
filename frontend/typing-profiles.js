@@ -1,7 +1,7 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id),api=window.TypeOnline,dialog=$('public-profile-dialog');
-let currentTag=null,offset=0,loading=false,generation=0,searchGeneration=0;
+let currentProfile=null,currentTag=null,offset=0,loading=false,generation=0,searchGeneration=0;
 const formatDate=value=>new Date(value).toLocaleString(window.TypeI18n?.locale||'tr-TR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 function face(element,profile){element.replaceChildren();const url=api.avatarURL(profile);if(url){const image=new Image();image.src=url;image.alt='';element.append(image);}else element.textContent=profile.display_name[0]||'?';}
 function stat(label,value){const item=document.createElement('div'),number=document.createElement('strong'),caption=document.createElement('small');number.textContent=value;caption.textContent=label;item.append(number,caption);return item;}
@@ -13,6 +13,7 @@ async function loadMore(reset=false){
   if(reset){offset=0;$('public-profile-history').replaceChildren();}
   $('public-profile-name').textContent=data.profile.display_name;$('public-profile-tag').textContent='#'+data.profile.account_tag;face($('public-profile-avatar'),data.profile);
   window.TypeBadges.render($('public-profile-badges'),data.profile);
+  if(reset){currentProfile=data.profile;window.dispatchEvent(new CustomEvent('type:profile-loaded',{detail:data.profile}));}
   const s=data.stats;$('public-profile-stats').replaceChildren(stat('en iyi wpm',s.bestWpm),stat('ortalama wpm',s.averageWpm),stat('doğruluk',s.accuracy+'%'),stat('testler',s.tests));
   for(const result of data.results){const row=document.createElement('tr');for(const value of [result.wpm,result.accuracy+'%',result.duration+'s · '+result.language+' · '+(window.TypeI18n?.t({easy:'kolay',normal:'normal',hard:'zor'}[result.difficulty]||result.difficulty)||result.difficulty),formatDate(result.created_at)]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}$('public-profile-history').append(row);}
   offset+=data.results.length;$('public-profile-more').hidden=!data.hasMore;
@@ -22,6 +23,8 @@ async function loadMore(reset=false){
 }
 function openProfile(tag){
  if(!/^[A-F0-9]{12}$/i.test(tag||''))return;
+ currentProfile=null;$('match-history-dialog').close();
+ window.dispatchEvent(new CustomEvent('type:profile-opening'));
  currentTag=tag.toUpperCase();offset=0;$('public-profile-name').textContent=window.TypeI18n?.t('oyuncu')||'oyuncu';$('public-profile-tag').textContent='#'+currentTag;$('public-profile-stats').replaceChildren();$('public-profile-history').replaceChildren();$('public-profile-more').hidden=true;
  if(!dialog.open)dialog.showModal();void loadMore(true);
  window.TypeBadges.render($('public-profile-badges'),null);
@@ -37,6 +40,6 @@ $('profile-search-form').addEventListener('submit',async event=>{
   $('profile-search-status').textContent=data.profiles.length?data.profiles.length+' oyuncu':'Oyuncu bulunamadı.';
  }catch(error){if(ticket===searchGeneration)$('profile-search-status').textContent=error.message;}
 });
-window.TypeProfiles={open:openProfile};
+window.TypeProfiles={open:openProfile,get profile(){return currentProfile;}};
 const checkLink=()=>{if(location.hash.startsWith('#profile='))openProfile(location.hash.slice(9));};window.addEventListener('hashchange',checkLink);checkLink();
 })();

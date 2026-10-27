@@ -82,3 +82,7 @@ Maç geçmişim yalnızca giriş yapan oyuncunun tamamlanmış maçlarını list
 Mevcut şemalardan sonra `supabase/migrations/20261027172907_typing_ranked_matchmaking_and_badges.sql` uygulanır, ardından güncel `typing-api` deploy edilir ve frontend yayımlanır. API veya migration uygulanmadan yalnızca yeni frontend'i yayımlamak eksik uçlar oluşturur. İlk canlı preflight otomatik güvenlik incelemesince reddedildi; kullanıcı sonraki mesajında yayını onayladı. Migration ve API deploy'u bu onaydan sonra tamamlandı. Canlı migration kaydı `20261027180111_typing_ranked_matchmaking_and_badges` sürümündedir; yerel dosyanın CLI tarafından oluşturulmuş zaman damgası farklıdır.
 
 `supabase/tests/typing-ranked.sql` geçici tablo kopyaları ve rollback kullanarak eşleştirme, 50.000 sınırı, rematch, tekrar puanı sınırı, geçmiş gizliliği ve sayfalamayı doğrular. Ayrı yerel PostgreSQL/PGlite ortamında üç temel şema ve yeni migration sonrası çalıştırılabilir. Üretim ön kontrolünün yerine yerel doğrulama yapılmıştır.
+
+## Profil içi düello geçmişi
+
+Hesap → profilimi görüntüle yoluyla açılan profil, tamamlanmış düelloları doğrudan gösterir: tarih, rakip, mod, sonuç, iki tarafın WPM değeri ve kendi Elo değişimin. Rakibin adına basınca o oyuncunun profili aynı profil penceresinde açılır. Başka oyuncunun profilinde yalnızca oturumdaki kullanıcıyla aralarındaki düellolar gösterilir; diğer oyuncunun tüm özel geçmişi açılmaz. Geçmiş 20 satırlık sayfalarla yüklenir; giriş yapılmadıysa giriş gerekliliği belirtilir. Bireysel doğrulanmış testler ayrı bölümde kalır.
