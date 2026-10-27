@@ -39,16 +39,20 @@ test('Every About section uses the current static copy and translates in all eig
   }
 });
 
-test('Language controls occur only in Settings, including generated update pages',()=>{
+test('language controls stay in Settings and the localized Downloads hub',()=>{
   function walk(directory=''){
     for(const entry of readdirSync(new URL(directory||'./',frontend),{withFileTypes:true})){
       const path=`${directory}${entry.name}`;
       if(entry.isDirectory())walk(`${path}/`);
       else if(path.endsWith('.html')){
         const html=read(path);
-        assert.doesNotMatch(html,/langSwitch|legalLangToggle|data-site-language/,path);
-        if(path==='settings.html')assert.match(html,/id="langSelect"/);
-        else assert.doesNotMatch(html,/id="langSelect"/,path);
+        assert.doesNotMatch(html,/langSwitch|legalLangToggle/,path);
+        const hasLanguageControl=path==='settings.html'||/^(?:(?:en|de|fr|ru|vi|zh|ja)\/)?downloads\.html$/.test(path);
+        if(hasLanguageControl)assert.match(html,/id="langSelect"/,path);
+        else {
+          assert.doesNotMatch(html,/id="langSelect"/,path);
+          assert.doesNotMatch(html,/data-site-language/,path);
+        }
       }
     }
   }

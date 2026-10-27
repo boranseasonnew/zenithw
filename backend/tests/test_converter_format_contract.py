@@ -1,6 +1,7 @@
 """Static contracts for the local FFmpeg converter format catalogue."""
 
 import ast
+from html.parser import HTMLParser
 import unittest
 from pathlib import Path
 
@@ -45,8 +46,23 @@ class ConverterFormatContractTests(unittest.TestCase):
 
     def test_converter_and_remux_only_advertise_server_supported_formats(self):
         supported = assigned_set("ALLOWED_CONVERT_FORMATS")
-        for target in supported:
-            self.assertIn(f'data-v="{target}"', CONVERT_PAGE)
+        class FormatOptions(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.in_formats = False
+                self.values = set()
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                if tag == 'select':
+                    self.in_formats = attrs.get('id') == 'convFormat'
+                if tag == 'option' and self.in_formats:
+                    self.values.add(attrs.get('value'))
+            def handle_endtag(self, tag):
+                if tag == 'select':
+                    self.in_formats = False
+        options = FormatOptions()
+        options.feed(CONVERT_PAGE)
+        self.assertEqual(options.values, supported)
         self.assertIn("aiff", REMUX_PAGE)
         self.assertIn("wmv", REMUX_PAGE)
 

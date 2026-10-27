@@ -1,6 +1,37 @@
 const LATEST_UPDATE = {
-  "ver": "v16.0",
+  "ver": "v16.1",
   "latest": true,
+  "dateTr": "27 ekim 2026",
+  "dateEn": "October 27, 2026",
+  "cover": null,
+  "titleTr": "Zenith Type: ritmini bul",
+  "titleEn": "Zenith Type: find your rhythm",
+  "introTr": [
+    "ZenithW'ye kısa bir yazma molası: Zenith Type ile hızını ve doğruluğunu ölç, antrenman yap veya arkadaşınla yarış."
+  ],
+  "introEn": [
+    "Take a typing break with ZenithW: measure your speed and accuracy, practice or race a friend in Zenith Type."
+  ],
+  "sections": [
+    {
+      "hTr": "Sana göre bir yazma ekranı",
+      "hEn": "A typing screen that fits you",
+      "pTr": "Süreyi, zorluğu ve Türkçe/İngilizce metin dilini seç. Sekiz tema, eşlikçiler ve akıcı imleçle yazarken arayüz geri çekilir. Yerel test ve antrenman internetsiz de çalışır. <a href=\"/typing\">Zenith Type'ı aç</a>.",
+      "pEn": "Choose a duration, difficulty and Turkish or English text. Eight themes, companions and a smooth caret keep typing focused while the interface fades away. Local tests and practice also work offline. <a href=\"/typing\">Open Zenith Type</a>."
+    },
+    {
+      "hTr": "Profil, sıralama ve düellolar",
+      "hEn": "Profiles, leaderboards and duels",
+      "pTr": "E-posta veya telefon vermeden hesap oluştur; benzersiz hesap kodunla giriş yap. Herkese açık profilini paylaş, doğrulanmış sonuçlarla dünya sıralamasına katıl. Dereceli düellolarda Elo için yarış veya oda kodu/bağlantısı üzerinden arkadaşını özel maça çağır. Özel maçlar dünya sıralamasını ve genel Elo puanını etkilemez.",
+      "pEn": "Create an account without an email or phone number and sign in with your unique account ID. Share your public profile and join the world leaderboard with verified results. Compete for Elo in ranked duels or invite a friend through a private room code or link. Private matches do not affect the world leaderboard or overall Elo."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V16_0 = {
+  "ver": "v16.0",
+  "latest": false,
   "dateTr": "14 ekim 2026",
   "dateEn": "October 14, 2026",
   "cover": null,
@@ -458,8 +489,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;

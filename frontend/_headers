@@ -209,6 +209,12 @@
 /support-sponsor.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+/typing-focus.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /updates-archive.07c744021db2.js
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -284,6 +290,9 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /zenithw.png
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/typing-*.js
   Cache-Control: public, max-age=3600, must-revalidate
 
 /cache-assets/*

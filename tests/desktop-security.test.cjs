@@ -5,7 +5,7 @@ const os = require('node:os');
 const test = require('node:test');
 const vm = require('node:vm');
 const { spawn } = require('node:child_process');
-const { createProgressTracker } = require('../desktop/src/progress.cjs');
+const { createProgressTracker, progressArgs } = require('../desktop/src/progress.cjs');
 const { videoFormats } = require('../desktop/src/formats.cjs');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'desktop', 'src', 'main.cjs'), 'utf8');
@@ -56,13 +56,18 @@ test('Desktop keeps video, audio and postprocessing below 100% until publication
   assert.equal(track('[SponsorBlock] Fetching SponsorBlock segments'), null);
   track('[info] id: Downloading 1 format(s): 299+251');
   track('[download] Destination: video.f299.mp4');
-  assert.equal(track('[download] 10.0% of  200MiB at 2MiB/s').percent, 4);
-  assert.equal(track('[download] 100% of  200MiB in 00:00:08').percent, 45);
+  const video = track('[download] 10.0% of  200MiB at 2MiB/s');
+  assert.equal(video.percent, 10);
+  assert.equal(video.percentScope, 'stream');
+  assert.equal(track('[download] 100% of  200MiB in 00:00:08').percent, 99);
   track('[download] Destination: audio.f251.webm');
-  assert.equal(track('[download] 20.0% of  5MiB at 1MiB/s').percent, 54);
-  assert.equal(track('[download] 100% of  5MiB in 00:00:01').percent, 90);
-  assert.equal(track('[Merger] Merging formats').percent, 93);
-  assert.equal(track('[Metadata] Adding metadata').percent, 97);
+  assert.equal(track('[download] 20.0% of  5MiB at 1MiB/s').percent, 20);
+  assert.equal(track('[download] 100% of  5MiB in 00:00:01').percent, 99);
+  for (const line of ['[Merger] Merging formats', '[Metadata] Adding metadata']) {
+    const processing = track(line);
+    assert.equal(processing.phase, 'processing');
+    assert.equal(processing.percent, null, 'postprocessing has no measured percentage');
+  }
 });
 
 test('Desktop prefers direct H.264 media over an HLS stream at the same resolution', () => {
@@ -90,13 +95,14 @@ test('Desktop never attempts to stream-copy an old MP4 selection into WebM', () 
   const end = source.indexOf('\nconst mediaExtensions', start);
   const downloadArgs = vm.runInNewContext(`${source.slice(start, end)}\ndownloadArgs`, {
     path, sanitizeNaming: (value) => value, baseArgs: () => [], bounded: (value) => value,
-    aria2Args: () => []
+    aria2Args: () => [], progressArgs
   });
   const current = { naming: '%(title)s.%(ext)s', retries: 3, concurrentFragments: 2, playlist: false, videoContainer: 'webm', embedThumbnail: true };
   const args = downloadArgs({ kind: 'video', format: '299+140', formatExt: 'mp4', url: 'https://example.com/video' }, current, 'C:\\Temp\\job');
-  assert.equal(args[args.indexOf('--merge-output-format') + 1], 'mp4');
-  assert.equal(args[args.indexOf('--remux-video') + 1], 'mp4');
-  assert.ok(args.includes('--embed-thumbnail'));
+  assert.equal(args[args.indexOf('--merge-output-format') + 1], 'mkv');
+  assert.equal(args[args.indexOf('--recode-video') + 1], 'webm');
+  assert.equal(args.includes('--remux-video'), false, 'incompatible MP4 must be encoded for WebM');
+  assert.equal(args.includes('--embed-thumbnail'), false);
   const webm = downloadArgs({ kind: 'video', format: '303+251', formatExt: 'webm', url: 'https://example.com/video' }, current, 'C:\\Temp\\job');
   assert.equal(webm[webm.indexOf('--merge-output-format') + 1], 'webm');
   assert.equal(webm.includes('--embed-thumbnail'), false);
@@ -112,7 +118,8 @@ test('Desktop preserves downloaded streams when postprocessing cannot publish a 
   const end = source.indexOf('\nfunction jobKey(', start);
   assert.ok(start >= 0 && end > start);
   const preserveRecovery = vm.runInNewContext(`${source.slice(start, end)}\npreserveRecovery`, {
-    fs, path, mediaExtensions: new Set(['.mp4']), app: { getPath: () => path.join(root, 'userdata') }
+    fs, path, mediaExtensions: new Set(['.mp4']), app: { getPath: () => path.join(root, 'userdata') },
+    jobFiles: directory => fs.readdirSync(directory).map(name => path.join(directory, name))
   });
   const recovery = preserveRecovery(workDir, 'test-job');
   assert.ok(fs.existsSync(path.join(recovery, 'video.f299.mp4')));

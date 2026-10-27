@@ -1,4 +1,5 @@
 import { PAGES_CSP } from "../shared/pages-security.mjs";
+import { TYPING_CSP } from "../shared/typing-security.mjs";
 import { STATIC_ASSET_PATHS } from "../shared/pages-cache-assets.mjs";
 import { AUDIO_WORKER_CSP, AUDIO_WORKER_PATH, AUDIO_EXPORT_WORKER_PATH, AUDIO_EXPORT_WORKER_CSP } from "../shared/audio-separator-security.mjs";
 
@@ -8,10 +9,10 @@ const NO_STORE = "private, no-store, max-age=0";
 
 // Cloudflare reads this response nonce when authorizing its injected JSD scripts.
 // Retain the reviewed hashes for our own inline code and event handlers.
-function htmlSecurityPolicy() {
+function htmlSecurityPolicy(policy = PAGES_CSP) {
   const bytes = crypto.getRandomValues(new Uint8Array(18));
   const nonce = btoa(String.fromCharCode(...bytes));
-  return PAGES_CSP.replace("script-src ", `script-src 'nonce-${nonce}' `);
+  return policy.replace("script-src ", `script-src 'nonce-${nonce}' `);
 }
 
 const ENABLED_VALUES = new Set(["1", "true", "yes", "on"]);
@@ -116,7 +117,10 @@ async function pageResponse(context) {
     context.request.headers.has("Cookie") ||
     headers.has("Set-Cookie");
 
-  if (isHtml) headers.set("Content-Security-Policy", htmlSecurityPolicy());
+  if (isHtml) {
+    const typing = /^\/typing(?:\.html)?\/?$/.test(new URL(context.request.url).pathname);
+    headers.set("Content-Security-Policy", htmlSecurityPolicy(typing ? TYPING_CSP : PAGES_CSP));
+  }
   headers.set("Cache-Control", isPrivate || response.status >= 400 || !isHtml
     ? NO_STORE
     : "public, max-age=0, must-revalidate");

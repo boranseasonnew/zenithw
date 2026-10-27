@@ -57,6 +57,8 @@ test('only verified content-hashed copies are immutable; ordinary assets have bo
   assert.match(headers.get('/runtime-config.js')['cache-control'], /no-store/);
   assert.equal(headers.get('/version.js')['cloudflare-cdn-cache-control'], 'no-store');
   assert.match(headers.get('/sitemap.xml')['cache-control'], /s-maxage=300/);
+  assert.equal(headers.get('/typing-*.js')['cache-control'], 'public, max-age=3600, must-revalidate');
+  assert.ok(!headers.has('/typing*'), 'typing HTML must keep its Function cache policy');
 });
 
 test('Pages output uses valid header/routing rules and never excludes HTML or dynamic endpoints', () => {

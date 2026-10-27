@@ -1,5 +1,5 @@
 // shared/lilith-studio.ts
-import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, inspectAudio, exportAudio } from "/vendor/lilith-engine/index.js?v=28950ca80236";
+import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, inspectAudio, exportAudio } from "/vendor/lilith-engine/index.js?v=658fbf14c76d";
 var ENGLISH = {
   upload: "Choose your audio",
   browse: "Browse files",

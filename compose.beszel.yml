@@ -1,0 +1,32 @@
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    profiles: [monitoring]
+    ports:
+      - "127.0.0.1:${BESZEL_PORT:-8090}:8090"
+    environment:
+      APP_URL: "${BESZEL_APP_URL:-http://localhost:8090}"
+    volumes:
+      - beszel-data:/beszel_data
+      - beszel-socket:/beszel_socket
+    restart: unless-stopped
+
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    profiles: [monitoring]
+    network_mode: host
+    volumes:
+      - beszel-agent-data:/var/lib/beszel-agent
+      - beszel-socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      HUB_URL: "${BESZEL_APP_URL:-http://localhost:8090}"
+      TOKEN: "${BESZEL_TOKEN:-}"
+      KEY: "${BESZEL_KEY:-}"
+    restart: unless-stopped
+
+volumes:
+  beszel-data:
+  beszel-agent-data:
+  beszel-socket:
