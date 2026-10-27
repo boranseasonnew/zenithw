@@ -1,4 +1,44 @@
 {
+  "typing-i18n.js": {
+    "url": "/cache-assets/typing-i18n.42495f0d569f.js",
+    "sha256": "42495f0d569f876900270d207869eb72db3f8ddd462a60c03808b45d955f8598"
+  },
+  "typing-badges.js": {
+    "url": "/cache-assets/typing-badges.a4f2869ad600.js",
+    "sha256": "a4f2869ad600da411bb88d8b12f78b37c06d568036e0141df99271cbb56b35e0"
+  },
+  "typing-config.js": {
+    "url": "/cache-assets/typing-config.34b397ae7fc3.js",
+    "sha256": "34b397ae7fc3da6f2a50c3e86f5d1b77259d64cb06ca77edb0507fbbbab04d09"
+  },
+  "typing-online.js": {
+    "url": "/cache-assets/typing-online.c7e5fd0ead68.js",
+    "sha256": "c7e5fd0ead68e30da49786c2207a5536c75f5f941248f61f48888a3cd27e2f27"
+  },
+  "typing-companions.js": {
+    "url": "/cache-assets/typing-companions.06d5ba3f06d4.js",
+    "sha256": "06d5ba3f06d43cba2e482c48cd9eab96bd4702ab4f570c1ce9a8bbd5743cd434"
+  },
+  "typing.js": {
+    "url": "/cache-assets/typing.9dc92a91c20b.js",
+    "sha256": "9dc92a91c20bea395d247d0c8cd1e7adc45c9abc8591b9a8bfd4ce1276079424"
+  },
+  "typing-duels.js": {
+    "url": "/cache-assets/typing-duels.2d2bbc73d73d.js",
+    "sha256": "2d2bbc73d73d82b4850a5d676102df04859d80232a6a46b7e0ae3bb727389f41"
+  },
+  "typing-profiles.js": {
+    "url": "/cache-assets/typing-profiles.5508eeb45905.js",
+    "sha256": "5508eeb459051404d8a21c7960a9dac3613c7cd8133e15679b540e265deb9766"
+  },
+  "typing-history.js": {
+    "url": "/cache-assets/typing-history.601b98b6cf91.js",
+    "sha256": "601b98b6cf91ba264e098f3e207865668f6206f26c699aa89f0c1b22e63d7fba"
+  },
+  "typing-focus.css": {
+    "url": "/cache-assets/typing-focus.8ff40cdfa536.css",
+    "sha256": "8ff40cdfa536a6013889cdb1324698fd17be18c20c4169f46ae5a119a9743133"
+  },
   "download-safety.js": {
     "url": "/cache-assets/download-safety.f8da11af7c3c.js",
     "sha256": "f8da11af7c3ca888a6541e33974a4494f05191ecdcbd9d3f6f58d338ea9c39f2"

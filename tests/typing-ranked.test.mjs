@@ -9,10 +9,16 @@ const rated=mmr=>({mmr,wins:1,losses:0,draws:0});
 test('typing loads badge dependencies before consumers and includes match history',()=>{
  const html=readFileSync(new URL('../frontend/typing.html',import.meta.url),'utf8');
  const scripts=[...html.matchAll(/<script src="\/?([^"?]+)"[^>]*><\/script>/g)].map(match=>match[1]);
- assert.ok(scripts.includes('typing-badges.js'));
- assert.ok(scripts.indexOf('typing-badges.js')<scripts.indexOf('typing-online.js'));
- assert.ok(scripts.indexOf('typing-badges.js')<scripts.indexOf('typing-duels.js'));
- assert.ok(scripts.includes('typing-history.js'));
+ const manifest=JSON.parse(readFileSync(new URL('../scripts/cache-assets-manifest.json',import.meta.url),'utf8'));
+ const resource=name=>manifest[name].url.slice(1);
+ assert.ok(scripts.includes(resource('typing-badges.js')));
+ assert.ok(scripts.indexOf(resource('typing-badges.js'))<scripts.indexOf(resource('typing-online.js')));
+ assert.ok(scripts.indexOf(resource('typing-badges.js'))<scripts.indexOf(resource('typing-duels.js')));
+ assert.ok(scripts.includes(resource('typing-history.js')));
+ for(const name of ['typing-online.js','typing-badges.js','typing-focus.css']){
+  assert.match(manifest[name].url,/\/cache-assets\/typing-[\w-]+\.[a-f0-9]{12}\.(js|css)$/);
+  assert.ok(html.includes(manifest[name].url));
+ }
 });
 test('rank badges use exact 5k, 10k, 20k and 50k boundaries',()=>{
  assert.equal(window.TypeRanks.tier({mmr:50000,wins:0,losses:0,draws:0}).key,'unranked');

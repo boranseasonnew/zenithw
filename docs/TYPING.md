@@ -86,3 +86,7 @@ Mevcut şemalardan sonra `supabase/migrations/20261027172907_typing_ranked_match
 ## Profil içi düello geçmişi
 
 Hesap → profilimi görüntüle yoluyla açılan profil, tamamlanmış düelloları doğrudan gösterir: tarih, rakip, mod, sonuç, iki tarafın WPM değeri ve kendi Elo değişimin. Rakibin adına basınca o oyuncunun profili aynı profil penceresinde açılır. Başka oyuncunun profilinde yalnızca oturumdaki kullanıcıyla aralarındaki düellolar gösterilir; diğer oyuncunun tüm özel geçmişi açılmaz. Geçmiş 20 satırlık sayfalarla yüklenir; giriş yapılmadıysa giriş gerekliliği belirtilir. Bireysel doğrulanmış testler ayrı bölümde kalır.
+
+## Rozet güncellemeleri ve tarayıcı önbelleği
+
+Type JavaScript ve CSS dosyaları artık içerik hash'i taşıyan `/cache-assets/` URL'leriyle yüklenir. Yeni HTML eski bir saatlik JS/CSS kopyasını kullanmaz; eski sürümler için kaynak URL'ler korunur. Hesap penceresi açılınca `me` verisi yeniden alınarak uzun süre açık kalan sekmelerde sunucu tarafından değiştirilen rozetler yenilenir. Kullanıcı oturumu değişmişse bekleyen yanıt uygulanmaz. Yerel mobil kontrolde iki rozetin hesap penceresinde görünürlüğü, geliştirici açıklaması ve rozet içermeyen eski profil verisinin pencere açıldığında yenilenmesi doğrulandı.

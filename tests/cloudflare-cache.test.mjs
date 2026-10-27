@@ -39,7 +39,8 @@ test('only verified content-hashed copies are immutable; ordinary assets have bo
     assert.equal(actual, entry.sha256, source);
     assert.ok(entry.url.includes('.' + actual.slice(0, 12) + '.'), source);
     assert.equal(headers.get('/cache-assets/*')['cache-control'], 'public, max-age=31536000, immutable');
-    assert.ok(!headers.get('/' + source)['cache-control'].includes('immutable'));
+    const sourceRule=/^typing-[^/]+\.js$/.test(source)?'/typing-*.js':'/'+source;
+    assert.ok(!headers.get(sourceRule)['cache-control'].includes('immutable'));
     assert.ok(excluded(entry.url));
   }
   for (const [url, values] of headers) {

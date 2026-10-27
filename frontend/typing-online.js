@@ -55,7 +55,13 @@ async function submitWork(button,work){
  if(busy)return;busy=true;const text=button.textContent;button.disabled=true;button.textContent='bekle…';$('account-error').textContent='';
  try{await work();}catch(error){$('account-error').textContent=error.message;}finally{busy=false;button.disabled=false;button.textContent=text;}
 }
-$('account-open').addEventListener('click',()=>{if(document.body.classList.contains('running'))return;$('account-error').textContent='';open($('account-dialog'));});
+$('account-open').addEventListener('click',()=>{
+ if(document.body.classList.contains('running'))return;
+ $('account-error').textContent='';open($('account-dialog'));
+ // Refresh server-owned badges for tabs kept open across a backend rollout.
+ const memberId=member?.user_id;
+ if(memberId)void request('me').then(data=>{if(member?.user_id===memberId){member=data.profile;renderAuth();}}).catch(error=>{if(member?.user_id===memberId)$('account-error').textContent=error.message;});
+});
 document.querySelectorAll('[data-auth-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.authMode)));
 $('auth-form').addEventListener('submit',event=>{
  event.preventDefault();const mode=authMode;
