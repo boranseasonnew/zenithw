@@ -1237,3 +1237,5 @@ body.light .video-card,body.light .playlist-card,body.light .qr-wrap{background-
   .dl-progress-footer{margin-top:17px;padding-top:16px;}
   .dl-quality-badge{min-height:30px;padding-inline:10px;font-size:8.5px;}
 }
+
+.save-btn{text-decoration:none;text-align:center}.save-btn:disabled{opacity:.45;cursor:not-allowed}#saveFilename{overflow-wrap:anywhere}#saveStatus:empty{display:none}

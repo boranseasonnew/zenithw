@@ -53,7 +53,7 @@ function createSocketClient(){
   return {connected:false,id:null,on:noop,off:noop,once:noop,connect:noop,disconnect:noop};
 }
 const socket=createSocketClient();
-let socketId=null,videoInfo={},dlId=null,dlAbort=null,activeProgressJobId=null,activeTransferAbort=null,ytErrTimer=null,pendingBlob=null,pendingFilename=null,pendingObjectUrl=null;
+let socketId=null,videoInfo={},dlId=null,dlAbort=null,activeProgressJobId=null,activeTransferAbort=null,ytErrTimer=null,pendingBlob=null,pendingFilename=null,pendingObjectUrl=null,pendingNativeDownload=null;
 let socketDisconnectTimer=null;
 let infoController=null,infoSequence=0;
 
@@ -93,7 +93,7 @@ const TX={
     stLblProfiles:'hızlı kalite profilleri',profileMinimal:'minimal',profileMinimalDesc:'küçük dosya · daha az veri',profileStandard:'standart',profileStandardDesc:'uyumluluk ve kalite dengesi',profileQuality:'kalite',profileQualityDesc:'uygunsa en verimli yüksek kalite',stProfileHint:'Profil video ve ses tercihlerini birlikte ayarlar. Sonra tek bir ayarı değiştirirsen özel ayara geçer.',profileCustom:'özel ayar',profileActive:'aktif profil: {name}',profileApplied:'{name} profili uygulandı',
     bbSave:'kaydet',bbHistory:'geçmiş',bbRemux:'remux',bbConvert:'dönüştür',bbSettings:'ayarlar',bbUpdates:'güncel',bbAbout:'hakkında',bbMore:'diğer',bbDonate:'destek ol',
     accDefault:'klasik',accDefaultDesc:'buz mavisi · dengeli',accPurple:'neon mor',accPurpleDesc:'elektrik moru · derin uzay',accGray:'grafit',accGrayDesc:'nötr gri · sade',accPink:'neon pembe',accPinkDesc:'canlı pembe · sıcak',accCobalt:'cobalt mavisi',accCobaltDesc:'derin mavi · odaklı',
-    saveTitleTxt:'nasıl kaydetmek istersin?',saveDlTxt:'indir',saveShareTxt:'paylaş',saveCopyTxt:'kopyala',
+    saveRetryDownload:'Bu yöntem burada çalışmadı. Dosyayı kaydetmek için indir düğmesine dokun.',saveCopied:'dosya kopyalandı',saveTitleTxt:'nasıl kaydetmek istersin?',saveDlTxt:'indir',saveShareTxt:'paylaş',saveCopyTxt:'kopyala',
     saveNoteTxt:'tarayıcı pop-up\'ları engelliyorsa "indir" butonunu kullanın.',saveDoneTxt:'tamam',
     stModalTitle:'ayarlar',stModalSubtitle:'indirme deneyimini özelleştir',stNavVideo:'video',stNavAudio:'ses',stNavAppearance:'görünüm',stNavAccessibility:'erişilebilirlik',stNavMeta:'metadata',stNavFilename:'dosya adı',stNavAdvanced:'gelişmiş',stNavClose:'kapat',
     stLblVisual:'görsel rahatlık',stReduceMotionName:'hareketleri azalt',stReduceMotionDesc:'animasyon ve geçişleri mümkün olduğunca kapatır.',stReduceTransparencyName:'şeffaflığı azalt',stReduceTransparencyDesc:'bulanıklık efektlerini kapatıp yüzeyleri daha belirgin yapar.',stLblBehavior:'davranış',stQueueName:'kuyruğu otomatik açma',stQueueDesc:'playlist indirmesi başlarken kuyruk arka planda çalışır.',
@@ -164,7 +164,7 @@ const TX={
     stLblProfiles:'quick quality profiles',profileMinimal:'minimal',profileMinimalDesc:'smaller files · less data',profileStandard:'standard',profileStandardDesc:'balanced quality and compatibility',profileQuality:'quality',profileQualityDesc:'efficient high quality when available',stProfileHint:'A profile sets video and audio preferences together. Changing one setting afterwards switches to custom.',profileCustom:'custom settings',profileActive:'active profile: {name}',profileApplied:'{name} profile applied',
     bbSave:'save',bbHistory:'history',bbRemux:'remux',bbConvert:'convert',bbSettings:'settings',bbUpdates:'updates',bbAbout:'about',bbMore:'more',bbDonate:'support us',
     accDefault:'classic',accDefaultDesc:'ice blue · balanced',accPurple:'neon purple',accPurpleDesc:'electric violet · deep space',accGray:'graphite',accGrayDesc:'neutral gray · minimal',accPink:'neon pink',accPinkDesc:'vivid pink · warm',accCobalt:'cobalt blue',accCobaltDesc:'deep blue · focused',
-    saveTitleTxt:'choose how to save',saveDlTxt:'download',saveShareTxt:'share',saveCopyTxt:'copy',
+    saveRetryDownload:'This method did not work here. Tap Download to save the file.',saveCopied:'file copied',saveTitleTxt:'choose how to save',saveDlTxt:'download',saveShareTxt:'share',saveCopyTxt:'copy',
     saveNoteTxt:'if your browser blocked the popup, use the download button.',saveDoneTxt:'done',
     stModalTitle:'settings',stModalSubtitle:'customize your download experience',stNavVideo:'video',stNavAudio:'audio',stNavAppearance:'appearance',stNavAccessibility:'accessibility',stNavMeta:'metadata',stNavFilename:'filename',stNavAdvanced:'advanced',stNavClose:'close',
     stLblVisual:'visual comfort',stReduceMotionName:'reduce motion',stReduceMotionDesc:'disables animations and transitions whenever possible.',stReduceTransparencyName:'reduce transparency',stReduceTransparencyDesc:'disables blur and makes surfaces more solid.',stLblBehavior:'behavior',stQueueName:"don't open the queue automatically",stQueueDesc:'playlist downloads can continue in the background.',
@@ -460,6 +460,7 @@ function cleanSettings(raw){
   if(!raw||typeof raw!=='object'||Array.isArray(raw))return clean;
   Object.keys(DEFAULT_SETTINGS).forEach(key=>{const value=raw[key],sample=DEFAULT_SETTINGS[key];if(typeof value===typeof sample)clean[key]=value;});
   if(clean.fnfTemplate)clean.fnfTemplate=clean.fnfTemplate.slice(0,180);
+  if(clean.saveMethod&&!['ask','download','share','copy'].includes(clean.saveMethod))clean.saveMethod='ask';
   return clean;
 }
 function loadSt(){try{const r=localStorage.getItem('zw_s');if(r)Object.assign(S,cleanSettings(JSON.parse(r)));}catch(e){}}
@@ -483,7 +484,7 @@ function applyStUI(){
   const tsu=document.getElementById('togSubtitles');if(tsu){tsu.classList.toggle('on',!!S.subtitles);tsu.setAttribute('aria-checked',String(!!S.subtitles));}
   ['ReduceMotion','ReduceTransparency','KeepQueueClosed','YoutubeAdaptiveQuality'].forEach(name=>{const key=name.charAt(0).toLowerCase()+name.slice(1),el=document.getElementById('tog'+name);if(el){el.classList.toggle('on',!!S[key]);el.setAttribute('aria-checked',String(!!S[key]));}});
   const subLang=document.getElementById('subtitleLangSelect');if(subLang)subLang.value=S.subtitleLang||'tr';
-  document.querySelectorAll('#saveMethodChips .chip').forEach(c=>c.classList.toggle('active',c.dataset.v===(S.saveMethod||'ask')));
+  document.querySelectorAll('#saveMethodChips .chip').forEach(c=>{const selected=c.dataset.v===(S.saveMethod||'ask');c.classList.toggle('active',selected);c.setAttribute('aria-pressed',String(selected));});
   document.querySelectorAll('#filenameStyleChips .chip').forEach(c=>c.classList.toggle('active',c.dataset.v===(S.filenameStyle||'basic')));
   ['Auto','Light','Dark'].forEach(n=>{const b=document.getElementById('theme'+n);if(b)b.classList.toggle('active',S.theme===n.toLowerCase());});
   const fi=document.getElementById('fnfInput');if(fi){fi.value=S.fnfTemplate||'{title}.{ext}';updateFnfPreview();}
@@ -654,14 +655,14 @@ async function fetchBulkVideos(){
   const urls=requestedUrls.filter(url=>!shouldRouteYoutubeToApps(url));
   if(blockedYoutube.length)showYoutubeAppRequired();
   if(urls.length===0)return;
-  
+
   const successCount=[];
   const failCount=[];
   const plan={...S},mode=DL_MODE;textarea.disabled=true;
   const goBtn=document.querySelector('.url-go-btn');
   bulkRunning=true;bulkStopRequested=false;
   if(goBtn){goBtn.onclick=cancelBulkDownloads;goBtn.setAttribute('aria-label',t('dlCancel'));goBtn.innerHTML='✕';}
-  
+
   try{for(let i=0;i<urls.length;i++){
     if(bulkStopRequested)break;
     const url=urls[i];
@@ -1112,6 +1113,7 @@ async function handoffPreparedDownload(payload,allowSaveModal,onProgress,signal)
       if(activeTransferAbort===controller)activeTransferAbort=null;
     }
   }
+  if(allowSaveModal){openPreparedSaveModal(payload);return 'save-modal';}
   return triggerNativeDownload(payload.download_url,payload.transfer_status_url,onProgress,signal);
 }
 async function cancelPlaylistQueue(){
@@ -1349,28 +1351,65 @@ function fireConfetti(){
   }
   setTimeout(()=>host.remove(),1400);
 }
-function releasePendingBlob(){if(pendingObjectUrl)URL.revokeObjectURL(pendingObjectUrl);pendingObjectUrl=null;pendingBlob=null;pendingFilename=null;}
-function openSaveModal(blob,filename){
-  releasePendingBlob();pendingBlob=blob;pendingFilename=filename;
-  const method=S.saveMethod||'ask';
-  if(method==='ask')openOverlay('saveOverlay');
-  else saveAction(method);
+function releasePendingBlob(){
+  if(pendingObjectUrl)URL.revokeObjectURL(pendingObjectUrl);
+  pendingObjectUrl=null;pendingBlob=null;pendingFilename=null;pendingNativeDownload=null;
+  document.getElementById('saveDownloadLink')?.removeAttribute('href');
 }
-function saveAction(type){
-  if(!pendingBlob)return;
-  const url=URL.createObjectURL(pendingBlob);
-  pendingObjectUrl=url;
-  setTimeout(()=>{URL.revokeObjectURL(url);if(pendingObjectUrl===url){pendingObjectUrl=null;pendingBlob=null;pendingFilename=null;}},60000);
-  if(type==='download'){const a=document.createElement('a');a.href=url;a.download=pendingFilename;a.click();toast(t('downloaded'),'#3bba64');fireConfetti();closeOverlay('saveOverlay',true);}
-  else if(type==='share'){if(navigator.share&&navigator.canShare&&navigator.canShare({files:[new File([pendingBlob],pendingFilename)]})){navigator.share({files:[new File([pendingBlob],pendingFilename)],title:pendingFilename}).catch(()=>{});fireConfetti();}else{const a=document.createElement('a');a.href=url;a.download=pendingFilename;a.click();toast(t('downloaded'),'#3bba64');fireConfetti();closeOverlay('saveOverlay',true);}}
-  else if(type==='copy'){
-    const fallback=()=>{const a=document.createElement('a');a.href=url;a.download=pendingFilename;a.click();toast(LANG==='en'?'Copy not supported here, downloaded instead':'Bu tarayıcıda kopyalama desteklenmiyor, indirildi','#f59e0b');closeOverlay('saveOverlay',true);};
-    if(navigator.clipboard&&window.ClipboardItem){
-      navigator.clipboard.write([new ClipboardItem({[pendingBlob.type]:pendingBlob})])
-        .then(()=>toast(LANG==='en'?'copied!':'kopyalandı!','#3bba64'))
-        .catch(fallback);
-    } else { fallback(); }
+function saveFile(){
+  const extensions={mp4:'video/mp4',mov:'video/quicktime',webm:'video/webm',mp3:'audio/mpeg',m4a:'audio/mp4',wav:'audio/wav',ogg:'audio/ogg',opus:'audio/ogg',flac:'audio/flac',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg'};
+  const original=(pendingBlob.type||'').split(';')[0].toLowerCase();
+  const type=(!original||original==='application/octet-stream')?(extensions[(pendingFilename||'').split('.').pop().toLowerCase()]||'application/octet-stream'):original;
+  return new File([pendingBlob],pendingFilename,{type});
+}
+function canShareSaveFile(){try{return !!(pendingBlob&&navigator.share&&navigator.canShare&&navigator.canShare({files:[saveFile()]}));}catch{return false;}}
+function canCopySaveFile(){try{return !!(pendingBlob&&navigator.clipboard?.write&&window.ClipboardItem&&(!ClipboardItem.supports||ClipboardItem.supports(saveFile().type)));}catch{return false;}}
+function configureSaveModal(){
+  const link=document.getElementById('saveDownloadLink');
+  link.href=pendingNativeDownload?pendingNativeDownload.download_url:pendingObjectUrl;
+  link.download=pendingFilename;document.getElementById('saveFilename').textContent=pendingFilename;
+  document.getElementById('saveShareButton').disabled=!canShareSaveFile();
+  document.getElementById('saveCopyButton').disabled=!canCopySaveFile();
+  document.getElementById('saveStatus').textContent='';
+}
+function showSaveIssue(){openOverlay('saveOverlay');document.getElementById('saveStatus').textContent=t('saveRetryDownload');}
+function openSaveModal(blob,filename){
+  releasePendingBlob();pendingBlob=blob;pendingFilename=filename;pendingObjectUrl=URL.createObjectURL(blob);configureSaveModal();
+  // Sharing/clipboard and older Safari require a fresh tap after preparation.
+  if(S.saveMethod==='download'&&navigator.userActivation?.isActive)saveAction('download');
+  else openOverlay('saveOverlay');
+}
+function openPreparedSaveModal(payload){
+  releasePendingBlob();pendingNativeDownload=payload;pendingFilename=payload.filename||'download';configureSaveModal();
+  openOverlay('saveOverlay');
+}
+function releaseUsedSaveLater(url){setTimeout(()=>{if(url&&pendingObjectUrl===url)releasePendingBlob();},60000);}
+async function saveAction(type,event){
+  if(!pendingBlob&&!pendingNativeDownload)return;
+  if(type==='download'){
+    // A real, connected anchor keeps Safari's download action on the user tap.
+    if(!event){document.getElementById('saveDownloadLink').click();return;}
+    if(pendingNativeDownload){
+      const prepared=pendingNativeDownload;document.getElementById('saveStatus').textContent=t('downloading');
+      // Let the anchor's navigation become a download before Safari polls status.
+      try{await new Promise(resolve=>setTimeout(resolve,500));await waitForNativeTransfer(prepared.transfer_status_url);if(pendingNativeDownload===prepared){closeOverlay('saveOverlay',true);toast(t('downloaded'),'#3bba64');fireConfetti();}}
+      catch{if(pendingNativeDownload===prepared)showSaveIssue();}
+    }else{closeOverlay('saveOverlay',true);toast(t('downloaded'),'#3bba64');fireConfetti();releaseUsedSaveLater(pendingObjectUrl);}
+    return;
   }
+  const usedUrl=pendingObjectUrl;
+  try{
+    if(type==='share'){
+      if(!canShareSaveFile()){showSaveIssue();return;}
+      // Share the typed file itself; a title-only fallback can copy just its name.
+      await navigator.share({files:[saveFile()]});
+    }else if(type==='copy'){
+      if(!canCopySaveFile()){showSaveIssue();return;}
+      const file=saveFile();await navigator.clipboard.write([new ClipboardItem({[file.type]:file})]);
+      toast(t('saveCopied'),'#3bba64');
+    }else return;
+    if(pendingObjectUrl===usedUrl){closeOverlay('saveOverlay',true);releaseUsedSaveLater(usedUrl);}
+  }catch(error){if(error.name!=='AbortError'&&pendingObjectUrl===usedUrl)showSaveIssue();}
 }
 
 // ── FILENAME ──────────────────────────────────────────
@@ -1397,7 +1436,7 @@ function showMobileSettingsHome(){if(!document.body.classList.contains('settings
 function stChip(el,key){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');S[key]=el.dataset.v;if(PROFILE_FIELDS.includes(key))S.downloadProfile='custom';saveSt();applyStUI();}
 function stToggle(key){S[key]=!S[key];const tog=document.getElementById('tog'+key.charAt(0).toUpperCase()+key.slice(1));if(tog){tog.classList.toggle('on',S[key]);tog.setAttribute('aria-checked',String(!!S[key]));}saveSt();applyAccessibilityPrefs();}
 function setSettingValue(key,value){if(Object.prototype.hasOwnProperty.call(DEFAULT_SETTINGS,key)){S[key]=value;saveSt();}}
-function setChoice(el,key){setSettingValue(key,el.dataset.v);el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c===el));}
+function setChoice(el,key){setSettingValue(key,el.dataset.v);el.parentElement.querySelectorAll('.chip').forEach(c=>{c.classList.toggle('active',c===el);if(key==='saveMethod')c.setAttribute('aria-pressed',String(c===el));});}
 function exportSettings(){
   const blob=new Blob([JSON.stringify({app:'ZenithW',version:1,settings:S},null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='zenithw-settings.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast(LANG==='tr'?'ayarlar dışa aktarıldı':'settings exported','#3bba64');
