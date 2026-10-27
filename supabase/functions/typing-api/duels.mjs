@@ -13,7 +13,7 @@ export async function handleDuels(action,req,body,user,ctx){
  const isMember=room=>room.host_id===user.id||room.guest_id===user.id;
  const roomView=async room=>{
   const ids=[room.host_id,room.guest_id].filter(Boolean);
-  const profiles=check(await admin.from('typing_profiles').select('user_id,username,display_name,account_tag,avatar_path,avatar_version').in('user_id',ids));
+  const profiles=check(await admin.from('typing_profiles').select('user_id,username,display_name,account_tag,avatar_path,avatar_version,is_verified,is_developer').in('user_id',ids));
   const tests=[room.host_challenge,room.guest_challenge].filter(Boolean);
   const challenges=tests.length?check(await admin.from('typing_challenges').select('id,target,events,started_at,duration,finished').in('id',tests)):[];
   const finishedScores=tests.length?check(await admin.from('typing_scores').select('challenge_id,wpm,accuracy,characters').in('challenge_id',tests)):[];
@@ -31,12 +31,20 @@ export async function handleDuels(action,req,body,user,ctx){
   const canAssist=!room.rated&&room.status==='waiting'&&check(await admin.rpc('typing_is_admin',{p_user:user.id}));
   const hostPoints=room.status==='finished'?(room.winner_id===room.host_id?1:room.winner_id?0:0.5):0;
   const guestPoints=room.status==='finished'?(room.winner_id===room.guest_id?1:room.winner_id?0:0.5):0;
-  return {hostPoints,guestPoints,canAssist,assisted:room.assist_user_id===user.id,code:room.room_code,status:room.status,rated:room.rated,duration:room.duration,language:room.language,difficulty:room.difficulty,host:profiles.find(p=>p.user_id===room.host_id),guest:profiles.find(p=>p.user_id===room.guest_id)||null,hostReady:room.host_ready,guestReady:room.guest_ready,startsAt:room.starts_at,serverNow:Date.now(),myChallenge:mine,target:room.status==='racing'?room.target:null,winnerId:room.winner_id,hostResult:resultView(room.host_result),guestResult:resultView(room.guest_result),hostDelta:room.host_delta,guestDelta:room.guest_delta,hostLive:live(room.host_challenge),guestLive:live(room.guest_challenge)};
+  return {competitive:room.competitive??room.rated,rematchCode:room.rematch_room_code||null,rematchRequestedByMe:user.id===room.host_id?room.host_rematch===true:room.guest_rematch===true,rematchRequestedByOpponent:user.id===room.host_id?room.guest_rematch===true:room.host_rematch===true,hostPoints,guestPoints,canAssist,assisted:room.assist_user_id===user.id,code:room.room_code,status:room.status,rated:room.rated,duration:room.duration,language:room.language,difficulty:room.difficulty,host:profiles.find(p=>p.user_id===room.host_id),guest:profiles.find(p=>p.user_id===room.guest_id)||null,hostReady:room.host_ready,guestReady:room.guest_ready,startsAt:room.starts_at,serverNow:Date.now(),myChallenge:mine,target:room.status==='racing'?room.target:null,winnerId:room.winner_id,hostResult:resultView(room.host_result),guestResult:resultView(room.guest_result),hostDelta:room.host_delta,guestDelta:room.guest_delta,hostLive:live(room.host_challenge),guestLive:live(room.guest_challenge)};
  };
  if(action==='rating'){
   await rate(req,'rating',60,60,user.id);
   check(await admin.from('typing_ratings').upsert({user_id:user.id},{onConflict:'user_id',ignoreDuplicates:true}));
   return {rating:check(await admin.from('typing_ratings').select('mmr,wins,losses,draws').eq('user_id',user.id).single())};
+ }
+ if(action==='room-history'){
+  await rate(req,'room-history',60,60,user.id);
+  const opponent=body.opponentId==null?null:String(body.opponentId);
+  if(opponent!==null&&!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(opponent))fail(400,'Geçersiz oyuncu.');
+  if(opponent===user.id)fail(400,'Başka bir oyuncu seç.');
+  const offset=Math.max(0,Math.min(10000,Math.floor(Number(body.offset)||0)));
+  return check(await admin.rpc('typing_match_history',{p_user:user.id,p_opponent:opponent,p_offset:offset}));
  }
  if(action==='matchmake'){
   const opts=settings();await rate(req,'matchmake',90,60,user.id);
@@ -71,6 +79,14 @@ export async function handleDuels(action,req,body,user,ctx){
   if(!check(await admin.rpc('typing_is_admin',{p_user:user.id})))fail(403,'Bu ayar sana açık değil.');
   const room=await getRoom();if(!isMember(room)||room.rated||room.status!=='waiting')fail(403,'Yalnızca bekleyen özel odada kullanılabilir.');
   return roomView(check(await admin.rpc('typing_room_assist',{p_code:code,p_user:user.id,p_enabled:body.enabled===true})));
+ }
+ if(action==='room-rematch'){
+  await rate(req,'room-rematch',15,60,user.id);const room=await getRoom();
+  if(!isMember(room))fail(403,'Bu odaya önce katılmalısın.');
+  if(room.status!=='finished'||!room.guest_id)fail(409,'Tekrar maç için önce düelloyu tamamla.');
+  const result=await admin.rpc('typing_room_rematch',{p_code:code,p_user:user.id,p_requested:body.requested===true,p_target:randomWords(wordLists,room.language,room.difficulty),p_next_code:newCode()});
+  if(result.error?.code==='P0001')fail(409,'Tekrar maç açılamadı. Oyunculardan biri başka odada olabilir veya davetin süresi dolmuştur.');
+  return roomView(check(result));
  }
  if(action==='room-ready'){
   await rate(req,'room-ready',15,60,user.id);const room=await getRoom();if(!isMember(room))fail(403,'Bu odaya katılmalısın.');

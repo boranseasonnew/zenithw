@@ -19,6 +19,8 @@
 
 Web v16.1 · ZenithW Desktop v4.2.0
 
+[Zenith Type](https://zenithw.space/typing) bietet Tipptraining und Duelle. Ranglistenspiele unterstützen bis zu 50.000 Elo, beidseitig bestätigte Rückspiele und einen Spielverlauf mit direkten Vergleichswerten. Für das Online-Spiel ist ein Konto erforderlich. Regeln und Veröffentlichungsstatus stehen in der [Dokumentation](docs/TYPING.md).
+
 ZenithW ist ein quelloffenes Medienwerkzeug zum Herunterladen von Videos und Audio sowie zum Extrahieren, Konvertieren und Remuxen. Ohne Werbung, Abonnement oder verpflichtendes Konto.
 
 Unterstützten Link einfügen, Format wählen und Datei herunterladen. Verfügbare Formate hängen von der Quelle ab.

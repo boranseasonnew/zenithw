@@ -35,6 +35,7 @@ function showAvatar(element,profile){element.replaceChildren();const url=avatarU
 function renderAuth(){
  $('auth-guest').hidden=!!member;$('auth-member').hidden=!member;$('account-label').textContent=member?member.display_name:(window.TypeI18n?.t('giriş')||'giriş');
  showAvatar($('avatar'),member);
+ window.TypeBadges.render($('account-badges'),member);window.TypeBadges.render($('member-badges'),member);
  $('remove-avatar').hidden=!member?.avatar_path;
  if(member){showAvatar($('profile-avatar'),member);$('member-name').textContent=member.display_name;$('member-username').textContent='#'+member.account_tag;$('member-display-name').value=member.display_name;}
  $('ranked-description').textContent=member?'Metin ve sonuç sunucuda doğrulanır.':'Giriş yap · 15 / 30 / 60 / 120 sn';

@@ -1,35 +1,38 @@
 (() => {
 'use strict';
 const $=id=>document.getElementById(id),api=window.TypeOnline,test=window.TypeTest;
-let active=null,pendingCode=null,pollTimer=null,queueTimer=null,polling=false,searching=false,startedCode=null,joining=false,view='test';
+let active=null,pendingCode=null,pollTimer=null,queueTimer=null,polling=false,searching=false,startedCode=null,joining=false,view='test',rematchDeadline=0,settledCode=null;
 const toast=message=>window.dispatchEvent(new CustomEvent('type:toast',{detail:message}));
 const opts=()=>({duration:Number($('duel-duration').value),language:$('duel-language').value,difficulty:$('duel-difficulty').value});
-const league=rating=>{
- const games=rating.wins+rating.losses+rating.draws;
- if(!games)return 'derecesiz';
- return rating.mmr>=1800?'usta':rating.mmr>=1600?'elmas':rating.mmr>=1400?'platin':rating.mmr>=1200?'altın':rating.mmr>=1000?'gümüş':'bronz';
-};
+for(const rank of window.TypeRanks.tiers){const item=document.createElement('span');item.className='league-tier';item.innerHTML=window.TypeRanks.markup(rank.key)+'<span>'+window.TypeI18n.t(rank.label)+'<small>'+rank.minimum.toLocaleString(window.TypeI18n.locale)+'</small></span>';$('league-track').append(item);}
+function showRating(rating){
+ const rank=window.TypeRanks.tier(rating);$('league-name').textContent=rank.label;
+ $('league-mmr').textContent=rating?rating.mmr.toLocaleString(window.TypeI18n?.locale||'tr-TR')+' Elo':'—';
+ $('league-chip').dataset.league=rank.key;$('league-badge').innerHTML=window.TypeRanks.markup(rating);
+}
 async function refreshRating(){
- if(!api.signedIn){$('league-name').textContent='derecesiz';$('league-mmr').textContent='—';return;}
- try{const data=await api.request('rating');$('league-name').textContent=league(data.rating);$('league-mmr').textContent=data.rating.mmr+' rp';$('league-chip').dataset.league=league(data.rating);}catch{}
+ if(!api.signedIn){showRating(null);return;}
+ try{const data=await api.request('rating');showRating(data.rating);}catch{}
 }
 function face(el,profile){
  el.replaceChildren();if(!profile){el.textContent='?';return;}
  const url=api.avatarURL(profile);if(url){const image=new Image();image.src=url;image.alt='';el.append(image);}else el.textContent=profile.display_name[0].toLocaleUpperCase('tr-TR');
 }
 function showRoom(room,clockOffset=0){
+ if(active?.code!==room.code)rematchDeadline=0;
  active={...room,clockOffset};pendingCode=room.code;
  $('room-assist-row').hidden=!room.canAssist;$('room-assist-toggle').checked=room.assisted===true;
- $('duel-home').hidden=true;$('duel-room').hidden=false;$('room-code-label').textContent=room.code;$('room-kind').textContent=room.rated?'dereceli düello':'özel oda';
+ $('duel-home').hidden=true;$('duel-room').hidden=false;$('room-code-label').textContent=room.code;$('room-kind').textContent=room.competitive?'dereceli düello':'özel oda';
  const link=new URL(location.href);link.hash='room='+room.code;
  const fileMode=location.protocol==='file:';$('room-invite').value=fileMode?room.code:link.href;$('copy-invite').textContent=fileMode?'kodu kopyala':'daveti kopyala';
  $('host-name').textContent=room.host?room.host.display_name+' #'+room.host.account_tag:'—';$('guest-name').textContent=room.guest?room.guest.display_name+' #'+room.guest.account_tag:(window.TypeI18n?.t('arkadaşın bekleniyor')||'arkadaşın bekleniyor');
- for(const side of ['host','guest']){const name=$(side+'-name');name.dataset.profile=room[side]?.account_tag||'';name.tabIndex=room[side]?0:-1;name.setAttribute('role','button');}face($('host-avatar'),room.host);face($('guest-avatar'),room.guest);
+ for(const side of ['host','guest']){const name=$(side+'-name');name.dataset.profile=room[side]?.account_tag||'';name.tabIndex=room[side]?0:-1;name.setAttribute('role','button');window.TypeBadges.render($(side+'-badges'),room[side]);}face($('host-avatar'),room.host);face($('guest-avatar'),room.guest);
  $('host-ready').textContent=room.hostReady?'hazır':'bekliyor';$('guest-ready').textContent=room.guest?(room.guestReady?'hazır':'bekliyor'):'—';
  $('host-player').classList.toggle('ready',room.hostReady);$('guest-player').classList.toggle('ready',room.guestReady);
  const mine=room.host?.user_id===api.profile?.user_id,isReady=mine?room.hostReady:room.guestReady;
  $('room-ready').textContent=isReady?'hazır değilim':'hazırım';$('room-ready').hidden=room.status!=='waiting';$('room-ready').disabled=!room.guest;
  $('room-again').hidden=!['finished','cancelled'].includes(room.status);
+ $('room-rematch').hidden=room.status!=='finished';$('room-rematch').textContent=room.rematchRequestedByMe?'tekrar maç isteğini iptal et':room.rematchRequestedByOpponent?'rakip tekrar oynamak istiyor · kabul et':'tekrar oyna';
  $('room-status').textContent=room.status==='waiting'?(room.guest?'İki oyuncu hazır olunca başlar.':'Oda kodunu veya davetini paylaş.'):room.status==='racing'?'Düello devam ediyor.':room.status==='cancelled'?'Düello tamamlanamadı.':'Düello tamamlandı.';
  $('host-score').hidden=room.status!=='finished';$('guest-score').hidden=room.status!=='finished';
  if(room.status==='finished'){
@@ -38,6 +41,7 @@ function showRoom(room,clockOffset=0){
   $('duel-outcome').hidden=false;$('duel-outcome').textContent=(draw?'Berabere.':won?'Bu tur senin. Kazandın.':'Bu tur rakibinin. Bir sonraki turda görüşürüz.')+(room.rated?' '+(delta>=0?'+':'')+delta+' RP':' · maç puanı '+room.hostPoints+'–'+room.guestPoints);
  }else $('duel-outcome').hidden=true;
  updateLive(room);
+ window.dispatchEvent(new CustomEvent('type:room',{detail:room}));
 }
 function updateLive(room){
  const mine=room.host?.user_id===api.profile?.user_id;
@@ -49,11 +53,12 @@ async function pollRoom(){
  try{
   const before=Date.now(),room=await api.request('room-state',{code:active.code});const clockOffset=room.serverNow+(Date.now()-before)/2-Date.now();
   showRoom(room,clockOffset);
+  if(room.status==='finished'&&room.rematchCode){clearInterval(pollTimer);pollTimer=null;await enterRoom(room.rematchCode);return;}
   if(room.status==='racing'&&startedCode!==room.code){startedCode=room.code;await test.loadDuel({...room,clockOffset});}
   if(['finished','cancelled'].includes(room.status)){
-   clearInterval(pollTimer);pollTimer=null;
-   if(startedCode===room.code){document.querySelectorAll('dialog[open]').forEach(d=>d.close());test.showView('duel');history.replaceState(null,'','#room='+room.code);}
-   void refreshRating();
+   if(room.status==='cancelled'){clearInterval(pollTimer);pollTimer=null;}
+   else {rematchDeadline ||= Date.now()+600000;if(Date.now()>rematchDeadline){clearInterval(pollTimer);pollTimer=null;}}
+   if(settledCode!==room.code){settledCode=room.code;if(startedCode===room.code){document.querySelectorAll('dialog[open]').forEach(d=>d.close());test.showView('duel');history.replaceState(null,'','#room='+room.code);}void refreshRating();}
   }
  }catch(error){$('duel-error').textContent=error.message;if(error.status===401){clearInterval(pollTimer);pollTimer=null;}}
  finally{polling=false;}
@@ -77,7 +82,7 @@ async function findMatch(){
  if(searching)return;searching=true;$('duel-error').textContent='';$('find-match').disabled=true;$('find-match').textContent='rakip aranıyor…';$('cancel-match').hidden=false;$('queue-status').textContent='Bir oyuncu daha arıyor olmalı.';
  const search=async()=>{
   if(!searching)return;
-  try{const data=await api.request('matchmake',opts());if(data.roomCode){stopSearch();await enterRoom(data.roomCode);}}
+  try{const data=await api.request('matchmake',opts());if(data.roomCode){stopSearch();await enterRoom(data.roomCode);}else if(data.ratingWindow)$('queue-status').textContent=window.TypeI18n?.t('Yakın puanlı rakip aranıyor. Aralık: ±')+data.ratingWindow+' Elo';}
   catch(error){$('duel-error').textContent=error.message;stopSearch();}
  };
  await search();if(searching)queueTimer=setInterval(()=>void search(),2200);
@@ -99,6 +104,13 @@ $('room-ready').addEventListener('click',async()=>{
  if(!active)return;$('room-ready').disabled=true;
  const mine=active.host.user_id===api.profile?.user_id,ready=!(mine?active.hostReady:active.guestReady);
  try{const before=Date.now(),room=await api.request('room-ready',{code:active.code,ready});showRoom(room,room.serverNow+(Date.now()-before)/2-Date.now());await pollRoom();}catch(error){$('duel-error').textContent=error.message;}finally{$('room-ready').disabled=!active?.guest;}
+});
+$('room-rematch').addEventListener('click',async()=>{
+ if(!active||active.status!=='finished')return;
+ const button=$('room-rematch');button.disabled=true;
+ try{const room=await api.request('room-rematch',{code:active.code,requested:!active.rematchRequestedByMe});showRoom(room,active.clockOffset);if(room.rematchCode)await enterRoom(room.rematchCode);else startPolling();}
+ catch(error){$('duel-error').textContent=error.message;}
+ finally{button.disabled=false;}
 });
 $('leave-room').addEventListener('click',async()=>{
  if(!active)return;

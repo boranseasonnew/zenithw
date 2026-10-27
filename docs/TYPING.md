@@ -13,7 +13,7 @@
 - Dünya sıralamasında her oyuncunun seçilen süre/dil/zorluktaki en iyi doğrulanmış sonucu; ilk üç için rozet. Antrenman ve eski yerel sonuçlar dünya sıralamasına gönderilmez.
 - Giriş yapan hesaplarda gönderme varsayılan açıktır. Kullanıcının kapatma tercihi korunur. Desteklenmeyen özel süreler yerel kalır.
 - Sıralamada isim ve hesap kodu birlikte gösterilir. İsim/kod üzerinden oyuncu araması, `#profile=ACCOUNT_TAG` bağlantısıyla herkese açık profil, en iyi/ortalama WPM ve doğruluk, 20 sonuçluk sayfalarla doğrulanmış test geçmişi bulunur. Özel oda sonuçları profil istatistiklerine dahil edilmez.
-- Özel oda oluşturma, kod/davet bağlantısı, iki oyuncu hazır olunca ortak 5 saniye geri sayımı, canlı rakip hızı. Özel odalarda WPM, doğruluk, kazanan ve maç puanı gösterilir; genel Elo etkilenmez. Dereceli eşleştirme Elo K=24 kullanır. Ligler: Bronz <1000, Gümüş 1000, Altın 1200, Platin 1400, Elmas 1600, Usta 1800. İlk tamamlanan dereceli maçtan önce derecesiz görünür.
+- Özel oda oluşturma, kod/davet bağlantısı, iki oyuncu hazır olunca ortak 5 saniye geri sayımı, canlı rakip hızı. Özel odalarda WPM, doğruluk, kazanan ve maç puanı gösterilir; genel Elo etkilenmez. Dereceli eşleştirme Elo K=24 kullanır. Elo tavanı 50.000; ligler Bronz <5.000, Gümüş 5.000, Altın 10.000, Ametist 20.000 ve Zirve 50.000. Rozet renkleri sırasıyla bronz, gümüş, sarı, gri-mor ve turuncu-mordur. İlk tamamlanan dereceli maçtan önce derecesiz görünür.
 
 ## Arayüz ve metin dili
 
@@ -54,7 +54,7 @@ Yerel dosyadan da online özellikler çalışır; davette dosya yolu paylaşılm
 
 Tüm depo için `pnpm install --frozen-lockfile` ardından `pnpm run build` çalıştırılır. Build; yerel medya, dil sayfaları, CSP ve cache çıktılarını üretir. Testler build tamamlandıktan sonra çalıştırılır. Eski `scripts/publish-typing.ps1` yalnızca typing kapsamındadır; tüm bekleyen depo değişikliklerini göndermek için kullanılmaz.
 
-Bu v16.1 tesliminde kullanıcının açık isteğiyle commit'in ana yazarı Codex'tir; kullanıcı author veya co-author olarak eklenmez. Mevcut dala normal push yapılır; eski commitler yeniden yazılmaz. GitHub kaynak commit'inin başarılı olması Cloudflare yayınının başarılı olduğunu tek başına doğrulamaz. 27 Ekim 2026 kontrolünde canlı Edge Function v6'nın dört dosyası yerel kaynaklarla eşleşmiştir; yeniden deploy gerekmez.
+Bu v16.1 tesliminde kullanıcının açık isteğiyle commit'in ana yazarı Codex'tir; kullanıcı author veya co-author olarak eklenmez. Mevcut dala normal push yapılır; eski commitler yeniden yazılmaz. GitHub kaynak commit'inin başarılı olması Cloudflare yayınının başarılı olduğunu tek başına doğrulamaz. 27 Ekim 2026 kontrolünde canlı Edge Function v6'nın dört dosyası yerel kaynaklarla eşleşmiştir; bu son kontrol, rekabetçi iyileştirmelerden öncesine aittir. Yeni migration ve güncellenen API henüz canlıya uygulanmamıştır.
 
 ## Doğrulama
 
@@ -66,3 +66,19 @@ pnpm run check:release-content
 ```
 
 Önceki çalışma kaydında iki geçici hesapla kayıt/giriş/kurtarma/şifre/avatar, iki oyunculu Elo ve tekrar gönderim kontrollerinin geçtiği belirtilmiştir. Bunlar son kontrolde yeniden yapılmış gibi raporlanmaz. Son oturumda canlı profil ve arama salt okunur olarak, sıralamalı test ve admin yardım arayüzü ise bütün Supabase isteklerini yakalayan yerel test verileriyle doğrulandı. Yeni canlı QA hesabı açılması otomatik güvenlik incelemesince reddedildi; hesap açılmadı. Son kapsam ve sınırlamalar için `docs/SECURITY-REVIEW-2026-10-27.md` dosyasına bak.
+
+## Rekabetçi eşleştirme, rematch ve geçmiş
+
+Eşleştirme aynı süre/dil/zorlukta en yakın Elo farkını tercih eder. Aralık her oyuncu için ilk anda ±100, her 15 saniyede +100 ve en fazla ±1.000 olur. İki tarafın aralığı da karşılaşmayı kabul etmelidir. On saniyeden eski heartbeat, iptal edilen arama veya değişen ayarlar bekleme süresini sıfırlar. Mevcut hesap puanları yeniden ölçeklenmez; başlangıç 1.000 ve Elo K=24 korunur. Dolayısıyla 50.000 rozetine ulaşmak uzun vadeli bir hedeftir.
+
+Biten maçta iki oyuncu da tekrar oynamayı kabul ederse aynı ayarlarla yeni oda açılır. İki oyuncu yeniden hazır olur; özel odadaki yardım otomatik taşınmaz. Dereceli rematch Elo'yu etkiler, ancak aynı ikilinin son 24 saatte ilk üç puanlı maç sınırı korunur. Tavan/taban sınırında arayüze hesaplanan teorik puan yerine gerçekten eklenen/çıkarılan puan gönderilir.
+
+Maç geçmişim yalnızca giriş yapan oyuncunun tamamlanmış maçlarını listeler. Oda içinde karşılıklı galibiyet/mağlubiyet/beraberlik özeti ve sayfalı karşılaşma geçmişi bulunur. Geçmiş yanıtlarında yardım durumu veya ham vuruş kayıtları yoktur.
+
+## Hesap rozetleri ve yayın sırası
+
+`is_verified` ve `is_developer` sunucunun yönettiği profil alanlarıdır; anonim veya oturum açmış tarayıcı rolü bunları değiştiremez. Yeni migration, iki rozeti yalnızca değiştirilemeyen eski `boranseason` girişine bağlı hesaba verir. Admin yetkisiyle aynı şey değildir; admin rolü değişmez. İsim/kod benzerliği rozet sağlamaz. Mavi doğrulama ve Zenith logolu geliştirici rozeti hesap, herkese açık profil, sıralama, arama ve oda ekranlarında kullanılır. Geliştirici açıklaması hover, klavye odağı ve mobil dokunmayla açılır.
+
+Mevcut şemalardan sonra `supabase/migrations/20261027172907_typing_ranked_matchmaking_and_badges.sql` uygulanır, ardından güncel `typing-api` deploy edilir ve frontend yayımlanır. API veya migration uygulanmadan yalnızca yeni frontend'i yayımlamak eksik uçlar oluşturur. Canlı preflight otomatik güvenlik incelemesince reddedildiği için bu adımlar ayrıca açık kullanıcı izni bekler.
+
+`supabase/tests/typing-ranked.sql` geçici tablo kopyaları ve rollback kullanarak eşleştirme, 50.000 sınırı, rematch, tekrar puanı sınırı, geçmiş gizliliği ve sayfalamayı doğrular. Ayrı yerel PostgreSQL/PGlite ortamında üç temel şema ve yeni migration sonrası çalıştırılabilir. Üretim ön kontrolünün yerine yerel doğrulama yapılmıştır.

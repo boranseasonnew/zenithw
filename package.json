@@ -16,7 +16,7 @@
     "check:cache": "node scripts/build-cache-assets.mjs --check",
     "test:cache": "node --test tests/cloudflare-cache.test.mjs",
     "test:seo": "node --test tests/downloads-seo.test.mjs",
-    "test:typing": "node --test tests/typing-verification.test.mjs tests/typing-routing.test.mjs tests/typing-profiles.test.mjs"
+    "test:typing": "node --test tests/typing-verification.test.mjs tests/typing-routing.test.mjs tests/typing-profiles.test.mjs tests/typing-ranked.test.mjs"
   },
   "dependencies": {
     "mediabunny": "1.56.1",

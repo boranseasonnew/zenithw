@@ -39,7 +39,7 @@ async function requireUser(req:Request){
  if(!account)fail(403,'Bu uygulama için kayıt oluşturmalısın.');
  return {user:data.user!,account,token:token!};
 }
-const publicFields='user_id,username,display_name,account_tag,avatar_path,avatar_version,created_at';
+const publicFields='user_id,username,display_name,account_tag,avatar_path,avatar_version,created_at,is_verified,is_developer';
 async function profile(id:string){const data=check(await admin.from('typing_profiles').select(publicFields).eq('user_id',id).single());return {...data,is_admin:check(await admin.rpc('typing_is_admin',{p_user:id}))};}
 async function loginAccount(value:unknown){
  const name=String(value||'').trim().replace(/^#/,'');
@@ -126,7 +126,8 @@ async function handler(req:Request){
   if(action==='leaderboard'){
    const opts=options(body);await rate(req,'leaderboard',120);
    const entries=check(await admin.rpc('typing_leaderboard',{p_duration:opts.duration,p_language:opts.language,p_difficulty:opts.difficulty}));
-   return json({entries});
+   const badges=entries.length?check(await admin.from('typing_profiles').select('user_id,is_verified,is_developer').in('user_id',entries.map(entry=>entry.user_id))):[];
+   return json({entries:entries.map(entry=>({...entry,...badges.find(profile=>profile.user_id===entry.user_id)}))});
   }
   if(action==='profile-public'){
    await rate(req,'profile-public',90);

@@ -19,6 +19,8 @@
 
 Web v16.1 · ZenithW Desktop v4.2.0
 
+[Zenith Type](https://zenithw.space/typing) propose des exercices de frappe et des duels. Le mode classé comprend une limite de 50 000 Elo, des revanches acceptées par les deux joueurs et un historique avec le bilan de leurs rencontres. Un compte est nécessaire pour jouer en ligne. Consultez les règles et le statut de publication dans la [documentation](docs/TYPING.md).
+
 ZenithW est un outil multimédia open source pour télécharger des vidéos et des fichiers audio, extraire le son, convertir et remuxer. Sans publicité, abonnement ni compte obligatoire.
 
 Collez un lien pris en charge, choisissez un format et téléchargez le fichier. Les formats disponibles dépendent de la source.
