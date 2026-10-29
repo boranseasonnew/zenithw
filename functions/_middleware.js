@@ -118,7 +118,7 @@ async function pageResponse(context) {
     headers.has("Set-Cookie");
 
   if (isHtml) {
-    const typing = /^\/typing(?:\.html)?\/?$/.test(new URL(context.request.url).pathname);
+    const typing = /^\/(?:en\/)?typing(?:\.html)?\/?$/.test(new URL(context.request.url).pathname);
     headers.set("Content-Security-Policy", htmlSecurityPolicy(typing ? TYPING_CSP : PAGES_CSP));
   }
   headers.set("Cache-Control", isPrivate || response.status >= 400 || !isHtml

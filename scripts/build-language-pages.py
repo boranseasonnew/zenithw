@@ -179,6 +179,7 @@ def navigation(source,lang):
         if path in ['/app','/pc-app']:
             fragment='android' if path=='/app' else 'windows';path='/downloads'
         else:fragment=parsed.fragment
+        if path=='/typing':return attr+'="'+('/typing' if lang=='tr' else '/en/typing')+'"'
         if path not in routes:return match[0]
         result=language_path(path,lang)+('?' +parsed.query if parsed.query else '')+('#'+fragment if fragment else '')
         return attr+'="'+html.escape(result,quote=True)+'"'

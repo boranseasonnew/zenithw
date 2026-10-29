@@ -212,6 +212,9 @@
 /typing-focus.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/typing-seo.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /typing.js
   Cache-Control: public, max-age=3600, must-revalidate
 

@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-updates.mjs && node scripts/build-downloads.mjs && node scripts/build-lilith-integration.mjs && node scripts/build-lilith-page.mjs && node scripts/build-seo.mjs && node scripts/build-local-media.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && node scripts/build-cache-assets.mjs",
-    "build:seo": "node scripts/build-downloads.mjs && node scripts/build-seo.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && node scripts/build-cache-assets.mjs",
+    "build": "node scripts/build-updates.mjs && node scripts/build-downloads.mjs && node scripts/build-lilith-integration.mjs && node scripts/build-lilith-page.mjs && node scripts/build-seo.mjs && node scripts/build-local-media.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && python scripts/build-typing-seo.py && node scripts/build-cache-assets.mjs",
+    "build:seo": "node scripts/build-downloads.mjs && node scripts/build-seo.mjs && node scripts/build-community.mjs && python scripts/build-locales.py && python scripts/build-language-pages.py && python scripts/build-typing-seo.py && node scripts/build-cache-assets.mjs",
     "lint": "node --check frontend/updates-core.99daf4ea6088.js && node --check frontend/info-page.412ae0f21fba.js && node --check scripts/build-updates.mjs && node --check frontend/audio-tools.js && node --check scripts/build-lilith-page.mjs",
     "test:updates": "node --test tests/updates-static.test.mjs",
     "test:about": "node --test tests/about-locales.test.mjs",
@@ -15,7 +15,7 @@
     "build:cache": "node scripts/build-cache-assets.mjs",
     "check:cache": "node scripts/build-cache-assets.mjs --check",
     "test:cache": "node --test tests/cloudflare-cache.test.mjs",
-    "test:seo": "node --test tests/downloads-seo.test.mjs",
+    "test:seo": "node --test tests/downloads-seo.test.mjs tests/typing-seo.test.mjs",
     "test:typing": "node --test tests/typing-verification.test.mjs tests/typing-routing.test.mjs tests/typing-profiles.test.mjs tests/typing-ranked.test.mjs tests/typing-seasons.test.mjs tests/typing-private-rooms.test.mjs"
   },
   "dependencies": {

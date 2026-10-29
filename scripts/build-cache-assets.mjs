@@ -17,7 +17,7 @@ execFileSync(process.platform === 'win32' ? 'python' : 'python3',
 const sources = [
   'typing-i18n.js', 'typing-badges.js', 'typing-config.js', 'typing-online.js',
   'typing-companions.js', 'typing.js', 'typing-duels.js', 'typing-profiles.js',
-  'typing-history.js', 'typing-seasons.js', 'typing-focus.css',
+  'typing-history.js', 'typing-seasons.js', 'typing-focus.css', 'typing-seo.css',
   'download-safety.js', 'audio-tools.js', 'audio-tools.css', 'audio-tools-link.css',
   'local-media.js', 'workspace-choices.js', 'premium-workspaces.css', 'downloads.js', 'android-tutorial.js', 'downloads.css', 'site-community.css', ...['microsoft-store','f-droid','uptodown','telegram'].map(brand=>'brands/'+brand+'.svg'), ...['f-droid-icon.svg','uptodown-icon.svg','windows.svg','android.svg','github.svg','microsoft-store-icon.svg','winget.png','credits.json'].map(file=>'brands/'+file),
   'site-language.js', 'site-language.css', 'site-shell.css',

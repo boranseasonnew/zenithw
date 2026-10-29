@@ -58,7 +58,7 @@ class Markup(HTMLParser):
 count=0
 for path in frontend.rglob('*.html'):
     # Zenith Type owns its browser-language UI and typing performance budget.
-    if path == frontend / 'typing.html':
+    if path.name == 'typing.html':
         continue
     source=path.read_text(encoding='utf-8')
     parser=Markup(source);parser.feed(source);output=parser.result()

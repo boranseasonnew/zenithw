@@ -1,0 +1,9 @@
+.typing-intro{padding:24px 0 8px;text-align:center}
+.typing-intro h1{margin:0 0 8px;font-size:clamp(20px,3vw,26px);letter-spacing:-.5px}
+.typing-intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+.typing-help{max-width:720px;margin:24px auto;color:var(--muted);font-size:12px;line-height:1.8}
+.typing-help summary{cursor:pointer;color:var(--fg);padding:10px 0}
+.typing-help h2{font-size:14px;color:var(--fg)}
+.typing-help nav{display:flex;flex-wrap:wrap;gap:10px}
+.typing-help a{text-decoration:underline;text-underline-offset:3px}
+body.running .typing-intro,body.running .typing-help{visibility:hidden}

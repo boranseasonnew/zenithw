@@ -4,6 +4,8 @@
 /terms           /about/terms      301
 /credit          /about/credit     301
 /community       /about/community  301
+/type            /typing           301
+/en/type         /en/typing        301
 
 # Downloads aliases also handled in functions/_middleware.js on Function-served routes.
 /app /downloads#android 301

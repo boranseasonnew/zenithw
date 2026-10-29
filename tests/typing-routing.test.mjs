@@ -5,13 +5,13 @@ import { PAGES_CSP } from '../shared/pages-security.mjs';
 import { TYPING_CSP } from '../shared/typing-security.mjs';
 function context(path){return {request:new Request('https://zenithw.space'+path),env:{MAINTENANCE_MODE:'off'},next:async()=>new Response('<html></html>',{headers:{'Content-Type':'text/html'}})};}
 test('only typing routes receive the isolated Supabase policy',async()=>{
- for(const route of ['/typing','/typing.html','/typing/']){
+ for(const route of ['/typing','/typing.html','/typing/','/en/typing','/en/typing.html','/en/typing/']){
   const policy=(await onRequest(context(route))).headers.get('Content-Security-Policy');
   assert.match(policy,/script-src 'nonce-[^']+'/);
   assert.equal(policy.replace(/ 'nonce-[^']+'/g,''),TYPING_CSP);
  }
  assert.match(TYPING_CSP,/connect-src 'self' https:\/\/woxxdgekdgapcsruicci\.supabase\.co/);
- for(const route of ['/','/downloads','/typing-other']){
+ for(const route of ['/','/downloads','/typing-other','/en/typing-other','/fr/typing']){
   const policy=(await onRequest(context(route))).headers.get('Content-Security-Policy');
   assert.match(policy,/script-src 'nonce-[^']+'/);
   assert.equal(policy.replace(/ 'nonce-[^']+'/g,''),PAGES_CSP);

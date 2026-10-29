@@ -1,0 +1,29 @@
+{
+  "updated": "2026-10-29",
+  "tr": {
+    "path": "/typing",
+    "title": "Ücretsiz Yazma Hızı Testi: WPM ve Doğruluk | Zenith Type",
+    "description": "Türkçe ve İngilizce yazma hızı testi yap. WPM ve doğruluğunu ölç, zayıf tuşlarını çalış, kendi metninle antrenman yap veya çevrimiçi düelloya katıl.",
+    "heading": "Yazma hızı testi",
+    "lead": "Türkçe veya İngilizce yaz. Hızını ve doğruluğunu ölç, kendi ritminde geliş.",
+    "help": "Test nasıl çalışır?",
+    "steps": "Ayarlar'dan dili ve süreyi seç. İlk tuşla test başlar; 15, 30, 60 veya 120 saniye sonunda WPM ve doğruluk oranını görürsün. Özel süre de belirleyebilirsin.",
+    "measurement": "WPM nedir?",
+    "formula": "Dakikadaki kelime sayısı (WPM), doğru karakter sayısının beşe ve dakika cinsinden geçen süreye bölünmesiyle hesaplanır. Doğruluk oranı, sonradan düzelttiğin hatalar dahil tüm tuş vuruşlarını dikkate alır.",
+    "practice": "Zayıf tuşlar, kelimeler veya kendi metninle antrenman yapabilirsin. Yerel test için hesap gerekmez; sayfa yüklendikten sonra yerel testler çevrimdışı da çalışır. Dünya sıralaması ve çevrimiçi düellolar hesap ve internet bağlantısı gerektirir.",
+    "home": "ZenithW ana sayfa"
+  },
+  "en": {
+    "path": "/en/typing",
+    "title": "Free Typing Speed Test: WPM & Accuracy | Zenith Type",
+    "description": "Take a free English or Turkish typing speed test. Measure WPM and accuracy, practise weak keys, train with your own text or join an online typing duel.",
+    "heading": "Typing speed test",
+    "lead": "Type in English or Turkish. Measure your speed and accuracy, and improve at your own pace.",
+    "help": "How does the test work?",
+    "steps": "Choose a language and duration in Settings. Your first keystroke starts the test; see your WPM and accuracy after 15, 30, 60 or 120 seconds. You can also set a custom duration.",
+    "measurement": "What is WPM?",
+    "formula": "Words per minute (WPM) is the number of correct characters divided by five and by elapsed time in minutes. Accuracy accounts for every keystroke, including mistakes you correct later.",
+    "practice": "Practise weak keys, words or your own text. No account is needed for a local test; once the page has loaded, local tests work offline too. World rankings and online duels require an account and an internet connection.",
+    "home": "ZenithW home"
+  }
+}
