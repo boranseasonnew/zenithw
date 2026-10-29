@@ -140,8 +140,8 @@
     "sha256": "94bdaf37ab313fb299a4b9ea9f860f8c883c61665c50d1c82ec3b5fe47da6bea"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.13c37153cf0d.json",
-    "sha256": "13c37153cf0de01bdc72597e38a94f30cb6cf50d76b5db82c4e72f5c79d3bb1f"
+    "url": "/cache-assets/en.cd4d09de2057.json",
+    "sha256": "cd4d09de2057d0a7e19fd3a58a05a1e5cf976708e2cfd0f466228433277b0f37"
   },
   "locales/fr.json": {
     "url": "/cache-assets/fr.3d8cfbd18b05.json",
@@ -168,8 +168,8 @@
     "sha256": "5d185ba53b11d33e287f7233db948cd22064f4e9cf5acc60e77a858a1a0e153a"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.1853c5c49016.js",
-    "sha256": "1853c5c490167d6dd7bdc24cbfbf15405c862ac5d027fdbb96433b43993d6f40"
+    "url": "/cache-assets/site-language.05a60535949a.js",
+    "sha256": "05a60535949a3308eb004bab5b2e945f7210330dffaf80ba980d6e9ed9f8486b"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.750ddfc30c31.css",
