@@ -10,20 +10,32 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/WEB-v16.1-222222?style=for-the-badge" alt="Web v16.1">
-  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge&amp;logo=windows11" alt="Windows v4.2.0">
-  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0 license">
+  <img src="https://img.shields.io/badge/WEB-v17.0-222222?style=for-the-badge" alt="Web v17.0">
+  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge" alt="Windows v4.2.0">
+  <img src="https://img.shields.io/badge/ANDROID-v2.4.1-222222?style=for-the-badge" alt="Android v2.4.1">
+  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0-only">
 </p>
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Web v16.1 · ZenithW Desktop v4.2.0
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v2.4.1
 
 [Zenith Type](https://zenithw.space/typing), yazma pratiği ve düellolar sunar. Dereceli oyunda 50.000 Elo sınırı, karşılıklı onayla tekrar maç ve ikili galibiyet kayıtlarını içeren maç geçmişi bulunur. Çevrimiçi oyun için hesap gerekir. Kurallar ve yayın durumu için [Zenith Type belgesine](docs/TYPING.md) bak. WPM sıralaması ve dereceli düello Elo’su 30 günde bir yenilenir; sezonun kalan süresi canlı sayaçta gösterilir. Özel oda sahibi maç öncesinde ayarları değiştirebilir; sana özel doğru tuş yardımı oyun sırasında açılıp kapatılabilir. Özel odalarda yalnızca profilde görünen, sezonla sıfırlanmayan ayrı bir Elo vardır; sıralamayı etkilemez.
 
 ZenithW; video ve ses indirme, ses ayıklama, dönüştürme ve remux için açık kaynaklı bir medya aracıdır. Reklam, abonelik veya zorunlu hesap yok.
 
 Desteklenen bağlantıyı yapıştır, formatı seç ve dosyayı indir. Kullanılabilir formatlar kaynağa bağlıdır.
+
+## Web 17.0 ile neler değişti?
+
+- Daha akıcı [ses ayırıcı](https://zenithw.space/audio-separator): parçalara bölünmüş dalga biçimi hazırlığı, ihtiyaç anında oynatma belleği ve iptal edilebilir WAV/ZIP dışa aktarma. MP3 ve FLAC korunur.
+- [Remux](https://zenithw.space/remux) başlamadan hedef biçimi seçtirir; uyumlu akışlarda MKV ↔ MP4 desteklenir. Uyumsuz codec için dönüştürme gerekir.
+- Sitenin sekiz dilinde daha açıklayıcı medya rehberi ve arama bilgileri; düzeltilmiş gezinme bağlantıları.
+- Bağımlılık güvenlik güncellemeleri, süre sınırı netleştirilen kapak istekleri ve eşzamanlı Type avatar değişikliklerine karşı koruma. Sunucu ve kurulu uygulama değişiklikleri ayrıca dağıtılmalıdır.
+
+Ses ayırıcı cihazında çalışır: en fazla 96 MiB dosya ve dört dakikalık bölüm; ilk kullanımda model/işlem altyapısı indirilir. Hız cihazına bağlıdır. Web 17.0, Windows ve Android sürüm numaralarını ayrı tutar.
+
+[Sürüm notları](https://zenithw.space/updates) · [Güvenlik ve doğrulama raporu — İngilizce](docs/full-code-audit-2026-11-02.md)
 
 ## Proje
 

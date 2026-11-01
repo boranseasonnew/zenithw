@@ -1,66 +1,55 @@
-# Zenith Desktop 4.1.0
+# ZenithW Desktop 4.2.0
 
-ZenithW'nin kurulu 0.3.4 sürümündeki kendi Electron kaynakları kurtarılarak oluşturulan Windows uygulaması. Stacher'ın düzeni ve erişilebilir seçenekleri incelendi; Stacher kodu, ikonları veya görselleri kullanılmadı.
+[![Windows](https://img.shields.io/badge/Windows-10%2F11_x64-222222)](https://zenithw.space/downloads#windows) [![License](https://img.shields.io/badge/License-AGPL--3.0-555555)](LICENSE)
 
-## Arayüz ve ayarlar
+ZenithW’nin Windows için yerel medya uygulaması. Video ve ses indirme, playlist seçimi, format/kalite tercihleri ve kalıcı geçmiş tek çalışma alanında toplanır. İndirmeler bilgisayarının bağlantısını kullanır; kaynak sitelerin erişim, oturum ve codec kısıtlamaları geçerlidir.
 
-- Üstte geniş bağlantı alanı; altında indirmeler ve kalıcı geçmiş, liste/kart görünümü.
-- Mat koyu görünüm, kısa geçişler, hareketi azaltma ve açıklamaları gizleme seçenekleri.
-- Sol kategori menüsü, sağda kaydırılabilir seçenekler ve ayar araması.
-- Video/ses, kalite, kapsayıcı, codec tercihi ve sürüklenen zaman aralığı ile kırpma.
-- Hazır seçimli ayarlar; TR, EN, RU ve DE arayüz metinleri.
-- MP4, MKV, WebM, MOV, AVI, FLV; MP3, M4A, Opus, FLAC, WAV, AAC, OGG ve ALAC.
-- Siyah zeminde kısa ceylan açılışı ve uygulama içindeki ilk kullanım ekranı.
-- EXE, kurulum ve görev çubuğu için aynı Z! marka simgesi.
-- Bağlantı, hız sınırı, fragment sayısı, tekrar denemeler, aria2 ve IPv4/IPv6.
-- Metaveri, kapak, bölümler, manuel/otomatik altyazılar ve son işleme.
-- SponsorBlock işaretleme/kaldırma; liste sırası, seçim aralığı ve indirme arşivi.
-- Kaynak analizi, istekler arasında bekleme, yt-dlp kanalı ve açılışta güncelleme.
-- Netscape cookie dosyası, desteklenen tarayıcı oturumu veya uygulama içi giriş.
-- En fazla 12 yerel profil; hassas alanlar hariç ayar içe/dışa aktarımı.
-- Playlist seçim aralığı, ters/karışık sıra, ayrı klasör ve sıra numaraları.
-- URL çubuğundan açılan format, kırpma, altyazı, oturum ve playlist panelleri.
-- Scripts: açıkça seçilen yerel PowerShell dosyasını indirmeden önce veya dosyalar kaydedildikten sonra çalıştırma; süre sınırı ve hata davranışı.
-- Üç adımlı ilk açılış ekranı ve gerçek araç durumu.
+[İndir](https://zenithw.space/downloads#windows) · [4.2.0 yayını](https://github.com/boranseasonnew/zenithw/releases/tag/v4.2.0) · [Ana proje](../README.tr.md) · [Hata bildir](https://github.com/boranseasonnew/zenithw/issues)
 
-Bu seçenekler yalnızca görsel kontrol değildir; doğrulanan değerler indirme motoruna aktarılır. Her site veya format her seçeneği desteklemeyebilir. WAV/WebM için gömülemeyen kapak ayrı dosya olarak korunur. aria2 yalnızca HTTP/FTP indirmelerine atanır; DASH/HLS yerel indirici kullanır.
+## Özellikler
 
-Scripts varsayılan olarak kapalıdır. Yalnızca dosya seçiciden seçilen `.ps1` dosyaları kullanılır; PowerShell güvenlik politikası değiştirilmez. Script kendi kullanıcı yetkileriyle çalışır. Bağlantı ve dosya isimleri komut metnine eklenmez; `ZENITHW_EVENT`, `ZENITHW_URL`, `ZENITHW_OUTPUT_DIR`, `ZENITHW_FILES_JSON` ortam değişkenleri ile aktarılır. Dosyalar ayar aktarımına dahil edilmez. Ön script başarısızlığında durdurma seçeneği indirmeyi başlatmaz; son script başarısızlığı indirilmiş dosyayı koruyarak uyarı verir. Hook tüm indirme işi için bir kere çalışır; playlist'in her videosu için ayrı tetiklenmez.
+- Video/ses, çözünürlük, kapsayıcı ve codec tercihleri; MP4, MKV, WebM ve desteklenen ses biçimleri.
+- Playlist seçim aralığı, sıralama ve klasör seçenekleri; eşzamanlı indirme kuyruğu.
+- Kırpma, altyazı, metadata, kapak ve SponsorBlock seçenekleri; kaynağın desteklediği ölçüde.
+- Cookie dosyası, desteklenen tarayıcı oturumu, proxy ve yt-dlp motor kanalı ayarları.
+- Kategorili ve aranabilir ayarlar, açık/koyu/sistem teması, vurgu renkleri, bildirimler ve sistem tepsisi.
+- Yerel profiller ve hassas alanları dışarıda bırakan ayar aktarımı; Türkçe, İngilizce, Almanca ve Rusça arayüz.
+- Yeniden açılışta korunan, en fazla 300 kayıtlık geçmiş. Tamamlanmamış işler kesilmiş gösterilir; otomatik devam garanti değildir.
 
-## Sürüm ve uygulama verileri
+Remux uyumlu akışları yeniden kodlamadan taşır; dönüştürme ayrı bir işlemdir. Her site bütün seçenekleri desteklemez. Gömülemeyen kapaklar uygun durumda ayrı dosya olarak saklanır.
 
-Bu sürüm `space.zenithw.desktop.stable` kimliği ve `%APPDATA%/Zenith Stable` veri klasörü kullanır. Önceki kurulumun ve önizlemenin verilerini ayrı tutar. Tamamlanmamış indirmeler yeniden açılışta kesilmiş olarak gösterilir; otomatik devam garantisi yoktur.
+## Web 17.0 ile kaynak güncellemeleri
 
-Windows paketi oluşturuldu ve uygulamanın açılışı incelendi. Gerçek indirme, farklı cihazlar, oturum ve bütün format kombinasyonları bu çalışma sırasında denenmedi. GitHub yayını ayrıca yapılmalıdır; kod imza sertifikası sağlanmadı.
+Web 17.0, Windows uygulamasının sürüm numarası değildir; yayımlanmış Windows paketi **4.2.0** olarak kalır. Depodaki Electron **44.10.1**, electron-builder **26.18.0** ve geçişli bağımlılık düzeltmeleri sonraki Windows paketinin derlenmesini gerektirir. Mevcut kurulumlar yalnızca web sitesi güncellenerek bu değişiklikleri almaz.
 
-Doğrudan açılan Zenith-4.0.0-Windows.exe klasik kurulum sihirbazı göstermez. İlk açılışta paketini geçici klasöre çıkarır; ardından ceylan animasyonu ve uygulama içindeki başlangıç tercihleri gelir. Tercihler %APPDATA%/Zenith Stable içinde saklanır. İsteğe bağlı Windows-Setup.exe normal Windows kısayollarını kurar.
+Masaüstü kuyruk, geçmiş, dosya yayınlama ve güvenlik sınırı testleri birlikte **24/24** geçti. Bunlar izole araç süreçleriyle yapılan testlerdir; yeni Windows paketinin gerçek cihazda doğrulandığı anlamına gelmez. Kalan uyarılar ve kapsam [inceleme raporunda](../docs/full-code-audit-2026-11-02.md).
 
-## Windows'ta derleme
+## Geliştirme ve paketleme
 
-Node.js ve npm gerekir. Paket sürümleri `package-lock.json` içinde sabitlenmiştir.
+Node.js/npm ve Windows araç paketi gerekir. Bağımlılıklar `package-lock.json` ile sabittir.
 
 ```powershell
 cd desktop
 npm ci
-npm run pack   # EXE ve gerekli dosyaların bulunduğu win-unpacked klasörü
-npm run dist   # Zenith 4.0 kurulum ve doğrudan açılan EXE
-npm run portable # yalnızca doğrudan açılan EXE
+npm test
+npm run start
+npm run pack
+npm run dist
+npm run portable
 ```
 
-`stage-tools`, eksiksiz bir yerel araç paketi varsa onu kullanır; aksi halde `%LOCALAPPDATA%/Programs/Zenith/resources/bin` klasöründen yt-dlp, FFmpeg, FFprobe, aria2 ve Deno dosyalarını kopyalar. Başka bir araç klasörü için `ZENITHW_TOOL_SOURCE` ortam değişkenini belirtin. Kaynak klasör değiştirilmez. Yalnızca unpacked EXE'yi taşımak yeterli değildir; unpacked çıktısının bütün dosyaları gerekir.
+`stage-tools`; yt-dlp, FFmpeg, FFprobe, aria2 ve Deno dosyalarını hazırlar. Eksiksiz yerel araç paketi varsa onu kullanır; yoksa kurulu Zenith’in araç klasörüne bakar. Başka kaynak için `ZENITHW_TOOL_SOURCE` belirtilebilir. Kaynak araçlar yerinde değiştirilmez. `win-unpacked` taşınırken yalnızca EXE değil, klasörün tamamı gerekir.
 
-4.0.1, YouTube için Deno çalışma ortamını paketler. Aria2 aktarım hatasında normal indirmeye geçer; 403/410 hatasında sayfayı yeniden çözerek bir kez daha dener. Kalite, cookie ve proxy seçimleri korunur. Başarısız denemeler, özel bağlantıları ve oturum başlıkları çıkarılmış `failure.json` kaydıyla kurtarma klasöründe tutulur. Kurulum kısayolu Windows araması için `ZenithW` adını kullanır.
+Araçları kopyalamak sürümlerini otomatik güncellemez. Motor güncellemesi uygulamanın ayarlarından yapılır. Microsoft Store paketlemesi için [Store rehberine](store/README.md) bak.
 
-Araçlar mevcut kurulumdan alındığından paketleme işlemi bunların sürümünü kendiliğinden değiştirmez. Uygulamanın motor ayarlarından yt-dlp güncellemesi yapılabilir. Dağıtım lisans bilgileri `LICENSE` ve `THIRD_PARTY_NOTICES.md` dosyalarındadır.
+## Veriler ve isteğe bağlı scriptler
 
-## Kurtarma kaydı
+Stable kimliği `space.zenithw.desktop.stable`, veri klasörü `%APPDATA%/Zenith Stable`’dır. Geçmiş, ayarlar ve oturum verileri kaynak paketine dahil edilmemelidir.
 
-Kaynak: kurulu ZenithW'nin `resources/app.asar` dosyası.
+PowerShell scriptleri varsayılan olarak kapalıdır. Kullanıcının seçtiği `.ps1` kendi yetkileriyle çalışır; yürütme politikası değiştirilmez. Olay bilgileri komut metnine eklenmez; `ZENITHW_EVENT`, `ZENITHW_URL`, `ZENITHW_OUTPUT_DIR`, `ZENITHW_FILES_JSON` ortam değişkenlerinden verilir. Ön işlem hatası indirmeyi durdurabilir; son işlem hatası indirilen dosyayı silmez.
 
-SHA-256: `1745f5a2bb387bb4ca6737d12fd4bf2d228e006207fd5830b568819d0541d079`.
+## Kaynak ve lisans
 
-Orijinal kurtarma kopyası, Git dışında `ZenithW-Builds/Desktop-source-recovered` klasöründe saklanır. Özel ayarlar, oturum dosyaları, indirme geçmişi ve kurulu uygulama verileri kaynak paketine dahil edilmez.
+İlk kaynak kurtarması ZenithW’nin kendi `resources/app.asar` dosyasından yapılmıştır; tarihsel SHA-256: `1745f5a2bb387bb4ca6737d12fd4bf2d228e006207fd5830b568819d0541d079`. Stacher’ın düzeni incelenmiş, kodu ve görsel varlıkları kullanılmamıştır.
 
-## 4.1.0
-
-Kategorili ayarlar, açık/koyu/sistem teması, vurgu renkleri, bildirimler, sistem tepsisi ve indirme sırasında uyku koruması eklendi. Eşzamanlı indirme sınırı, dosya adı, üzerine yazma, remux/recode, format sıralaması, liste içinden video seçimi, liste birleştirme ve ayrı SponsorBlock işaretleme ayarları motorla bağlantılıdır. Geçmiş uygulama yeniden açıldığında temizlenir; dosyalar ve ayarlar korunur.
+[AGPL-3.0-only](LICENSE). Bileşenlerin lisansları [üçüncü taraf bildirimlerinde](THIRD_PARTY_NOTICES.md) korunur. Yalnızca indirmeye yetkili olduğun içerikleri kullan.

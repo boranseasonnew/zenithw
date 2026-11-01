@@ -10,20 +10,32 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/WEB-v16.1-222222?style=for-the-badge" alt="Web v16.1">
-  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge&amp;logo=windows11" alt="Windows v4.2.0">
-  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0 license">
+  <img src="https://img.shields.io/badge/WEB-v17.0-222222?style=for-the-badge" alt="Web v17.0">
+  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge" alt="Windows v4.2.0">
+  <img src="https://img.shields.io/badge/ANDROID-v2.4.1-222222?style=for-the-badge" alt="Android v2.4.1">
+  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0-only">
 </p>
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Web v16.1 · ZenithW Desktop v4.2.0
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v2.4.1
 
 [Zenith Type](https://zenithw.space/typing) ではタイピング練習と対戦ができます。ランク戦は最大50,000 Eloに対応し、双方の同意による再戦と、相手ごとの勝敗を確認できる対戦履歴を備えています。オンライン対戦にはアカウントが必要です。ルールと公開状況は[ドキュメント](docs/TYPING.md)を参照してください。 WPMランキングとランク戦Eloは30日ごとにリセットされ、シーズンの残り時間が表示されます。 プライベートルームのホストは試合開始前に設定を変更できます。所有者限定の正しいキー入力支援はプレイ中にも切り替えられます。プライベート対戦にはプロフィールに表示される独立した永続Eloがあり、シーズンでリセットされず、ランキングには影響しません。
 
 ZenithW は、動画・音声のダウンロード、音声抽出、変換、リマックスができるオープンソースのメディアツールです。広告やサブスクリプションはなく、アカウント登録も不要です。
 
 対応するリンクを貼り付け、形式を選んでダウンロードします。利用できる形式は配信元によって異なります。
+
+## Web 17.0の変更点
+
+- [音声分離](https://zenithw.space/audio-separator)の反応を改善。波形処理の分割、必要時の再生メモリ確保、キャンセル可能なWAV／ZIP書き出しに対応。MP3とFLACも利用できます。
+- [リマックス](https://zenithw.space/remux)で開始前に出力形式を選択。対応するストリームではMKV ↔ MP4を利用でき、非対応コーデックは変換が必要です。
+- 8言語でメディアツールの説明と検索向け情報を充実し、画面移動のリンクを修正しました。
+- 依存関係のセキュリティ更新、サムネイル取得の総時間制限、Typeアバター同時変更への対策。サーバーとアプリには個別の配備が必要です。
+
+音声分離は端末内で動作し、96 MiBまでのファイルと最長4分の区間に対応します。初回はモデルなどをダウンロードし、速度は端末に依存します。WindowsとAndroidのバージョン番号はそれぞれ維持されます。
+
+[更新情報](https://zenithw.space/updates) · [セキュリティ・検証レポート（英語）](docs/full-code-audit-2026-11-02.md)
 
 ## プロジェクト
 

@@ -57,6 +57,8 @@ try {
   await page.goto('http://127.0.0.1:8766/remux.html');
   await page.locator('#localMediaMode').selectOption('only');
   await page.locator('input[type=file]').first().setInputFiles(fixture);
+  await page.locator('#remuxFormat').selectOption('mkv');
+  await page.locator('#remuxStart').click();
   await page.waitForFunction(() => document.querySelector('.local-media-panel progress').value === 1);
   assert.equal(uploads, 1, 'Remux local success must not upload');
   console.log('PASS: CSP, real Convert/Remux browser workers, failure privacy, cancel, explicit fallback, mobile width');

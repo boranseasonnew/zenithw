@@ -2,6 +2,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2.102.0';
 import { username, password, options, randomWords, validateBatch, replay, readBoundedBody, rateLimitAddress } from './core.mjs';
 import { wordLists } from './words.mjs';
 import { handleDuels } from './duels.mjs';
+import { changeAvatar } from './avatar.mjs';
 const url = Deno.env.get('SUPABASE_URL')!;
 const secret = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const anonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -82,11 +83,8 @@ async function handler(req:Request){
    const webp=new TextDecoder().decode(bytes.slice(0,4))==='RIFF'&&new TextDecoder().decode(bytes.slice(8,12))==='WEBP';
    if(!png&&!jpg&&!webp)fail(400,'PNG, JPG veya WebP görseli seç.');
    const ext=png?'png':jpg?'jpg':'webp',mime=png?'image/png':jpg?'image/jpeg':'image/webp';
-   const path=user.id+'/'+crypto.randomUUID()+'.'+ext, previous=await profile(user.id);
-   check(await admin.storage.from('typing-avatars').upload(path,bytes,{contentType:mime,upsert:false,cacheControl:'3600'}));
-   const updated=await admin.from('typing_profiles').update({avatar_path:path,avatar_version:Date.now()}).eq('user_id',user.id);
-   if(updated.error){await admin.storage.from('typing-avatars').remove([path]);throw new Error('avatar update failed');}
-   if(previous.avatar_path)await admin.storage.from('typing-avatars').remove([previous.avatar_path]);
+   const previous=await profile(user.id);
+   await changeAvatar(admin,user.id,previous,{bytes,ext,mime});
    return json({profile:await profile(user.id)});
   }
   // Limit JSON even when the caller omits Content-Length.
@@ -157,8 +155,7 @@ async function handler(req:Request){
   if(action?.startsWith('room-')||['rating','matchmake','queue-cancel'].includes(action||''))return json(await handleDuels(action,req,body,user,{admin,check,fail,rate}));
   if(action==='avatar-remove'){
    await rate(req,'avatar-remove',8,60,user.id);const previous=await profile(user.id);
-   if(previous.avatar_path)check(await admin.storage.from('typing-avatars').remove([previous.avatar_path]));
-   check(await admin.from('typing_profiles').update({avatar_path:null,avatar_version:Date.now()}).eq('user_id',user.id));
+   await changeAvatar(admin,user.id,previous,null);
    return json({profile:await profile(user.id)});
   }
   if(action==='me')return json({profile:await profile(user.id)});
@@ -219,6 +216,7 @@ async function handler(req:Request){
   if(action==='logout'){check(await admin.auth.admin.signOut(token,'local'));return json({ok:true});}
   fail(404,'İşlem bulunamadı.');
  }catch(error){
+  if(error?.code==='avatar_conflict')return json({error:'İşlem tamamlanamadı. Tekrar dene.'},409);
   if(error?.code==='payload_too_large')return json({error:'İstek çok büyük.'},413);
   if(error instanceof HttpError)return json({error:error.message},error.status);
   if(error instanceof Error&&/Kullanıcı adı|Şifre|Geçersiz|Vuruş|Olağandışı|doğrulanamadı|koşullarını|sınırı/.test(error.message))return json({error:error.message},400);

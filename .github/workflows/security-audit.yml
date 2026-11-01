@@ -39,7 +39,32 @@ jobs:
         run: |
           node scripts/build-cache-assets.mjs --check
           node --test tests/cloudflare-cache.test.mjs
-          node --test tests/site-language.test.mjs tests/about-locales.test.mjs tests/updates-static.test.mjs tests/downloads-seo.test.mjs tests/workspace-choices.test.mjs
+          node --test tests/site-language.test.mjs tests/about-locales.test.mjs tests/updates-static.test.mjs tests/downloads-seo.test.mjs tests/workspace-choices.test.mjs tests/html-audit.test.mjs tests/typing-seo.test.mjs
+
+      - name: Audit web and desktop dependency locks
+        run: |
+          npm ci --ignore-scripts
+          npm audit --audit-level=high
+          npm audit --prefix desktop --audit-level=high
+
+      - name: Verify real remux media and localized separator behavior
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm run test:media
+
+      - name: Audit and verify the standalone promo project
+        run: |
+          npm ci --prefix promo-video --ignore-scripts
+          npm audit --prefix promo-video --audit-level=high
+          npm run lint --prefix promo-video
+          npm run build --prefix promo-video
+
+      - name: Verify desktop queue, persistence and security boundaries
+        run: node --test tests/desktop-security.test.cjs desktop/tests/*.test.cjs
+
+      - name: Verify Type permissions, scoring and avatar concurrency
+        run: npm run test:typing
 
       - name: Backend testlerini çalıştır
         working-directory: backend

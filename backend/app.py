@@ -3954,12 +3954,13 @@ def download_thumbnail_from_url(thumbnail_url):
     """
     filename = str(uuid.uuid4())
     content_type = ""
+    deadline = time.monotonic() + THUMBNAIL_TIMEOUT_SECONDS
     try:
         request_obj = UrlRequest(
             thumbnail_url,
             headers={"User-Agent": "ZenithW/1.0 (thumbnail fetch)"},
         )
-        with open_http_resource(request_obj, timeout=min(THUMBNAIL_TIMEOUT_SECONDS, 20)) as upstream:
+        with gevent.Timeout(THUMBNAIL_TIMEOUT_SECONDS, TimeoutError("Thumbnail request timed out")), open_http_resource(request_obj, timeout=min(THUMBNAIL_TIMEOUT_SECONDS, 20)) as upstream:
             content_type = (upstream.headers.get_content_type() or "").lower()
             if not content_type.startswith("image/"):
                 raise ValueError("Thumbnail source did not return an image")
@@ -3971,6 +3972,8 @@ def download_thumbnail_from_url(thumbnail_url):
             total = 0
             with open(full_path, "wb") as output:
                 while True:
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError("Thumbnail request timed out")
                     chunk = upstream.read(64 * 1024)
                     if not chunk:
                         break

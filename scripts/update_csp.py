@@ -7,6 +7,8 @@ import hashlib
 import html
 import json
 import re
+import errno
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,6 +62,19 @@ def render_headers() -> tuple[str, str]:
     )
     return current, expected
 
+def write_if_changed(path: Path, value: str, current: str) -> None:
+    if value == current:
+        return
+    for attempt in range(6):
+        try:
+            path.write_text(value, encoding="utf-8", newline="\n")
+            return
+        except OSError as error:
+            if error.errno not in {errno.EACCES, errno.EPERM, errno.EBUSY, errno.EINVAL} or attempt == 5:
+                raise
+            time.sleep(.1)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -74,9 +89,9 @@ def main() -> int:
             return 1
         print("Pages CSP hashes are current")
         return 0
-    HEADERS.write_text(expected, encoding="utf-8", newline="\n")
+    write_if_changed(HEADERS, expected, current)
     FUNCTION_POLICY.parent.mkdir(parents=True, exist_ok=True)
-    FUNCTION_POLICY.write_text(policy, encoding="utf-8", newline="\n")
+    write_if_changed(FUNCTION_POLICY, policy, policy_current)
     script_hashes, handler_hashes = collect_hashes()
     print(f"Updated CSP with {len(script_hashes)} inline-script and {len(handler_hashes)} handler hashes")
     return 0

@@ -21,6 +21,12 @@ test('local media copies tracks, rejects incompatible codecs and malformed input
     const copied = await run(file, 'mp4');
     assert.equal(copied.type, 'done', JSON.stringify(copied));
     assert.ok(copied.blob.size > 0);
+    const mkv = await run(file, 'mkv');
+    assert.equal(mkv.type, 'done', JSON.stringify(mkv));
+    const mp4Again = await run(mkv.blob, 'mp4');
+    assert.equal(mp4Again.type, 'done', JSON.stringify(mp4Again));
+    assert.equal((await run(file, 'mov')).type, 'done');
+    assert.equal((await run(file, 'm4v')).type, 'done');
     const audio = await run(file, 'm4a');
     assert.equal(audio.type, 'done', JSON.stringify(audio));
     assert.equal(audio.blob.type, 'audio/mp4');
@@ -36,5 +42,10 @@ test('local media copies tracks, rejects incompatible codecs and malformed input
     const vorbis = new Blob([await readFile(join(dir,'vorbis.ogg'))]);
     assert.equal((await run(vorbis, 'opus')).code, 'unsupported');
     assert.equal((await run(vorbis, 'ogg')).type, 'done');
+    execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=160x90:rate=15','-f','lavfi','-i','sine=frequency=440:sample_rate=48000','-t','1','-c:v','libvpx-vp9','-cpu-used','8','-c:a','libopus',join(dir,'source.webm')]);
+    const webm = new Blob([await readFile(join(dir,'source.webm'))]);
+    const webmMkv = await run(webm, 'mkv');
+    assert.equal(webmMkv.type, 'done', JSON.stringify(webmMkv));
+    assert.equal((await run(webmMkv.blob, 'webm')).type, 'done');
   } finally { await rm(dir, { recursive: true, force: true }); }
 });

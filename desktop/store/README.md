@@ -1,5 +1,9 @@
 # ZenithW Microsoft Store hazırlığı
 
+[Mağaza sayfası](https://apps.microsoft.com/store/detail/9NVWM7S7MJP7) · [Windows kaynak rehberi](../README.md) · [Web 17.0 notları](https://zenithw.space/updates)
+
+Web **17.0**, mevcut Windows/Store sürümü **4.2.0**’dan ayrıdır. Kaynak depodaki Electron ve paketleme güncellemeleri mevcut Store paketini değiştirmez; yeniden derleme, doğrulama ve Store dağıtımı gerekir. Test kapsamı ve kalan bağımlılık kayıtları [inceleme raporunda](../../docs/full-code-audit-2026-11-02.md).
+
 Ürün: **ZenithW Desktop**, masaüstü sürümü **4.2.0**, Windows x64. Paket formatı APPX: Microsoft Store bu MSIX ailesindeki formatı kabul eder. Mağaza dağıttığı paketi imzalar; ayrıca ücretli sertifika satın almak gerekmez. Mevcut GitHub EXE'si imzasız olduğundan EXE bağlantısı yöntemiyle başvuru yapılmamalıdır.
 
 ## Hesaba bağlama

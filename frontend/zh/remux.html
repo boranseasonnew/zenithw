@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-static-language="zh" data-localized-route="/remux">
 <head>
 <link rel="stylesheet" href="/cache-assets/site-language.750ddfc30c31.css">
-<script src="/cache-assets/site-language.05a60535949a.js"></script>
+<script src="/cache-assets/site-language.2476c062e2da.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>无损视频再复用工具| ZenithW</title>
@@ -67,6 +67,12 @@
           <div><span class="tool-error-label" id="toolErrorLabel" data-l10n="{&quot;text:0&quot;:&quot;NE YAPILABİLİR?&quot;}">尝试什么</span><strong id="toolErrorTitle"></strong><p id="toolErrorText"></p></div>
         </div>
       <div class="remux-drop-card">
+        <label for="remuxFormat" data-l10n="{&quot;text:0&quot;:&quot;Output container&quot;}">输出容器</label>
+        <select id="remuxFormat" onchange="renderRemuxSignal()">
+          <option value="" data-l10n="{&quot;text:0&quot;:&quot;Same as source&quot;}">与源文件相同</option>
+          <option value="mp4">MP4</option><option value="mkv">MKV</option><option value="webm">WebM</option><option value="mov" data-l10n="{&quot;text:0&quot;:&quot;MOV&quot;}">MOV</option><option value="avi" data-l10n="{&quot;text:0&quot;:&quot;AVI&quot;}">狩猎</option><option value="m4v">M4V</option><option value="3gp">3GP</option><option value="ts">TS</option><option value="wmv">WMV</option>
+          <option value="m4a">M4A</option><option value="mp3">MP3</option><option value="aac">AAC</option><option value="opus">Opus</option><option value="ogg">OGG</option><option value="flac">FLAC</option><option value="wav">WAV</option><option value="aiff">AIFF</option><option value="wma">WMA</option>
+        </select>
         <label class="dropzone" id="remuxDrop" for="remuxFileInput" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleRemuxDrop(event)">
           <div class="remux-drop-orbit" aria-hidden="true"></div>
           <div class="tool-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3-3 3 3"/></svg></div>
@@ -74,6 +80,8 @@
           <span class="remux-file-cta" data-l10n="{&quot;text:0&quot;:&quot;dosya seç&quot;}">选择文件</span>
           <input class="visually-hidden-input" type="file" id="remuxFileInput" accept=".mp4,.webm,.mkv,.mov,.avi,.m4v,.3gp,.ts,.wmv,.mp3,.m4a,.aac,.opus,.ogg,.flac,.wav,.aiff,.wma,video/*,audio/*" onchange="handleRemuxFile(this)"/>
         </label>
+        <p class="remux-format-note" data-l10n="{&quot;text:0&quot;:&quot;Choose MP4, MKV or another container. Compatible codecs are required; audio-only formats keep only audio. Remux never re-encodes.&quot;}">选择 MP4、MKV 或其他容器。需要兼容的编解码器；纯音频格式仅保留音频。重新封装不会重新编码。</p>
+        <button type="button" id="remuxStart" class="remux-start" onclick="startRemux()" disabled data-l10n="{&quot;text:0&quot;:&quot;Start remux&quot;}">开始重新封装</button>
       </div>
       <details class="workspace-details"><summary data-l10n="{&quot;text:0&quot;:&quot;Features and requirements&quot;}">功能和系统要求</summary><aside class="remux-sidecar">
         
@@ -115,7 +123,7 @@
 </div>
 <script src="/runtime-config.js"></script>
 <script src="/cache-assets/local-media.8f06bcc335a0.js"></script>
-<script src="/cache-assets/app.bbd598557c99.js"></script>
+<script src="/cache-assets/app.5b1b55d64501.js"></script>
 <script src="/site-shell.js?v=14.3"></script>
 
 <!-- generated community footer --><footer class="site-community-footer" data-community="footer"><a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.instagram.com/zenithwonline/" target="_blank" rel="noopener noreferrer">Instagram</a><a class="telegram-link" href="https://t.me/zenithwon" target="_blank" rel="noopener noreferrer"><img src="/cache-assets/telegram.f438f2293a19.svg" width="18" height="18" alt=""><span data-l10n="{&quot;text:0&quot;:&quot;Join Telegram&quot;}">加入 Telegram</span></a></footer><!-- end generated community footer -->

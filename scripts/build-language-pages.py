@@ -142,7 +142,7 @@ def metadata(source,route,lang):
     if route=='/downloads':
         for platform in ['windows','android']:
             graph.append({'@type':'SoftwareApplication','@id':canonical+'#'+platform+'-app','name':'ZenithW '+platform.title(),'url':canonical+'#'+platform,'operatingSystem':CONFIG[platform]['requirements'],'softwareVersion':CONFIG[platform]['version'],'applicationCategory':'MultimediaApplication','isAccessibleForFree':True,'offers':{'@type':'Offer','price':'0','priceCurrency':'USD'},'publisher':{'@id':org['@id']}})
-    elif route in ['/','/convert','/remux']:
+    elif route in ['/','/convert','/remux','/audio-separator']:
         graph.append({'@type':'WebApplication','name':'ZenithW','url':canonical,'operatingSystem':'Web browser','applicationCategory':'MultimediaApplication','isAccessibleForFree':True,'offers':{'@type':'Offer','price':'0','priceCurrency':'USD'}})
     data=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')
     seo=f'\n<!-- generated SEO metadata -->\n<link rel="canonical" href="{canonical}">\n{alternates}\n'

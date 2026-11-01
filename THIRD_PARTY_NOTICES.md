@@ -4,6 +4,8 @@ ZenithW uses third-party software and libraries. Those components are **not reli
 
 Key runtime components include:
 
+- **Socket.IO client 4.8.4** — MIT. The self-hosted browser distribution and its SHA-256/SRI hashes are recorded in [browser-dependencies.json](shared/browser-dependencies.json). License: [socket.io-LICENSE.txt](frontend/vendor/socket.io-LICENSE.txt).
+
 - **Mediabunny 1.56.1** — Mozilla Public License 2.0. The local-file processing worker bundles this library without upstream source modifications. License: [mediabunny-LICENSE.txt](frontend/vendor/mediabunny-LICENSE.txt). Corresponding source: [npm package 1.56.1](https://www.npmjs.com/package/mediabunny/v/1.56.1), including its `src/` directory. The bundle is reproducible with the checked-in package lock and `scripts/build-local-media.mjs`.
 
 - **yt-dlp** — distributed under its applicable upstream licensing terms (the source/PyPI distribution is primarily Unlicense; bundled builds may include components under additional licenses).

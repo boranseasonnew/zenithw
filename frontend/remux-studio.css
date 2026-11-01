@@ -11,4 +11,9 @@
 .remux-page .remux-flow-label{padding-bottom:9px;border-bottom:1px solid var(--border);}
 .remux-page .remux-flow li:last-child{padding-bottom:15px;}
 .remux-page .remux-info-item{background:rgba(0,0,0,.1);}
+.remux-drop-card>label[for="remuxFormat"]{display:block;margin:0 0 10px;color:var(--text,#eee);font-size:13px}
+#remuxFormat{width:100%;padding:12px;margin-bottom:16px;background:#1c1c23;color:#eee;border:1px solid #444;border-radius:12px;font:inherit}
+.remux-format-note{font-size:12px;color:#aaa;line-height:1.7;margin:16px 0}
+.remux-start{width:100%;padding:13px;border-radius:12px;border:1px solid #6d55b1;background:#533b89;color:white;font:inherit;cursor:pointer}
+.remux-start:disabled{opacity:.45;cursor:default}
 @media(max-width:700px){.remux-signal{margin-bottom:16px;}.remux-page .remux-sidecar{padding:16px;}}

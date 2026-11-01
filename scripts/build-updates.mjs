@@ -3,7 +3,8 @@ import { readFileSync, mkdirSync } from 'node:fs';
 import vm from 'node:vm';
 import {rows as v16Rows} from './v16-release-copy.mjs';
 import {rows as v161Rows} from './v161-release-copy.mjs';
-const rows=[...v16Rows,...v161Rows];
+import {rows as v17Rows} from './v17-release-copy.mjs';
+const rows=[...v16Rows,...v161Rows,...v17Rows];
 const langs=['tr','en','de','fr','ru','vi','zh','ja'];
 for(let i=0;i<langs.length;i++){const p=new URL('../frontend/locales/'+langs[i]+'.json',import.meta.url),catalog=JSON.parse(readFileSync(p,'utf8'));for(const row of rows){if(row.length!==8)throw Error('Incomplete release translation');catalog[row[0]]=row[i];catalog[row[1]]=row[i];}writeFileSync(p,JSON.stringify(catalog,null,2)+'\n','utf8');}
 

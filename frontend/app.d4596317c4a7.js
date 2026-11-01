@@ -1458,15 +1458,22 @@ function validateToolFile(f){
 }
 function showSelectedToolFile(dropId,f){const drop=document.getElementById(dropId);if(!drop)return;const icon=drop.querySelector('.tool-drop-icon'),title=drop.querySelector('.drop-title'),sub=drop.querySelector('.drop-sub');if(icon){icon.classList.add('selected');icon.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>';}if(title)title.textContent=f.name;if(sub)sub.textContent=formatLocalFileSize(f.size);}
 function resetRemuxDrop(){const drop=document.getElementById('remuxDrop');if(!drop)return;const icon=drop.querySelector('.tool-drop-icon'),title=drop.querySelector('.drop-title'),sub=drop.querySelector('.drop-sub');if(icon){icon.classList.remove('selected');icon.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3-3 3 3"/></svg>';}if(title)title.textContent=t('remuxDropTitle');if(sub)sub.textContent=t('remuxDropSub');const input=document.getElementById('remuxFileInput');if(input)input.value='';remuxSourceFormat='';renderRemuxSignal();}
-let remuxBusy=false,remuxSourceFormat='';
-function renderRemuxSignal(){const source=document.getElementById('remuxSourceType'),target=document.getElementById('remuxTargetType'),text=document.getElementById('remuxSignalText');if(source)source.textContent=remuxSourceFormat?remuxSourceFormat.toUpperCase():t('remuxSourceDefault');if(target)target.textContent=remuxSourceFormat?remuxSourceFormat.toUpperCase():t('remuxTargetDefault');if(text)text.textContent=t('remuxSignalText');}
-async function handleRemuxFile(inp){
+let remuxBusy=false,remuxSourceFormat='',remuxFile=null;
+function renderRemuxSignal(){const source=document.getElementById('remuxSourceType'),target=document.getElementById('remuxTargetType'),text=document.getElementById('remuxSignalText'),chosen=document.getElementById('remuxFormat')?.value||remuxSourceFormat;if(source)source.textContent=remuxSourceFormat?remuxSourceFormat.toUpperCase():t('remuxSourceDefault');if(target)target.textContent=chosen?chosen.toUpperCase():t('remuxTargetDefault');if(text)text.textContent=t('remuxSignalText');const button=document.getElementById('remuxStart');if(button)button.disabled=remuxBusy||!remuxFile;}
+function handleRemuxFile(inp){
+  const f=inp.files[0];if(remuxBusy||!validateToolFile(f))return;
+  const extension=f.name.split('.').pop().toLowerCase();
+  if(!new Set(['mp4','webm','mkv','mov','avi','m4v','3gp','ts','wmv','mp3','m4a','aac','opus','ogg','flac','wav','aiff','wma']).has(extension)){toast(t('errConversion'),'#ed4245');return;}
+  remuxFile=f;remuxSourceFormat=extension;clearToolError();renderRemuxSignal();showSelectedToolFile('remuxDrop',f);
+}
+async function startRemux(){
+  const inp={files:[remuxFile]};
   const f=inp.files[0];if(remuxBusy||!validateToolFile(f))return;
   const dot=f.name.lastIndexOf('.');
-  const target=dot>=0?f.name.slice(dot+1).toLowerCase():'';
+  const target=document.getElementById('remuxFormat')?.value||(dot>=0?f.name.slice(dot+1).toLowerCase():'');
   const allowed=new Set(['mp4','webm','mkv','mov','avi','m4v','3gp','ts','wmv','mp3','m4a','aac','opus','ogg','flac','wav','aiff','wma']);
   if(!allowed.has(target)){toast(t('errConversion'),'#ed4245');resetRemuxDrop();return;}
-  clearToolError();remuxBusy=true;remuxSourceFormat=target;renderRemuxSignal();showSelectedToolFile('remuxDrop',f);if(!window.ZenithLocalMedia?.isLocal())toast(t('uploading'),'#5b8def');
+  clearToolError();remuxBusy=true;const select=document.getElementById('remuxFormat');if(select)select.disabled=true;renderRemuxSignal();showSelectedToolFile('remuxDrop',f);if(!window.ZenithLocalMedia?.isLocal())toast(t('uploading'),'#5b8def');
   try{
     const base=dot>0?f.name.slice(0,dot):f.name;
     const fd=new FormData();
@@ -1479,7 +1486,7 @@ async function handleRemuxFile(inp){
     if(!payload.download_url)throw new Error('Remuxed file was not prepared');
     await handoffPreparedDownload(payload,true);toast(t('remuxDone'),'#3bba64');
   }catch(e){if(!e.localMedia)showPublicError({error_code:e.name==='AbortError'?'request_timeout':'conversion_failed'},0,'',false);}
-  finally{remuxBusy=false;setTimeout(resetRemuxDrop,1200);}
+  finally{remuxBusy=false;if(select)select.disabled=false;renderRemuxSignal();}
 }
 function handleRemuxDrop(e){e.preventDefault();document.getElementById('remuxDrop').classList.remove('drag');const f=e.dataTransfer.files[0];if(!f)return;handleRemuxFile({files:[f]});}
 

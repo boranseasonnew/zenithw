@@ -1,6 +1,63 @@
 const LATEST_UPDATE = {
-  "ver": "v16.1",
+  "ver": "v17.0",
   "latest": true,
+  "dateTr": "2 kasım 2026",
+  "dateEn": "November 2, 2026",
+  "cover": null,
+  "titleTr": "Daha akıcı medya araçları, daha sağlam bir ZenithW",
+  "titleEn": "Smoother media tools, a stronger ZenithW",
+  "introTr": [
+    "v17.0 ile ZenithW’nin günlük kullanımda en çok dokunulan yerlerini elden geçirdik: ses ayırma sonuçları, dosya indirme, remux seçenekleri ve farklı dillerde sayfalar arasında gezinme. Amacımız yeni düğmelerle ekranı doldurmak değil; dosyanla çalışırken daha az bekleten, ne yaptığını daha açık anlatan ve kontrolü sende tutan bir deneyim sunmak.",
+    "Bu sürüm, görünür iyileştirmelerin yanında kaynak kodu ve bağımlılık incelemesini de bir araya getiriyor. Aşağıdaki yenilikler web 17.0’a aittir; Windows ve Android kendi sürüm numaralarını korur. Güvenlik ve altyapı değişikliklerinin ilgili sunucuya veya uygulama paketine ayrıca dağıtılması gerekir."
+  ],
+  "introEn": [
+    "For v17.0, we revisited the parts of ZenithW you use every day: separation results, file exports, remux choices and navigation across languages. The aim is to make working with your files feel more responsive and understandable, with controls that stay useful while a task is running. The familiar media workspace remains at the centre of this release.",
+    "This release also brings together a source and dependency review. The web version is now 17.0; Windows and Android keep their own version numbers. Security and infrastructure changes reach their respective services or installed apps through separate deployments and releases."
+  ],
+  "sections": [
+    {
+      "hTr": "Ses ayırma sonuçlarında daha rahat gezin",
+      "hEn": "More responsive separation results",
+      "pTr": "Vokal ve enstrümantal hazır olduğunda dalga biçimlerini hazırlama ve ekranı güncelleme işlerini daha küçük parçalara ayırdık. Dinleme için gereken ek ses belleği, gerçekten oynatmaya veya zaman çizgisinde ilerlemeye başladığında hazırlanıyor. Böylece sonuç ekranı gereksiz işi daha geç yapıyor ve uzun bölümlerde arayüze daha sık çalışma fırsatı kalıyor. Modelin ayırma kalitesi değişmedi; işlem süresi hâlâ cihazına ve seçtiğin bölüme bağlı.",
+      "pEn": "Once vocals and instrumental audio are ready, waveform preparation and screen updates are split into smaller pieces of work. Additional playback memory is prepared when you actually play or seek. This reduces eager work on the result screen and gives the interface more opportunities to respond during longer sections. Separation quality is unchanged, and processing time still depends on your device and selected audio."
+    },
+    {
+      "hTr": "WAV ve ZIP indirirken kontrol sende",
+      "hEn": "Stay in control during WAV and ZIP export",
+      "pTr": "Tek bir sesi WAV olarak indirmek veya iki sesi ZIP içinde almak artık uzun bir işi tek seferde arayüze yüklemiyor. Hazırlık sırasında ilerleme ve iptal kontrolleri kullanılabiliyor; ZIP oluştururken gereksiz tam dosya kopyaları azaltıldı. MP3 ve FLAC seçenekleri de yerinde. Dosyanın hazırlanması cihazında gerçekleşmeye devam ediyor; büyük sesler yine bellek ve zaman gerektirebilir, özellikle düşük güçlü telefonlarda.",
+      "pEn": "Downloading one stem as WAV or both in a ZIP no longer puts all of the export work into one uninterrupted interface task. Progress and cancellation remain available while the files are prepared, and ZIP creation avoids an unnecessary full-file copy. MP3 and FLAC choices remain available. Preparation stays on your device; large audio can still take time and memory, particularly on less powerful phones."
+    },
+    {
+      "hTr": "Remux: dosyanı seç, hedef biçimi belirle",
+      "hEn": "Remux: choose your file and target container",
+      "pTr": "Dosya seçer seçmez işlemi başlatmak yerine hedef biçimi seçip ardından başlatabiliyorsun. MKV’den MP4’e, MP4’ten MKV’ye ve uygun diğer kapsayıcılara geçiş daha anlaşılır; çıktı dosyasının adı da seçiminle uyumlu. Remux görüntüyü yeniden kodlamaz: içindeki ses ve video hedef biçime uyumluysa kalite korunur, uyumsuzsa açık hata alırsın. Ses biçimi seçersen yalnızca ses saklanır. <a href=\"/remux\">Remux’u aç</a>.",
+      "pEn": "Choosing a file now lets you select the destination before starting. MKV to MP4, MP4 to MKV and other compatible containers have a clearer workflow, with an output filename that follows your selection. Remuxing does not re-encode video: compatible audio and video retain their quality, while incompatible combinations return an error. Audio-only targets keep just the audio. <a href=\"/remux\">Open remux</a>."
+    },
+    {
+      "hTr": "Sekiz dilde daha açıklayıcı sayfalar",
+      "hEn": "Clearer pages across eight languages",
+      "pTr": "Ses ayırıcının ne yaptığı, hangi dosyalarla çalıştığı ve ilk kullanımda neden model indirdiği artık sayfada daha açık anlatılıyor. Bu bilgiler mevcut sekiz dile uyarlandı; arama motorlarının okuyabildiği sayfa açıklamaları, dil bağlantıları ve site haritası da güncellendi. Farklı dilde ana sayfadan ayarlara giderken oluşan bozuk bağlantıları düzelttik. Böylece araçlara ulaşmak ve sınırlarını önceden anlamak daha kolay; arama sıralaması için garanti vermiyoruz.",
+      "pEn": "The separator now explains its purpose, supported input and first-use model download more clearly on the page. The guidance is available in all eight existing languages, alongside refreshed search descriptions, language links and sitemap content. We also fixed broken settings links on localized homepages. It is easier to reach the tools and understand their limits before starting; these changes do not guarantee a search ranking."
+    },
+    {
+      "hTr": "Güvenilirlik ve gizlilik üzerinde çalıştık",
+      "hEn": "Reliability and privacy refinements",
+      "pTr": "Kod incelemesinde kapak indirmelerinin toplam bekleme sınırını netleştirdik ve Type profil fotoğrafı isteklerinin aynı anda geldiğinde birbirinin sonucunu bozmasını önleyen değişiklikleri hazırladık. Web istemcisi ile sunucu ve masaüstü bağımlılıklarında güvenlik güncellemeleri yapıldı. Bu çalışma bütün açıkların bittiği anlamına gelmiyor: bazı geliştirme araçlarında orta önem dereceli kayıtlar takibimizde. Ses ayırma dosyaları cihazında kalıyor; reklam veya yeni bir veri toplama sistemi eklenmedi.",
+      "pEn": "The code review tightened the total time budget for thumbnail downloads and prepared protection against overlapping Type avatar changes. Security updates cover the browser client and server/desktop dependencies. This does not mean every vulnerability is eliminated: some development-tool findings remain open at moderate severity. Separation audio stays on your device, and this release introduces no advertising or new data-collection system."
+    },
+    {
+      "hTr": "Kontrol edildi, sınırları açık bırakıldı",
+      "hEn": "Checked, with clear limits",
+      "pTr": "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.",
+      "pEn": "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V16_1 = {
+  "ver": "v16.1",
+  "latest": false,
   "dateTr": "27 ekim 2026",
   "dateEn": "October 27, 2026",
   "cover": null,
@@ -489,8 +546,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v17.0', 'v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V16_1,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;
@@ -578,10 +635,14 @@ async function render(){
   const order=UPDATE_VERSIONS.indexOf(u.ver);
   const newer=order>0?UPDATE_VERSIONS[order-1]:null;
   const older=order>=0&&order<UPDATE_VERSIONS.length-1?UPDATE_VERSIONS[order+1]:null;
+  const updatePath=version=>{
+    const path=version===LATEST_UPDATE.ver?'/updates':'/updates/'+version+'/';
+    return window.ZWLanguage?ZWLanguage.path(path):path;
+  };
   let nav='';
-  if(newer)nav+=`<a class="upd-nav-link" href="${newer===LATEST_UPDATE.ver?'/updates':'/updates/'+newer+'/'}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
+  if(newer)nav+=`<a class="upd-nav-link" href="${updatePath(newer)}"><span class="upd-nav-label">${t.newer}</span>← ${newer}</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
-  if(older)nav+=`<a class="upd-nav-link next" href="/updates/${older}/"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
+  if(older)nav+=`<a class="upd-nav-link next" href="${updatePath(older)}"><span class="upd-nav-label">${t.older}</span>${older} →</a>`;
   else nav+=`<span aria-hidden="true"></span>`;
   document.getElementById('updNavRow').innerHTML=nav;
   document.title=`${u.ver} — ${releaseText(u.titleTr,u.titleEn)} — ZenithW`;

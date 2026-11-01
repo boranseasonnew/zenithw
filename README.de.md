@@ -10,20 +10,32 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/WEB-v16.1-222222?style=for-the-badge" alt="Web v16.1">
-  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge&amp;logo=windows11" alt="Windows v4.2.0">
-  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0 license">
+  <img src="https://img.shields.io/badge/WEB-v17.0-222222?style=for-the-badge" alt="Web v17.0">
+  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge" alt="Windows v4.2.0">
+  <img src="https://img.shields.io/badge/ANDROID-v2.4.1-222222?style=for-the-badge" alt="Android v2.4.1">
+  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0-only">
 </p>
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Web v16.1 · ZenithW Desktop v4.2.0
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v2.4.1
 
 [Zenith Type](https://zenithw.space/typing) bietet Tipptraining und Duelle. Ranglistenspiele unterstützen bis zu 50.000 Elo, beidseitig bestätigte Rückspiele und einen Spielverlauf mit direkten Vergleichswerten. Für das Online-Spiel ist ein Konto erforderlich. Regeln und Veröffentlichungsstatus stehen in der [Dokumentation](docs/TYPING.md). Die WPM-Rangliste und Elo der Ranglistenduelle werden alle 30 Tage zurückgesetzt; ein Countdown zeigt die verbleibende Saisonzeit. Gastgeber können private Räume vor dem Spiel konfigurieren. Die nur für den Besitzer verfügbare Tastenhilfe lässt sich während des Spiels umschalten. Private Räume haben einen separaten, dauerhaften Elo-Wert im Profil, ohne Einfluss auf die Rangliste.
 
 ZenithW ist ein quelloffenes Medienwerkzeug zum Herunterladen von Videos und Audio sowie zum Extrahieren, Konvertieren und Remuxen. Ohne Werbung, Abonnement oder verpflichtendes Konto.
 
 Unterstützten Link einfügen, Format wählen und Datei herunterladen. Verfügbare Formate hängen von der Quelle ab.
+
+## Neu in Web 17.0
+
+- Ein flüssigerer [Audiotrenner](https://zenithw.space/audio-separator): Wellenformen in kleinen Arbeitsschritten, Wiedergabespeicher bei Bedarf und abbrechbare WAV-/ZIP-Exporte. MP3 und FLAC bleiben verfügbar.
+- [Remux](https://zenithw.space/remux) lässt vor dem Start den Zielcontainer wählen, einschließlich MKV ↔ MP4 bei passenden Streams. Unpassende Codecs benötigen Konvertierung.
+- Verständlichere Medienhinweise und Suchmetadaten in acht Website-Sprachen sowie korrigierte Navigationslinks.
+- Sicherheitsupdates für Abhängigkeiten, begrenzte Vorschaubildanfragen und Schutz vor gleichzeitigen Type-Avataränderungen. Server- und App-Änderungen benötigen eigene Bereitstellungen.
+
+Der Audiotrenner läuft auf deinem Gerät: bis zu 96 MiB und ein vierminütiger Abschnitt, mit Modelldownload beim ersten Start. Die Geschwindigkeit hängt vom Gerät ab. Windows und Android behalten eigene Versionsnummern.
+
+[Versionshinweise](https://zenithw.space/updates) · [Sicherheits- und Prüfbericht — Englisch](docs/full-code-audit-2026-11-02.md)
 
 ## Projekt
 

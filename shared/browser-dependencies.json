@@ -1,0 +1,11 @@
+{
+  "socket.io-client": {
+    "version": "4.8.4",
+    "url": "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.4/socket.io.min.js",
+    "path": "frontend/vendor/socket.io-4.8.4.min.js",
+    "sha256": "d5d79a35039e860b32bdef4795528b05c2f788d4b2d9dacc913120e2878f7b3f",
+    "integrity": "sha512-xRBIxEU1o+/TCVhv/EL1y/xAdUVdvVQJSXO0zafimQ/Qm6acv4wlfZxqpoXZLO6pa2dROhAEJAXXdI+FAFgnKA==",
+    "license": "MIT",
+    "reviewed": "2026-11-02"
+  }
+}

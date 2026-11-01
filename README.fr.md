@@ -10,20 +10,32 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/WEB-v16.1-222222?style=for-the-badge" alt="Web v16.1">
-  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge&amp;logo=windows11" alt="Windows v4.2.0">
-  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0 license">
+  <img src="https://img.shields.io/badge/WEB-v17.0-222222?style=for-the-badge" alt="Web v17.0">
+  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge" alt="Windows v4.2.0">
+  <img src="https://img.shields.io/badge/ANDROID-v2.4.1-222222?style=for-the-badge" alt="Android v2.4.1">
+  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0-only">
 </p>
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
 
-Web v16.1 · ZenithW Desktop v4.2.0
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v2.4.1
 
 [Zenith Type](https://zenithw.space/typing) propose des exercices de frappe et des duels. Le mode classé comprend une limite de 50 000 Elo, des revanches acceptées par les deux joueurs et un historique avec le bilan de leurs rencontres. Un compte est nécessaire pour jouer en ligne. Consultez les règles et le statut de publication dans la [documentation](docs/TYPING.md). Le classement WPM et les points Elo des duels classés sont réinitialisés tous les 30 jours, avec un compte à rebours de saison. L’hôte peut modifier les paramètres d’une salle privée avant le match. L’aide à la frappe réservée au propriétaire peut être activée en jeu. Les salles privées ont un Elo distinct et permanent, visible sur le profil et sans effet sur le classement.
 
 ZenithW est un outil multimédia open source pour télécharger des vidéos et des fichiers audio, extraire le son, convertir et remuxer. Sans publicité, abonnement ni compte obligatoire.
 
 Collez un lien pris en charge, choisissez un format et téléchargez le fichier. Les formats disponibles dépendent de la source.
+
+## Les nouveautés du web 17.0
+
+- Un [séparateur audio](https://zenithw.space/audio-separator) plus réactif : formes d’onde par petites tâches, mémoire de lecture à la demande et exports WAV/ZIP annulables. MP3 et FLAC restent disponibles.
+- Le [remux](https://zenithw.space/remux) permet de choisir le conteneur avant de lancer, notamment MKV ↔ MP4 pour les pistes compatibles. Les codecs incompatibles nécessitent une conversion.
+- Des explications et métadonnées de recherche plus claires dans les huit langues du site, avec des liens de navigation corrigés.
+- Des dépendances actualisées, une durée totale limitée pour les miniatures et une protection contre les changements d’avatar Type simultanés. Serveur et applications nécessitent leurs propres déploiements.
+
+Le séparateur fonctionne sur votre appareil : jusqu’à 96 MiB et un extrait de quatre minutes, avec téléchargement initial du modèle. La vitesse dépend de l’appareil. Windows et Android conservent leurs versions distinctes.
+
+[Notes de version](https://zenithw.space/updates) · [Rapport de sécurité et de validation — anglais](docs/full-code-audit-2026-11-02.md)
 
 ## Projet
 

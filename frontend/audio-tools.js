@@ -1,5 +1,141 @@
 // shared/lilith-studio.ts
-import { createSeparator, SynchronizedPlayer, waveformPeaks, safeFilename, inspectAudio, exportAudio } from "/vendor/lilith-engine/index.js?v=658fbf14c76d";
+import { createSeparator, SynchronizedPlayer, safeFilename, inspectAudio, exportAudio } from "/vendor/lilith-engine/index.js?v=658fbf14c76d";
+
+// shared/audio-preview.mjs
+var yieldToBrowser = () => globalThis.scheduler?.yield ? globalThis.scheduler.yield() : new Promise((resolve) => setTimeout(resolve, 0));
+function peakBetween(left, right, start, end) {
+  let peak = 0;
+  for (let i = start; i < end; i++) peak = Math.max(peak, Math.abs(left[i]), Math.abs(right[i]));
+  return peak;
+}
+async function waveformPeaksAsync(channels, points = 400, signal) {
+  if (!Number.isSafeInteger(points) || points < 1 || points > 1e4) throw new RangeError("Invalid waveform resolution");
+  const n = channels[0].length;
+  const peaks = new Float32Array(Math.min(n, points));
+  let deadline = performance.now() + 8;
+  signal?.throwIfAborted();
+  for (let p = 0; p < peaks.length; p++) {
+    const start = Math.floor(p * n / peaks.length), end = Math.floor((p + 1) * n / peaks.length);
+    let peak = 0;
+    for (let i = start; i < end; i += 32768) {
+      peak = Math.max(peak, peakBetween(channels[0], channels[1], i, Math.min(end, i + 32768)));
+      signal?.throwIfAborted();
+      if (performance.now() >= deadline) {
+        await yieldToBrowser();
+        deadline = performance.now() + 8;
+      }
+    }
+    peaks[p] = peak;
+  }
+  signal?.throwIfAborted();
+  return peaks;
+}
+
+// shared/audio-export.mjs
+function writeFrames(view, channels, start, end) {
+  for (let i = start; i < end; i++) for (let channel = 0; channel < 2; channel++) {
+    const sample = channels[channel][i];
+    if (!Number.isFinite(sample)) throw new RangeError("Non-finite PCM");
+    const value = Math.max(-1, Math.min(1, sample));
+    view.setInt16(44 + i * 4 + channel * 2, Math.round(value * (value < 0 ? 32768 : 32767)), true);
+  }
+}
+async function encodeWavAsync(channels, rate = 44100, signal, onProgress) {
+  const count = channels[0]?.length;
+  if (!count || channels[1]?.length !== count || !Number.isSafeInteger(rate) || rate < 8e3 || rate > 192e3 || count * 4 > 4294967295 - 36) throw new RangeError("Invalid PCM dimensions/rate");
+  signal?.throwIfAborted();
+  const buffer = new ArrayBuffer(44 + count * 4), view = new DataView(buffer);
+  for (const [offset, text] of [[0, "RIFF"], [8, "WAVE"], [12, "fmt "], [36, "data"]]) for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i));
+  for (const [offset, value] of [[4, buffer.byteLength - 8], [16, 16], [24, rate], [28, rate * 4], [40, count * 4]]) view.setUint32(offset, value, true);
+  for (const [offset, value] of [[20, 1], [22, 2], [32, 4], [34, 16]]) view.setUint16(offset, value, true);
+  let deadline = performance.now() + 8;
+  for (let start = 0; start < count; start += 16384) {
+    writeFrames(view, channels, start, Math.min(count, start + 16384));
+    signal?.throwIfAborted();
+    if (performance.now() >= deadline) {
+      onProgress?.(Math.min(1, (start + 16384) / count));
+      await yieldToBrowser();
+      deadline = performance.now() + 8;
+    }
+  }
+  signal?.throwIfAborted();
+  onProgress?.(1);
+  return new Blob([buffer], { type: "audio/wav" });
+}
+var crcTable = Uint32Array.from({ length: 256 }, (_, value) => {
+  for (let i = 0; i < 8; i++) value = value & 1 ? 3988292384 ^ value >>> 1 : value >>> 1;
+  return value >>> 0;
+});
+function updateCrc(crc, bytes, start, end) {
+  for (let i = start; i < end; i++) crc = crcTable[(crc ^ bytes[i]) & 255] ^ crc >>> 8;
+  return crc;
+}
+async function blobCrc(blob, signal) {
+  let crc = 4294967295, deadline = performance.now() + 8;
+  const reader = blob.stream().getReader();
+  try {
+    while (true) {
+      signal?.throwIfAborted();
+      const { done, value } = await reader.read();
+      if (done) break;
+      for (let offset = 0; offset < value.length; offset += 32768) {
+        crc = updateCrc(crc, value, offset, Math.min(value.length, offset + 32768));
+        signal?.throwIfAborted();
+        if (performance.now() >= deadline) {
+          await yieldToBrowser();
+          deadline = performance.now() + 8;
+        }
+      }
+    }
+  } finally {
+    await reader.cancel();
+    reader.releaseLock();
+  }
+  return (crc ^ 4294967295) >>> 0;
+}
+async function zipWavStems(result, name = "audio", signal, onProgress) {
+  const base = String(name).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 80) || "audio";
+  const localParts = [], directory = [];
+  let offset = 0, directorySize = 0;
+  for (const [index, stemName] of ["vocals", "instrumental"].entries()) {
+    signal?.throwIfAborted();
+    const stem = result[stemName];
+    const wav = await encodeWavAsync(stem.channels, stem.sampleRate, signal, (value) => onProgress?.((index + value * 0.7) / 2));
+    const crc = await blobCrc(wav, signal), filename = new TextEncoder().encode(base + "_" + stemName + ".wav");
+    const local = new Uint8Array(30 + filename.length), header = new DataView(local.buffer);
+    header.setUint32(0, 67324752, true);
+    header.setUint16(4, 20, true);
+    header.setUint16(6, 2048, true);
+    header.setUint16(12, 33, true);
+    for (const [position, value] of [[14, crc], [18, wav.size], [22, wav.size]]) header.setUint32(position, value, true);
+    header.setUint16(26, filename.length, true);
+    local.set(filename, 30);
+    const central = new Uint8Array(46 + filename.length), entry = new DataView(central.buffer);
+    entry.setUint32(0, 33639248, true);
+    entry.setUint16(4, 20, true);
+    entry.setUint16(6, 20, true);
+    entry.setUint16(8, 2048, true);
+    entry.setUint16(14, 33, true);
+    for (const [position, value] of [[16, crc], [20, wav.size], [24, wav.size], [42, offset]]) entry.setUint32(position, value, true);
+    entry.setUint16(28, filename.length, true);
+    central.set(filename, 46);
+    localParts.push(local, wav);
+    directory.push(central);
+    offset += local.length + wav.size;
+    directorySize += central.length;
+    onProgress?.((index + 1) / 2);
+  }
+  signal?.throwIfAborted();
+  const end = new Uint8Array(22), view = new DataView(end.buffer);
+  view.setUint32(0, 101010256, true);
+  view.setUint16(8, 2, true);
+  view.setUint16(10, 2, true);
+  view.setUint32(12, directorySize, true);
+  view.setUint32(16, offset, true);
+  return new Blob([...localParts, ...directory, end], { type: "application/zip" });
+}
+
+// shared/lilith-studio.ts
 var ENGLISH = {
   upload: "Choose your audio",
   browse: "Browse files",
@@ -84,6 +220,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
   const t = { ...ENGLISH, ...overrides };
   let engine, result, player, file;
   let controller, exportController, busy = false, exporting = false, frame = 0, generation = 0, destroyed = false, duration = 0;
+  let lastProgressPaint = 0;
   const urls = /* @__PURE__ */ new Set(), timers = /* @__PURE__ */ new Set();
   const el = (tag, text, cls) => {
     const node = document.createElement(tag);
@@ -250,9 +387,10 @@ function mountStudio(root2, overrides = {}, options = {}) {
     formatButtons.forEach((b) => b.disabled = true);
     exportStatus.textContent = t.encoding;
     try {
-      const blob = await exportAudio(result[selectedStem], format, { signal: exportController.signal, workerUrl: options.exportWorkerUrl, onProgress: (f) => {
-        exportStatus.textContent = `${t.encoding} \xB7 ${number(f * 100, 0)}%`;
-      } });
+      const stem = result[selectedStem], onProgress = (f) => {
+        if (!destroyed) exportStatus.textContent = `${t.encoding} \xB7 ${number(f * 100, 0)}%`;
+      };
+      const blob = format === "wav" ? await encodeWavAsync(stem.channels, stem.sampleRate, exportController.signal, onProgress) : await exportAudio(stem, format, { signal: exportController.signal, workerUrl: options.exportWorkerUrl, onProgress });
       if (!destroyed && dialog.open) {
         download(blob, `${safeFilename(file?.name)}_${selectedStem}.${format}`);
         dialog.close();
@@ -264,7 +402,13 @@ function mountStudio(root2, overrides = {}, options = {}) {
       formatButtons.forEach((b) => b.disabled = false);
     }
   };
+  let lastProgressStage = "";
   const report = (event) => {
+    if (destroyed) return;
+    const now = performance.now();
+    if (event.stage === lastProgressStage && !event.warning && event.progress !== 1 && now - lastProgressPaint < 100) return;
+    lastProgressPaint = now;
+    lastProgressStage = event.stage;
     if (event.warning && /unavailable|quota/.test(event.warning)) {
       firstRun.textContent = t.cacheWarning;
     }
@@ -289,15 +433,20 @@ function mountStudio(root2, overrides = {}, options = {}) {
         value.dispose();
         return;
       }
-      showResults(value);
+      await showResults(value, controller.signal);
       status.textContent = t.complete;
       retry.hidden = true;
       void updateStorage();
     } catch (error) {
       if (!destroyed) {
-        const code = error instanceof Error && "code" in error ? String(error.code) : "";
-        status.textContent = range && code === "UNSUPPORTED" ? t.rangeBrowser : messages[code] ?? t.failed;
-        if (code === "DURATION" && duration > 240) showRange();
+        if (controller.signal.aborted) {
+          await clearResults();
+          status.textContent = t.canceled;
+        } else {
+          const code = error instanceof Error && "code" in error ? String(error.code) : "";
+          status.textContent = range && code === "UNSUPPORTED" ? t.rangeBrowser : messages[code] ?? t.failed;
+          if (code === "DURATION" && duration > 240) showRange();
+        }
       }
     } finally {
       if (!destroyed) {
@@ -374,10 +523,23 @@ function mountStudio(root2, overrides = {}, options = {}) {
     void process({ start, duration: end - start });
   };
   retry.onclick = () => void updateFile(file);
-  cancel.onclick = () => controller?.abort();
-  function showResults(value) {
+  cancel.onclick = () => {
+    if (exporting) exportController?.abort();
+    else controller?.abort();
+  };
+  async function showResults(value, signal) {
+    const volumes = { vocals: 1, instrumental: 1 }, muted = { vocals: false, instrumental: false };
+    const ensurePlayer = () => {
+      if (!player) {
+        player = new SynchronizedPlayer(value);
+        for (const name of ["vocals", "instrumental"]) {
+          player.volume(name, volumes[name]);
+          player.mute(name, muted[name]);
+        }
+      }
+      return player;
+    };
     result = value;
-    player = new SynchronizedPlayer(value);
     output.hidden = false;
     const heading2 = el("div", void 0, "results-heading"), both = el("button", t.both), zip = el("button", t.zip);
     heading2.append(el("h2", t.results), both, zip);
@@ -390,7 +552,8 @@ function mountStudio(root2, overrides = {}, options = {}) {
     };
     const playback = async (name) => {
       try {
-        if (!player) return;
+        if (!result || busy || destroyed) return;
+        ensurePlayer();
         if (name === "both") {
           if (player.isPlaying("vocals") && player.isPlaying("instrumental")) player.pause();
           else await player.play("both");
@@ -404,13 +567,31 @@ function mountStudio(root2, overrides = {}, options = {}) {
     };
     both.onclick = () => void playback("both");
     zip.onclick = async () => {
+      if (busy || exporting || destroyed) return;
+      exporting = true;
+      setBusy(true);
       zip.disabled = true;
+      exportController = new AbortController();
+      status.textContent = t.encoding;
       try {
-        download(await value.exportZip(file?.name), safeFilename(file?.name) + "_stems.zip");
+        const blob = await zipWavStems(value, safeFilename(file?.name), exportController.signal, (fraction) => {
+          if (!destroyed) {
+            progress.value = fraction;
+            status.textContent = `${t.encoding} \xB7 ${number(fraction * 100, 0)}%`;
+          }
+        });
+        if (!destroyed) {
+          download(blob, safeFilename(file?.name) + "_stems.zip");
+          status.textContent = t.complete;
+        }
       } catch {
-        status.textContent = t.exportError;
+        if (!destroyed) status.textContent = exportController.signal.aborted ? t.exportCanceled : t.exportError;
       } finally {
-        zip.disabled = false;
+        exporting = false;
+        if (!destroyed) {
+          setBusy(false);
+          zip.disabled = false;
+        }
       }
     };
     for (const name of ["vocals", "instrumental"]) {
@@ -422,11 +603,13 @@ function mountStudio(root2, overrides = {}, options = {}) {
       title.append(el("h3", t[name]), el("small", t[name === "vocals" ? "vocalsHint" : "instrumentalHint"]));
       const clock = el("span", `0:00 / ${time(value[name].duration)}`, "track-clock");
       rowHead.append(glyph, title, clock);
+      await yieldToBrowser();
+      signal.throwIfAborted();
       const canvas = el("canvas");
       canvas.width = 1200;
       canvas.height = 144;
       canvas.setAttribute("aria-label", `${t[name]} ${t.waveform}`);
-      const peaks = waveformPeaks(value[name].channels, 400), ctx = canvas.getContext("2d"), layers = [document.createElement("canvas"), document.createElement("canvas")];
+      const peaks = await waveformPeaksAsync(value[name].channels, 400, signal), ctx = canvas.getContext("2d"), layers = [document.createElement("canvas"), document.createElement("canvas")];
       const colors = ["#36343f", name === "vocals" ? "#c9acff" : "#87d9ce"];
       for (const [index, layer] of layers.entries()) {
         layer.width = 1200;
@@ -464,37 +647,56 @@ function mountStudio(root2, overrides = {}, options = {}) {
       volume.step = ".01";
       volume.value = "1";
       volume.setAttribute("aria-label", `${t[name]} ${t.volume}`);
-      volume.oninput = () => player?.volume(name, Number(volume.value));
+      volume.oninput = () => {
+        volumes[name] = Number(volume.value);
+        player?.volume(name, volumes[name]);
+      };
       const mute = el("button", t.mute, "mute-button");
       mute.setAttribute("aria-pressed", "false");
       mute.onclick = () => {
         const active = mute.getAttribute("aria-pressed") !== "true";
+        muted[name] = active;
         mute.setAttribute("aria-pressed", String(active));
         player?.mute(name, active);
       };
       const volumeGroup = el("div", void 0, "volume-group");
       volumeGroup.append(mute, volume);
-      seek.oninput = () => void player?.seek(Number(seek.value)).then(() => {
-        cancelAnimationFrame(frame);
-        tick();
-      }).catch(() => {
-        status.textContent = t.playbackError;
-      });
+      seek.oninput = () => {
+        if (!result || busy || destroyed) return;
+        try {
+          void ensurePlayer().seek(Number(seek.value)).then(() => {
+            cancelAnimationFrame(frame);
+            tick();
+          }).catch(() => {
+            status.textContent = t.playbackError;
+          });
+        } catch {
+          status.textContent = t.playbackError;
+        }
+      };
+      let lastPixel = -1, lastTime = "";
       const draw = () => {
-        const seconds = player?.currentTime ?? 0, fraction = seconds / value[name].duration;
-        ctx.clearRect(0, 0, 1200, 144);
-        ctx.drawImage(layers[0], 0, 0);
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(0, 0, 1200 * fraction, 144);
-        ctx.clip();
-        ctx.drawImage(layers[1], 0, 0);
-        ctx.restore();
-        ctx.fillStyle = colors[1];
-        ctx.fillRect(Math.min(1198, 1200 * fraction), 0, 2, 144);
-        clock.textContent = `${time(seconds)} / ${time(value[name].duration)}`;
+        const seconds = player?.currentTime ?? 0, fraction = seconds / value[name].duration, pixel = Math.min(1198, Math.floor(1200 * fraction));
+        if (pixel !== lastPixel) {
+          lastPixel = pixel;
+          ctx.clearRect(0, 0, 1200, 144);
+          ctx.drawImage(layers[0], 0, 0);
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(0, 0, 1200 * fraction, 144);
+          ctx.clip();
+          ctx.drawImage(layers[1], 0, 0);
+          ctx.restore();
+          ctx.fillStyle = colors[1];
+          ctx.fillRect(pixel, 0, 2, 144);
+        }
+        const label = `${time(seconds)} / ${time(value[name].duration)}`;
+        if (label !== lastTime) {
+          lastTime = label;
+          clock.textContent = label;
+          seek.setAttribute("aria-valuetext", label);
+        }
         seek.value = String(seconds);
-        seek.setAttribute("aria-valuetext", `${time(seconds)} / ${time(value[name].duration)}`);
         play.textContent = player?.isPlaying(name) ? t.pause : t.play;
         row.dataset.playing = String(player?.isPlaying(name) ?? false);
       };

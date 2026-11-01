@@ -23,7 +23,7 @@ test('real job flow retries aria2 with fresh native arguments and retains settin
   });
   api.initialize({ useAria2: true, cookieMode: 'none', downloadArchive: false });
   // File existence validation remains active, even with the process stub.
-  assert.ok(fs.existsSync(path.resolve(__dirname, '../resources/bin/deno.exe')));
+  assert.ok(fs.existsSync(api.resource('deno.exe')));
   await api.invoke('download:start', { url: 'https://video.test/watch', title: 'Test', kind: 'video', format: '299+140/best' });
   await done;
   assert.equal(calls.length, 3);
@@ -46,9 +46,11 @@ test('real job flow retries aria2 with fresh native arguments and retains settin
   assert.equal(events.filter(event => event.type === 'failed').length, 1);
 });
 
-test('inspection and downloads explicitly use the packaged JS runtime', () => {
-  const api = loadMain({ directory: os.tmpdir() });
+test('inspection and downloads explicitly use the packaged JS runtime', t => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'zenith-runtime-test-'));
+  t.after(() => fs.rmSync(directory, {recursive:true,force:true}));
+  const api = loadMain({ directory });
   api.initialize({});
   const args = api.baseArgs();
-  assert.equal(args[args.indexOf('--js-runtimes') + 1], `deno:${path.resolve(__dirname, '../resources/bin/deno.exe')}`);
+  assert.equal(args[args.indexOf('--js-runtimes') + 1], `deno:${api.resource('deno.exe')}`);
 });

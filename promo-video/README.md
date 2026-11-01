@@ -1,54 +1,24 @@
-# Remotion video
+# ZenithW promotional video
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+The separate Remotion/React project for ZenithW promotional compositions. It is not loaded by the website or included in the Windows app. Web **17.0** is documented in the [main project](../README.md); compositions and rendered videos have their own lifecycle.
 
-Welcome to your Remotion project!
+## Local commands
 
-## Commands
-
-**Install Dependencies**
-
-```console
-npm i --loglevel=error
-```
-
-**Start Preview**
-
-```console
+```sh
+npm ci --ignore-scripts
 npm run dev
+npm run lint
+npm run build
 ```
 
-**Render video**
+`dev` opens Remotion Studio. `lint` runs ESLint and TypeScript. `build` creates a browser bundle in the ignored `build/` directory; it does not render video. For rendering, use the installed CLI with your composition ID and output path; see the [render documentation](https://www.remotion.dev/docs/cli/render).
 
-```console
-npx remotion render
-```
+## Versions and security
 
-**Upgrade Remotion**
+Remotion packages are aligned to **4.0.539**. Zod is overridden to **4.6.7** to avoid [GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5). Remotion warns that it expects Zod 4.5.4; clean install, lint/types and bundling pass with the patched override. A full render has not been validated. Keep Remotion packages aligned when updating.
 
-```console
-npx remotion upgrade
-```
+The npm audit reports no high/critical findings, with 12 moderate dependency-path findings remaining. See the [audit report](../docs/full-code-audit-2026-11-02.md) for scope and limitations. Update the lockfile with dependencies; do not commit generated bundles or rendered media.
 
-## Docs
+## Licensing
 
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+The package remains private and marked `UNLICENSED`. Dependencies retain their own licenses. Review the [Remotion license](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md) for organizational/commercial use. The main project's [third-party notices](../THIRD_PARTY_NOTICES.md) cover separately distributed components.

@@ -81,3 +81,4 @@ desktop/store/identity.json
 .playwright-mcp/
 .venv-security/
 zenithw-promo/out/
+promo-video/build/
