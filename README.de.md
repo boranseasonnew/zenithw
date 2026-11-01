@@ -10,13 +10,20 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/WEB-v17.0-222222?style=for-the-badge" alt="Web v17.0">
-  <img src="https://img.shields.io/badge/WINDOWS-v4.2.0-222222?style=for-the-badge" alt="Windows v4.2.0">
-  <img src="https://img.shields.io/badge/ANDROID-v2.4.1-222222?style=for-the-badge" alt="Android v2.4.1">
-  <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-555555?style=for-the-badge" alt="AGPL-3.0-only">
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=electron&amp;color=2563EB" alt="Windows latest release"></a>
+  <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
 </p>
 
-[English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md)
+<p align="center">
+  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=PC%20downloads&amp;logo=github&amp;color=7C3AED" alt="PC GitHub release asset downloads, all releases"></a>
+  <a href="https://github.com/boranseasonnew/zenithw-android/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw-android/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android%20downloads&amp;logo=android&amp;color=2E7D32" alt="Android GitHub release asset downloads, all releases"></a>
+</p>
+
+<p align="center"><sub>Die Zähler summieren Dateidownloads aller GitHub-Veröffentlichungen, keine einzelnen Nutzer oder Microsoft-Store-Installationen.</sub></p>
+
+[English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
 Web v17.0 · ZenithW Desktop v4.2.0 · Android v2.4.1
 
