@@ -19,8 +19,8 @@ for(const file of walk(frontend).filter(file=>file.endsWith('.html'))) {
  let source=readFileSync(file,'utf8');
  if(/data-static-language="(?:en|de|fr|ru|vi|zh|ja)"/.test(source))continue;
  source=source.replace(/\s*<!-- generated community footer -->[\s\S]*?<!-- end generated community footer -->/g,'').replace(/\s*<!-- generated community updates -->[\s\S]*?<!-- end generated community updates -->/g,'');
- // Keep original social links intact; this small shared footer also works on pages without one.
- if(telegram) {
+ // Keep the URL-focused homepage free of extra links; retain the footer on other pages.
+ if(telegram && !/<body\b[^>]*\bclass="[^"]*\bhome-page\b/.test(source)) {
   const footer=`\n<!-- generated community footer --><footer class="site-community-footer" data-community="footer"><a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.instagram.com/zenithwonline/" target="_blank" rel="noopener noreferrer">Instagram</a><a class="telegram-link" href="${telegram}" target="_blank" rel="noopener noreferrer">${icon}<span ${field('Join Telegram')}>Telegram’a katıl</span></a></footer><!-- end generated community footer -->\n`;
   source=source.replace('</body>',footer+'</body>');
   if(/class="updates-page"/.test(source))source=source.replace('</main>',`<!-- generated community updates --><p class="telegram-changelog"><a href="${telegram}" target="_blank" rel="noopener noreferrer" ${field('Follow updates on Telegram')}>Güncellemeleri Telegram’da takip et</a></p><!-- end generated community updates -->\n</main>`);

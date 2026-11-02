@@ -107,7 +107,8 @@ test('Telegram links on all public/private pages use the shared URL and safe new
  for(const file of walk(join(root,'frontend')).filter(file=>file.endsWith('.html'))){
   const source=readFileSync(file,'utf8');
   if (/<meta\b[^>]*http-equiv="refresh"/i.test(source)) continue; // Redirect aliases have no site footer.
-  assert.ok(source.includes('data-community="footer"'),file);
+  if (/<body\b[^>]*\bclass="[^"]*\bhome-page\b/.test(source)) assert.ok(!source.includes('data-community="footer"'),file);
+  else assert.ok(source.includes('data-community="footer"'),file);
   for(const match of source.matchAll(/<a\b[^>]*href="https:\/\/t\.me\/[^>]+>/g)){
    assert.ok(match[0].includes('href="'+config.telegram+'"'),file);assert.ok(match[0].includes('target="_blank"'));assert.ok(match[0].includes('rel="noopener noreferrer"'));
   }

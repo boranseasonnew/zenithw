@@ -27,7 +27,7 @@ try{
    const prefix=language==='tr'?'':language+'/';
    await page.goto('http://127.0.0.1:8770/'+prefix);
    assert.equal(await page.locator('#bbTools').textContent(),label);
-   assert.equal(await page.locator('#homeStatusTxt,.discovery,#homeMediaTools').count(),0);
+   assert.equal(await page.locator('#homeStatusTxt,.discovery,#homeMediaTools,.site-community-footer').count(),0);
    assert.equal(await page.locator('.bottom-bar a[href*=remux],.bottom-bar a[href*=convert]').count(),0);
    assert.equal(await page.locator('#urlInput').isVisible(),true);
    await page.evaluate(()=>window.scrollTo(0,500));
