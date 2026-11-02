@@ -6,19 +6,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 
-APP_PATH = Path(__file__).resolve().parents[1] / "app.py"
-APP_TREE = ast.parse(APP_PATH.read_text(encoding="utf-8"))
 
 
-def load_function(name, namespace):
-    node = next(
-        item for item in APP_TREE.body
-        if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)) and item.name == name
-    )
-    module = ast.Module(body=[node], type_ignores=[])
-    exec(compile(module, str(APP_PATH), "exec"), namespace)
-    return namespace[name]
 
+
+from source_support import APP_PATH, APP_SOURCE, APP_TREE, load_function, function_source
 
 class FakeApp:
     @staticmethod

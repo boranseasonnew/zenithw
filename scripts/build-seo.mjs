@@ -90,37 +90,10 @@ for (const path of ['privacy.html', 'terms.html', 'dmca.html']) {
   write(path, source);
 }
 
-const homeBlock = `<!-- generated discovery content -->
-<section class="discovery" aria-labelledby="discovery-title" lang="tr">
-  <span class="guide-kicker">ZENITHW / WEB · ANDROID · WINDOWS</span>
-  <h1 id="discovery-title">Ücretsiz video ve ses indirici.</h1>
-  <p class="discovery-lead">TikTok, Instagram, X, Reddit, Pinterest ve SoundCloud gibi desteklenen kaynaklardan video veya ses kaydet. Bağlantını yukarıya yapıştır, uygun modu seç ve dosyanı indir.</p>
-  <div class="discovery-platforms"><a href="/app">Android uygulaması ↗</a><a href="/pc-app">Windows uygulaması ↗</a><a href="/convert">Video ve ses dönüştür ↗</a><a href="/remux">Kayıpsız remux ↗</a><a href="/typing">Zenith Type ↗</a></div>
-  <section class="discovery-how"><h2>Nasıl kullanılır?</h2><ol class="guide-steps"><li>Profil adresi yerine kaydetmek istediğin paylaşımın bağlantısını kopyala.</li><li>Bağlantıyı yapıştırıp devam et. Video ve ses için otomatik, yalnızca ses için ses modunu kullan.</li><li>İndirme planını kontrol et ve indir. Kullanılabilir kalite, kaynak paylaşımın sunduğu akışlara bağlıdır.</li></ol></section>
-  <div class="discovery-heading"><h2>İlk bağlantından son dosyana.</h2><a href="/guides">Tüm rehberler ↗</a></div>
-  ${cards('tr')}
-  <section class="discovery-faq"><h2>Sık sorulan sorular</h2>
-    <details><summary>ZenithW ücretsiz mi, hesap gerekiyor mu?</summary><p>Web araçları ücretsizdir ve ZenithW hesabı açmanı gerektirmez. Kaynak platformun erişim kısıtları yine geçerlidir.</p></details>
-    <details><summary>YouTube bağlantıları webde çalışıyor mu?</summary><p>YouTube indirmeleri şu anda web sürümünde kapalıdır. <a href="/app">Android</a> veya <a href="/pc-app">Windows</a> uygulamasında cihaz bağlantın üzerinden deneyebilirsin. Erişim yine videoya ve kaynak koşullarına bağlıdır.</p></details>
-    <details><summary>Özel veya silinmiş paylaşımlar indirilebilir mi?</summary><p>Kaynağa erişilemiyorsa dosya hazırlanamaz. Tarayıcında açık olan hesap, oturumunu otomatik olarak web sunucusuna aktarmaz.</p></details>
-    <details><summary>Dönüştürme ile remux arasındaki fark ne?</summary><p>Remux uyumlu akışları yeniden kodlamadan taşır. Farklı bir codec gerektiğinde dönüştürme kullanılır. <a href="/guides/convert-vs-remux">Format ve uyumluluk rehberini oku.</a></p></details>
-  </section>
-  <footer class="guide-footer"><span>Bağımsız, reklamsız ve açık kaynak.</span><nav aria-label="Proje ve destek"><a href="/about">Hakkında</a><a href="/about/privacy">Gizlilik</a><a href="/about/terms">Koşullar</a><a href="/support">İletişim</a><a href="/updates">Güncellemeler</a><a href="https://www.instagram.com/zenithwonline/" rel="noopener noreferrer">Instagram ↗</a></nav></footer>
-</section>
-<!-- end generated discovery content -->`;
 let homepage = read('index.html');
-if (homepage.includes('<!-- generated discovery content -->')) {
-  homepage = homepage.replace(/<!-- generated discovery content -->[\s\S]*?<!-- end generated discovery content -->/, homeBlock);
-} else {
-  homepage = homepage.replace('<!-- SUPPORTED SERVICES POPOVER -->', homeBlock + '\n\n<!-- SUPPORTED SERVICES POPOVER -->');
-}
-if (!homepage.includes('href="/guides.css"') && !homepage.includes('/cache-assets/guides.')) homepage = homepage.replace('</head>', '<link rel="stylesheet" href="/guides.css">\n</head>');
-homepage = homepage.replace('id="urlInput" data-i18n-ph=', 'id="urlInput" aria-label="Video veya ses paylaşım bağlantısı" data-i18n-ph=');
-if (!homepage.includes('<main id="home-main">')) {
-  homepage = homepage.replace('<div class="page">', '<main id="home-main">\n<div class="page">');
-  homepage = homepage.replace('<!-- end generated discovery content -->', '<!-- end generated discovery content -->\n</main>');
-}
-write('index.html', homepage);
+homepage = homepage.replace(/<!-- generated discovery content -->[\s\S]*?<!-- end generated discovery content -->/, '');
+if (!homepage.includes('class="home-title"')) homepage=homepage.replace('<main id="home-main">','<main id="home-main">\n<h1 class="home-title">Ücretsiz video ve ses indirici.</h1>');
+write('index.html',homepage);
 
 // Canonical URLs are also used in ordinary, crawlable navigation.
 for (const file of walk(frontend).filter(file => file.endsWith('.html'))) {

@@ -1,3 +1,4 @@
+from source_support import read_frontend_source
 """Contracts for the quick download profiles exposed by the frontend."""
 
 import ast
@@ -6,17 +7,13 @@ import threading
 import unittest
 
 
+from source_support import APP_PATH, APP_SOURCE, APP_TREE, load_function, function_source
+
 ROOT = Path(__file__).resolve().parents[2]
-APP_SOURCE = (ROOT / "backend" / "app.py").read_text(encoding="utf-8")
-FRONTEND_SOURCE = (ROOT / "frontend" / "app.d4596317c4a7.js").read_text(encoding="utf-8")
+FRONTEND_SOURCE = read_frontend_source()
 SETTINGS_SOURCE = (ROOT / "frontend" / "settings.html").read_text(encoding="utf-8")
 
 
-def load_function(name, namespace):
-    tree = ast.parse(APP_SOURCE)
-    node = next(item for item in tree.body if isinstance(item, ast.FunctionDef) and item.name == name)
-    exec(compile(ast.Module(body=[node], type_ignores=[]), "app.py", "exec"), namespace)
-    return namespace[name]
 
 
 class DownloadProfileContractTests(unittest.TestCase):

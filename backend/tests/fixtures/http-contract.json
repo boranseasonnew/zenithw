@@ -1,0 +1,180 @@
+{
+  "0": {
+    "method": "get",
+    "url": "/",
+    "input": null,
+    "status": 200,
+    "json": {
+      "message": "This is an API endpoint. Visit zenithw.space for the web interface.",
+      "service": "zenithw-api",
+      "status": "ok"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "1": {
+    "method": "get",
+    "url": "/health",
+    "input": null,
+    "status": 204,
+    "json": null,
+    "body": "",
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "2": {
+    "method": "get",
+    "url": "/robots.txt",
+    "input": null,
+    "status": 200,
+    "json": null,
+    "body": "User-agent: *\nDisallow: /\n",
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "3": {
+    "method": "get",
+    "url": "/does-not-exist",
+    "input": null,
+    "status": 404,
+    "json": {
+      "error": "Not Found"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "4": {
+    "method": "post",
+    "url": "/info",
+    "input": {},
+    "status": 400,
+    "json": {
+      "error": "URL required"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "5": {
+    "method": "post",
+    "url": "/info",
+    "input": {
+      "url": "http://127.0.0.1/private"
+    },
+    "status": 400,
+    "json": {
+      "error": "Invalid or disallowed URL."
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "6": {
+    "method": "post",
+    "url": "/download",
+    "input": {},
+    "status": 400,
+    "json": {
+      "error": "URL required"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "7": {
+    "method": "post",
+    "url": "/thumbnail",
+    "input": {},
+    "status": 400,
+    "json": {
+      "error": "URL required"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "8": {
+    "method": "post",
+    "url": "/cancel",
+    "input": {},
+    "status": 400,
+    "json": {
+      "error": "download_id required"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "9": {
+    "method": "post",
+    "url": "/cancel",
+    "input": {
+      "download_id": "bad"
+    },
+    "status": 400,
+    "json": {
+      "error": "Invalid download_id"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  },
+  "10": {
+    "method": "post",
+    "url": "/convert",
+    "input": null,
+    "status": 400,
+    "json": {
+      "error": "File required"
+    },
+    "body": null,
+    "headers": {
+      "X-Robots-Tag": "noindex, nofollow",
+      "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store"
+    }
+  }
+}

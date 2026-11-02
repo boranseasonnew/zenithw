@@ -6,9 +6,8 @@ import unittest
 from pathlib import Path
 
 
-APP_PATH = Path(__file__).resolve().parents[1] / "app.py"
-APP_SOURCE = APP_PATH.read_text(encoding="utf-8")
-APP_TREE = ast.parse(APP_SOURCE, filename=str(APP_PATH))
+from source_support import APP_PATH, APP_SOURCE, APP_TREE, load_function, function_source
+
 FRONTEND_DIR = APP_PATH.parents[1] / "frontend"
 CONVERT_PAGE = (FRONTEND_DIR / "convert.html").read_text(encoding="utf-8")
 REMUX_PAGE = (FRONTEND_DIR / "remux.html").read_text(encoding="utf-8")
@@ -23,12 +22,6 @@ def assigned_set(name):
     return ast.literal_eval(node.value)
 
 
-def function_source(name):
-    node = next(
-        item for item in APP_TREE.body
-        if isinstance(item, ast.FunctionDef) and item.name == name
-    )
-    return ast.get_source_segment(APP_SOURCE, node)
 
 
 class ConverterFormatContractTests(unittest.TestCase):

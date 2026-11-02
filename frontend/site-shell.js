@@ -7,6 +7,19 @@
     fr:{home:'accueil',history:'historique',updates:'nouveautés',convert:'convertir',more:'plus',remux:'remux',settings:'paramètres',about:'à propos',support:'soutenir',privacy:'confidentialité',terms:'conditions',credits:'crédits',status:'statut'},
     de:{home:'start',history:'verlauf',updates:'updates',convert:'konvertieren',more:'mehr',remux:'remux',settings:'einstellungen',about:'über uns',support:'unterstützen',privacy:'datenschutz',terms:'bedingungen',credits:'danksagungen',status:'status'}
   };
+
+  labels.ru = {"home": "главная", "history": "история", "updates": "обновления", "convert": "конвертация", "more": "ещё", "remux": "remux", "settings": "настройки", "about": "о проекте", "support": "поддержать", "privacy": "конфиденциальность", "terms": "условия", "credits": "участники", "status": "статус"};
+  labels.vi = {"home": "trang chủ", "history": "lịch sử", "updates": "cập nhật", "convert": "chuyển đổi", "more": "thêm", "remux": "remux", "settings": "cài đặt", "about": "giới thiệu", "support": "ủng hộ", "privacy": "riêng tư", "terms": "điều khoản", "credits": "đóng góp", "status": "trạng thái"};
+  labels.zh = {"home": "首页", "history": "历史", "updates": "更新", "convert": "转换", "more": "更多", "remux": "重新封装", "settings": "设置", "about": "关于", "support": "支持", "privacy": "隐私", "terms": "条款", "credits": "贡献者", "status": "状态"};
+  labels.ja = {"home": "ホーム", "history": "履歴", "updates": "更新", "convert": "変換", "more": "その他", "remux": "リマックス", "settings": "設定", "about": "概要", "support": "支援", "privacy": "プライバシー", "terms": "利用規約", "credits": "貢献者", "status": "状況"};
+  Object.assign(labels.tr,{"tools": "araçlar", "vocal": "vokal ayırıcı", "typing": "Zenith Type"});
+  Object.assign(labels.en,{"tools": "tools", "vocal": "vocal separator", "typing": "Zenith Type"});
+  Object.assign(labels.fr,{"tools": "outils", "vocal": "séparateur vocal", "typing": "Zenith Type"});
+  Object.assign(labels.de,{"tools": "werkzeuge", "vocal": "gesang trennen", "typing": "Zenith Type"});
+  Object.assign(labels.ru,{"tools": "инструменты", "vocal": "отделение вокала", "typing": "Zenith Type"});
+  Object.assign(labels.vi,{"tools": "công cụ", "vocal": "tách giọng hát", "typing": "Zenith Type"});
+  Object.assign(labels.zh,{"tools": "工具", "vocal": "人声分离", "typing": "Zenith Type"});
+  Object.assign(labels.ja,{"tools": "ツール", "vocal": "ボーカル分離", "typing": "Zenith Type"});
   function currentLang(){
     if(window.ZWLanguage)return ZWLanguage.current;
     try{const saved=localStorage.getItem('zw_lang');if(labels[saved])return saved;}catch(e){}
@@ -14,6 +27,7 @@
     return labels[browser]?browser:'tr';
   }
   const icon={
+    tools:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
     home:'<path d="M12 3v13M5 16l7 5 7-5" stroke-linecap="round" stroke-linejoin="round"/>',
     history:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
     updates:'<path d="M4 20L15.5 8.5M13.5 6.5l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 3.5v4M4.5 5.5h4M18.5 14.5v5M16 17h5M19 3v2M18 4h2" stroke-linecap="round"/>',
@@ -36,25 +50,41 @@
     }else{host.innerHTML=`
       <nav class="bottom-bar" aria-label="ZenithW">
         <a class="bar-btn ${active==='home'?'active':''}" href="/" aria-current="${active==='home'?'page':'false'}">${svg('home')}<span id="bbSave"></span></a>
-        <a class="bar-btn ${active==='remux'?'active':''}" href="/remux.html" aria-current="${active==='remux'?'page':'false'}">${svg('remux')}<span id="bbRemux"></span></a>
+        <button class="bar-btn ${['remux','convert','audio-separator','typing'].includes(active)?'active':''}" type="button" id="toolsNavButton" popovertarget="siteToolsMenu" aria-controls="siteToolsMenu">${svg('tools')}<span id="bbTools"></span></button>
         <a class="bar-btn ${active==='settings'?'active':''}" href="/settings.html" aria-current="${active==='settings'?'page':'false'}">${svg('settings')}<span id="bbSettings"></span></a>
         <a class="bar-btn ${active==='support'?'active':''}" href="/support.html" aria-current="${active==='support'?'page':'false'}">${svg('support')}<span id="bbSupport"></span></a>
         <a class="bar-btn ${active==='updates'?'active':''}" href="/updates" aria-current="${active==='updates'?'page':'false'}">${svg('updates')}<span id="bbUpdates"></span></a>
         <a class="bar-btn mobile-extra ${active==='history'?'active':''}" href="/history.html" aria-current="${active==='history'?'page':'false'}">${svg('history')}<span id="bbHistoryMobile"></span></a>
-        <a class="bar-btn mobile-extra ${active==='convert'?'active':''}" href="/convert.html" aria-current="${active==='convert'?'page':'false'}">${svg('convert')}<span id="bbConvertMobile"></span></a>
         <a class="bar-btn mobile-extra ${active==='about'?'active':''}" href="/about" aria-current="${active==='about'?'page':'false'}">${svg('about')}<span id="bbAboutMobile"></span></a>
       </nav>
       <div class="more-popup" id="morePopup">
         <a class="more-item ${active==='history'?'active':''}" href="/history.html">${svg('history')}<span id="moreItemHistory"></span></a>
-        <a class="more-item ${active==='convert'?'active':''}" href="/convert.html">${svg('convert')}<span id="moreItemConvert"></span></a>
         <a class="more-item ${active==='about'?'active':''}" href="/about">${svg('about')}<span id="moreItemAbout"></span></a>
       </div>`;}
+  }
+  if(host && host.dataset.mode!=='info'){
+    const panel=document.createElement('div');panel.id='siteToolsMenu';panel.className='tools-popover';panel.setAttribute('popover','auto');
+    panel.innerHTML='<nav class="tools-list">'+[['vocal','/audio-separator'],['typing','/typing'],['remux','/remux'],['convert','/convert']].map(([key,path])=>'<a data-tool-label="'+key+'" data-tool-path="'+path+'" href="'+path+'"><span></span><b aria-hidden="true">↗</b></a>').join('')+'</nav>';
+    host.appendChild(panel);
+    const button=document.getElementById('toolsNavButton');
+    if(!('showPopover' in panel)){
+      panel.removeAttribute('popover');button.removeAttribute('popovertarget');
+      panel.hidden=true;button.addEventListener('click',()=>{panel.hidden=!panel.hidden;button.setAttribute('aria-expanded',String(!panel.hidden));});
+      document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){panel.hidden=true;button.setAttribute('aria-expanded','false');button.focus();}});
+      document.addEventListener('click',event=>{if(!panel.contains(event.target)&&!button.contains(event.target)){panel.hidden=true;button.setAttribute('aria-expanded','false');}});
+    }
   }
   if(window.ZWLanguage)ZWLanguage.onChange(applyShellLanguage);
   function applyShellLanguage(){
     const lang=currentLang(),copy=window.ZWLanguage?ZWLanguage.copy(labels,lang):(labels[lang]||labels.en);
-    const map={bbSave:'home',bbRemux:'remux',bbSettings:'settings',bbSupport:'support',bbUpdates:'updates',bbHistoryMobile:'history',bbConvertMobile:'convert',bbAboutMobile:'about',moreItemHistory:'history',moreItemConvert:'convert',moreItemAbout:'about'};
+    const map={bbTools:'tools',bbSave:'home',bbRemux:'remux',bbSettings:'settings',bbSupport:'support',bbUpdates:'updates',bbHistoryMobile:'history',bbConvertMobile:'convert',bbAboutMobile:'about',moreItemHistory:'history',moreItemConvert:'convert',moreItemAbout:'about'};
     Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=copy[key];});
+    const toolsPanel=document.getElementById('siteToolsMenu');if(toolsPanel)toolsPanel.setAttribute('aria-label',copy.tools);
+    document.querySelectorAll('[data-tool-label]').forEach(link=>{
+      link.querySelector('span').textContent=copy[link.dataset.toolLabel];
+      const path=link.dataset.toolPath;
+      link.href=window.ZWLanguage?ZWLanguage.path(path):path;
+    });
     document.querySelectorAll('[data-info-label]').forEach(el=>{el.textContent=copy[el.dataset.infoLabel]||el.dataset.infoLabel;});
     const aboutNav={
       tr:{

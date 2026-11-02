@@ -5,6 +5,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {waveformPeaksAsync} from '../shared/audio-preview.mjs';
 import {waveformPeaks} from '../frontend/vendor/lilith-engine/index.js';
+import {moduleSource} from './helpers/web-app-source.mjs';
 
 test('cooperative waveform preparation matches SDK peaks without changing PCM',async()=>{
  const a=Float32Array.from({length:100003},(_,i)=>Math.sin(i/13)),b=Float32Array.from(a,x=>-x*.8);
@@ -22,8 +23,8 @@ test('long preview preparation yields to other work and can be cancelled',async(
 });
 
 test('remux waits for explicit start and submits the chosen output without transcoding',async()=>{
- const source=readFileSync(new URL('../frontend/app.d4596317c4a7.js',import.meta.url),'utf8');
- const code=source.slice(source.indexOf("let remuxBusy="),source.indexOf('// ── CONVERT'));
+ const source=moduleSource('media-tools');
+ const code="let remuxBusy=false,remuxSourceFormat='',remuxFile=null;\n"+source.slice(source.indexOf('function renderRemuxSignal'),source.indexOf('// ── CONVERT'));
  const elements={remuxFormat:{value:'mp4'},remuxStart:{disabled:true}},jobs=[];
  const context=vm.createContext({FormData,Set,document:{getElementById:id=>elements[id]},window:{},
   validateToolFile:f=>!!f,clearToolError(){},showSelectedToolFile(){},toast(){},t:key=>key,

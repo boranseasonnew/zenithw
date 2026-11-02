@@ -65,6 +65,7 @@ for path in frontend.rglob('*.html'):
     if 'site-language.js' not in output and not re.search(r'/cache-assets/site-language\.[a-f0-9]+\.js',output):
         output=output.replace('<head>','<head>\n<link rel="stylesheet" href="/site-language.css">\n<script src="/site-language.js"></script>',1)
     output=re.sub(r'version\.js\?v=[0-9.]+', 'version.js?v='+version, output)
+    output=re.sub(r'src="/site-shell\.js(?:\?v=[^"]*)?"', 'src="/site-shell.js?v='+version+'-tools"', output)
     if output!=source:
         # Windows file scanners can briefly reject an otherwise writable file.
         for attempt in range(6):

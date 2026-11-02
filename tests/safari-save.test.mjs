@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
-const source=readFileSync(new URL('../frontend/app.d4596317c4a7.js',import.meta.url),'utf8');
-const fragment=source.slice(source.indexOf('function releasePendingBlob()'),source.indexOf('// ── FILENAME'));
+import {moduleSource} from './helpers/web-app-source.mjs';
+const source=moduleSource('save');
+const fragment=source.slice(source.indexOf('function releasePendingBlob()'));
 function setup(navigator={}){
  const nodes=new Map(),calls={opened:[],closed:[],downloads:0,confetti:0,messages:[]};
  const node=id=>{if(!nodes.has(id))nodes.set(id,{textContent:'',removeAttribute(name){delete this[name];},click(){calls.downloads++;void ctx.saveAction('download',{});}});return nodes.get(id);};

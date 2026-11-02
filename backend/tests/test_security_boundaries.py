@@ -18,33 +18,13 @@ from types import SimpleNamespace
 from urllib.parse import urlparse
 
 
-APP_PATH = Path(__file__).resolve().parents[1] / "app.py"
-APP_SOURCE = APP_PATH.read_text(encoding="utf-8")
-APP_TREE = ast.parse(APP_SOURCE, filename=str(APP_PATH))
 
 
-def load_function(name, namespace):
-    node = next(
-        item for item in APP_TREE.body
-        if isinstance(item, ast.FunctionDef) and item.name == name
-    )
-    # Route decorators belong to Flask, not the isolated function under test.
-    import copy
-    node = copy.deepcopy(node)
-    node.decorator_list = []
-    module = ast.Module(body=[node], type_ignores=[])
-    ast.fix_missing_locations(module)
-    exec(compile(module, str(APP_PATH), "exec"), namespace)
-    return namespace[name]
 
 
-def function_source(name):
-    node = next(
-        item for item in APP_TREE.body
-        if isinstance(item, ast.FunctionDef) and item.name == name
-    )
-    return ast.get_source_segment(APP_SOURCE, node)
 
+
+from source_support import APP_PATH, APP_SOURCE, APP_TREE, load_function, function_source
 
 class OriginLockTests(unittest.TestCase):
     def test_production_cannot_enable_development_key_or_cors_overrides(self):

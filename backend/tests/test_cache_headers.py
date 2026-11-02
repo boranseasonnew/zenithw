@@ -1,5 +1,5 @@
 """Verify API cache protection without starting workers or contacting providers."""
-import ast
+from source_support import load_function
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -9,13 +9,7 @@ APP_PATH = ROOT / "backend/app.py"
 
 class ApiCacheHeadersTests(unittest.TestCase):
     def setUp(self):
-        tree = ast.parse(APP_PATH.read_text(encoding="utf-8"))
-        node = next(item for item in tree.body if isinstance(item, ast.FunctionDef)
-                    and item.name == "prevent_api_indexing")
-        node.decorator_list = []
-        namespace = {}
-        exec(compile(ast.Module(body=[node], type_ignores=[]), str(APP_PATH), "exec"), namespace)
-        self.apply_headers = namespace["prevent_api_indexing"]
+        self.apply_headers = load_function("prevent_api_indexing", {})
 
     def test_success_errors_and_token_transfers_never_enter_browser_or_cdn_cache(self):
         for status in (200, 204, 206, 304, 400, 403, 404, 410, 429, 500, 503):

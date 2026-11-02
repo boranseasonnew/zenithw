@@ -24,8 +24,4 @@ const optimizedHtml=html.replace('content="Separate vocals and music on your dev
 writeFileSync(new URL('audio-separator.html',frontend),optimizedHtml);
 // Keep the Media Tools hub and separator routes on the same localized template.
 writeFileSync(new URL('media-tools.html',frontend),html.replace('https://zenithw.space/audio-separator','https://zenithw.space/media-tools').replace('<title>AI Vocal Remover &amp; Audio Separator | ZenithW</title>','<title>Media Tools | ZenithW</title>').replace('<script type="module" src="/audio-tools.js"></script>','').replace('<div id="studio"></div>','<div id="studio"><section class="audio-card"><h2>AI Audio Separator</h2><a class="button" href="/audio-separator">Separate audio</a></section></div>'));
-const home=new URL('index.html',frontend);let index=readFileSync(home,'utf8');
-if(!index.includes('id="homeMediaTools"'))index=index.replace('</main>','<section class="home-media-tools" id="homeMediaTools"><h2>Media Tools</h2><a href="/audio-separator">AI Audio Separator <span aria-hidden="true">↗</span></a></section>\n</main>').replace('</head>','<link rel="stylesheet" href="/audio-tools-link.css">\n</head>');
-index=index.replace(/(<section[^>]+id="homeMediaTools"[\s\S]*?<a href=")\/media-tools/, '$1/audio-separator');
-writeFileSync(home,index);
 console.log('Lilith page and existing eight-language catalogs generated.');

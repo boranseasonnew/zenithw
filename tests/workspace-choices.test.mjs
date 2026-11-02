@@ -2,9 +2,10 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {test} from 'node:test';
 import vm from 'node:vm';
+import {moduleSource} from './helpers/web-app-source.mjs';
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8');
 test('native format selection and existing modal buttons update the same conversion target and reject unknown formats',()=>{
- const functionSource=read('frontend/app.d4596317c4a7.js').match(/function setConvFmt\(el\)\{[\s\S]*?\n\}/)[0];
+ const functionSource=moduleSource('media-tools').match(/function setConvFmt\(el\)\{[\s\S]*?\n\}/)[0];
  let renders=0,updates=0;const preview={textContent:''};
  const ctx=vm.createContext({convTargetFmt:'mp3',document:{querySelectorAll:()=>[],getElementById:()=>preview},renderConvPreflight:()=>renders++,_updateConvBtn:()=>updates++});
  vm.runInContext(functionSource,ctx);

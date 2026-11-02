@@ -1,3 +1,4 @@
+from source_support import read_frontend_source
 import unittest
 import re
 from pathlib import Path
@@ -20,7 +21,7 @@ class StandaloneToolPageTests(unittest.TestCase):
 
     def test_hosted_youtube_links_are_routed_to_device_apps(self):
         index = (FRONTEND / "index.html").read_text(encoding="utf-8")
-        app = (FRONTEND / "app.d4596317c4a7.js").read_text(encoding="utf-8")
+        app = read_frontend_source()
         runtime = (FRONTEND / "runtime-config.js").read_text(encoding="utf-8")
         docker_runtime = (FRONTEND.parent / "docker/runtime-config.js").read_text(encoding="utf-8")
 
@@ -71,10 +72,10 @@ class StandaloneToolPageTests(unittest.TestCase):
 
     def test_home_command_center_has_current_identity_and_modes(self):
         index = (FRONTEND / "index.html").read_text(encoding="utf-8")
-        app = (FRONTEND / "app.d4596317c4a7.js").read_text(encoding="utf-8")
+        app = read_frontend_source()
         self.assertIn('ZenithW', index)
-        self.assertIn('id="homeStatusTxt"', index)
-        self.assertIn('id="homeStatusTxt"', index)
+        self.assertNotIn('id="homeStatusTxt"', index)
+        self.assertNotIn('id="homeStatusTxt"', index)
         self.assertIn('id="modeAuto"', index)
         self.assertIn('id="modeAudio"', index)
         self.assertIn('id="modeMute"', index)
@@ -138,7 +139,7 @@ class StandaloneToolPageTests(unittest.TestCase):
 
     def test_converter_has_premium_standalone_workflow(self):
         source = (FRONTEND / "convert.html").read_text(encoding="utf-8")
-        app = next(FRONTEND.glob("app.*.js")).read_text(encoding="utf-8")
+        app = read_frontend_source()
         shell = (FRONTEND / "site-shell.css").read_text(encoding="utf-8")
         self.assertIn('class="theme-default tool-page convert-page"', source)
         self.assertIn('id="convFileInput"', source)

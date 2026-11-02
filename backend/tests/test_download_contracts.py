@@ -1,3 +1,4 @@
+from source_support import read_frontend_source
 """Characterization tests for downloader invariants without starting Flask.
 
 The production module starts background threads and installs socket guards at
@@ -19,31 +20,15 @@ from pathlib import Path
 from types import SimpleNamespace
 
 
-APP_PATH = Path(__file__).resolve().parents[1] / "app.py"
-APP_SOURCE = APP_PATH.read_text(encoding="utf-8")
-APP_TREE = ast.parse(APP_SOURCE, filename=str(APP_PATH))
+from source_support import APP_PATH, APP_SOURCE, APP_TREE, load_function, function_source
+
 FRONTEND_DIR = APP_PATH.parents[1] / "frontend"
 FRONTEND_APP_PATH = next(FRONTEND_DIR.glob("app.*.js"))
-FRONTEND_SOURCE = FRONTEND_APP_PATH.read_text(encoding="utf-8")
+FRONTEND_SOURCE = read_frontend_source()
 
 
-def load_function(name, namespace):
-    node = next(
-        item for item in APP_TREE.body
-        if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)) and item.name == name
-    )
-    module = ast.Module(body=[node], type_ignores=[])
-    ast.fix_missing_locations(module)
-    exec(compile(module, str(APP_PATH), "exec"), namespace)
-    return namespace[name]
 
 
-def function_source(name):
-    node = next(
-        item for item in APP_TREE.body
-        if isinstance(item, ast.FunctionDef) and item.name == name
-    )
-    return ast.get_source_segment(APP_SOURCE, node)
 
 
 def download_source():
@@ -83,9 +68,9 @@ class SourceHealthTests(unittest.TestCase):
             self.assertIn("youtube_app_required_response()", source)
 
     def test_proxy_fix_can_be_disabled_and_has_bounded_hops(self):
-        self.assertIn('if TRUST_PROXY:', APP_SOURCE)
+        self.assertIn('if settings.TRUST_PROXY:', APP_SOURCE)
         self.assertIn('PROXY_HOPS = _bounded_env_int("PROXY_HOPS", 1, 1, 8)', APP_SOURCE)
-        self.assertIn('x_for=PROXY_HOPS', APP_SOURCE)
+        self.assertIn('x_for=settings.PROXY_HOPS', APP_SOURCE)
 
     def test_client_ip_does_not_parse_raw_x_forwarded_for(self):
         source = function_source("get_client_ip")

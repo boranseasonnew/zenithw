@@ -44,6 +44,7 @@ jobs:
       - name: Audit web and desktop dependency locks
         run: |
           npm ci --ignore-scripts
+          npm run lint
           npm audit --audit-level=high
           npm audit --prefix desktop --audit-level=high
 
