@@ -203,7 +203,7 @@
   "this video is private and cannot be downloaded.": "该视频是私人视频，无法下载。",
   "this video is currently unavailable.": "该视频目前不可用。",
   "live streams are not currently supported.": "目前不支持直播。",
-  "this link or platform is not supported.": "不支持此链接或平台。",
+  "this link or platform is not supported.": "此链接中没有受支持的视频，或该网站暂不受支持。请使用单个视频的页面链接。",
   "the platform did not allow this download. try again later.": "该平台不允许此下载。稍后再试。",
   "a connection problem occurred. please try again.": "发生连接问题。请再试一次。",
   "the operation could not be completed. please try again.": "操作无法完成。请再试一次。",
@@ -2142,7 +2142,7 @@
   "tamamlandı!": "完成了！",
   "Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.": "流只会重新打包到选定的容器中；没有任何内容被重新编码。",
   "youtube videosu bulunamadı": "找不到 youtube 视频",
-  "bu bağlantı veya platform desteklenmiyor.": "不支持此链接或平台。",
+  "bu bağlantı veya platform desteklenmiyor.": "此链接中没有受支持的视频，或该网站暂不受支持。请使用单个视频的页面链接。",
   "link kopyala": "复制链接",
   "Daha iyi bir indirme deneyimi.": "更好的下载体验。",
   "paylaş": "分享",
@@ -3697,5 +3697,7 @@
   "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.": "我们重新检查了页面生成、语言链接、音频导出、本地重新封装以及错误情形。自动检查和浏览器回归通过，桌面端的队列与历史记录测试也已更新。这不代表每台手机速度相同，或所有网站都能成功下载。本次未在实体设备上验证真实 AI 模型，也未测试新的 Windows 安装包。<a href=\"/audio-separator\">试用音频分离</a>，或<a href=\"/typing\">进入 Zenith Type</a>。",
   "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.": "我们重新检查了页面生成、语言链接、音频导出、本地重新封装以及错误情形。自动检查和浏览器回归通过，桌面端的队列与历史记录测试也已更新。这不代表每台手机速度相同，或所有网站都能成功下载。本次未在实体设备上验证真实 AI 模型，也未测试新的 Windows 安装包。<a href=\"/audio-separator\">试用音频分离</a>，或<a href=\"/typing\">进入 Zenith Type</a>。",
   "2 kasım 2026": "2026年11月2日",
-  "November 2, 2026": "2026年11月2日"
+  "November 2, 2026": "2026年11月2日",
+  "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "此链接中没有受支持的视频，或该网站暂不受支持。请使用单个视频的页面链接。",
+  "Enter a valid video page link starting with https:// or http://.": "请输入以 https:// 或 http:// 开头的有效视频页面链接。"
 }

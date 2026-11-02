@@ -203,7 +203,7 @@
   "this video is private and cannot be downloaded.": "video này là riêng tư và không thể tải xuống.",
   "this video is currently unavailable.": "video này hiện không có sẵn.",
   "live streams are not currently supported.": "luồng trực tiếp hiện không được hỗ trợ.",
-  "this link or platform is not supported.": "liên kết hoặc nền tảng này không được hỗ trợ.",
+  "this link or platform is not supported.": "Liên kết này không có video được hỗ trợ hoặc trang web chưa được hỗ trợ. Hãy dùng liên kết trang của một video cụ thể.",
   "the platform did not allow this download. try again later.": "nền tảng không cho phép tải xuống này. thử lại sau.",
   "a connection problem occurred. please try again.": "đã xảy ra sự cố kết nối. vui lòng thử lại.",
   "the operation could not be completed. please try again.": "hoạt động không thể hoàn thành. vui lòng thử lại.",
@@ -2142,7 +2142,7 @@
   "tamamlandı!": "xong!",
   "Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.": "Các luồng chỉ được đóng gói lại vào vùng chứa đã chọn; không có gì được mã hóa lại.",
   "youtube videosu bulunamadı": "không tìm thấy video youtube",
-  "bu bağlantı veya platform desteklenmiyor.": "liên kết hoặc nền tảng này không được hỗ trợ.",
+  "bu bağlantı veya platform desteklenmiyor.": "Liên kết này không có video được hỗ trợ hoặc trang web chưa được hỗ trợ. Hãy dùng liên kết trang của một video cụ thể.",
   "link kopyala": "sao chép liên kết",
   "Daha iyi bir indirme deneyimi.": "Trải nghiệm tải xuống tốt hơn.",
   "paylaş": "chia sẻ",
@@ -3697,5 +3697,7 @@
   "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.": "Chúng tôi kiểm tra lại việc tạo trang, liên kết ngôn ngữ, xuất âm thanh, remux cục bộ và tình huống lỗi. Kiểm tra tự động và thử trên trình duyệt đều đạt; kiểm thử hàng đợi và lịch sử desktop cũng được cập nhật. Đây không phải cam kết tốc độ giống nhau trên mọi máy hay tải được từ mọi nguồn. Mô hình AI trên thiết bị thật và bộ cài Windows mới chưa được thử trong bản này. <a href=\"/audio-separator\">Thử tách âm thanh</a> hoặc <a href=\"/typing\">mở Zenith Type</a>.",
   "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.": "Chúng tôi kiểm tra lại việc tạo trang, liên kết ngôn ngữ, xuất âm thanh, remux cục bộ và tình huống lỗi. Kiểm tra tự động và thử trên trình duyệt đều đạt; kiểm thử hàng đợi và lịch sử desktop cũng được cập nhật. Đây không phải cam kết tốc độ giống nhau trên mọi máy hay tải được từ mọi nguồn. Mô hình AI trên thiết bị thật và bộ cài Windows mới chưa được thử trong bản này. <a href=\"/audio-separator\">Thử tách âm thanh</a> hoặc <a href=\"/typing\">mở Zenith Type</a>.",
   "2 kasım 2026": "2 tháng 11, 2026",
-  "November 2, 2026": "2 tháng 11, 2026"
+  "November 2, 2026": "2 tháng 11, 2026",
+  "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "Liên kết này không có video được hỗ trợ hoặc trang web chưa được hỗ trợ. Hãy dùng liên kết trang của một video cụ thể.",
+  "Enter a valid video page link starting with https:// or http://.": "Nhập liên kết trang video hợp lệ bắt đầu bằng https:// hoặc http://."
 }

@@ -5,6 +5,12 @@ from zenith.security.urls import is_instagram, is_pornhub, is_tiktok, is_youtube
 def classify_error(error_msg, url):
     """Map upstream/technical failures to stable codes safe for public clients."""
     es = str(error_msg or "").lower()
+    if es.strip() in ("url required", "invalid or disallowed url."):
+        return "invalid_url"
+    if "unsupported url" in es or es.strip() == "this platform is not supported.":
+        return "unsupported_url"
+    if es.strip() == "live streams are not currently supported.":
+        return "live_not_supported"
     if "playlist downloads are not supported" in es:
         return "playlist_not_supported"
     if "video too long" in es:
@@ -42,8 +48,6 @@ def classify_error(error_msg, url):
         # its page request is rejected. Keep the public response actionable
         # instead of exposing the generic retry-only message.
         return "platform_restricted"
-    if "unsupported url" in es:
-        return "unsupported_url"
     if "no video formats" in es or "requested format" in es:
         return "format_unavailable"
     if any(token in es for token in ("network", "connection", "403", "forbidden")):
@@ -62,6 +66,13 @@ def public_error_payload(error_msg, url):
         "error": PUBLIC_ERROR_MESSAGES[code],
         "error_code": code,
     }
+
+def validation_error_response(message):
+    payload = {"error": str(message)}
+    code = classify_error(message, "")
+    if code != "request_failed":
+        payload["error_code"] = code
+    return jsonify(payload), 400
 
 def is_cookie_configuration_error(error_text):
     """Distinguish cookie-file failures from YouTube's generic cookie advice.
@@ -150,6 +161,7 @@ PUBLIC_ERROR_MESSAGES = {
     "instagram_ratelimit": "Instagram is temporarily limiting requests. Please try again shortly.",
     "platform_restricted": "The platform did not allow this download. Please try again later.",
     "unsupported_url": "This link or platform is not supported.",
+    "invalid_url": "Enter a valid public video page URL starting with https:// or http://.",
     "network_error": "A connection problem occurred. Please try again.",
     "request_timeout": "The request took too long. Please try again.",
     "request_failed": "The request could not be completed. Please try again.",

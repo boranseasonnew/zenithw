@@ -196,7 +196,7 @@
   "this video is private and cannot be downloaded.": "dieses video ist privat und kann nicht heruntergeladen werden.",
   "this video is currently unavailable.": "dieses video ist derzeit nicht verfügbar.",
   "live streams are not currently supported.": "livestreams werden derzeit nicht unterstützt.",
-  "this link or platform is not supported.": "dieser link oder diese plattform wird nicht unterstützt.",
+  "this link or platform is not supported.": "Dieser Link enthält kein unterstütztes Video oder die Website wird nicht unterstützt. Verwende den Seitenlink eines einzelnen Videos.",
   "the platform did not allow this download. try again later.": "die plattform hat diesen download nicht zugelassen. versuche es später erneut.",
   "a connection problem occurred. please try again.": "ein verbindungsproblem ist aufgetreten. versuche es erneut.",
   "the operation could not be completed. please try again.": "der vorgang konnte nicht abgeschlossen werden. bitte versuche es erneut.",
@@ -2142,7 +2142,7 @@
   "tamamlandı!": "fertig!",
   "Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.": "Streams werden nur in den gewählten Container umgepackt; nichts wird neu kodiert.",
   "youtube videosu bulunamadı": "youtube-video nicht gefunden",
-  "bu bağlantı veya platform desteklenmiyor.": "dieser link oder diese plattform wird nicht unterstützt.",
+  "bu bağlantı veya platform desteklenmiyor.": "Dieser Link enthält kein unterstütztes Video oder die Website wird nicht unterstützt. Verwende den Seitenlink eines einzelnen Videos.",
   "link kopyala": "link kopieren",
   "Daha iyi bir indirme deneyimi.": "Ein besseres Download-Erlebnis.",
   "paylaş": "teilen",
@@ -3697,5 +3697,7 @@
   "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.": "Seitenerzeugung, Sprachlinks, Audioexport, lokales Remux und Fehlerfälle wurden erneut geprüft. Automatische Kontrollen und Browsertests bestanden; Desktop-Tests für Warteschlange und Verlauf wurden erneuert. Das verspricht keine gleiche Geschwindigkeit auf jedem Smartphone oder jeden Download. Das echte KI-Modell auf physischen Geräten und ein neuer Windows-Installer wurden hier nicht getestet. <a href=\"/audio-separator\">Trenner ausprobieren</a> oder <a href=\"/typing\">Zenith Type öffnen</a>.",
   "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.": "Seitenerzeugung, Sprachlinks, Audioexport, lokales Remux und Fehlerfälle wurden erneut geprüft. Automatische Kontrollen und Browsertests bestanden; Desktop-Tests für Warteschlange und Verlauf wurden erneuert. Das verspricht keine gleiche Geschwindigkeit auf jedem Smartphone oder jeden Download. Das echte KI-Modell auf physischen Geräten und ein neuer Windows-Installer wurden hier nicht getestet. <a href=\"/audio-separator\">Trenner ausprobieren</a> oder <a href=\"/typing\">Zenith Type öffnen</a>.",
   "2 kasım 2026": "2. November 2026",
-  "November 2, 2026": "2. November 2026"
+  "November 2, 2026": "2. November 2026",
+  "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "Dieser Link enthält kein unterstütztes Video oder die Website wird nicht unterstützt. Verwende den Seitenlink eines einzelnen Videos.",
+  "Enter a valid video page link starting with https:// or http://.": "Gib einen gültigen Link zu einer Videoseite ein, der mit https:// oder http:// beginnt."
 }

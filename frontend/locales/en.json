@@ -203,7 +203,7 @@
   "this video is private and cannot be downloaded.": "this video is private and cannot be downloaded.",
   "this video is currently unavailable.": "this video is currently unavailable.",
   "live streams are not currently supported.": "live streams are not currently supported.",
-  "this link or platform is not supported.": "this link or platform is not supported.",
+  "this link or platform is not supported.": "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.",
   "the platform did not allow this download. try again later.": "the platform did not allow this download. try again later.",
   "a connection problem occurred. please try again.": "a connection problem occurred. please try again.",
   "the operation could not be completed. please try again.": "the operation could not be completed. please try again.",
@@ -2142,7 +2142,7 @@
   "tamamlandı!": "done!",
   "Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.": "Streams are only repackaged into the selected container; nothing is re-encoded.",
   "youtube videosu bulunamadı": "youtube video not found",
-  "bu bağlantı veya platform desteklenmiyor.": "this link or platform is not supported.",
+  "bu bağlantı veya platform desteklenmiyor.": "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.",
   "link kopyala": "copy link",
   "Daha iyi bir indirme deneyimi.": "A better download experience.",
   "paylaş": "share",
@@ -3697,5 +3697,7 @@
   "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.": "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.",
   "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.": "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.",
   "2 kasım 2026": "November 2, 2026",
-  "November 2, 2026": "November 2, 2026"
+  "November 2, 2026": "November 2, 2026",
+  "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.",
+  "Enter a valid video page link starting with https:// or http://.": "Enter a valid video page link starting with https:// or http://."
 }

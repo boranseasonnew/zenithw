@@ -67,6 +67,24 @@ def http_scenario(directory):
                 assert response.status_code == 200, response.get_json()
                 assert response.get_json()["title"] == "Service wiring"
         assert len(calls) == 1, "Repeated metadata must use this app's cache"
+
+        with patch.object(runtime.network, "is_safe_url", return_value=True), patch.object(metadata_module, "SafeYoutubeDL", FakeExtractor):
+            for endpoint in ("/info", "/download", "/thumbnail"):
+                response = client.post(endpoint, json={"url": "https://open.spotify.com/track/fixture"})
+                assert response.status_code == 400, endpoint
+                assert response.get_json()["error_code"] == "unsupported_url", endpoint
+        assert len(calls) == 1, "Blocked platforms must not reach the extractor"
+
+        class UnsupportedExtractor(FakeExtractor):
+            def extract_info(self, url, download=False):
+                raise ValueError("Unsupported URL: https://example.test/private?token=secret")
+
+        with patch.object(runtime.network, "is_safe_url", return_value=True), patch.object(metadata_module, "SafeYoutubeDL", UnsupportedExtractor):
+            for url in ("https://example.test/unsupported", "https://www.instagram.com/not-a-video"):
+                response = client.post("/info", json={"url": url})
+                assert response.status_code == 400
+                assert response.get_json()["error_code"] == "unsupported_url", response.get_json()
+                assert "secret" not in response.get_data(as_text=True)
         assert not runtime.jobs.cancel_events
         assert not runtime._threads
     finally:

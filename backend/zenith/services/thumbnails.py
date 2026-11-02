@@ -31,18 +31,18 @@ class ThumbnailService:
             return jsonify({"error": "Invalid thumbnail URL"}), 400
         thumbnail_url = raw_thumbnail.strip()
         if not url:
-            return jsonify({"error": "URL required"}), 400
+            return jsonify({"error": "URL required", "error_code": "invalid_url"}), 400
         if is_youtube(url) and not self.runtime.config.YOUTUBE_WEB_ENABLED:
             return youtube_app_required_response()
         if not self.runtime.jobs.thumbnail_slots.acquire(blocking=False):
             return service_busy("Thumbnail service is busy. Please try again shortly.", retry_after=5)
         try:
             if not self.runtime.network.is_safe_url(url):
-                return jsonify({"error": "Invalid or disallowed URL."}), 400
+                return jsonify({"error": "Invalid or disallowed URL.", "error_code": "invalid_url"}), 400
             if is_youtube_live_url(url):
-                return jsonify({"error": "Live streams are not currently supported."}), 400
+                return jsonify({"error": "Live streams are not currently supported.", "error_code": "live_not_supported"}), 400
             if is_unsupported_domain(url):
-                return jsonify({"error": "This platform is not supported."}), 400
+                return jsonify({"error": "This platform is not supported.", "error_code": "unsupported_url"}), 400
             # The analysis response already carries an extractor-provided image URL.
             # Prefer it: fetching this small static asset should not require a second
             # metadata extraction (which video platforms increasingly block on cloud

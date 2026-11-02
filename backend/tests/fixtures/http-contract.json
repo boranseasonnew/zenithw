@@ -67,7 +67,8 @@
     "input": {},
     "status": 400,
     "json": {
-      "error": "URL required"
+      "error": "URL required",
+      "error_code": "invalid_url"
     },
     "body": null,
     "headers": {
@@ -85,7 +86,8 @@
     },
     "status": 400,
     "json": {
-      "error": "Invalid or disallowed URL."
+      "error": "Invalid or disallowed URL.",
+      "error_code": "invalid_url"
     },
     "body": null,
     "headers": {
@@ -101,7 +103,8 @@
     "input": {},
     "status": 400,
     "json": {
-      "error": "URL required"
+      "error": "URL required",
+      "error_code": "invalid_url"
     },
     "body": null,
     "headers": {
@@ -117,7 +120,8 @@
     "input": {},
     "status": 400,
     "json": {
-      "error": "URL required"
+      "error": "URL required",
+      "error_code": "invalid_url"
     },
     "body": null,
     "headers": {

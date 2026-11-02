@@ -196,7 +196,7 @@
   "this video is private and cannot be downloaded.": "cette vidéo est privée et ne peut pas être téléchargée.",
   "this video is currently unavailable.": "cette vidéo est actuellement indisponible.",
   "live streams are not currently supported.": "les diffusions en direct ne sont pas prises en charge.",
-  "this link or platform is not supported.": "ce lien ou cette plateforme n'est pas pris en charge.",
+  "this link or platform is not supported.": "Ce lien ne contient pas de vidéo prise en charge, ou le site n’est pas pris en charge. Utilise le lien de la page d’une seule vidéo.",
   "the platform did not allow this download. try again later.": "la plateforme n'a pas autorisé ce téléchargement. réessayez plus tard.",
   "a connection problem occurred. please try again.": "un problème de connexion est survenu. réessayez.",
   "the operation could not be completed. please try again.": "l'opération n'a pas pu être terminée. veuillez réessayer.",
@@ -2142,7 +2142,7 @@
   "tamamlandı!": "terminé !",
   "Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.": "Les flux sont seulement réemballés dans le conteneur choisi ; rien n’est réencodé.",
   "youtube videosu bulunamadı": "vidéo youtube introuvable",
-  "bu bağlantı veya platform desteklenmiyor.": "ce lien ou cette plateforme n'est pas pris en charge.",
+  "bu bağlantı veya platform desteklenmiyor.": "Ce lien ne contient pas de vidéo prise en charge, ou le site n’est pas pris en charge. Utilise le lien de la page d’une seule vidéo.",
   "link kopyala": "copier le lien",
   "Daha iyi bir indirme deneyimi.": "Une meilleure expérience de téléchargement.",
   "paylaş": "partager",
@@ -3697,5 +3697,7 @@
   "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.": "Génération des pages, liens de langue, exports audio, remux local et erreurs ont été revérifiés. Les contrôles automatiques et les essais navigateur passent ; les tests de file et d’historique du bureau ont été actualisés. Cela ne promet ni la même vitesse sur chaque téléphone ni tous les téléchargements réussis. Le modèle IA sur des appareils physiques et un nouvel installateur Windows n’ont pas été testés ici. <a href=\"/audio-separator\">Essayer le séparateur</a> ou <a href=\"/typing\">ouvrir Zenith Type</a>.",
   "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.": "Génération des pages, liens de langue, exports audio, remux local et erreurs ont été revérifiés. Les contrôles automatiques et les essais navigateur passent ; les tests de file et d’historique du bureau ont été actualisés. Cela ne promet ni la même vitesse sur chaque téléphone ni tous les téléchargements réussis. Le modèle IA sur des appareils physiques et un nouvel installateur Windows n’ont pas été testés ici. <a href=\"/audio-separator\">Essayer le séparateur</a> ou <a href=\"/typing\">ouvrir Zenith Type</a>.",
   "2 kasım 2026": "2 novembre 2026",
-  "November 2, 2026": "2 novembre 2026"
+  "November 2, 2026": "2 novembre 2026",
+  "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "Ce lien ne contient pas de vidéo prise en charge, ou le site n’est pas pris en charge. Utilise le lien de la page d’une seule vidéo.",
+  "Enter a valid video page link starting with https:// or http://.": "Saisis un lien valide vers une page vidéo, commençant par https:// ou http://."
 }

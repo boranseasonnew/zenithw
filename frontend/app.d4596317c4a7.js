@@ -138,6 +138,10 @@
       if (!opts.silent) toast(t("enterLink"), "#ed4245");
       return false;
     }
+    if (!isValidUrl(url)) {
+      if (!opts.silent) showPublicError({ error_code: "invalid_url" }, 400, url, true);
+      return false;
+    }
     if (shouldRouteYoutubeToApps(url)) {
       showYoutubeAppRequired();
       return false;
@@ -154,7 +158,7 @@
       const res = await fetch(API + "/info", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url }), signal: controller.signal });
       const d = await res.json();
       if (sequence !== state.infoSequence || document.getElementById("urlInput").value.trim() !== url) return false;
-      if (d.error) {
+      if (!res.ok || d.error || d.error_code) {
         if (handleYoutubeAppRequired(d)) return false;
         if (!opts.silent) showPublicError(d, res.status, url, true);
         return false;
@@ -1689,7 +1693,8 @@
       errPrivate: "bu video gizli ve indirilemiyor.",
       errUnavailable: "bu video şu anda kullanılamıyor.",
       errLive: "canlı yayınlar şu anda desteklenmiyor.",
-      errUnsupported: "bu bağlantı veya platform desteklenmiyor.",
+      errUnsupported: "Bu bağlantıdan video okunamadı veya site desteklenmiyor. Tek bir videonun sayfa bağlantısını kullan.",
+      errInvalidUrl: "Geçerli bir video sayfası bağlantısı gir. Bağlantı https:// veya http:// ile başlamalı.",
       errPlatformRestricted: "platform bu indirmeye izin vermedi. daha sonra tekrar deneyin.",
       errNetwork: "bağlantı sorunu oluştu. tekrar deneyin.",
       errGeneric: "işlem tamamlanamadı. lütfen tekrar deneyin.",
@@ -1972,7 +1977,8 @@
       errPrivate: "this video is private and cannot be downloaded.",
       errUnavailable: "this video is currently unavailable.",
       errLive: "live streams are not currently supported.",
-      errUnsupported: "this link or platform is not supported.",
+      errUnsupported: "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.",
+      errInvalidUrl: "Enter a valid video page link starting with https:// or http://.",
       errPlatformRestricted: "the platform did not allow this download. try again later.",
       errNetwork: "a connection problem occurred. please try again.",
       errGeneric: "the operation could not be completed. please try again.",
@@ -2254,7 +2260,8 @@
       errPrivate: "cette vidéo est privée et ne peut pas être téléchargée.",
       errUnavailable: "cette vidéo est actuellement indisponible.",
       errLive: "les diffusions en direct ne sont pas prises en charge.",
-      errUnsupported: "ce lien ou cette plateforme n'est pas pris en charge.",
+      errUnsupported: "Ce lien ne contient pas de vidéo prise en charge, ou le site n’est pas pris en charge. Utilise le lien de la page d’une seule vidéo.",
+      errInvalidUrl: "Saisis un lien valide vers une page vidéo, commençant par https:// ou http://.",
       errPlatformRestricted: "la plateforme n'a pas autorisé ce téléchargement. réessayez plus tard.",
       errNetwork: "un problème de connexion est survenu. réessayez.",
       errGeneric: "l'opération n'a pas pu être terminée. veuillez réessayer.",
@@ -2536,7 +2543,8 @@
       errPrivate: "dieses video ist privat und kann nicht heruntergeladen werden.",
       errUnavailable: "dieses video ist derzeit nicht verfügbar.",
       errLive: "livestreams werden derzeit nicht unterstützt.",
-      errUnsupported: "dieser link oder diese plattform wird nicht unterstützt.",
+      errUnsupported: "Dieser Link enthält kein unterstütztes Video oder die Website wird nicht unterstützt. Verwende den Seitenlink eines einzelnen Videos.",
+      errInvalidUrl: "Gib einen gültigen Link zu einer Videoseite ein, der mit https:// oder http:// beginnt.",
       errPlatformRestricted: "die plattform hat diesen download nicht zugelassen. versuche es später erneut.",
       errNetwork: "ein verbindungsproblem ist aufgetreten. versuche es erneut.",
       errGeneric: "der vorgang konnte nicht abgeschlossen werden. bitte versuche es erneut.",
@@ -3186,6 +3194,7 @@
     unsupported_url: "errUnsupported",
     playlist_not_supported: "errUnsupported",
     video_too_long: "errUnavailable",
+    invalid_url: "errInvalidUrl",
     network_error: "errNetwork",
     request_timeout: "errTimeout",
     file_too_large: "errFileTooLarge",
@@ -3199,6 +3208,9 @@
   function publicErrorMessage(payload, status, url) {
     const code = payload && payload.error_code;
     if (code && PUBLIC_ERROR_TX[code]) return t(PUBLIC_ERROR_TX[code]);
+    const legacy = typeof payload?.error === "string" ? payload.error.trim().toLowerCase() : "";
+    if (["this platform is not supported.", "this link or platform is not supported."].includes(legacy) || legacy.startsWith("unsupported url:")) return t("errUnsupported");
+    if (["invalid or disallowed url.", "url required"].includes(legacy)) return t("errInvalidUrl");
     if (status === 429) return t("errRateLimited");
     if (status === 503) return t("errServerBusy");
     if (status === 504) return t("errTimeout");

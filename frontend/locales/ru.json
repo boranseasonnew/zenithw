@@ -203,7 +203,7 @@
   "this video is private and cannot be downloaded.": "это видео является частным и не может быть загружено.",
   "this video is currently unavailable.": "это видео в настоящее время недоступно.",
   "live streams are not currently supported.": "прямые трансляции в настоящее время не поддерживаются.",
-  "this link or platform is not supported.": "эта ссылка или платформа не поддерживается.",
+  "this link or platform is not supported.": "По этой ссылке нет поддерживаемого видео или сайт не поддерживается. Используй ссылку на страницу отдельного видео.",
   "the platform did not allow this download. try again later.": "платформа не позволила эту загрузку. попробуйте еще раз позже.",
   "a connection problem occurred. please try again.": "возникла проблема с подключением. пожалуйста, попробуйте еще раз.",
   "the operation could not be completed. please try again.": "операцию завершить не удалось. пожалуйста, попробуйте еще раз.",
@@ -2141,7 +2141,7 @@
   "tamamlandı!": "готово!",
   "Akışlar yalnızca seçili konteynere yeniden paketlenir; yeniden kodlama yapılmaz.": "Потоки только переупаковываются в выбранный контейнер; ничего не перекодируется.",
   "youtube videosu bulunamadı": "видео на ютубе не найдено",
-  "bu bağlantı veya platform desteklenmiyor.": "эта ссылка или платформа не поддерживается.",
+  "bu bağlantı veya platform desteklenmiyor.": "По этой ссылке нет поддерживаемого видео или сайт не поддерживается. Используй ссылку на страницу отдельного видео.",
   "link kopyala": "скопировать ссылку",
   "Daha iyi bir indirme deneyimi.": "Лучший опыт загрузки.",
   "paylaş": "поделиться",
@@ -3697,5 +3697,7 @@
   "Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href=\"/audio-separator\">Ses ayırıcıyı dene</a> veya <a href=\"/typing\">Zenith Type’a geç</a>.": "Повторно проверены генерация страниц, языковые ссылки, экспорт звука, локальный remux и ошибки. Автотесты и браузерные проверки прошли; обновлены тесты очереди и истории настольного приложения. Это не обещание одинаковой скорости на всех телефонах или загрузки с любого сайта. Реальная ИИ-модель на физических устройствах и новый установщик Windows здесь не проверялись. <a href=\"/audio-separator\">Попробовать разделение</a> или <a href=\"/typing\">открыть Zenith Type</a>.",
   "We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href=\"/audio-separator\">Try the separator</a> or <a href=\"/typing\">visit Zenith Type</a>.": "Повторно проверены генерация страниц, языковые ссылки, экспорт звука, локальный remux и ошибки. Автотесты и браузерные проверки прошли; обновлены тесты очереди и истории настольного приложения. Это не обещание одинаковой скорости на всех телефонах или загрузки с любого сайта. Реальная ИИ-модель на физических устройствах и новый установщик Windows здесь не проверялись. <a href=\"/audio-separator\">Попробовать разделение</a> или <a href=\"/typing\">открыть Zenith Type</a>.",
   "2 kasım 2026": "2 ноября 2026",
-  "November 2, 2026": "2 ноября 2026"
+  "November 2, 2026": "2 ноября 2026",
+  "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "По этой ссылке нет поддерживаемого видео или сайт не поддерживается. Используй ссылку на страницу отдельного видео.",
+  "Enter a valid video page link starting with https:// or http://.": "Введи действительную ссылку на страницу видео, начинающуюся с https:// или http://."
 }

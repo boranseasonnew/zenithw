@@ -86,15 +86,15 @@ class MetadataService:
             return jsonify({"error": "Invalid request body"}), 400
         url = data.get("url", "").strip()
         if not url:
-            return jsonify({"error": "URL required"}), 400
+            return jsonify({"error": "URL required", "error_code": "invalid_url"}), 400
         if is_youtube(url) and not self.runtime.config.YOUTUBE_WEB_ENABLED:
             return youtube_app_required_response()
         if not self.runtime.network.is_safe_url(url):
-            return jsonify({"error": "Invalid or disallowed URL."}), 400
+            return jsonify({"error": "Invalid or disallowed URL.", "error_code": "invalid_url"}), 400
         if is_youtube_live_url(url):
-            return jsonify({"error": "Live streams are not currently supported."}), 400
+            return jsonify({"error": "Live streams are not currently supported.", "error_code": "live_not_supported"}), 400
         if is_unsupported_domain(url):
-            return jsonify({"error": "This platform is not supported."}), 400
+            return jsonify({"error": "This platform is not supported.", "error_code": "unsupported_url"}), 400
 
         cache_key = self._info_cache_key(url)
         cached_payload, inflight_event, is_leader = self._acquire_info_work(cache_key)

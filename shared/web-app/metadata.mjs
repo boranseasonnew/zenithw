@@ -1,7 +1,7 @@
 // ZenithW metadata; built into the existing classic-script entry point.
 import {API} from './api.mjs';
 import {showPublicError} from './errors.mjs';
-import {handleYoutubeAppRequired, hideQR, shouldRouteYoutubeToApps, showQR, showYoutubeAppRequired} from './input.mjs';
+import {handleYoutubeAppRequired, hideQR, isValidUrl, shouldRouteYoutubeToApps, showQR, showYoutubeAppRequired} from './input.mjs';
 import {t} from './language.mjs';
 import {openDlModal} from './progress.mjs';
 import {renderPlaylist} from './queue.mjs';
@@ -16,6 +16,7 @@ export async function fetchVideo(opts){
   // videoyu tekrar indirmesin / başarı sayılmasın.
   state.videoInfo={};
   if(!url){if(!opts.silent)toast(t('enterLink'),'#ed4245');return false;}
+  if(!isValidUrl(url)){if(!opts.silent)showPublicError({error_code:'invalid_url'},400,url,true);return false;}
   if(shouldRouteYoutubeToApps(url)){showYoutubeAppRequired();return false;}
   if(state.infoController)state.infoController.abort();
   const controller=new AbortController();
@@ -29,7 +30,7 @@ export async function fetchVideo(opts){
     const res=await fetch(API+'/info',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url}),signal:controller.signal});
     const d=await res.json();
     if(sequence!==state.infoSequence||document.getElementById('urlInput').value.trim()!==url)return false;
-    if(d.error){if(handleYoutubeAppRequired(d))return false;if(!opts.silent)showPublicError(d,res.status,url,true);return false;}
+    if(!res.ok||d.error||d.error_code){if(handleYoutubeAppRequired(d))return false;if(!opts.silent)showPublicError(d,res.status,url,true);return false;}
 
     if(d.is_playlist){
       // Toplu indirme tek video bekler; playlist bulursa bu URL fail sayılır.

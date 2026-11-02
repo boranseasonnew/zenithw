@@ -10,7 +10,7 @@ import yt_dlp
 from flask import jsonify, request
 from safe_ytdlp import SafeYoutubeDL
 from zenith.jobs.errors import DownloadQueueFull, DownloadQueueTimeout, DownloadRequestError, SpoolBudgetExceeded
-from zenith.security.errors import is_cookie_configuration_error, is_youtube_auth_required_error, public_error_payload, rate_limit_response, remember_primary_error, service_busy, youtube_app_required_response
+from zenith.security.errors import is_cookie_configuration_error, is_youtube_auth_required_error, public_error_payload, rate_limit_response, remember_primary_error, service_busy, validation_error_response, youtube_app_required_response
 from zenith.security.logging import _redact_log_text
 from zenith.security.urls import is_unsupported_domain, is_youtube, is_youtube_live_url
 from zenith.services.formats import ALLOWED_DOWNLOAD_FORMATS, ALLOWED_SPONSORBLOCK_CATEGORIES, ALLOWED_VIDEO_CODECS, AUDIO_FMTS, FFMPEG_LOCAL_DEMUXERS, FFMPEG_LOCAL_PROTOCOLS
@@ -585,7 +585,7 @@ class DownloadService:
         try:
             dl_request = self.parse_download_request(request.get_json(silent=True))
         except DownloadRequestError as exc:
-            return jsonify({"error": str(exc)}), 400
+            return validation_error_response(exc)
 
         url = dl_request["url"]
         if is_youtube(url) and not self.runtime.config.YOUTUBE_WEB_ENABLED:
