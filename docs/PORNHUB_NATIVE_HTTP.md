@@ -57,8 +57,15 @@ failure. A GitHub website push does not deploy the EC2 backend.
 - Existing production app/safe wrapper files were backed up on EC2. A
   staged copy of the live monolithic app adds only one provider option line;
   the live source is not replaced with the repository's modular app tree.
-- Production installation/restart is pending the requested deployment
-  approval. The existing service remains unchanged at this checkpoint.
+- After explicit deployment approval, the two network files and the single
+  Pornhub option line were installed atomically and the existing service
+  restarted. Original file hashes and backups were checked before replacement.
+  Health returned 204 and readiness returned 200; rollback was not needed.
+- The live local `/info` API returned HTTP 200 with title, thumbnail and duration
+  in 1.41 seconds. The public HTTPS `/info` path returned the same successful
+  fields in 1.34 seconds, without an origin secret being sent over the public
+  request. Public `/health` returned 204. Cookie/environment/proxy settings
+  were not changed.
 
 References: [libcurl DNS pinning](https://curl.se/libcurl/c/CURLOPT_RESOLVE.html),
 [manual redirect handling](https://curl.se/libcurl/c/CURLOPT_FOLLOWLOCATION.html),
