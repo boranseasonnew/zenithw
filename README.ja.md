@@ -25,7 +25,7 @@
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
-Web v17.0 · ZenithW Desktop v4.2.0 · Android v2.4.1
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v3.0.0
 
 [Zenith Type](https://zenithw.space/typing) ではタイピング練習と対戦ができます。ランク戦は最大50,000 Eloに対応し、双方の同意による再戦と、相手ごとの勝敗を確認できる対戦履歴を備えています。オンライン対戦にはアカウントが必要です。ルールと公開状況は[ドキュメント](docs/TYPING.md)を参照してください。 WPMランキングとランク戦Eloは30日ごとにリセットされ、シーズンの残り時間が表示されます。 プライベートルームのホストは試合開始前に設定を変更できます。所有者限定の正しいキー入力支援はプレイ中にも切り替えられます。プライベート対戦にはプロフィールに表示される独立した永続Eloがあり、シーズンでリセットされず、ランキングには影響しません。
 
