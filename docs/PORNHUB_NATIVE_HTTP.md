@@ -39,6 +39,27 @@ add only the Pornhub option flag to the existing live engine, then verify
 health, metadata and a bounded download. Roll back the changed files on any
 failure. A GitHub website push does not deploy the EC2 backend.
 
+## Staged verification — 3 November 2026
+
+- All 148 local backend tests passed, including the 12 native guard tests.
+- The same 12 guard tests passed on the existing EC2 Python 3.12,
+  yt-dlp 2026.10.21 and curl_cffi 0.16.3 runtime. Staged source SHA-256
+  values matched the committed files.
+- Real extraction through the new adapter succeeded on EC2 in 1.12 seconds;
+  the largest observed heartbeat gap was 0.299 seconds, including extractor
+  startup. Format availability varied between requests; this is not a speed
+  or format-availability guarantee.
+- A real low-quality MP4 download completed in the isolated stage directory.
+  ffprobe identified H.264 426x240 video and AAC audio, duration 1361.166667
+  seconds, file size 145,290,863 bytes. The initial 80 MiB test was skipped
+  by its size cap; the completed check used a 180 MiB cap and resumed after
+  the first command's 120-second deadline.
+- Existing production app/safe wrapper files were backed up on EC2. A
+  staged copy of the live monolithic app adds only one provider option line;
+  the live source is not replaced with the repository's modular app tree.
+- Production installation/restart is pending the requested deployment
+  approval. The existing service remains unchanged at this checkpoint.
+
 References: [libcurl DNS pinning](https://curl.se/libcurl/c/CURLOPT_RESOLVE.html),
 [manual redirect handling](https://curl.se/libcurl/c/CURLOPT_FOLLOWLOCATION.html),
 [curl_cffi Session API](https://curl-cffi.readthedocs.io/en/latest/api.html),
