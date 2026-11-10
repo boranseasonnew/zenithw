@@ -6,37 +6,30 @@
 
 <p align="center">
   Save media. Keep it simple.<br>
-  <a href="https://zenithw.space">Web app</a> · <a href="https://github.com/boranseasonnew/zenithw/releases/latest">Windows</a> · <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest">Android</a> · <strong><a href="why_zenithw.md">Why ZenithW?</a></strong>
+  <a href="https://zenithw.space">Web app</a> · <a href="https://github.com/boranseasonnew/zenithw/releases/latest">Windows</a> · <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest">Android</a>
 </p>
 
 <p align="center">
   <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=rust&amp;color=2563EB" alt="Windows latest release"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
 </p>
 
-[English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
+<p align="center">
+  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=PC%20downloads&amp;logo=github&amp;color=7C3AED" alt="PC GitHub release asset downloads, all releases"></a>
+  <a href="https://github.com/boranseasonnew/zenithw-android/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw-android/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android%20downloads&amp;logo=android&amp;color=2E7D32" alt="Android GitHub release asset downloads, all releases"></a>
+</p>
 
-Web v17.0 · ZenithW Desktop v5.0.0 · Android v3.1.1
+<p align="center"><sub>Download badges show GitHub release file downloads across all releases, not unique users or Microsoft Store installs.</sub></p>
+
+<p align="center"><strong><a href="why_zenithw.md">✦ Why ZenithW? Read our story</a></strong></p>
+
+[English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
 ZenithW is an open-source media downloader with tools for audio extraction, conversion and remuxing. No ads, subscription or mandatory account.
 
 Paste a supported link, choose a format and download the file. Available formats depend on the source.
-
-> **[Why ZenithW exists](why_zenithw.md)** — Boran explains the project’s inspiration, the balance between simplicity and control, and why the app stays ad-free.
-
-**GitHub app downloads: 240 total** · [53 Windows](https://github.com/boranseasonnew/zenithw/releases) · [187 Android](https://github.com/boranseasonnew/zenithw-android/releases). Snapshot from 11 November 2026 (Türkiye time). Counts are file downloads across public releases and exclude checksums and Microsoft Store installs.
-
-## Windows: ZenithW Desktop 5.0
-
-ZenithW Desktop now runs on Rust and Microsoft Edge WebView2, with Electron removed. It keeps video and audio downloads, playlists, the queue, trimming, subtitles, square covers, profiles and history on your device. The v5 installer is **116.5 MB**, about **46% smaller** than v4.2. Media transfer and conversion times still depend on the source, connection and hardware.
-
-Choose White, Black, Neon Purple or the Windows theme in Settings. **About** explains how the app works and which data stays on your device. **What’s New** covers the Rust move and the v5 changes in Turkish, English, German and Russian.
-
-[Windows installer and portable ZIP](https://github.com/boranseasonnew/zenithw/releases/tag/v5.0.0) · [Desktop documentation](desktop/) · [Microsoft Store listing](https://apps.microsoft.com/store/detail/9NVWM7S7MJP7) · [WinGet submission](https://github.com/microsoft/winget-pkgs/pull/449816)
-
-Windows 10 or 11, x64. To run the portable edition, extract the entire ZIP and open `Zenith.exe`. If you upgrade, you may need to sign in again in the new WebView2 login window.
 
 ## What changes in web 17.0
 

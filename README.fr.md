@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=rust&amp;color=2563EB" alt="Windows latest release"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
 </p>
@@ -23,9 +23,9 @@
 
 <p align="center"><sub>Les compteurs totalisent les téléchargements de fichiers de toutes les publications GitHub, pas les utilisateurs uniques ni les installations Microsoft Store.</sub></p>
 
-[English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
+<p align="center"><strong><a href="why_zenithw.md">✦ Pourquoi ZenithW ? Découvrir son histoire (anglais)</a></strong></p>
 
-Web v17.0 · ZenithW Desktop v5.0.0 · Android v3.1.1
+[English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
 [Zenith Type](https://zenithw.space/typing) propose des exercices de frappe et des duels. Le mode classé comprend une limite de 50 000 Elo, des revanches acceptées par les deux joueurs et un historique avec le bilan de leurs rencontres. Un compte est nécessaire pour jouer en ligne. Consultez les règles et le statut de publication dans la [documentation](docs/TYPING.md). Le classement WPM et les points Elo des duels classés sont réinitialisés tous les 30 jours, avec un compte à rebours de saison. L’hôte peut modifier les paramètres d’une salle privée avant le match. L’aide à la frappe réservée au propriétaire peut être activée en jeu. Les salles privées ont un Elo distinct et permanent, visible sur le profil et sans effet sur le classement.
 

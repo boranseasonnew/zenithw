@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=rust&amp;color=2563EB" alt="Windows latest release"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
 </p>
@@ -23,13 +23,9 @@
 
 <p align="center"><sub>İndirme rozetleri tüm GitHub yayın dosyalarının toplam indirilmesini gösterir; tekil kullanıcı veya Microsoft Store kurulum sayısı değildir.</sub></p>
 
+<p align="center"><strong><a href="why_zenithw.md">✦ ZenithW neden var? Hikâyemizi oku</a></strong></p>
+
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
-
-Web v17.0 · ZenithW Desktop v5.0.0 · Android v3.1.1
-
-**[ZenithW neden var?](why_zenithw.md)** · Boran’ın projenin çıkışını, amaçlarını ve reklam konusundaki yaklaşımını anlattığı yazı (İngilizce).
-
-**[Windows 5.0.0](https://github.com/boranseasonnew/zenithw/releases/tag/v5.0.0)**, Electron’dan Rust ve Microsoft Edge WebView2’ye geçti. Ayarlar’da Beyaz, Siyah, Mor neon ve Sistem temaları; Hakkında ve Yenilikler bölümleri var. Kurulum dosyası 116,5 MB, önceki sürüme göre yaklaşık %46 daha küçük. Taşınabilir sürümü kullanmak için ZIP’in tamamını çıkarıp Zenith.exe’yi aç.
 
 [Zenith Type](https://zenithw.space/typing), yazma pratiği ve düellolar sunar. Dereceli oyunda 50.000 Elo sınırı, karşılıklı onayla tekrar maç ve ikili galibiyet kayıtlarını içeren maç geçmişi bulunur. Çevrimiçi oyun için hesap gerekir. Kurallar ve yayın durumu için [Zenith Type belgesine](docs/TYPING.md) bak. WPM sıralaması ve dereceli düello Elo’su 30 günde bir yenilenir; sezonun kalan süresi canlı sayaçta gösterilir. Özel oda sahibi maç öncesinde ayarları değiştirebilir; sana özel doğru tuş yardımı oyun sırasında açılıp kapatılabilir. Özel odalarda yalnızca profilde görünen, sezonla sıfırlanmayan ayrı bir Elo vardır; sıralamayı etkilemez.
 
