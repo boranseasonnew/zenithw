@@ -25,7 +25,7 @@
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
-Web v17.0 · ZenithW Desktop v4.2.0 · Android v3.0.0
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v3.1.1
 
 ZenithW 是开源媒体工具，可下载视频与音频、提取声音、转换格式和重新封装。媒体工具无广告、无订阅，也不强制注册账户。
 

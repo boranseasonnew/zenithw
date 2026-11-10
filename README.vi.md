@@ -25,7 +25,7 @@
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
-Web v17.0 · ZenithW Desktop v4.2.0 · Android v3.0.0
+Web v17.0 · ZenithW Desktop v4.2.0 · Android v3.1.1
 
 ZenithW là công cụ media mã nguồn mở để tải video và âm thanh, trích xuất tiếng, chuyển đổi và remux. Các công cụ media không có quảng cáo, không cần thuê bao hay tài khoản bắt buộc.
 
