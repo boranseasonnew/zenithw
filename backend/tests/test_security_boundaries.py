@@ -113,6 +113,8 @@ class OutboundSecurityTests(unittest.TestCase):
         node = next(node for node in tree.body if isinstance(node, ast.ClassDef))
 
         class Base:
+            params = {}
+
             def build_request_director(self, handlers, preferences=None):
                 return list(handlers)
 

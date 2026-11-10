@@ -114,8 +114,8 @@ class MediaEngine:
                 "bot-detection hatalarına yol açabilir."
             )
         logger.warning(
-            "[INIT] Native browser impersonation disabled: libcurl bypasses Python "
-            "socket SSRF guards. Providers requiring impersonation may reject requests."
+            "[INIT] Browser impersonation restricted to public-IP-pinned native HTTP; "
+            "unwrapped native handlers remain disabled."
         )
         if self.runtime.config.POT_PROVIDER_URL:
             logger.info(
@@ -375,8 +375,8 @@ class MediaEngine:
             "cachedir": self.runtime.config.YTDLP_CACHE_DIR,
         }
         if is_pornhub(url):
-            # Preserve the source referer; SafeYoutubeDL excludes native libcurl
-            # because its connections bypass the Python SSRF boundary.
+            # Only this provider opts into the independent native HTTP guard.
+            opts["zenith_public_impersonation"] = True
             opts["http_headers"]["Referer"] = f"https://{_get_hostname(url)}/"
         if self.runtime.config.POT_PROVIDER_URL and is_youtube(url):
             # Keep provider failures visible in Railway logs while public clients
