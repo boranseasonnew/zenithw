@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 
 const version = runInNewContext(`${readFileSync('frontend/version.js', 'utf8')}\nZW_VERSION`);
@@ -17,9 +17,8 @@ assert.equal(asset, `Zenith-${ver.slice(1)}-Windows-Setup.exe`);
 for (const file of ['README.md', 'README.tr.md', 'README.fr.md', 'README.de.md', 'README.ru.md', 'README.vi.md', 'README.zh.md', 'README.ja.md']) {
   assert.match(readFileSync(file, 'utf8'), new RegExp(`ZenithW Desktop ${ver.replaceAll('.', '\\.')}`), file);
 }
-if (existsSync('desktop/package.json')) {
-  assert.equal(`v${JSON.parse(readFileSync('desktop/package.json', 'utf8')).version}`, ver);
-}
+const site = JSON.parse(readFileSync('shared/site-config.json', 'utf8'));
+assert.equal(`v${site.windows.version}`, ver);
 assert.doesNotMatch(app, /kakangeldi82-netizen|youtube support is active|youtube desteği aktif|le support youtube est actif|youtube-unterstützung ist aktiv/i);
 assert.doesNotMatch(index, /<span class=>/);
 console.log(`Desktop release content matches ${ver} and the current repository.`);

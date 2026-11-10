@@ -1,0 +1,66 @@
+[
+  {
+    "name": "yt-dlp",
+    "version": "2026.10.26 stable",
+    "artifact": "yt-dlp.exe",
+    "url": "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp.exe",
+    "sha256": "f5389d3698ecde4ef06f4e6b1ce0294fe9ac1396228c8990b8d3416d6d177a7d",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/f264a6cbd1f630894da0f368df00f8aae50140e0",
+    "binaries": {
+      "yt-dlp.exe": "f5389d3698ecde4ef06f4e6b1ce0294fe9ac1396228c8990b8d3416d6d177a7d"
+    },
+    "notices": [
+      "https://raw.githubusercontent.com/yt-dlp/yt-dlp/f264a6cbd1f630894da0f368df00f8aae50140e0/LICENSE",
+      "https://raw.githubusercontent.com/yt-dlp/yt-dlp/f264a6cbd1f630894da0f368df00f8aae50140e0/THIRD_PARTY_LICENSES.txt"
+    ]
+  },
+  {
+    "name": "FFmpeg / FFprobe (Gyan essentials)",
+    "version": "9.0.1",
+    "artifact": "ffmpeg.zip",
+    "url": "https://github.com/GyanD/codexffmpeg/releases/download/9.0.1/ffmpeg-9.0.1-essentials_build.zip",
+    "sha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
+    "source": "https://github.com/FFmpeg/FFmpeg/tree/bf1b838f2ab88b4f8fd83443325c782ea0e0f7fa",
+    "binaries": {
+      "ffmpeg.exe": "72a489eccd008c2ec2c0a5856c5c75bc3d8bbfa90166c4566865c246445e6aa3",
+      "ffprobe.exe": "19202b23c0043f15ad1b7bce2344f406fd52bd6efd8f995ce02e7392a1cec52f"
+    },
+    "archiveNotices": ["README.txt"],
+    "notices": [
+      "https://raw.githubusercontent.com/FFmpeg/FFmpeg/bf1b838f2ab88b4f8fd83443325c782ea0e0f7fa/COPYING.GPLv3",
+      "https://raw.githubusercontent.com/FFmpeg/FFmpeg/bf1b838f2ab88b4f8fd83443325c782ea0e0f7fa/LICENSE.md"
+    ]
+  },
+  {
+    "name": "aria2",
+    "version": "1.37.0 Win64 build1",
+    "artifact": "aria2.zip",
+    "url": "https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip",
+    "sha256": "67d015301eef0b612191212d564c5bb0a14b5b9c4796b76454276a4d28d9b288",
+    "source": "https://github.com/aria2/aria2/tree/release-1.37.0",
+    "binaries": {
+      "aria2c.exe": "be2099c214f63a3cb4954b09a0becd6e2e34660b886d4c898d260febfe9d70c2"
+    },
+    "archiveNotices": ["AUTHORS", "README.mingw"],
+    "notices": [
+      "https://raw.githubusercontent.com/aria2/aria2/release-1.37.0/COPYING"
+    ]
+  },
+  {
+    "name": "Deno",
+    "version": "2.9.7",
+    "artifact": "deno.zip",
+    "url": "https://github.com/denoland/deno/releases/download/v2.9.7/deno-x86_64-pc-windows-msvc.zip",
+    "sha256": "a0c3101b4158d1dfb7d6a78a7bf0f3de80c96bb423c152beec8beb22786f2238",
+    "source": "https://github.com/denoland/deno/tree/v2.9.7",
+    "binaries": {
+      "deno.exe": "e020f3e232bd16e33768dee528e5983349c962952051ced0a5d58ad42f5d9b33"
+    },
+    "notices": [
+      "https://raw.githubusercontent.com/denoland/deno/v2.9.7/LICENSE.md",
+      "https://raw.githubusercontent.com/denoland/deno/v2.9.7/ext/webgpu/LICENSE.md",
+      "https://raw.githubusercontent.com/denoland/deno/v2.9.7/cli/tsc/dts/node/LICENSE",
+      "https://raw.githubusercontent.com/denoland/deno/v2.9.7/cli/tsc/dts/node/undici/LICENSE"
+    ]
+  }
+]

@@ -4,6 +4,9 @@ Tema|Theme|Тема|Design
 Arayüzün renk düzeni|Interface color scheme|Цветовая схема интерфейса|Farbschema der Oberfläche
 Koyu|Dark|Тёмная|Dunkel
 Açık|Light|Светлая|Hell
+Beyaz|White|Белая|Weiß
+Siyah|Black|Чёрная|Schwarz
+Mor neon|Purple neon|Неоновая фиолетовая|Neonviolett
 Sistem|System|Системная|System
 Vurgu rengi|Accent color|Цвет акцента|Akzentfarbe
 Düğmeler ve seçili seçenekler|Buttons and selected options|Кнопки и выбранные параметры|Schaltflächen und ausgewählte Optionen
@@ -16,7 +19,7 @@ Sistem bildirimleri|System notifications|Системные уведомлени
 Ekran kapanabilir; indirme bitince normal uyku düzenine döner.|The screen can turn off; normal sleep resumes after downloading.|Экран может выключаться; после загрузки режим сна восстанавливается.|Der Bildschirm darf ausgehen; danach gilt der normale Ruhemodus.
 Sistem tepsisi|System tray|Системный трей|Infobereich
 Küçültünce tepsiye gider. Pencereyi kapatmak uygulamadan çıkar.|Minimize to the tray. Closing the window quits the app.|Сворачивать в трей. Закрытие окна завершает приложение.|Minimieren in den Infobereich. Schließen beendet die App.
-Geçmiş yalnızca bu oturumda tutulur. Uygulamayı yeniden açınca temizlenir; dosyaların ve ayarların korunur.|History lasts for this session. Restarting clears it; files and settings are kept.|История хранится только в этом сеансе. При перезапуске она очищается; файлы и настройки сохраняются.|Der Verlauf gilt für diese Sitzung. Ein Neustart leert ihn; Dateien und Einstellungen bleiben erhalten.
+Son 300 indirme kaydı bu cihazda saklanır ve uygulamayı yeniden açtığında görünür.|Your latest 300 download records are stored on this device and remain available after restarting the app.|Последние 300 записей о загрузках хранятся на этом устройстве и доступны после перезапуска приложения.|Die letzten 300 Download-Einträge werden auf diesem Gerät gespeichert und bleiben nach einem Neustart verfügbar.
 Eşzamanlı indirmeler|Concurrent downloads|Одновременные загрузки|Gleichzeitige Downloads
 Aynı anda çalışan indirme sayısı|Number of downloads running at once|Количество одновременных загрузок|Anzahl gleichzeitig laufender Downloads
 Mevcut dosyaların üzerine yaz|Overwrite existing files|Перезаписывать существующие файлы|Vorhandene Dateien überschreiben

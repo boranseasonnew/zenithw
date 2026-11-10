@@ -1,10 +1,8 @@
 # ZenithW Microsoft Store hazırlığı
 
-[Mağaza sayfası](https://apps.microsoft.com/store/detail/9NVWM7S7MJP7) · [Windows kaynak rehberi](../README.md) · [Web 17.0 notları](https://zenithw.space/updates)
+[Mağaza sayfası](https://apps.microsoft.com/store/detail/9NVWM7S7MJP7) · [Windows kaynak rehberi](../README.md)
 
-Web **17.0**, mevcut Windows/Store sürümü **4.2.0**’dan ayrıdır. Kaynak depodaki Electron ve paketleme güncellemeleri mevcut Store paketini değiştirmez; yeniden derleme, doğrulama ve Store dağıtımı gerekir. Test kapsamı ve kalan bağımlılık kayıtları [inceleme raporunda](../../docs/full-code-audit-2026-11-02.md).
-
-Ürün: **ZenithW Desktop**, masaüstü sürümü **4.2.0**, Windows x64. Paket formatı APPX: Microsoft Store bu MSIX ailesindeki formatı kabul eder. Mağaza dağıttığı paketi imzalar; ayrıca ücretli sertifika satın almak gerekmez. Mevcut GitHub EXE'si imzasız olduğundan EXE bağlantısı yöntemiyle başvuru yapılmamalıdır.
+ZenithW Desktop **5.0.0** için Windows x64 APPX paketi üretilir. Microsoft Store paketi sertifikasyon sonrasında imzalar. Store sürümünün güncellemeleri mevcut uygulama kaydı üzerinden dağıtılır.
 
 ## Hesaba bağlama
 
@@ -22,24 +20,25 @@ Bu değerler parola değildir. Publisher alanındaki **CN=** önekini aynen koru
 
 ## Paket üretme
 
-Windows'ta `desktop` klasöründe:
+Windows’ta depo kökünden çalıştır.
 
 ```powershell
-npm ci
-npm run stage-tools
-npm test
-npm run store
+pwsh -File desktop/scripts/stage-release-tools.ps1
+pwsh -File desktop/scripts/prepare-rust.ps1 -UiOnly
+cargo test --locked --manifest-path desktop/native/Cargo.toml
+cargo build --locked --release --manifest-path desktop/native/Cargo.toml
+pwsh -File desktop/scripts/package-store.ps1 -ExePath desktop/native/target/release/zenithw-desktop.exe
 ```
 
-Çıktı: `ZenithW-Builds/Microsoft-Store-Preparation/4.2.0/ZenithW-4.2.0-Store-x64.appx` ve `SHA256SUMS.txt`.
+Paket `ZenithW-Builds/Microsoft-Store-Preparation/5.0.0/ZenithW-5.0.0-Store-x64.appx` yoluna yazılır. Aynı klasörde `SHA256SUMS.txt` bulunur.
 
-Hesap kimliği olmadan yalnızca paketleme denemesi için:
+Hesap kimliği olmadan paketleme denemesi için `-Draft` kullan.
 
 ```powershell
-npm run store -- --draft
+pwsh -File desktop/scripts/package-store.ps1 -ExePath desktop/native/target/release/zenithw-desktop.exe -Draft
 ```
 
-**DRAFT** dosyası yerel hazırlık kimliği taşır; Store'a yüklenmez ve imzasız olduğu için çift tıklayarak kurulum doğrulaması yapılamaz. Gerçek hesap kimliğiyle üretilecek paket için ayrıca sertifika eklemek gerekmez. Üretici önce sistemdeki Windows SDK'yı kullanır; yoksa electron-builder'ın doğrulanmış resmi paketleme araçları kullanılır.
+Paketleyici Windows SDK’daki MakeAppx aracını kullanır. **DRAFT** dosyası yerel hazırlık kimliği taşır. Store gönderiminde Partner Center kimliğiyle üretilen APPX dosyasını kullan.
 
 ## Başvuru içeriği
 
@@ -51,7 +50,7 @@ npm run store -- --draft
 
 Fiyatı **Free / Ücretsiz**, cihazı **PC**, dilleri **tr-TR, en-US, de-DE, ru-RU** seç. Açıklamada mevcut özellikleri kullan; tüm kaynaklarda sürekli indirme garantisi verme. Gizlilik URL'si: https://github.com/boranseasonnew/zenithw/blob/main/desktop/store/privacy.md . Destek: https://github.com/boranseasonnew/zenithw/issues . Web sitesi: https://zenithw.space/pc-app .
 
-Paketin yalnızca `runFullTrust` özel izni vardır: yerel yt-dlp, FFmpeg, FFprobe, aria2 ve Deno araçlarını çalıştırır. Yönetici yetkisi, sürücü veya Windows hizmeti istemez. Store'da yt-dlp'nin güncellenebilir kopyası kullanıcı verisi klasöründe tutulur; kurulum klasörüne yazılmaz. Uygulama sürümü Store üzerinden, isteğe bağlı motor güncellemesi resmi yt-dlp GitHub yayınlarından gelir. 4.2.0 sürümünde uygulama güncelleme düğmesi doğrudan Store’un indirmeler ve güncellemeler sayfasını açar; GitHub EXE’si önerilmez. Geçmiş kayıtları yerel olarak yeniden açılışlarda korunur (en fazla 300 kayıt).
+Paket, yerel yt-dlp, FFmpeg, FFprobe, aria2 ve Deno araçlarını çalıştırmak için `runFullTrust` iznini bildirir. Masaüstü arayüzü Windows WebView2 Runtime’ı kullanır. yt-dlp’nin güncellenebilir kopyası kullanıcı verisi klasöründedir. İsteğe bağlı motor güncellemesi resmî yt-dlp GitHub yayınlarından gelir. Uygulamanın güncelleme düğmesi Microsoft Store’un indirmeler ve güncellemeler sayfasını açar. Son 300 indirme kaydı cihazda saklanır.
 
 Göndermeden önce gerçek kimlikli paketi test ortamına yükleyerek Windows App Certification Kit ve indirme/güncelleme kontrollerini tamamla. Masaüstü ekran görüntüleri **PNG, en az 1366×768** olmalı; kişisel URL, kullanıcı adı veya dosya yolunu göstermemeli. Her mağaza dilinde uygun görüntüyü yükle. Adın ayrılabilmesi, kimlik onayı, yaş derecelendirme cevapları ve Microsoft inceleme sonucu hesaptaki başvuru sırasında kesinleşir; hazırlık paketi mağaza onayı anlamına gelmez.
 

@@ -2,6 +2,8 @@
 
 ZenithW uses third-party software and libraries. Those components are **not relicensed under ZenithW's AGPL-3.0-only license**; each remains subject to its own license and copyright terms.
 
+Windows release packages include `THIRD_PARTY_LICENSES.txt` with upstream license texts and source locations, and `THIRD_PARTY_RUST_RUNTIME.html` with the Rust standard library copyright report. The media tool versions, upstream release archives and SHA-256 digests are listed in [media-tools.json](scripts/media-tools.json). Rust dependency versions are listed in [Cargo.lock](native/Cargo.lock).
+
 Key runtime components include:
 
 - **Mediabunny 1.56.1** — Mozilla Public License 2.0. The local-file processing worker bundles this library without upstream source modifications. License: [mediabunny-LICENSE.txt](frontend/vendor/mediabunny-LICENSE.txt). Corresponding source: [npm package 1.56.1](https://www.npmjs.com/package/mediabunny/v/1.56.1), including its `src/` directory. The bundle is reproducible with the checked-in package lock and `scripts/build-local-media.mjs`.

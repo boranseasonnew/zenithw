@@ -1,0 +1,186 @@
+{
+  "enums": {
+    "language": [
+      "tr",
+      "en",
+      "ru",
+      "de"
+    ],
+    "ipMode": [
+      "auto",
+      "ipv4",
+      "ipv6"
+    ],
+    "ytDlpChannel": [
+      "stable",
+      "nightly"
+    ],
+    "cookieMode": [
+      "none",
+      "session",
+      "browser"
+    ],
+    "cookieBrowser": [
+      "chrome",
+      "edge",
+      "firefox",
+      "brave",
+      "opera",
+      "vivaldi"
+    ],
+    "videoContainer": [
+      "mp4",
+      "webm",
+      "mkv",
+      "mov",
+      "avi",
+      "flv"
+    ],
+    "videoCodec": [
+      "h264",
+      "vp9",
+      "av1",
+      "auto"
+    ],
+    "audioFormat": [
+      "mp3",
+      "m4a",
+      "opus",
+      "flac",
+      "wav",
+      "aac",
+      "vorbis",
+      "alac"
+    ],
+    "unavailableFragments": [
+      "skip",
+      "abort"
+    ],
+    "fixupPolicy": [
+      "detect_or_warn",
+      "warn",
+      "never"
+    ],
+    "subtitleFormat": [
+      "best",
+      "srt",
+      "vtt",
+      "ass"
+    ],
+    "playlistPolicy": [
+      "stop",
+      "continue"
+    ],
+    "sponsorAction": [
+      "remove",
+      "mark"
+    ],
+    "scriptPolicy": [
+      "stop",
+      "continue"
+    ],
+    "theme": [
+      "dark",
+      "light",
+      "system",
+      "neon"
+    ],
+    "accentColor": [
+      "rose",
+      "blue",
+      "violet"
+    ],
+    "concatPlaylist": [
+      "never",
+      "always",
+      "multi_video"
+    ],
+    "remuxVideo": [
+      "",
+      "mp4",
+      "mkv",
+      "webm",
+      "mov",
+      "avi",
+      "flv"
+    ],
+    "recodeVideo": [
+      "",
+      "mp4",
+      "mkv",
+      "webm",
+      "mov",
+      "avi",
+      "flv"
+    ],
+    "formatSort": [
+      "",
+      "res,fps",
+      "vcodec:h264,acodec:m4a",
+      "vcodec:av1",
+      "+size,+br"
+    ]
+  },
+  "numbers": {
+    "retries": [
+      1,
+      30
+    ],
+    "fragmentRetries": [
+      1,
+      30
+    ],
+    "fileAccessRetries": [
+      1,
+      30
+    ],
+    "concurrentFragments": [
+      1,
+      16
+    ],
+    "aria2Connections": [
+      1,
+      16
+    ],
+    "socketTimeout": [
+      5,
+      120
+    ],
+    "videoQuality": [
+      144,
+      8640
+    ],
+    "audioQuality": [
+      32,
+      512
+    ],
+    "extractorRetries": [
+      1,
+      30
+    ],
+    "sleepRequests": [
+      0,
+      120
+    ],
+    "sleepInterval": [
+      0,
+      300
+    ],
+    "maxSleepInterval": [
+      0,
+      300
+    ],
+    "sleepSubtitles": [
+      0,
+      120
+    ],
+    "scriptTimeout": [
+      5,
+      300
+    ],
+    "maxDownloads": [
+      1,
+      8
+    ]
+  }
+}

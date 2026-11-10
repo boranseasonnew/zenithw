@@ -1,0 +1,32 @@
+[package]
+name = "zenithw-desktop"
+version = "5.0.0"
+edition = "2024"
+publish = false
+build = "build.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+zenithw-desktop-core = { path = "../rust-core" }
+tauri = { version = "2", features = ["tray-icon", "image-png", "custom-protocol"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-notification = "2"
+tokio = { version = "1", features = ["process", "io-util", "time", "sync", "rt-multi-thread", "macros"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4"] }
+url = "2"
+regex = "1"
+dirs = "6"
+semver = "1"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "stream"] }
+futures-util = "0.3"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.61", features = ["Win32_System_Power", "Win32_System_Threading", "Win32_System_JobObjects", "Win32_System_Diagnostics_ToolHelp", "Win32_Security", "Win32_Storage_FileSystem", "Win32_Storage_Packaging_Appx", "Win32_Foundation", "Win32_Globalization"] }
+
+[dev-dependencies]
+tempfile = "3"

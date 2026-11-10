@@ -1,6 +1,6 @@
 {
   "productName": "ZenithW Desktop",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "architecture": "x64",
   "price": "Free",
   "categorySuggestion": "Photo & video",
@@ -24,7 +24,7 @@
         "Microsoft Store üzerinden uygulama güncellemeleri",
         "Türkçe, İngilizce, Almanca ve Rusça arayüz"
       ],
-      "releaseNotes": "4.2.0: İndirme yüzdesi gerçek aktarılan baytlarla hesaplanıyor; boyut bilinmiyorsa belirsiz ilerleme gösteriliyor. Kalan süre aktarımı kapsıyor, son işleme ve kaydetme ayrı belirtiliyor. İndirme sırasında başka bağlantı hazırlama ve kısa süreli metadata önbelleği eklendi. 50 bağlantıya kadar toplu ekleme, 100 işlik kuyruk ve playlist seçimi geliştirildi. Desteklenen formatlarda 3000×3000 kare kapak doğrulanarak gömülüyor; başarısızlıkta özgün dosya korunuyor. Üst menü, Hakkında, sürüm bilgisi ve kısa arayüz geçişleri eklendi. Geçmiş artık yeniden açılışta korunuyor. Store sürümünde güncelleme düğmesi Microsoft Store’u açıyor. Kaynak ve ağ kısıtlamaları geçerlidir.",
+      "releaseNotes": "5.0.0 ile Windows uygulaması Rust altyapısı ve Microsoft Edge WebView2’ye geçti. Bağlantı alanı, indirme kontrolleri ve arayüz geçişleri yenilendi. Ayarlarda Beyaz, Siyah, Mor Neon veya Windows görünümünü izleyen Sistem temasını seçebilirsin. İndirme kuyruğu, oynatma listesi seçimi, yerel ayarlar ve geçmiş kullanılabilir.",
       "keywords": [
         "video",
         "ses",
@@ -48,7 +48,7 @@
         "Application updates through Microsoft Store",
         "Turkish, English, German and Russian interface"
       ],
-      "releaseNotes": "4.2.0: Transfer progress uses actual bytes; unknown sizes show indeterminate progress. Remaining time describes transfer, with separate post-processing and saving stages. Prepare another URL during downloads and reuse a short-lived metadata cache. Improved batch input for up to 50 URLs, a 100-job queue and playlist selection. Supported formats receive verified 3000×3000 square artwork; original files are retained on failure. Added a top menu, About, version details and short transitions. History now survives restarts. The Store edition opens Microsoft Store for application updates. Network and source restrictions still apply.",
+      "releaseNotes": "Version 5.0.0 moves the Windows app to a Rust backend and Microsoft Edge WebView2. The link field, download controls, and interface transitions have been updated. In Settings, choose White, Black, Neon Purple, or System to follow your Windows appearance. The download queue, playlist selection, local preferences, and history are available.",
       "keywords": [
         "video",
         "audio",
@@ -72,7 +72,7 @@
         "App-Updates über den Microsoft Store",
         "Türkische, englische, deutsche und russische Oberfläche"
       ],
-      "releaseNotes": "4.2.0: Fortschritt anhand übertragener Bytes, unbestimmte Anzeige bei unbekannter Größe. Restzeit für den Transfer, getrennte Nachbearbeitung und Speicherung. Weitere Links während Downloads vorbereiten und kurzlebigen Metadaten-Cache nutzen. Stapel mit bis zu 50 Links, 100 Aufträge und Playlist-Auswahl verbessert. Geprüfte quadratische Cover mit 3000×3000 in unterstützten Formaten; Original bleibt bei Fehlern erhalten. Neues oberes Menü, Über die App, Versionsanzeige und kurze Übergänge. Verlauf bleibt nach Neustarts erhalten. App-Updates der Store-Ausgabe öffnen den Microsoft Store. Netzwerk- und Quellbeschränkungen gelten weiterhin.",
+      "releaseNotes": "Version 5.0.0 stellt die Windows-App auf ein Rust-Backend und Microsoft Edge WebView2 um. Das Linkfeld, die Download-Steuerung und die Übergänge der Oberfläche wurden überarbeitet. In den Einstellungen stehen Weiß, Schwarz, Neonviolett und System zur Auswahl. Der Systemmodus übernimmt das Windows-Erscheinungsbild. Download-Warteschlange, Playlist-Auswahl, lokale Einstellungen und Verlauf stehen zur Verfügung.",
       "keywords": [
         "Video",
         "Audio",
@@ -96,7 +96,7 @@
         "Обновления приложения через Microsoft Store",
         "Турецкий, английский, немецкий и русский интерфейс"
       ],
-      "releaseNotes": "4.2.0: Прогресс по реальным байтам, неопределённый индикатор при неизвестном размере. Оставшееся время относится к передаче; обработка и сохранение выделены отдельно. Подготовка следующей ссылки во время загрузки и временный кэш метаданных. Улучшены добавление до 50 ссылок, очередь на 100 задач и выбор плейлиста. Проверяемые обложки 3000×3000 в поддерживаемых форматах; при ошибке сохраняется оригинал. Верхнее меню, О программе, версия и короткие переходы. История сохраняется после перезапуска. Кнопка обновлений Store-версии открывает Microsoft Store. Ограничения сети и источников остаются.",
+      "releaseNotes": "В версии 5.0.0 приложение для Windows перешло на Rust и Microsoft Edge WebView2. Обновлены поле ссылки, управление загрузками и переходы интерфейса. В настройках можно выбрать белую, чёрную, неоново-фиолетовую или системную тему. Системная тема следует оформлению Windows. Доступны очередь загрузок, выбор элементов плейлиста, локальные настройки и история.",
       "keywords": [
         "видео",
         "аудио",

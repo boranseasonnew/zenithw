@@ -41,12 +41,11 @@ jobs:
           node --test tests/cloudflare-cache.test.mjs
           node --test tests/site-language.test.mjs tests/about-locales.test.mjs tests/updates-static.test.mjs tests/downloads-seo.test.mjs tests/workspace-choices.test.mjs tests/html-audit.test.mjs tests/typing-seo.test.mjs
 
-      - name: Audit web and desktop dependency locks
+      - name: Audit the web dependency lock
         run: |
           npm ci --ignore-scripts
           npm run lint
           npm audit --audit-level=high
-          npm audit --prefix desktop --audit-level=high
 
       - name: Verify real remux media and localized separator behavior
         run: |
@@ -60,9 +59,6 @@ jobs:
           npm audit --prefix promo-video --audit-level=high
           npm run lint --prefix promo-video
           npm run build --prefix promo-video
-
-      - name: Verify desktop queue, persistence and security boundaries
-        run: node --test tests/desktop-security.test.cjs desktop/tests/*.test.cjs
 
       - name: Verify Type permissions, scoring and avatar concurrency
         run: npm run test:typing
@@ -79,3 +75,23 @@ jobs:
 
       - name: CSP bütünlüğünü doğrula
         run: python scripts/update_csp.py --check
+
+  desktop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Verify the desktop renderer bridge
+        run: node --test tests/desktop-bridge.test.mjs
+
+      - name: Install the RustSec audit tool
+        run: cargo +stable install --locked --version 0.23.0 cargo-audit
+
+      - name: Audit the desktop Rust dependency locks
+        run: |
+          cargo audit --file desktop/native/Cargo.lock
+          cargo audit --file desktop/rust-core/Cargo.lock

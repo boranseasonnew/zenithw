@@ -259,7 +259,7 @@ function localText(source,language='tr',fallback=source){const a=uiCopy.get(sour
 function localizeUi(root,language='tr'){
  const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
  for(let node;node=walk.nextNode();){
-  if(node.parentElement?.closest('[data-i18n],#job-list,#media-heading,#uploader,#thumb,#toast,#profiles-list,#folder-label,#folder-value,#media-folder,#status-version,script,style'))continue;
+  if(node.parentElement?.closest('[data-i18n],#news-tab,#about-tab,#news-heading,#news-intro,#about-intro,.release-editorial-sections,#job-list,#media-heading,#uploader,#thumb,#toast,#profiles-list,#folder-label,#folder-value,#media-folder,#status-version,script,style'))continue;
   const source=originalText.get(node)||node.textContent.trim();if(!uiCopy.has(source))continue;
   originalText.set(node,source);node.textContent=node.textContent.replace(node.textContent.trim(),localText(source,language));
  }
