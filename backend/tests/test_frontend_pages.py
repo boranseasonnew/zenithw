@@ -52,10 +52,17 @@ class StandaloneToolPageTests(unittest.TestCase):
     def test_hidden_desktop_promo_never_blocks_navigation(self):
         index = (FRONTEND / "index.html").read_text(encoding="utf-8")
         styles = (FRONTEND / "desktop-promo.css").read_text(encoding="utf-8")
-        self.assertIn('id="desktopPromo" hidden', index)
-        self.assertRegex(styles, r'\.desktop-promo\[hidden\]\{[^}]*display:none!important')
-        self.assertRegex(styles, r'\.desktop-promo\{[^}]*pointer-events:none')
-        self.assertRegex(styles, r'\.desktop-promo\.is-visible\{[^}]*pointer-events:auto')
+        promo = re.search(r'<div\b[^>]*\bid="desktopPromo"[^>]*>', index)
+        self.assertIsNotNone(promo)
+        classes = re.search(r'\sclass="([^"]*)"', promo[0])
+        self.assertIsNotNone(classes)
+        self.assertTrue({"overlay", "app-popup"}.issubset(classes[1].split()))
+        self.assertRegex(promo[0], r'\shidden(?=[\s=>])')
+        self.assertRegex(promo[0], r'\sinert(?=[\s=>])')
+        self.assertIn('aria-hidden="true"', promo[0])
+        hidden_rule = re.search(r'\.overlay\.app-popup\[\s*hidden\s*\]\s*\{([^}]*)\}', styles)
+        self.assertIsNotNone(hidden_rule)
+        self.assertRegex(hidden_rule[1], r'(?:^|;)\s*display\s*:\s*none(?:\s*!\s*important)?\s*(?:;|$)')
 
     def test_about_routes_use_native_about_pages_without_cross_root_rewrites(self):
         redirects = (FRONTEND / "_redirects").read_text(encoding="utf-8")

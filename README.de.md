@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=electron&amp;color=2563EB" alt="Windows latest release"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=rust&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
 </p>
@@ -25,7 +25,7 @@
 
 [English](README.md) · [Türkçe](README.tr.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Tiếng Việt](README.vi.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
 
-Web v17.0 · ZenithW Desktop v4.2.0 · Android v3.1.1
+Web v17.0 · ZenithW Desktop v5.0.0 · Android v3.1.1
 
 [Zenith Type](https://zenithw.space/typing) bietet Tipptraining und Duelle. Ranglistenspiele unterstützen bis zu 50.000 Elo, beidseitig bestätigte Rückspiele und einen Spielverlauf mit direkten Vergleichswerten. Für das Online-Spiel ist ein Konto erforderlich. Regeln und Veröffentlichungsstatus stehen in der [Dokumentation](docs/TYPING.md). Die WPM-Rangliste und Elo der Ranglistenduelle werden alle 30 Tage zurückgesetzt; ein Countdown zeigt die verbleibende Saisonzeit. Gastgeber können private Räume vor dem Spiel konfigurieren. Die nur für den Besitzer verfügbare Tastenhilfe lässt sich während des Spiels umschalten. Private Räume haben einen separaten, dauerhaften Elo-Wert im Profil, ohne Einfluss auf die Rangliste.
 

@@ -38,11 +38,11 @@ And there's still plenty of room to improve.
 
 ## What About the Desktop Application?
 
-The Windows version is planned to be rewritten in **Rust**.
+Starting with [ZenithW Desktop 5.0](https://github.com/boranseasonnew/zenithw/releases/tag/v5.0.0), the Windows app runs on **Rust** and uses Microsoft Edge WebView2 for the interface. The 5.0 installer is about 46% smaller than 4.2 because the app no longer bundles Electron.
 
 Why Rust?
 
-Because I want ZenithW to become lighter, faster, more efficient, and easier to maintain over time.
+I wanted a lighter Windows package and a core that’s easier to maintain. Rust now handles the queue, file operations and media tools. Video downloads and conversions still depend on the source, your connection and your hardware.
 
 And here's a little confession.
 

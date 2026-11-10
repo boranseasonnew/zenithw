@@ -10,21 +10,21 @@
   },
   "telegram": "https://t.me/zenithwon",
   "windows": {
-    "version": "4.2.0",
+    "version": "5.0.0",
     "requirements": "Windows 10/11 · x64",
     "storeMinimum": "Windows 10 version 2004 (build 19041)",
-    "release": "https://github.com/boranseasonnew/zenithw/releases/tag/v4.2.0",
+    "release": "https://github.com/boranseasonnew/zenithw/releases/tag/v5.0.0",
     "installer": {
-      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/Zenith-4.2.0-Windows-Setup.exe",
-      "name": "Zenith-4.2.0-Windows-Setup.exe",
-      "bytes": 214723677
+      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v5.0.0/Zenith-5.0.0-Windows-Setup.exe",
+      "name": "Zenith-5.0.0-Windows-Setup.exe",
+      "bytes": 116470105
     },
     "portable": {
-      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/Zenith-4.2.0-Windows.exe",
-      "name": "Zenith-4.2.0-Windows.exe",
-      "bytes": 214567377
+      "url": "https://github.com/boranseasonnew/zenithw/releases/download/v5.0.0/Zenith-5.0.0-Windows.zip",
+      "name": "Zenith-5.0.0-Windows.zip",
+      "bytes": 152099674
     },
-    "checksums": "https://github.com/boranseasonnew/zenithw/releases/download/v4.2.0/SHA256SUMS.txt",
+    "checksums": "https://github.com/boranseasonnew/zenithw/releases/download/v5.0.0/SHA256SUMS.txt",
     "stores": {
       "microsoft": {
         "status": "available",

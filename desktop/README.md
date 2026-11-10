@@ -14,7 +14,8 @@ Web 17.0 ve Windows 5.0.0 ayrı yayın sürümleridir.
 - Playlist seçim aralığı, sıralama ve klasör seçenekleri; eşzamanlı indirme kuyruğu.
 - Kırpma, altyazı, metadata, kapak ve SponsorBlock seçenekleri; kaynağın desteklediği ölçüde.
 - Cookie dosyası, desteklenen tarayıcı oturumu, proxy ve yt-dlp motor kanalı ayarları.
-- Kategorili ve aranabilir ayarlar, açık/koyu/sistem teması, vurgu renkleri, bildirimler ve sistem tepsisi.
+- Kategorili ve aranabilir ayarlar; Beyaz, Siyah, Mor neon ve Sistem temaları; vurgu renkleri, bildirimler ve sistem tepsisi.
+- Hakkında bölümünde amaç, gizlilik ve kullanılan teknolojiler; Yenilikler bölümünde 5.0 geçişi ve sürüm değişiklikleri.
 - Yerel profiller ve hassas alanları dışarıda bırakan ayar aktarımı; Türkçe, İngilizce, Almanca ve Rusça arayüz.
 - Yeniden açılışta korunan, en fazla 300 kayıtlık geçmiş. Tamamlanmamış işler kesilmiş gösterilir; otomatik devam garanti değildir.
 
