@@ -36,42 +36,6 @@
 /audio-tools.js
   Cache-Control: public, max-age=3600, must-revalidate
 
-/brands/android.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/credits.json
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/f-droid-icon.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/f-droid.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/github.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/microsoft-store-icon.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/microsoft-store.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/telegram.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/uptodown-icon.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/uptodown.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/windows.svg
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/brands/winget.png
-  Cache-Control: public, max-age=3600, must-revalidate
-
 /compare.a0575b77ab4c.css
   Cache-Control: public, max-age=3600, must-revalidate
 
@@ -293,6 +257,9 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /zenithw.png
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/brands/*
   Cache-Control: public, max-age=3600, must-revalidate
 
 /typing-*.js

@@ -136,44 +136,44 @@
     "sha256": "0ed19a44f6a06e4f2ffe42e97b1437a61e95415670b5ae59feb26d00733e9574"
   },
   "brands/credits.json": {
-    "url": "/cache-assets/credits.29c12303fcd9.json",
-    "sha256": "29c12303fcd97565950a4188759b19f98873aeb4b47e76da91cbf1fbb4ff2c86"
+    "url": "/cache-assets/credits.4b5b087cac6d.json",
+    "sha256": "4b5b087cac6d991277a0647750ea2f636f6aa941f80815a3172fa5b70900d171"
   },
   "locales/tr.json": {
-    "url": "/cache-assets/tr.7f5c62e01890.json",
-    "sha256": "7f5c62e018908583d16de22867aa45208e58f9c8d6201d159c9f1c14ff49efd4"
+    "url": "/cache-assets/tr.a433f4bac9b8.json",
+    "sha256": "a433f4bac9b8e58e1c269552f03ad00b7c14663555eeca017e246d3f77510c7b"
   },
   "locales/en.json": {
-    "url": "/cache-assets/en.d8cf7bfc3c0a.json",
-    "sha256": "d8cf7bfc3c0a42ea3f738c2b173809ff20161a7ede3ceb980e0e5c94d8c8699a"
+    "url": "/cache-assets/en.48889629c953.json",
+    "sha256": "48889629c953f5135db5653ee2c23f60e5c3ea27fc402d6641ddccd0912b9915"
   },
   "locales/fr.json": {
-    "url": "/cache-assets/fr.b99cbf248829.json",
-    "sha256": "b99cbf24882906293f3da528d8b4d64b1f3568371c280efbc6d7a77506fbcc23"
+    "url": "/cache-assets/fr.a753eca30be1.json",
+    "sha256": "a753eca30be10d4bec1862955e911647dea15b2480b41bb56b842ec12e1d6a36"
   },
   "locales/de.json": {
-    "url": "/cache-assets/de.d794471c9055.json",
-    "sha256": "d794471c90559ccd3f88b68d39d6478aeb2caa92a3fbabcc076a21b75d5f43ac"
+    "url": "/cache-assets/de.7565d3691d80.json",
+    "sha256": "7565d3691d801685825eb80ce56c321b15cc17796db3af1d74b700f5703137cd"
   },
   "locales/ru.json": {
-    "url": "/cache-assets/ru.d3150454dc5f.json",
-    "sha256": "d3150454dc5fda9a166ece02a38dd95ef316115571de061319895efc9b4645e3"
+    "url": "/cache-assets/ru.7bb16b278780.json",
+    "sha256": "7bb16b2787804c7169fdd69244be28b3caec703fd04a4f2b9b159a74b4be7ef1"
   },
   "locales/vi.json": {
-    "url": "/cache-assets/vi.e3bb53b875af.json",
-    "sha256": "e3bb53b875af354af12b66c9154e18d8bb5ed4c1af21e88c0b0d6b9bed3769e2"
+    "url": "/cache-assets/vi.0145d6e5f4d1.json",
+    "sha256": "0145d6e5f4d11d07408210a4f7c0eb94b6162fff6416caf5930378cc3eb97748"
   },
   "locales/zh.json": {
-    "url": "/cache-assets/zh.5d61282d5516.json",
-    "sha256": "5d61282d5516bca47d7186c000afe98c3343b4837d342431655ae922aa0f4909"
+    "url": "/cache-assets/zh.eb5ec91fb330.json",
+    "sha256": "eb5ec91fb3305c315c5e8d18dc69af8dfac1b7629dc998cf62871aa22c4eaf67"
   },
   "locales/ja.json": {
-    "url": "/cache-assets/ja.3b4b1256dbdf.json",
-    "sha256": "3b4b1256dbdfbfff59765929c18f897d0059bb620b9fda12d37fd0c3aeb35db7"
+    "url": "/cache-assets/ja.c0c1b216879b.json",
+    "sha256": "c0c1b216879b23abb365aee3d26d3372827d082b16093ff7166f8a939f3937e5"
   },
   "site-language.js": {
-    "url": "/cache-assets/site-language.8a862708fcf9.js",
-    "sha256": "8a862708fcf99676258635126d2392c85828898dba6a366f935b331038e453af"
+    "url": "/cache-assets/site-language.7bf92603c418.js",
+    "sha256": "7bf92603c41869cb88205e2a1c229639e110d88291262924f2dba6708033d396"
   },
   "site-language.css": {
     "url": "/cache-assets/site-language.750ddfc30c31.css",
@@ -182,6 +182,14 @@
   "site-shell.css": {
     "url": "/cache-assets/site-shell.8774e697ef53.css",
     "sha256": "8774e697ef53b75917ee63bc4124b8bf2652f27d772271a131ae0906149e0136"
+  },
+  "desktop-promo.css": {
+    "url": "/cache-assets/desktop-promo.b0d9cd408b51.css",
+    "sha256": "b0d9cd408b51ebc9c45b936a9436a58fb06ddc32371f3d04d5a7d458e236e9d1"
+  },
+  "brands/youtube.png": {
+    "url": "/cache-assets/youtube.1027b1b05177.png",
+    "sha256": "1027b1b0517727adb9697155a270744381c3ce9b047b1c8bd8a9389dc7d07a83"
   },
   "support-copy.json": {
     "url": "/cache-assets/support-copy.3d639d29b1cb.json",
@@ -196,8 +204,8 @@
     "sha256": "9179d506460104b93eedae7b06519c70a9271fc2c468a488d729f101e5b2cba9"
   },
   "app.d4596317c4a7.js": {
-    "url": "/cache-assets/app.8db075c6a15c.js",
-    "sha256": "8db075c6a15cb2861de2050881b93ac455ff8565e033d99370f5ee7da99667c2"
+    "url": "/cache-assets/app.a9318a7de684.js",
+    "sha256": "a9318a7de6843448aa149432324fd80652b5c7d2c88fd1662b1aa74081090088"
   },
   "style.487d49f0164d.css": {
     "url": "/cache-assets/style.139086b74728.css",

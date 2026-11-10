@@ -3699,5 +3699,11 @@
   "2 kasım 2026": "2 tháng 11, 2026",
   "November 2, 2026": "2 tháng 11, 2026",
   "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "Liên kết này không có video được hỗ trợ hoặc trang web chưa được hỗ trợ. Hãy dùng liên kết trang của một video cụ thể.",
-  "Enter a valid video page link starting with https:// or http://.": "Nhập liên kết trang video hợp lệ bắt đầu bằng https:// hoặc http://."
+  "Enter a valid video page link starting with https:// or http://.": "Nhập liên kết trang video hợp lệ bắt đầu bằng https:// hoặc http://.",
+  "YouTube downloads are unavailable on the web.": "Phiên bản web không hỗ trợ tải xuống từ YouTube.",
+  "You can download YouTube links in the ZenithW desktop or Android app.": "Bạn có thể tải nội dung từ liên kết YouTube bằng ứng dụng ZenithW cho Windows hoặc Android.",
+  "Download the apps": "Tải ứng dụng",
+  "Desktop app": "Ứng dụng máy tính",
+  "Use ZenithW on your device": "Dùng ZenithW trên thiết bị của bạn",
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "Tiếp tục tải trên web hoặc dùng ứng dụng ZenithW để tải trực tiếp trên thiết bị."
 }

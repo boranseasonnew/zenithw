@@ -3699,5 +3699,11 @@
   "2 kasım 2026": "2026年11月2日",
   "November 2, 2026": "2026年11月2日",
   "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "このリンクには対応する動画がないか、サイトが未対応です。個別の動画ページのリンクを使ってください。",
-  "Enter a valid video page link starting with https:// or http://.": "https:// または http:// で始まる有効な動画ページのリンクを入力してください。"
+  "Enter a valid video page link starting with https:// or http://.": "https:// または http:// で始まる有効な動画ページのリンクを入力してください。",
+  "YouTube downloads are unavailable on the web.": "ウェブ版では YouTube からダウンロードできません。",
+  "You can download YouTube links in the ZenithW desktop or Android app.": "YouTube のリンクは ZenithW のデスクトップ版または Android アプリでダウンロードできます。",
+  "Download the apps": "アプリをダウンロード",
+  "Desktop app": "デスクトップアプリ",
+  "Use ZenithW on your device": "お使いの端末で ZenithW を使う",
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "ウェブでのダウンロードを続けることも、ZenithW アプリで端末に直接ダウンロードすることもできます。"
 }

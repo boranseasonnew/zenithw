@@ -3699,5 +3699,11 @@
   "2 kasım 2026": "2 kasım 2026",
   "November 2, 2026": "2 kasım 2026",
   "This link does not contain a supported video, or the site is not supported. Use the page link for a single video.": "Bu bağlantıdan video okunamadı veya site desteklenmiyor. Tek bir videonun sayfa bağlantısını kullan.",
-  "Enter a valid video page link starting with https:// or http://.": "Geçerli bir video sayfası bağlantısı gir. Bağlantı https:// veya http:// ile başlamalı."
+  "Enter a valid video page link starting with https:// or http://.": "Geçerli bir video sayfası bağlantısı gir. Bağlantı https:// veya http:// ile başlamalı.",
+  "YouTube downloads are unavailable on the web.": "YouTube indirmeleri web sürümünde kullanılamıyor.",
+  "You can download YouTube links in the ZenithW desktop or Android app.": "YouTube bağlantılarını ZenithW'nin masaüstü veya Android uygulamasında indirebilirsin.",
+  "Download the apps": "Uygulamaları indir",
+  "Desktop app": "Masaüstü uygulaması",
+  "Use ZenithW on your device": "ZenithW’yi cihazında kullan",
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "Web’den indirmeye devam edebilir veya ZenithW uygulamalarıyla doğrudan cihazında indirebilirsin."
 }

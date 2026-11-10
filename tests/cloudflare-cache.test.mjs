@@ -39,7 +39,9 @@ test('only verified content-hashed copies are immutable; ordinary assets have bo
     assert.equal(actual, entry.sha256, source);
     assert.ok(entry.url.includes('.' + actual.slice(0, 12) + '.'), source);
     assert.equal(headers.get('/cache-assets/*')['cache-control'], 'public, max-age=31536000, immutable');
-    const sourceRule=/^typing-[^/]+\.js$/.test(source)?'/typing-*.js':'/'+source;
+    let sourceRule = '/' + source;
+    if (/^typing-[^/]+\.js$/.test(source)) sourceRule = '/typing-*.js';
+    if (source.startsWith('brands/')) sourceRule = '/brands/*';
     assert.ok(!headers.get(sourceRule)['cache-control'].includes('immutable'));
     assert.ok(excluded(entry.url));
   }
@@ -59,6 +61,7 @@ test('only verified content-hashed copies are immutable; ordinary assets have bo
   assert.equal(headers.get('/version.js')['cloudflare-cdn-cache-control'], 'no-store');
   assert.match(headers.get('/sitemap.xml')['cache-control'], /s-maxage=300/);
   assert.equal(headers.get('/typing-*.js')['cache-control'], 'public, max-age=3600, must-revalidate');
+  assert.equal(headers.get('/brands/*')['cache-control'], 'public, max-age=3600, must-revalidate');
   assert.ok(!headers.has('/typing*'), 'typing HTML must keep its Function cache policy');
 });
 

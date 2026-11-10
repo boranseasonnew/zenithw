@@ -1,0 +1,163 @@
+/* Shared presentation for the app reminder and YouTube handoff. */
+.overlay.app-popup {
+  --popup-gutter: clamp(12px, 3vw, 24px);
+  align-items: center;
+  justify-content: center;
+  padding: var(--popup-gutter);
+  background: rgb(4 7 14 / 72%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.overlay.app-popup::before { content: none; }
+.overlay.desktop-promo { z-index: 8500; }
+.overlay.app-popup[hidden] { display: none; }
+
+.app-popup-card {
+  position: relative;
+  width: min(100%, 480px);
+  max-height: calc(100dvh - var(--popup-gutter) * 2);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: clamp(16px, 4vw, 24px);
+  border: 1px solid var(--border2);
+  border-radius: 22px;
+  background: radial-gradient(ellipse at 50% 0, rgba(var(--accent-rgb), .12), transparent 72%), var(--modal-bg);
+  box-shadow: 0 20px 64px rgb(0 0 0 / 36%);
+  color: var(--text);
+}
+
+.app-popup-close {
+  position: absolute;
+  inset: 12px 12px auto auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  background: var(--chip-bg);
+  color: var(--text2);
+  font: 24px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.youtube-handoff-logo {
+  /* The official artwork includes clear space around the 100px-tall visible icon. */
+  display: block;
+  margin: -8px auto;
+}
+
+.desktop-promo-icon {
+  display: block;
+  margin-bottom: 14px;
+  border-radius: 12px;
+}
+
+.app-popup-card h2 {
+  margin: 0;
+  font-size: clamp(20px, 4.8vw, 26px);
+  font-weight: 720;
+  letter-spacing: -.035em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.app-popup-card > p {
+  margin: 8px 0 16px;
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.app-popup-actions {
+  display: grid;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.app-popup-actions h3 {
+  margin: 0 0 2px;
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.app-popup-link {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 6px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 13px;
+  background: var(--chip-bg);
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color .16s ease, border-color .16s ease;
+}
+
+.app-popup-link img {
+  display: block;
+  justify-self: center;
+  object-fit: contain;
+}
+
+.app-popup-link strong, .app-popup-link small { display: block; }
+.app-popup-link strong { font-size: 13px; font-weight: 680; }
+.app-popup-link small { color: var(--text2); font-size: 12px; line-height: 1.3; }
+.app-popup-link > svg { color: var(--accent); }
+
+.app-popup-link:hover, .app-popup-close:hover {
+  border-color: var(--accent);
+  background-color: rgba(var(--accent-rgb), .12);
+}
+
+.app-popup-card :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.desktop-promo-never {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 6px;
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.desktop-promo-never input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+@media (min-width: 600px) {
+  .app-popup-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-popup-actions h3 { grid-column: 1 / -1; }
+}
+
+@media (max-height: 420px) and (min-width: 620px) {
+  .youtube-handoff-card {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    width: min(100%, 640px);
+    padding: 14px 18px;
+  }
+
+  .youtube-handoff-logo { grid-row: span 2; margin: -8px -10px; }
+  .youtube-handoff-card h2 { align-self: end; margin-right: 36px; }
+  .youtube-handoff-card > p { margin: 8px 36px 12px 0; }
+  .youtube-handoff-card .app-popup-actions { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay.app-popup, .app-popup-link { transition: none; }
+}

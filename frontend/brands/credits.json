@@ -1,4 +1,9 @@
 {
+  "youtube.png": {
+    "source": "https://brand.youtube/youtube-icon/",
+    "owner": "YouTube",
+    "note": "Unmodified full-color digital icon from the official YouTube Icon package."
+  },
   "android.svg": {
     "source": "https://developer.android.com/static/images/brand/android-head_flat.svg",
     "owner": "Google LLC",
