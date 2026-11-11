@@ -37,6 +37,7 @@ export const STATIC_ASSET_PATHS = new Set([
   "/cache-assets/app.a9318a7de684.js",
   "/cache-assets/app.bbd598557c99.js",
   "/cache-assets/app.e0a5a2e7a16f.js",
+  "/cache-assets/app.e86bf8c14ee2.js",
   "/cache-assets/app.fe3468d19117.js",
   "/cache-assets/audio-tools-link.9f69c6e1e66e.css",
   "/cache-assets/audio-tools.0498bb7ff454.css",

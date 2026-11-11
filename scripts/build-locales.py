@@ -18,7 +18,11 @@ class Markup(HTMLParser):
     def handle_starttag(self, tag, attrs):
         line,column=self.getpos(); start=self.offsets[line-1]+column
         attributes=dict(attrs)
-        node={'start':start,'raw':self.get_starttag_text(),'fields':{},'children':0,'tag':tag,'blocked':tag in blocked or any(item['blocked'] for item in self.stack)}
+        script_type=(attributes.get('type') or '').strip().lower()
+        script_src=attributes.get('src','')
+        defer_script=(tag=='script' and script_src and 'async' not in attributes and 'defer' not in attributes
+                  and script_type!='module' and not re.search(r'(?:^|/)site-language(?:\.[a-f0-9]+)?\.js(?:[?#]|$)',script_src))
+        node={'start':start,'raw':self.get_starttag_text(),'fields':{},'children':0,'tag':tag,'defer':bool(defer_script),'blocked':tag in blocked or any(item['blocked'] for item in self.stack)}
         if self.stack:self.stack[-1]['children']+=1
         # Previously recorded source text remains authoritative on rebuilds.
         if attributes.get('data-l10n'):node['fields']=json.loads(attributes['data-l10n'])
@@ -47,11 +51,16 @@ class Markup(HTMLParser):
     def result(self):
         output=self.source
         for node in reversed(self.nodes):
-            if not node['fields']:continue
+            if not node['fields'] and not node['defer']:continue
             raw=re.sub(r'\sdata-l10n="[^"]*"','',node['raw'])
-            close=raw.rfind('/>') if raw.endswith('/>') else raw.rfind('>')
-            attribute=html.escape(json.dumps(node['fields'],ensure_ascii=False,separators=(',',':')),quote=True)
-            replacement=raw[:close]+' data-l10n="'+attribute+'"'+raw[close:]
+            if node['defer']:
+                close=raw.rfind('/>') if raw.endswith('/>') else raw.rfind('>')
+                raw=raw[:close]+' defer'+raw[close:]
+            replacement=raw
+            if node['fields']:
+                close=replacement.rfind('/>') if replacement.endswith('/>') else replacement.rfind('>')
+                attribute=html.escape(json.dumps(node['fields'],ensure_ascii=False,separators=(',',':')),quote=True)
+                replacement=replacement[:close]+' data-l10n="'+attribute+'"'+replacement[close:]
             start=node['start'];output=output[:start]+replacement+output[start+len(node['raw']):]
         return output
 

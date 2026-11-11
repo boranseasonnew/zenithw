@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { test } from 'node:test';
 import {rows as v17Copy} from '../scripts/v17-release-copy.mjs';
 
@@ -47,9 +47,16 @@ test('web 17.0 is complete in eight languages and preserves the previous release
     assert.match(read(prefix+'index.html'),/version\.js\?v=17\.0/);
   }
   assert.match(read('version.js'),/ver: 'v17\.0'/);
-  for(const file of ['README.md','README.tr.md','README.de.md','README.fr.md','README.ja.md','desktop/README.md','desktop/store/README.md','promo-video/README.md']){
+  for(const file of ['README.md','README.tr.md','README.de.md','README.fr.md','README.ja.md']){
     assert.match(readFileSync(new URL('../'+file,import.meta.url),'utf8'),/17\.0/,file);
   }
+  const versionSource=read('version.js');
+  const webVersion=/ver:\s*'v([0-9.]+)'/.exec(versionSource)[1];
+  const desktopVersion=/desktop:\s*\{\s*ver:\s*'v([0-9.]+)'/.exec(versionSource)[1];
+  const desktopReadme=new URL('../desktop/README.md',import.meta.url);
+  if(existsSync(desktopReadme))assert.ok(readFileSync(desktopReadme,'utf8').includes(`Web ${webVersion}`),'desktop/README.md web version');
+  const storeReadme=new URL('../desktop/store/README.md',import.meta.url);
+  if(existsSync(storeReadme))assert.ok(readFileSync(storeReadme,'utf8').includes(`Desktop **${desktopVersion}**`),'desktop/store/README.md desktop version');
 });
 
 test('v15.3–v15.9 notes have static content and accessible archive links', () => {

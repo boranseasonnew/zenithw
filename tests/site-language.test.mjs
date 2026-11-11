@@ -1,9 +1,12 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,readdirSync} from 'node:fs';
+import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import vm from 'node:vm';
 import {test} from 'node:test';
 
 const frontend = new URL('../frontend/', import.meta.url);
+const frontendPath = fileURLToPath(frontend);
 const languages = ['tr','en','fr','de','ru','vi','zh','ja'];
 const read = path => readFileSync(new URL(path, frontend), 'utf8');
 const catalogs = Object.fromEntries(languages.map(lang => [lang, JSON.parse(read(`locales/${lang}.json`))]));
@@ -20,6 +23,40 @@ test('Every language preserves variable slots and link markup across the full ca
       assert.deepEqual(tokens(value),tokens(key),`${lang} placeholders: ${key}`);
       assert.doesNotMatch(value,/<script\b|\son\w+\s*=|href\s*=\s*["']javascript:/i,`${lang} unsafe markup`);
       assert.doesNotMatch(value,/ZXQPH\d+QXZ/,`${lang} unresolved token`);
+    }
+  }
+});
+
+test('language bootstrap stays synchronous while other classic scripts defer in document order',()=>{
+  const walk=directory=>readdirSync(directory,{withFileTypes:true}).flatMap(entry=>{
+    const path=join(directory,entry.name);
+    return entry.isDirectory()?walk(path):[path];
+  });
+  const orderGroups=[
+    ['/version.js','/cache-assets/updates-core.','/site-shell.js'],
+    ['/vendor/socket.io-','/runtime-config.js','/cache-assets/app.','/site-shell.js'],
+    ['/runtime-config.js','/cache-assets/local-media.','/cache-assets/app.','/site-shell.js'],
+    ['/cache-assets/app.','/site-shell.js'],
+  ];
+  for(const path of walk(frontendPath).filter(path=>path.endsWith('.html'))){
+    const source=readFileSync(path,'utf8');
+    const scripts=[...source.matchAll(/<script\b[^>]*>/gi)].map(match=>match[0]);
+    const external=scripts.map(tag=>({
+      tag,
+      src:/\bsrc=["']([^"']+)/i.exec(tag)?.[1]||'',
+      type:/\btype=["']([^"']+)/i.exec(tag)?.[1]?.toLowerCase()||'',
+    })).filter(script=>script.src);
+    for(const script of external){
+      if(script.src.includes('site-language') && script.type!=='module'){
+        assert.doesNotMatch(script.tag,/\b(?:async|defer)\b/i,path+' language bootstrap');
+      }else if(script.type!=='module' && !/\basync\b/i.test(script.tag)){
+        assert.match(script.tag,/\bdefer\b/i,path+' '+script.src);
+      }
+    }
+    const sources=external.map(script=>script.src);
+    for(const group of orderGroups){
+      const positions=group.map(fragment=>sources.findIndex(src=>src.includes(fragment))).filter(index=>index>=0);
+      assert.deepEqual(positions,[...positions].sort((a,b)=>a-b),path+' script order');
     }
   }
 });

@@ -25,7 +25,7 @@ test('runtime parts are Pages compatible and full notices distributed',()=>{
 test('all eight clean routes preserve title, exact future note and original localization',()=>{
  for(const lang of ['tr','en','de','fr','ru','vi','zh','ja']){
   const path=(lang==='tr'?'':lang+'/')+'audio-separator.html',html=readFileSync(new URL('../frontend/'+path,import.meta.url),'utf8');
-  assert.match(html,/<title>[^<]+ \| ZenithW<\/title>/);assert.ok(html.includes('Android and Windows support may come in the future. Not guaranteed.'));assert.match(html,/id="studio"/);assert.doesNotMatch(html,/<iframe|huggingface.*(?:preconnect|preload)/);
+    assert.match(html,/<title(?:\s[^>]*)?>[^<]+ \| ZenithW<\/title>/);assert.ok(html.includes('Android and Windows support may come in the future. Not guaranteed.'));assert.match(html,/id="studio"/);assert.doesNotMatch(html,/<iframe|huggingface.*(?:preconnect|preload)/);
   const catalog=JSON.parse(readFileSync(new URL('../frontend/locales/'+lang+'.json',import.meta.url),'utf8'));
   for(const key of ['Play Both','Pause Both','Browse files','Waveform','Seek','Volume','Mute','Ready for playback'])assert.ok(catalog[key],lang+': '+key);
  }
@@ -54,7 +54,7 @@ test('Studio strings and engine information use every existing locale catalog',(
   for(const text of [...Object.values(english),...info])assert.ok(catalog[text],language+': '+text);
   assert.doesNotThrow(()=>new Intl.NumberFormat(catalog['en-US']).format(1.2));
   const html=readFileSync(new URL('../frontend/'+(language==='tr'?'':language+'/')+'audio-separator.html',import.meta.url),'utf8');
-  assert.equal(html.match(/<title>([^<]+)<\/title>/)[1].replaceAll('&amp;','&'),catalog[titleKey]);
+    assert.equal(html.match(/<title(?:\s[^>]*)?>([^<]+)<\/title>/)[1].replaceAll('&amp;','&'),catalog[titleKey]);
   assert.ok(html.includes(catalog['Powered by Lilith Audio Engine']));
   assert.ok(html.includes(catalog[future]));
   assert.ok(html.includes('https://github.com/boranseasonnew/lilith-audio-engine'));
