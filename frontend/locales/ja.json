@@ -3705,5 +3705,6 @@
   "Download the apps": "アプリをダウンロード",
   "Desktop app": "デスクトップアプリ",
   "Use ZenithW on your device": "お使いの端末で ZenithW を使う",
-  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "ウェブでのダウンロードを続けることも、ZenithW アプリで端末に直接ダウンロードすることもできます。"
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "ウェブでのダウンロードを続けることも、ZenithW アプリで端末に直接ダウンロードすることもできます。",
+  "İndirme geçmişi herhangi bir sunucu hesabına bağlanmaz; tamamen tarayıcınızın yerel depolamasında (localStorage) tutulur ve dilediğiniz an geçmiş panelinden temizlenebilir. Hazırlanan medya dosyaları sunucuda kalıcı bir kullanıcı profiline kaydedilmez. ZenithW ziyaretçilere ait oturum verilerini, kişisel çerezleri veya kimlik bilgilerini toplamaz; tüm veri akışı yalnızca anlık medya aktarımıyla sınırlıdır.": "ダウンロード履歴はサーバーアカウントに関連付けられず、ブラウザのローカルストレージ（localStorage）にのみ保存され、履歴パネルからいつでも消去できます。生成されたメディアファイルはサーバー上の恒久的なユーザープロファイルに保存されません。ZenithW は訪問者のセッションデータ、個人用 Cookie、資格情報を収集しません。すべてのデータフローはリアルタイムのメディア配信のみに制限されています。"
 }

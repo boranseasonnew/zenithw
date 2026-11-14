@@ -3705,5 +3705,6 @@
   "Download the apps": "下载应用",
   "Desktop app": "桌面应用",
   "Use ZenithW on your device": "在你的设备上使用 ZenithW",
-  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "你可以继续在网页上下载，也可以用 ZenithW 应用直接在设备上下载。"
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "你可以继续在网页上下载，也可以用 ZenithW 应用直接在设备上下载。",
+  "İndirme geçmişi herhangi bir sunucu hesabına bağlanmaz; tamamen tarayıcınızın yerel depolamasında (localStorage) tutulur ve dilediğiniz an geçmiş panelinden temizlenebilir. Hazırlanan medya dosyaları sunucuda kalıcı bir kullanıcı profiline kaydedilmez. ZenithW ziyaretçilere ait oturum verilerini, kişisel çerezleri veya kimlik bilgilerini toplamaz; tüm veri akışı yalnızca anlık medya aktarımıyla sınırlıdır.": "下载历史记录不与任何服务器帐户关联；它完全保存在浏览器的本地存储（localStorage）中，并且可以随时从历史记录面板中清除。准备好的媒体文件不会保存到服务器上的持久用户资料中。ZenithW 不会收集访客的会话数据、个人 Cookie 或身份凭据；所有数据流仅限于实时的媒体传输。"
 }

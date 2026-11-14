@@ -3705,5 +3705,6 @@
   "Download the apps": "Tải ứng dụng",
   "Desktop app": "Ứng dụng máy tính",
   "Use ZenithW on your device": "Dùng ZenithW trên thiết bị của bạn",
-  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "Tiếp tục tải trên web hoặc dùng ứng dụng ZenithW để tải trực tiếp trên thiết bị."
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "Tiếp tục tải trên web hoặc dùng ứng dụng ZenithW để tải trực tiếp trên thiết bị.",
+  "İndirme geçmişi herhangi bir sunucu hesabına bağlanmaz; tamamen tarayıcınızın yerel depolamasında (localStorage) tutulur ve dilediğiniz an geçmiş panelinden temizlenebilir. Hazırlanan medya dosyaları sunucuda kalıcı bir kullanıcı profiline kaydedilmez. ZenithW ziyaretçilere ait oturum verilerini, kişisel çerezleri veya kimlik bilgilerini toplamaz; tüm veri akışı yalnızca anlık medya aktarımıyla sınırlıdır.": "Lịch sử tải xuống không được liên kết với bất kỳ tài khoản máy chủ nào; nó được lưu hoàn toàn trong bộ nhớ cục bộ của trình duyệt (localStorage) và có thể xóa bất cứ lúc nào từ bảng lịch sử. Các tệp đa phương tiện đã xử lý không được lưu vào hồ sơ người dùng cố định trên máy chủ. ZenithW không thu thập dữ liệu phiên, cookie cá nhân hoặc thông tin nhận dạng của khách truy cập; tất cả luồng dữ liệu chỉ giới hạn trong việc truyền phát tệp đa phương tiện tức thì."
 }

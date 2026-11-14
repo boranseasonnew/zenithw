@@ -3705,5 +3705,6 @@
   "Download the apps": "Uygulamaları indir",
   "Desktop app": "Masaüstü uygulaması",
   "Use ZenithW on your device": "ZenithW’yi cihazında kullan",
-  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "Web’den indirmeye devam edebilir veya ZenithW uygulamalarıyla doğrudan cihazında indirebilirsin."
+  "Keep downloading on the web or use the ZenithW apps to download directly on your device.": "Web’den indirmeye devam edebilir veya ZenithW uygulamalarıyla doğrudan cihazında indirebilirsin.",
+  "İndirme geçmişi herhangi bir sunucu hesabına bağlanmaz; tamamen tarayıcınızın yerel depolamasında (localStorage) tutulur ve dilediğiniz an geçmiş panelinden temizlenebilir. Hazırlanan medya dosyaları sunucuda kalıcı bir kullanıcı profiline kaydedilmez. ZenithW ziyaretçilere ait oturum verilerini, kişisel çerezleri veya kimlik bilgilerini toplamaz; tüm veri akışı yalnızca anlık medya aktarımıyla sınırlıdır.": "İndirme geçmişi herhangi bir sunucu hesabına bağlanmaz; tamamen tarayıcınızın yerel depolamasında (localStorage) tutulur ve dilediğiniz an geçmiş panelinden temizlenebilir. Hazırlanan medya dosyaları sunucuda kalıcı bir kullanıcı profiline kaydedilmez. ZenithW ziyaretçilere ait oturum verilerini, kişisel çerezleri veya kimlik bilgilerini toplamaz; tüm veri akışı yalnızca anlık medya aktarımıyla sınırlıdır."
 }
