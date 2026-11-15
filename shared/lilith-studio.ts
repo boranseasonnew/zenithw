@@ -1,13 +1,14 @@
 // Only the public SDK is used by the Studio.
 import {createSeparator,SynchronizedPlayer,safeFilename,inspectAudio,exportAudio} from '@lilith/audio-engine';
 import {waveformPeaksAsync,yieldToBrowser} from './audio-preview.mjs';
+import {createRepeatController} from './audio-repeat.mjs';
 import {encodeWavAsync,zipWavStems} from './audio-export.mjs';
 import type {SeparationEngine,SeparationResult,SeparatorOptions,StemName,ProgressEvent,AudioExportFormat} from '@lilith/audio-engine';
 export const ENGLISH={
   upload:'Choose your audio',browse:'Browse files',drop:'Drop a file here, or browse from your device.',formats:'Mono or stereo · Up to 4 minutes / 96 MiB · Codecs depend on your browser',
   modelInfo:'UVR-MDX-NET-Voc_FT · 66.8 MB · First run downloads the model and a 26.8 MB runtime. Quality varies by recording.',
   cancel:'Cancel',ready:'Ready when you are.',privacy:'Your audio is never uploaded. Only public model files are downloaded. No tracking, ads or hidden server processing.',
-  results:'Your separated stems',vocals:'Vocals',instrumental:'Instrumental',play:'Play',pause:'Pause',both:'Play Both',pauseBoth:'Pause Both',seek:'Seek',volume:'Volume',mute:'Mute',
+  results:'Your separated stems',vocals:'Vocals',instrumental:'Instrumental',play:'Play',pause:'Pause',both:'Play Both',pauseBoth:'Pause Both',repeat:'Repeat playback',seek:'Seek',volume:'Volume',mute:'Mute',
   zip:'Download Both · ZIP',cache:'Remove cached model',storage:'Model storage',canceled:'Canceled. Audio and inference resources released.',
   failed:'Unable to process this file.',working:'Processing',download:'Downloading model',cached:'Using verified cached model',decoding:'Decoding audio',
   runtime:'Loading inference runtime',loading:'Initializing model',verify:'Verifying model integrity',tensors:'Preparing tensors',inference:'Running AI inference',reconstructing:'Reconstructing audio',
@@ -33,7 +34,7 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
   const el=<K extends keyof HTMLElementTagNameMap>(tag:K,text?:string,cls?:string)=>{const node=document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;};
   const number=(v:number,digits=1)=>new Intl.NumberFormat(t.locale,{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(v);
   const time=(s:number)=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-  const icon=(kind:string)=>{const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');const isSolid=['play','pause','rewind','forward'].includes(kind);svg.setAttribute('fill',isSolid?'currentColor':'none');svg.setAttribute('stroke',isSolid?'none':'currentColor');if(!isSolid)svg.setAttribute('stroke-width','1.6');svg.setAttribute('aria-hidden','true');const p=document.createElementNS(svg.namespaceURI,'path');p.setAttribute('d',({upload:'M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4',download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',vocals:'M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8',instrumental:'M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z',shield:'m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6',play:'M8 5v14l11-7z',pause:'M6 19h4V5H6v14zm8-14v14h4V5h-4z',rewind:'M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z',forward:'M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z'} as Record<string,string>)[kind]);svg.append(p);return svg;};
+  const icon=(kind:string)=>{const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');const isSolid=['play','pause','rewind','forward'].includes(kind);svg.setAttribute('fill',isSolid?'currentColor':'none');svg.setAttribute('stroke',isSolid?'none':'currentColor');if(!isSolid)svg.setAttribute('stroke-width','1.6');svg.setAttribute('aria-hidden','true');const p=document.createElementNS(svg.namespaceURI,'path');p.setAttribute('d',({upload:'M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4',download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',vocals:'M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8',instrumental:'M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z',shield:'m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6',play:'M8 5v14l11-7z',pause:'M6 19h4V5H6v14zm8-14v14h4V5h-4z',rewind:'M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z',forward:'M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z',repeat:'m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h18M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3'} as Record<string,string>)[kind]);svg.append(p);return svg;};
   root.dataset.state='upload';
   const workspace=el('section',undefined,'audio-workspace'),top=el('div',undefined,'workspace-top'),heading=el('div');heading.append(el('span',t.local,'local-badge'),el('h2',t.automatic),el('p',t.automaticCopy));top.append(heading);
   const input=el('input');input.type='file';input.accept='audio/*,.wav,.mp3,.flac,.ogg,.m4a,.aac,.webm';input.id='lilith-file';input.className='file-input';
@@ -134,11 +135,32 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
     output.append(heading);
 
     const updates:(()=>void)[]=[];
+    const repeat=createRepeatController();
+    let repeatRestarting=false;
     const tick=()=>{
       updates.forEach(fn=>fn());
       const isBoth=Boolean(player?.isPlaying('vocals')&&player?.isPlaying('instrumental'));
       both.textContent=isBoth?t.pauseBoth:t.both;
       masterPlayBtn.setAttribute('aria-label',isBoth?t.pauseBoth:t.both);
+      const repeatMode=repeat.observe({
+        playing:Boolean(player?.playing),
+        vocals:Boolean(player?.isPlaying('vocals')),
+        instrumental:Boolean(player?.isPlaying('instrumental')),
+        currentTime:player?.currentTime??0,
+        duration:value.vocals.duration,
+      });
+      if(repeatMode&&player&&!repeatRestarting&&!busy&&!destroyed&&result===value){
+        repeatRestarting=true;
+        void player.play(repeatMode).then(()=>{
+          repeatRestarting=false;
+          if(!destroyed&&result===value){cancelAnimationFrame(frame);tick();}
+        }).catch(error=>{
+          repeatRestarting=false;
+          console.error('[ZenithW audio preview] Repeat failed:',error);
+          if(!destroyed&&result===value)status.textContent=t.playbackError;
+        });
+        return;
+      }
       if(player?.playing){
         masterPlayBtn.replaceChildren(icon('pause'));
         masterPlayBtn.classList.add('is-playing');
@@ -155,10 +177,14 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
         await previewContext.resume();
         ensurePlayer();
         if(name==='both'){
-          if(player!.isPlaying('vocals')&&player!.isPlaying('instrumental'))player!.pause();
-          else await player!.play('both');
-        }else if(player!.isPlaying(name))player!.pauseStem(name);
-        else await player!.playStem(name);
+          if(player!.isPlaying('vocals')&&player!.isPlaying('instrumental')){
+            player!.pause();
+            repeat.cancel();
+          }else await player!.play('both');
+        }else if(player!.isPlaying(name)){
+          player!.pauseStem(name);
+          if(!player!.playing)repeat.cancel();
+        }else await player!.playStem(name);
         cancelAnimationFrame(frame);
         tick();
       }catch(error){
@@ -414,7 +440,16 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
       const target=Math.min(value.vocals.duration,player.currentTime+5);
       player.seek(target).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{});
     };
-    transportLeft.append(masterPlayBtn,seekBackBtn,seekFwdBtn);
+    const repeatBtn=el('button',undefined,'transport-sub-btn repeat-btn');
+    repeatBtn.type='button';
+    repeatBtn.setAttribute('aria-label',t.repeat);
+    repeatBtn.setAttribute('title',t.repeat);
+    repeatBtn.setAttribute('aria-pressed','false');
+    repeatBtn.append(icon('repeat'));
+    repeatBtn.onclick=()=>{
+      repeatBtn.setAttribute('aria-pressed',String(repeat.toggle()));
+    };
+    transportLeft.append(masterPlayBtn,seekBackBtn,seekFwdBtn,repeatBtn);
 
     const transportCenter=el('div',undefined,'transport-center');
     const masterClock=el('span',`0:00 / ${time(value.vocals.duration)}`,'master-digital-clock');

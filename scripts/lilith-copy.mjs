@@ -1,5 +1,6 @@
 // Site-owned copy in existing catalog order: tr/en/de/fr/ru/vi/zh/ja.
 export const extra=[
+['Döngüde oynat','Repeat playback','Wiedergabe wiederholen','Répéter la lecture','Повторять воспроизведение','Phát lặp lại','循环播放','リピート再生'],
 ['Model hazır — bu parça işleniyor','Model ready — processing this track','Modell bereit — Track wird verarbeitet','Modèle prêt — traitement du morceau','Модель готова — обрабатываем трек','Mô hình sẵn sàng — đang xử lý bản nhạc','模型已准备就绪，正在处理此音轨','モデル準備完了 — 曲を処理中'],
 ['Tarayıcın model önbelleğini saklayamadı. Sonraki ziyarette yeniden indirilebilir.','Your browser could not keep the model cache. A later visit may download it again.','Dein Browser konnte den Modellcache nicht behalten. Beim nächsten Besuch wird er möglicherweise erneut geladen.','Votre navigateur n’a pas pu conserver le modèle. Il pourra être téléchargé à nouveau lors d’une prochaine visite.','Браузер не смог сохранить кэш модели. При следующем посещении она может скачаться снова.','Trình duyệt không giữ được bộ nhớ đệm mô hình. Lần sau có thể phải tải lại.','浏览器未能保留模型缓存，下次访问可能需要重新下载。','モデルのキャッシュを保存できませんでした。次回のアクセスで再ダウンロードが必要な場合があります。'],
 ["Otomatik ses ayırma", "Automatic separation", "Automatische Trennung", "Séparation automatique", "Автоматическое разделение", "Tách âm thanh tự động", "自动分离", "自動音声分離"],
