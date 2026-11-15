@@ -135,6 +135,25 @@ async function zipWavStems(result, name = "audio", signal, onProgress) {
   return new Blob([...localParts, ...directory, end], { type: "application/zip" });
 }
 
+// shared/audio-repeat.mjs
+function createRepeatController() {
+  let enabled = false, wasPlaying = false, lastMode = null;
+  return {
+    toggle() { enabled = !enabled; return enabled; },
+    cancel() { wasPlaying = false; lastMode = null; },
+    observe({ playing, vocals, instrumental, currentTime, duration }) {
+      if (playing) {
+        const mode = vocals && instrumental ? "both" : vocals ? "vocals" : instrumental ? "instrumental" : null;
+        if (mode) { wasPlaying = true; lastMode = mode; }
+        return null;
+      }
+      const mode = enabled && wasPlaying && duration > 0 && currentTime >= duration ? lastMode : null;
+      wasPlaying = false;
+      return mode;
+    }
+  };
+}
+
 // shared/lilith-studio.ts
 var ENGLISH = {
   upload: "Choose your audio",
@@ -152,6 +171,7 @@ var ENGLISH = {
   pause: "Pause",
   both: "Play Both",
   pauseBoth: "Pause Both",
+  repeat: "Repeat playback",
   seek: "Seek",
   volume: "Volume",
   mute: "Mute",
@@ -239,7 +259,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     if (!isSolid) svg.setAttribute("stroke-width", "1.6");
     svg.setAttribute("aria-hidden", "true");
     const p = document.createElementNS(svg.namespaceURI, "path");
-    p.setAttribute("d", { upload: "M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4", download: "M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4", vocals: "M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8", instrumental: "M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z", shield: "m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6", play: "M8 5v14l11-7z", pause: "M6 19h4V5H6v14zm8-14v14h4V5h-4z", rewind: "M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z", forward: "M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" }[kind]);
+    p.setAttribute("d", { upload: "M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4", download: "M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4", vocals: "M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8", instrumental: "M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z", shield: "m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6", play: "M8 5v14l11-7z", pause: "M6 19h4V5H6v14zm8-14v14h4V5h-4z", rewind: "M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z", forward: "M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z", repeat: "M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3" }[kind]);
     svg.append(p);
     return svg;
   };
@@ -532,13 +552,15 @@ function mountStudio(root2, overrides = {}, options = {}) {
     const volumes = { vocals: 1, instrumental: 1 };
     const userMuted = { vocals: false, instrumental: false };
     const soloState = { vocals: false, instrumental: false };
+    let previewContext;
     const ensurePlayer = () => {
       if (!player) {
-        player = new SynchronizedPlayer(value);
+        previewContext ??= new AudioContext();
+        player = new SynchronizedPlayer(value, previewContext);
         for (const name of ["vocals", "instrumental"]) {
           player.volume(name, volumes[name]);
-          player.mute(name, userMuted[name]);
         }
+        applyMuteSolo();
       }
       return player;
     };
@@ -565,11 +587,32 @@ function mountStudio(root2, overrides = {}, options = {}) {
     heading2.append(titleGroup, replaceBtn);
     output.append(heading2);
     const updates = [];
+    const repeat = createRepeatController();
+    let repeatRestarting = false;
     const tick = () => {
       updates.forEach((fn) => fn());
       const isBoth = Boolean(player?.isPlaying("vocals") && player?.isPlaying("instrumental"));
       both.textContent = isBoth ? t.pauseBoth : t.both;
       masterPlayBtn.setAttribute("aria-label", isBoth ? t.pauseBoth : t.both);
+      const repeatMode = repeat.observe({
+        playing: Boolean(player?.playing),
+        vocals: Boolean(player?.isPlaying("vocals")),
+        instrumental: Boolean(player?.isPlaying("instrumental")),
+        currentTime: player?.currentTime ?? 0,
+        duration: value.vocals.duration
+      });
+      if (repeatMode && player && !repeatRestarting && !busy && !destroyed && result === value) {
+        repeatRestarting = true;
+        void player.play(repeatMode).then(() => {
+          repeatRestarting = false;
+          if (!destroyed && result === value) { cancelAnimationFrame(frame); tick(); }
+        }).catch((error) => {
+          repeatRestarting = false;
+          console.error("[ZenithW audio preview] Repeat failed:", error);
+          if (!destroyed && result === value) status.textContent = t.playbackError;
+        });
+        return;
+      }
       if (player?.playing) {
         masterPlayBtn.replaceChildren(icon("pause"));
         masterPlayBtn.classList.add("is-playing");
@@ -582,15 +625,22 @@ function mountStudio(root2, overrides = {}, options = {}) {
     const playback = async (name) => {
       try {
         if (!result || busy || destroyed) return;
+        previewContext ??= new AudioContext();
+        await previewContext.resume();
         ensurePlayer();
         if (name === "both") {
-          if (player.isPlaying("vocals") && player.isPlaying("instrumental")) player.pause();
-          else await player.play("both");
-        } else if (player.isPlaying(name)) player.pauseStem(name);
-        else await player.playStem(name);
+          if (player.isPlaying("vocals") && player.isPlaying("instrumental")) {
+            player.pause();
+            repeat.cancel();
+          } else await player.play("both");
+        } else if (player.isPlaying(name)) {
+          player.pauseStem(name);
+          if (!player.playing) repeat.cancel();
+        } else await player.playStem(name);
         cancelAnimationFrame(frame);
         tick();
-      } catch {
+      } catch (error) {
+        console.error("[ZenithW audio preview] Playback failed:", error);
         status.textContent = t.playbackError;
       }
     };
@@ -627,6 +677,21 @@ function mountStudio(root2, overrides = {}, options = {}) {
     for (const name of ["instrumental", "vocals"]) {
       const row = el("article", void 0, "stem-card");
       row.dataset.stem = name;
+      const stemPlay = el("button", void 0, "stem-play-btn");
+      stemPlay.type = "button";
+      stemPlay.setAttribute("aria-label", `${t.play} ${t[name]}`);
+      stemPlay.setAttribute("aria-pressed", "false");
+      stemPlay.append(icon("play"));
+      stemPlay.onclick = () => void playback(name);
+      updates.push(() => {
+        const active = Boolean(player?.isPlaying(name));
+        if (stemPlay.dataset.playing !== String(active)) {
+          stemPlay.dataset.playing = String(active);
+          stemPlay.setAttribute("aria-pressed", String(active));
+          stemPlay.setAttribute("aria-label", `${active ? t.pause : t.play} ${t[name]}`);
+          stemPlay.replaceChildren(icon(active ? "pause" : "play"));
+        }
+      });
       const mixerStrip = el("div", void 0, "stem-mixer-strip");
       const dialWrap = el("div", void 0, "stem-vol-dial");
       dialWrap.setAttribute("title", `${t[name]} ${t.volume}`);
@@ -786,7 +851,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
         dialog.showModal();
       };
       actionsArea.append(save);
-      row.append(mixerStrip, centerArea, actionsArea);
+      row.append(stemPlay, mixerStrip, centerArea, actionsArea);
       stemsContainer.append(row);
       let lastPixel = -1, lastTime = "";
       const draw = () => {
@@ -855,7 +920,16 @@ function mountStudio(root2, overrides = {}, options = {}) {
       }).catch(() => {
       });
     };
-    transportLeft.append(masterPlayBtn, seekBackBtn, seekFwdBtn);
+    const repeatBtn = el("button", void 0, "transport-sub-btn repeat-btn");
+    repeatBtn.type = "button";
+    repeatBtn.setAttribute("aria-label", t.repeat);
+    repeatBtn.setAttribute("title", t.repeat);
+    repeatBtn.setAttribute("aria-pressed", "false");
+    repeatBtn.append(icon("repeat"));
+    repeatBtn.onclick = () => {
+      repeatBtn.setAttribute("aria-pressed", String(repeat.toggle()));
+    };
+    transportLeft.append(masterPlayBtn, seekBackBtn, seekFwdBtn, repeatBtn);
     const transportCenter = el("div", void 0, "transport-center");
     const masterClock = el("span", `0:00 / ${time(value.vocals.duration)}`, "master-digital-clock");
     transportCenter.append(masterClock);
@@ -902,4 +976,15 @@ var api = window.ZWLanguage;
 if (api) await api.ready;
 var root = document.getElementById("studio");
 var strings = Object.fromEntries(Object.entries(ENGLISH).map(([key, text]) => [key, api?.translate(text) ?? text]));
+var audioLocale = document.documentElement.dataset.staticLanguage || document.documentElement.lang?.slice(0, 2) || "en";
+strings.repeat = {
+  tr: "Döngüde oynat",
+  en: "Repeat playback",
+  de: "Wiedergabe wiederholen",
+  fr: "Répéter la lecture",
+  ru: "Повторять воспроизведение",
+  vi: "Phát lặp lại",
+  zh: "循环播放",
+  ja: "リピート再生"
+}[audioLocale] || "Repeat playback";
 mountStudio(root, strings, { workerUrl: "/audio-separator-worker.js?v=fb3ef8db479a", exportWorkerUrl: "/audio-export-worker.js?v=8e89dd115571" });
