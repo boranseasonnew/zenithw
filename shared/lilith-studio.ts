@@ -95,13 +95,17 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
     const volumes:Record<StemName,number>={vocals:1,instrumental:1};
     const userMuted:Record<StemName,boolean>={vocals:false,instrumental:false};
     const soloState:Record<StemName,boolean>={vocals:false,instrumental:false};
+    // Resume the audio context on the original click, before allocating large PCM buffers.
+    // Delaying AudioContext.resume() until after buffer copies can lose transient user activation.
+    let previewContext:AudioContext|undefined;
     const ensurePlayer=()=>{
       if(!player){
-        player=new SynchronizedPlayer(value);
+        previewContext??=new AudioContext();
+        player=new SynchronizedPlayer(value,previewContext);
         for(const name of ['vocals','instrumental'] as StemName[]){
           player.volume(name,volumes[name]);
-          player.mute(name,userMuted[name]);
         }
+        applyMuteSolo();
       }
       return player;
     };
@@ -147,6 +151,8 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
     const playback=async(name:StemName|'both')=>{
       try{
         if(!result||busy||destroyed)return;
+        previewContext??=new AudioContext();
+        await previewContext.resume();
         ensurePlayer();
         if(name==='both'){
           if(player!.isPlaying('vocals')&&player!.isPlaying('instrumental'))player!.pause();
@@ -155,7 +161,8 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
         else await player!.playStem(name);
         cancelAnimationFrame(frame);
         tick();
-      }catch{
+      }catch(error){
+        console.error('[ZenithW audio preview] Playback failed:',error);
         status.textContent=t.playbackError;
       }
     };
@@ -189,6 +196,22 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
     for(const name of ['instrumental','vocals'] as StemName[]){
       const row=el('article',undefined,'stem-card');
       row.dataset.stem=name;
+
+      const stemPlay=el('button',undefined,'stem-play-btn');
+      stemPlay.type='button';
+      stemPlay.setAttribute('aria-label',`${t.play} ${t[name]}`);
+      stemPlay.setAttribute('aria-pressed','false');
+      stemPlay.append(icon('play'));
+      stemPlay.onclick=()=>void playback(name);
+      updates.push(()=>{
+        const active=Boolean(player?.isPlaying(name));
+        if(stemPlay.dataset.playing!==String(active)){
+          stemPlay.dataset.playing=String(active);
+          stemPlay.setAttribute('aria-pressed',String(active));
+          stemPlay.setAttribute('aria-label',`${active?t.pause:t.play} ${t[name]}`);
+          stemPlay.replaceChildren(icon(active?'pause':'play'));
+        }
+      });
 
       const mixerStrip=el('div',undefined,'stem-mixer-strip');
       const dialWrap=el('div',undefined,'stem-vol-dial');
@@ -326,7 +349,7 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
       };
       actionsArea.append(save);
 
-      row.append(mixerStrip,centerArea,actionsArea);
+      row.append(stemPlay,mixerStrip,centerArea,actionsArea);
       stemsContainer.append(row);
 
       let lastPixel=-1,lastTime='';

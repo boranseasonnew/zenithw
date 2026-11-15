@@ -61,7 +61,7 @@ footer{max-width:1240px;margin:auto;padding:24px 36px;border-top:1px solid var(-
 #studio .stem-card:hover,
 #studio .stem-card[data-playing=true] {
   display: grid;
-  grid-template-columns: 43px 84px minmax(0,1fr) 38px;
+  grid-template-columns: 43px 104px minmax(0,1fr) 38px;
   align-items:center; gap:15px; position:relative; min-width:0;
   margin:0; padding:17px 18px; border:0; border-radius:0;
   background: #15161c;
@@ -101,7 +101,7 @@ footer{max-width:1240px;margin:auto;padding:24px 36px;border-top:1px solid var(-
 #studio .stem-badge { font-size:11px; font-weight:700; border-radius:6px; padding:3px 8px; }
 #studio .stem-time-badge { font-size:10px; font-weight:500; white-space:nowrap; }
 #studio .waveform-wrap {
-  height:76px; border:1px solid color-mix(in srgb,var(--stem-color) 13%, #232530);
+  height:94px; border:1px solid color-mix(in srgb,var(--stem-color) 24%, #232530);
   border-radius:9px; background:linear-gradient(90deg,
     color-mix(in srgb,var(--stem-color) 12%, #0d1015),
     color-mix(in srgb,var(--stem-color) 6%, #0c0e13));
