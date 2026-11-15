@@ -17,7 +17,7 @@ export const ENGLISH={
   locale:'en-US',resultsInfo:'{duration} s · 44.1 kHz · {backend} · Processing: {time} s',playbackError:'Playback failed. Try playing the track again.',exportError:'The download could not be prepared. Try again.',cacheFailed:'The model cache could not be cleared. Try again.',
   replaceFile:'Change track',vocalsHint:'Isolate the voice',instrumentalHint:'Keep the music',
   warm:'Model ready — processing this track',cacheWarning:'Your browser could not keep the model cache. A later visit may download it again.',
-  automatic:'Automatic separation',automaticCopy:'Upload once. Get vocals and music together. No settings needed.',
+  automatic:'Automatic separation',automaticCopy:'Choose a file to separate vocals and music automatically. No settings needed.',
   local:'On your device',retry:'Try again',checking:'Checking your audio',sizeError:'This file exceeds 96 MiB. Choose a smaller file.',channelError:'Only mono or stereo audio is supported. Convert this file to stereo first.',
   longFile:'This track is {duration}. Select a section of up to four minutes to keep memory use manageable.',rangeStart:'Start time (seconds)',rangeEnd:'End time (seconds)',rangeAction:'Separate this section',rangeError:'Choose a valid section between 1 second and 4 minutes within the track.',
   durationError:'This track exceeds four minutes. Select a section or choose a shorter file.',rangeBrowser:'Your browser cannot decode a selected section. Try a current Chromium browser or trim the file locally first.',
@@ -33,7 +33,7 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
   const el=<K extends keyof HTMLElementTagNameMap>(tag:K,text?:string,cls?:string)=>{const node=document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;};
   const number=(v:number,digits=1)=>new Intl.NumberFormat(t.locale,{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(v);
   const time=(s:number)=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-  const icon=(kind:string)=>{const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.6');svg.setAttribute('aria-hidden','true');const p=document.createElementNS(svg.namespaceURI,'path');p.setAttribute('d',({upload:'M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4',download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',vocals:'M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8',instrumental:'M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z',shield:'m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6'} as Record<string,string>)[kind]);svg.append(p);return svg;};
+  const icon=(kind:string)=>{const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');const isSolid=['play','pause','rewind','forward'].includes(kind);svg.setAttribute('fill',isSolid?'currentColor':'none');svg.setAttribute('stroke',isSolid?'none':'currentColor');if(!isSolid)svg.setAttribute('stroke-width','1.6');svg.setAttribute('aria-hidden','true');const p=document.createElementNS(svg.namespaceURI,'path');p.setAttribute('d',({upload:'M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4',download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',vocals:'M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8',instrumental:'M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z',shield:'m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6',play:'M8 5v14l11-7z',pause:'M6 19h4V5H6v14zm8-14v14h4V5h-4z',rewind:'M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z',forward:'M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z'} as Record<string,string>)[kind]);svg.append(p);return svg;};
   root.dataset.state='upload';
   const workspace=el('section',undefined,'audio-workspace'),top=el('div',undefined,'workspace-top'),heading=el('div');heading.append(el('span',t.local,'local-badge'),el('h2',t.automatic),el('p',t.automaticCopy));top.append(heading);
   const input=el('input');input.type='file';input.accept='audio/*,.wav,.mp3,.flac,.ogg,.m4a,.aac,.webm';input.id='lilith-file';input.className='file-input';
@@ -92,27 +92,322 @@ export function mountStudio(root:HTMLElement,overrides:Partial<StudioStrings>={}
   rangeAction.onclick=()=>{const start=Number(rangeStart.value),end=Number(rangeEnd.value);if(!Number.isFinite(start)||!Number.isFinite(end)||start<0||end>duration||end-start<1||end-start>240){status.textContent=t.rangeError;return;}void process({start,duration:end-start});};
   retry.onclick=()=>void updateFile(file);cancel.onclick=()=>{if(exporting)exportController?.abort();else controller?.abort();};
   async function showResults(value:SeparationResult,signal:AbortSignal){
-    const volumes={vocals:1,instrumental:1},muted={vocals:false,instrumental:false};
-    const ensurePlayer=()=>{if(!player){player=new SynchronizedPlayer(value);for(const name of ['vocals','instrumental'] as StemName[]){player.volume(name,volumes[name]);player.mute(name,muted[name]);}}return player;};
-    result=value;output.hidden=false;const heading=el('div',undefined,'results-heading'),both=el('button',t.both),zip=el('button',t.zip);heading.append(el('h2',t.results),both,zip);output.append(heading,el('p',t.playbackHint,'playback-hint'));
-    const updates:(()=>void)[]=[];const tick=()=>{updates.forEach(fn=>fn());both.textContent=player?.isPlaying('vocals')&&player.isPlaying('instrumental')?t.pauseBoth:t.both;if(player?.playing)frame=requestAnimationFrame(tick);};
-    const playback=async(name:StemName|'both')=>{try{if(!result||busy||destroyed)return;ensurePlayer();if(name==='both'){if(player!.isPlaying('vocals')&&player!.isPlaying('instrumental'))player!.pause();else await player!.play('both');}else if(player!.isPlaying(name))player!.pauseStem(name);else await player!.playStem(name);cancelAnimationFrame(frame);tick();}catch{status.textContent=t.playbackError;}};
-    both.onclick=()=>void playback('both');zip.onclick=async()=>{if(busy||exporting||destroyed)return;exporting=true;setBusy(true);zip.disabled=true;exportController=new AbortController();status.textContent=t.encoding;try{const blob=await zipWavStems(value,safeFilename(file?.name),exportController.signal,(fraction:number)=>{if(!destroyed){progress.value=fraction;status.textContent=`${t.encoding} · ${number(fraction*100,0)}%`;}});if(!destroyed){download(blob,safeFilename(file?.name)+'_stems.zip');status.textContent=t.complete;}}catch{if(!destroyed)status.textContent=exportController.signal.aborted?t.exportCanceled:t.exportError;}finally{exporting=false;if(!destroyed){setBusy(false);zip.disabled=false;}}};
-    for(const name of ['vocals','instrumental'] as StemName[]){
-      const row=el('article',undefined,'stem-card');row.dataset.stem=name;const rowHead=el('div',undefined,'stem-heading'),glyph=el('span',undefined,'stem-icon');glyph.append(icon(name));const title=el('div');title.append(el('h3',t[name]),el('small',t[name==='vocals'?'vocalsHint':'instrumentalHint']));const clock=el('span',`0:00 / ${time(value[name].duration)}`,'track-clock');rowHead.append(glyph,title,clock);
+    const volumes:Record<StemName,number>={vocals:1,instrumental:1};
+    const userMuted:Record<StemName,boolean>={vocals:false,instrumental:false};
+    const soloState:Record<StemName,boolean>={vocals:false,instrumental:false};
+    const ensurePlayer=()=>{
+      if(!player){
+        player=new SynchronizedPlayer(value);
+        for(const name of ['vocals','instrumental'] as StemName[]){
+          player.volume(name,volumes[name]);
+          player.mute(name,userMuted[name]);
+        }
+      }
+      return player;
+    };
+    const applyMuteSolo=()=>{
+      if(!player)return;
+      const hasSolo=soloState.vocals||soloState.instrumental;
+      for(const s of ['vocals','instrumental'] as StemName[]){
+        if(hasSolo){
+          player.mute(s,!soloState[s]||userMuted[s]);
+        }else{
+          player.mute(s,userMuted[s]);
+        }
+      }
+    };
+    result=value;
+    output.hidden=false;
+
+    const heading=el('div',undefined,'results-heading');
+    const titleGroup=el('div',undefined,'results-title-group');
+    const trackReady=el('h2',file?.name?`"${file.name}"`:t.results);
+    const metaTag=el('span',t.resultsInfo.replace('{duration}',number(value.vocals.duration,2)).replace('{backend}',value.metadata.backend.toUpperCase()).replace('{time}',number(value.metadata.totalSeconds??value.metadata.inferenceSeconds)),'results-meta-pill');
+    titleGroup.append(trackReady,metaTag);
+    const replaceBtn=el('button',t.replaceFile,'btn-replace');
+    replaceBtn.onclick=()=>input.click();
+    heading.append(titleGroup,replaceBtn);
+    output.append(heading);
+
+    const updates:(()=>void)[]=[];
+    const tick=()=>{
+      updates.forEach(fn=>fn());
+      const isBoth=Boolean(player?.isPlaying('vocals')&&player?.isPlaying('instrumental'));
+      both.textContent=isBoth?t.pauseBoth:t.both;
+      masterPlayBtn.setAttribute('aria-label',isBoth?t.pauseBoth:t.both);
+      if(player?.playing){
+        masterPlayBtn.replaceChildren(icon('pause'));
+        masterPlayBtn.classList.add('is-playing');
+        frame=requestAnimationFrame(tick);
+      }else{
+        masterPlayBtn.replaceChildren(icon('play'));
+        masterPlayBtn.classList.remove('is-playing');
+      }
+    };
+    const playback=async(name:StemName|'both')=>{
+      try{
+        if(!result||busy||destroyed)return;
+        ensurePlayer();
+        if(name==='both'){
+          if(player!.isPlaying('vocals')&&player!.isPlaying('instrumental'))player!.pause();
+          else await player!.play('both');
+        }else if(player!.isPlaying(name))player!.pauseStem(name);
+        else await player!.playStem(name);
+        cancelAnimationFrame(frame);
+        tick();
+      }catch{
+        status.textContent=t.playbackError;
+      }
+    };
+
+    const handleZip=async()=>{
+      if(busy||exporting||destroyed)return;
+      exporting=true;setBusy(true);zip.disabled=true;exportController=new AbortController();
+      status.textContent=t.encoding;
+      try{
+        const blob=await zipWavStems(value,safeFilename(file?.name),exportController.signal,(fraction:number)=>{
+          if(!destroyed){
+            progress.value=fraction;
+            status.textContent=`${t.encoding} · ${number(fraction*100,0)}%`;
+          }
+        });
+        if(!destroyed){
+          download(blob,safeFilename(file?.name)+'_stems.zip');
+          status.textContent=t.complete;
+        }
+      }catch{
+        if(!destroyed)status.textContent=exportController.signal.aborted?t.exportCanceled:t.exportError;
+      }finally{
+        exporting=false;
+        if(!destroyed){setBusy(false);zip.disabled=false;}
+      }
+    };
+
+    const stemsContainer=el('div',undefined,'stems-container');
+    const updateSoloButtons:(()=>void)[]=[];
+
+    for(const name of ['instrumental','vocals'] as StemName[]){
+      const row=el('article',undefined,'stem-card');
+      row.dataset.stem=name;
+
+      const mixerStrip=el('div',undefined,'stem-mixer-strip');
+      const dialWrap=el('div',undefined,'stem-vol-dial');
+      dialWrap.setAttribute('title',`${t[name]} ${t.volume}`);
+      const gaugeSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      gaugeSvg.setAttribute('viewBox','0 0 44 44');
+      gaugeSvg.setAttribute('class','vol-gauge-svg');
+      const arcBg=document.createElementNS(gaugeSvg.namespaceURI,'circle');
+      arcBg.setAttribute('cx','22');arcBg.setAttribute('cy','22');arcBg.setAttribute('r','16');arcBg.setAttribute('class','vol-arc-bg');
+      const arcProg=document.createElementNS(gaugeSvg.namespaceURI,'circle');
+      arcProg.setAttribute('cx','22');arcProg.setAttribute('cy','22');arcProg.setAttribute('r','16');arcProg.setAttribute('class','vol-arc-prog');
+      gaugeSvg.append(arcBg,arcProg);
+      const volNum=el('span','100','vol-value-text');
+      const volumeInput=el('input',undefined,'vol-hidden-range');
+      volumeInput.type='range';volumeInput.min='0';volumeInput.max='1';volumeInput.step='.01';volumeInput.value='1';
+      volumeInput.setAttribute('aria-label',`${t[name]} ${t.volume}`);
+      const updateVolGauge=(v:number)=>{
+        const circumference=100.53;
+        const arcSpan=circumference*0.75;
+        arcProg.style.strokeDashoffset=String(arcSpan*(1-v));
+        volNum.textContent=String(Math.round(v*100));
+      };
+      updateVolGauge(1);
+      volumeInput.oninput=()=>{
+        const v=Number(volumeInput.value);
+        volumes[name]=v;
+        player?.volume(name,v);
+        updateVolGauge(v);
+      };
+      dialWrap.append(gaugeSvg,volNum,volumeInput);
+
+      const msGroup=el('div',undefined,'stem-ms-group');
+      const muteBtn=el('button','M','btn-ms btn-mute');
+      muteBtn.setAttribute('title',`${t.mute} (${t[name]})`);
+      muteBtn.setAttribute('aria-pressed','false');
+      muteBtn.onclick=()=>{
+        userMuted[name]=!userMuted[name];
+        muteBtn.setAttribute('aria-pressed',String(userMuted[name]));
+        applyMuteSolo();
+      };
+      const soloBtn=el('button','S','btn-ms btn-solo');
+      soloBtn.setAttribute('title',`Solo (${t[name]})`);
+      soloBtn.setAttribute('aria-pressed','false');
+      soloBtn.onclick=()=>{
+        soloState[name]=!soloState[name];
+        soloBtn.setAttribute('aria-pressed',String(soloState[name]));
+        applyMuteSolo();
+        updateSoloButtons.forEach(fn=>fn());
+      };
+      updateSoloButtons.push(()=>{
+        soloBtn.setAttribute('aria-pressed',String(soloState[name]));
+      });
+      msGroup.append(muteBtn,soloBtn);
+      mixerStrip.append(dialWrap,msGroup);
+
+      const centerArea=el('div',undefined,'stem-center-area');
+      const metaRow=el('div',undefined,'stem-meta-row');
+      const badge=el('span',t[name],'stem-badge');
+      badge.prepend(icon(name));
+      const clock=el('span',`0:00 / ${time(value[name].duration)}`,'stem-time-badge');
+      metaRow.append(badge,clock);
+
       await yieldToBrowser();signal.throwIfAborted();
-      const canvas=el('canvas');canvas.width=1200;canvas.height=144;canvas.setAttribute('aria-label',`${t[name]} ${t.waveform}`);const peaks=await waveformPeaksAsync(value[name].channels,400,signal),ctx=canvas.getContext('2d')!,layers=[document.createElement('canvas'),document.createElement('canvas')];
-      const colors=['#36343f',name==='vocals'?'#c9acff':'#87d9ce'];for(const [index,layer] of layers.entries()){layer.width=1200;layer.height=144;const c=layer.getContext('2d')!;c.fillStyle=colors[index];for(let i=0;i<peaks.length;i++){const height=Math.max(2,Math.min(1,peaks[i])*132);c.fillRect(i*3,72-height/2,2,height);}}
-      const seek=el('input');seek.className='seek';seek.type='range';seek.min='0';seek.max=String(value[name].duration);seek.step='.01';seek.value='0';seek.setAttribute('aria-label',`${t[name]} ${t.seek}`);
-      const controls=el('div',undefined,'player-controls'),play=el('button',t.play,'play-button'),save=el('button',undefined,'download-button');save.append(icon('download'),el('span',t.downloadAudio));save.setAttribute('aria-label',`${t[name]} ${t.downloadAudio}`);
-      save.onclick=()=>{selectedStem=name;returnFocus=save;exportTarget.textContent=t[name];exportStatus.textContent='';dialog.showModal();};play.onclick=()=>void playback(name);
-      const volume=el('input');volume.type='range';volume.min='0';volume.max='1';volume.step='.01';volume.value='1';volume.setAttribute('aria-label',`${t[name]} ${t.volume}`);volume.oninput=()=>{volumes[name]=Number(volume.value);player?.volume(name,volumes[name]);};const mute=el('button',t.mute,'mute-button');mute.setAttribute('aria-pressed','false');mute.onclick=()=>{const active=mute.getAttribute('aria-pressed')!=='true';muted[name]=active;mute.setAttribute('aria-pressed',String(active));player?.mute(name,active);};const volumeGroup=el('div',undefined,'volume-group');volumeGroup.append(mute,volume);
-      seek.oninput=()=>{if(!result||busy||destroyed)return;try{void ensurePlayer().seek(Number(seek.value)).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{status.textContent=t.playbackError;});}catch{status.textContent=t.playbackError;}};
+      const waveformWrap=el('div',undefined,'waveform-wrap');
+      const canvas=el('canvas');
+      canvas.width=1200;canvas.height=144;
+      canvas.setAttribute('aria-label',`${t[name]} ${t.waveform}`);
+      const peaks=await waveformPeaksAsync(value[name].channels,400,signal);
+      const ctx=canvas.getContext('2d')!,layers=[document.createElement('canvas'),document.createElement('canvas')];
+      const isVoc=name==='vocals';
+      const colors=['#171922',isVoc?'#a855f7':'#22c55e'];
+      for(const [index,layer] of layers.entries()){
+        layer.width=1200;layer.height=144;
+        const c=layer.getContext('2d')!;
+        c.fillStyle=colors[index];
+        const barW=2.2,count=peaks.length,step=1200/count;
+        for(let i=0;i<count;i++){
+          const h=Math.max(3,Math.min(1,peaks[i])*132);
+          const x=i*step,y=72-h/2;
+          if(typeof c.roundRect==='function'){
+            c.beginPath();c.roundRect(x,y,barW,h,1.2);c.fill();
+          }else{
+            c.fillRect(x,y,barW,h);
+          }
+        }
+      }
+
+      const seek=el('input',undefined,'seek');
+      seek.type='range';seek.min='0';seek.max=String(value[name].duration);seek.step='.01';seek.value='0';
+      seek.setAttribute('aria-label',`${t[name]} ${t.seek}`);
+
+      const seekFromPointer=(e:PointerEvent|MouseEvent)=>{
+        if(!result||busy||destroyed)return;
+        const rect=canvas.getBoundingClientRect();
+        const frac=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+        const targetSec=frac*value[name].duration;
+        ensurePlayer().seek(targetSec).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{status.textContent=t.playbackError;});
+      };
+      canvas.addEventListener('pointerdown',e=>{
+        canvas.setPointerCapture(e.pointerId);
+        seekFromPointer(e);
+        const onMove=(ev:PointerEvent)=>seekFromPointer(ev);
+        const onUp=(ev:PointerEvent)=>{
+          canvas.removeEventListener('pointermove',onMove);
+          canvas.removeEventListener('pointerup',onUp);
+          try{canvas.releasePointerCapture(ev.pointerId);}catch{}
+        };
+        canvas.addEventListener('pointermove',onMove);
+        canvas.addEventListener('pointerup',onUp);
+      });
+
+      seek.oninput=()=>{
+        if(!result||busy||destroyed)return;
+        try{
+          void ensurePlayer().seek(Number(seek.value)).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{status.textContent=t.playbackError;});
+        }catch{
+          status.textContent=t.playbackError;
+        }
+      };
+
+      waveformWrap.append(canvas,seek);
+      centerArea.append(metaRow,waveformWrap);
+
+      const actionsArea=el('div',undefined,'stem-actions');
+      const save=el('button',undefined,'stem-download-btn');
+      save.append(icon('download'));
+      save.setAttribute('title',`${t[name]} ${t.downloadAudio}`);
+      save.setAttribute('aria-label',`${t[name]} ${t.downloadAudio}`);
+      save.onclick=()=>{
+        selectedStem=name;
+        returnFocus=save;
+        exportTarget.textContent=t[name];
+        exportStatus.textContent='';
+        dialog.showModal();
+      };
+      actionsArea.append(save);
+
+      row.append(mixerStrip,centerArea,actionsArea);
+      stemsContainer.append(row);
+
       let lastPixel=-1,lastTime='';
-      const draw=()=>{const seconds=player?.currentTime??0,fraction=seconds/value[name].duration,pixel=Math.min(1198,Math.floor(1200*fraction));if(pixel!==lastPixel){lastPixel=pixel;ctx.clearRect(0,0,1200,144);ctx.drawImage(layers[0],0,0);ctx.save();ctx.beginPath();ctx.rect(0,0,1200*fraction,144);ctx.clip();ctx.drawImage(layers[1],0,0);ctx.restore();ctx.fillStyle=colors[1];ctx.fillRect(pixel,0,2,144);}const label=`${time(seconds)} / ${time(value[name].duration)}`;if(label!==lastTime){lastTime=label;clock.textContent=label;seek.setAttribute('aria-valuetext',label);}seek.value=String(seconds);play.textContent=player?.isPlaying(name)?t.pause:t.play;row.dataset.playing=String(player?.isPlaying(name)??false);};
-      controls.append(play,save,volumeGroup);row.append(rowHead,canvas,seek,controls);output.append(row);updates.push(draw);
+      const draw=()=>{
+        const seconds=player?.currentTime??0;
+        const fraction=seconds/value[name].duration;
+        const pixel=Math.min(1198,Math.floor(1200*fraction));
+        if(pixel!==lastPixel){
+          lastPixel=pixel;
+          ctx.clearRect(0,0,1200,144);
+          ctx.drawImage(layers[0],0,0);
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(0,0,1200*fraction,144);
+          ctx.clip();
+          ctx.drawImage(layers[1],0,0);
+          ctx.restore();
+          ctx.save();
+          ctx.shadowColor='#ffffff';
+          ctx.shadowBlur=6;
+          ctx.fillStyle='#ffffff';
+          ctx.fillRect(pixel,0,2,144);
+          ctx.restore();
+        }
+        const label=`${time(seconds)} / ${time(value[name].duration)}`;
+        if(label!==lastTime){
+          lastTime=label;
+          clock.textContent=label;
+          seek.setAttribute('aria-valuetext',label);
+          masterClock.textContent=label;
+        }
+        seek.value=String(seconds);
+        row.dataset.playing=String(player?.isPlaying(name)??false);
+      };
+      updates.push(draw);
     }
-    output.append(el('p',t.resultsInfo.replace('{duration}',number(value.vocals.duration,2)).replace('{backend}',value.metadata.backend.toUpperCase()).replace('{time}',number(value.metadata.totalSeconds??value.metadata.inferenceSeconds)),'model-info'));tick();
+    output.append(stemsContainer);
+
+    const transportBar=el('div',undefined,'master-transport-bar');
+    const transportLeft=el('div',undefined,'transport-left');
+    const masterPlayBtn=el('button',undefined,'master-play-btn');
+    masterPlayBtn.setAttribute('aria-label',t.both);
+    masterPlayBtn.append(icon('play'));
+    masterPlayBtn.onclick=()=>void playback('both');
+
+    const seekBackBtn=el('button',undefined,'transport-sub-btn');
+    seekBackBtn.setAttribute('title','-5s');
+    seekBackBtn.setAttribute('aria-label','Rewind 5s');
+    seekBackBtn.append(icon('rewind'));
+    seekBackBtn.onclick=()=>{
+      if(!result||!player)return;
+      const target=Math.max(0,player.currentTime-5);
+      player.seek(target).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{});
+    };
+
+    const seekFwdBtn=el('button',undefined,'transport-sub-btn');
+    seekFwdBtn.setAttribute('title','+5s');
+    seekFwdBtn.setAttribute('aria-label','Forward 5s');
+    seekFwdBtn.append(icon('forward'));
+    seekFwdBtn.onclick=()=>{
+      if(!result||!player)return;
+      const target=Math.min(value.vocals.duration,player.currentTime+5);
+      player.seek(target).then(()=>{cancelAnimationFrame(frame);tick();}).catch(()=>{});
+    };
+    transportLeft.append(masterPlayBtn,seekBackBtn,seekFwdBtn);
+
+    const transportCenter=el('div',undefined,'transport-center');
+    const masterClock=el('span',`0:00 / ${time(value.vocals.duration)}`,'master-digital-clock');
+    transportCenter.append(masterClock);
+
+    const transportRight=el('div',undefined,'transport-right');
+    const both=el('button',t.both,'btn-both');
+    both.onclick=()=>void playback('both');
+    const zip=el('button',undefined,'master-download-btn primary');
+    zip.append(icon('download'),el('span',t.zip));
+    zip.onclick=()=>handleZip();
+    transportRight.append(both,zip);
+
+    transportBar.append(transportLeft,transportCenter,transportRight);
+    output.append(transportBar);
+    tick();
   }
   clear.onclick=async()=>{try{await (engine??await createSeparator()).clearCache();statusPanel.hidden=false;status.textContent=t.cleared;await updateStorage();}catch{status.textContent=busy?t.cacheError:t.cacheFailed;}};
   const destroy=async()=>{destroyed=true;++generation;controller?.abort();exportController?.abort();if(dialog.open)dialog.close();await engine?.dispose();await clearResults();for(const url of urls)URL.revokeObjectURL(url);for(const timer of timers)clearTimeout(timer);urls.clear();timers.clear();};window.addEventListener('pagehide',()=>void destroy(),{once:true});return {destroy};
