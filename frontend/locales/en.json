@@ -3729,5 +3729,11 @@
   "AÇIK KAYNAK SES MOTORU": "OPEN-SOURCE AUDIO ENGINE",
   "PROJECT LINKS": "PROJECT LINKS",
   "PROJE BAĞLANTILARI": "PROJECT LINKS",
-  "Repeat playback": "Repeat playback"
+  "Repeat playback": "Repeat playback",
+  "Uptodown submission rejected": "Uptodown submission rejected",
+  "Rejected": "Rejected",
+  "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.": "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.",
+  "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.": "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.",
+  "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.": "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.",
+  "Download Android from GitHub Releases": "Download Android from GitHub Releases"
 }
