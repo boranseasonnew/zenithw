@@ -66,26 +66,26 @@
       <div class="image-modal-backdrop" data-close-modal></div>
       <section class="image-modal-panel" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
         <header class="image-modal-head">
-          <div><span class="image-panel-eyebrow">ZENITHW / IMAGE STUDIO</span><h2 id="imageModalTitle">Görsel düzenleyici</h2></div>
-          <button class="image-modal-close" id="closeImageModal" type="button" aria-label="Kapat">×</button>
+          <div><span class="image-panel-eyebrow">ZENITHW / IMAGE STUDIO</span><h2 data-l10n="{&quot;text:0&quot;:&quot;Görsel düzenleyici&quot;}">Görsel düzenleyici</h2></div>
+          <button class="image-modal-close" id="closeImageModal" type="button" aria-label="Kapat" data-l10n="{&quot;aria-label&quot;:&quot;Kapat&quot;}">×</button>
         </header>
         <div class="image-modal-layout">
-          <aside class="image-modal-files"><div class="image-queue-heading"><h3>Seçilen görseller</h3><span id="queueCount">0</span></div><div class="image-queue-empty" id="queueEmpty">Henüz dosya eklenmedi.</div><div class="image-queue" id="imageQueue"></div><label class="image-add-more" for="imageFiles">＋ Başka görsel ekle</label></aside>
+          <aside class="image-modal-files"><div class="image-queue-heading"><h3 data-l10n="{&quot;text:0&quot;:&quot;Seçilen görseller&quot;}">Seçilen görseller</h3><span id="queueCount">0</span></div><div class="image-queue-empty" id="queueEmpty">Henüz dosya eklenmedi.</div><div class="image-queue" id="imageQueue"></div><label class="image-add-more" data-l10n="{&quot;text:0&quot;:&quot;＋ Başka görsel ekle&quot;}" for="imageFiles">＋ Başka görsel ekle</label></aside>
           <div class="image-editor">
-            <div class="image-preview-stage"><img id="imagePreview" alt="Görsel önizlemesi"><span id="previewDimensions">Önizleme</span></div>
+            <div class="image-preview-stage"><img id="imagePreview" alt="Görsel önizlemesi"><span id="previewDimensions" data-l10n="{&quot;text:0&quot;:&quot;Önizleme&quot;}">Önizleme</span></div>
             <div class="image-editor-tools">
               <section class="image-editor-card">
-                <div class="image-editor-title"><span>01 / IMAGE RESIZER</span><b>Boyutlandır</b></div>
+                <div class="image-editor-title"><span>01 / IMAGE RESIZER</span><b data-l10n="{&quot;text:0&quot;:&quot;Boyutlandır&quot;}">Boyutlandır</b></div>
                 <div class="image-dimensions">
-                  <label>Genişlik <input id="resizeWidth" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
-                  <button id="aspectLock" class="image-lock active" type="button" aria-pressed="true" title="En-boy oranını koru">↔</button>
-                  <label>Yükseklik <input id="resizeHeight" type="number" min="1" max="12000" value="1080" inputmode="numeric"></label>
+                  <label data-l10n="{&quot;text:0&quot;:&quot;Genişlik&quot;}">Genişlik <input id="resizeWidth" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
+                  <button id="aspectLock" class="image-lock active" type="button" aria-pressed="true" title="En-boy oranını koru" data-l10n="{&quot;title&quot;:&quot;En-boy oranını koru&quot;}">↔</button>
+                  <label data-l10n="{&quot;text:0&quot;:&quot;Yükseklik&quot;}">Yükseklik <input id="resizeHeight" type="number" min="1" max="12000" value="1080" inputmode="numeric"></label>
                 </div>
-                <div class="image-resize-meta"><span id="originalDimensions">Orijinal: —</span><button id="resetDimensions" type="button">Orijinale dön</button></div>
-                <label class="image-check"><input id="resizeEnabled" type="checkbox"> Boyutları uygula</label>
+                <div class="image-resize-meta"><span id="originalDimensions" data-l10n="{&quot;text:0&quot;:&quot;Orijinal: —&quot;}">Orijinal: —</span><button id="resetDimensions" type="button" data-l10n="{&quot;text:0&quot;:&quot;Orijinale dön&quot;}">Orijinale dön</button></div>
+                <label class="image-check"><input id="resizeEnabled" type="checkbox" checked> Boyutları uygula</label>
               </section>
               <section class="image-editor-card">
-                <div class="image-editor-title"><span>02 / OUTPUT FORMAT</span><b>Çıkış biçimi</b></div>
+                <div class="image-editor-title"><span>02 / OUTPUT FORMAT</span><b data-l10n="{&quot;text:0&quot;:&quot;Çıkış biçimi&quot;}">Çıkış biçimi</b></div>
                 <input id="formatSearch" type="search" placeholder="JPEG, PNG, AVIF..." autocomplete="off">
                 <select id="formatSelect" aria-label="Çıkış biçimi" disabled><option>Format motoru hazırlanıyor…</option></select>
                 <small id="formatMeta">Desteklenen yazma biçimleri cihazında taranır.</small>
@@ -95,8 +95,8 @@
               </section>
             </div>
             <div class="image-modal-footer">
-              <div class="image-engine-status" id="imageStatus" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span>Görseller yalnızca cihazında işlenir.</span></div>
-              <button class="image-convert-button" id="convertImages" type="button" disabled><span>Görselleri dönüştür</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10M17 7 7 17"/></svg></button>
+              <div class="image-engine-status" id="imageStatus" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span data-l10n="{&quot;text:0&quot;:&quot;Görseller yalnızca cihazında işlenir.&quot;}">Görseller yalnızca cihazında işlenir.</span></div>
+              <button class="image-convert-button" id="convertImages" type="button" disabled><span data-l10n="{&quot;text:0&quot;:&quot;Görselleri dönüştür&quot;}">Görselleri dönüştür</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10M17 7 7 17"/></svg></button>
             </div>
           </div>
         </div>
