@@ -29,17 +29,21 @@
     engine:'Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.',
     pngQuality:'PNG kayıpsızdır; kalite ayarı kullanılmaz.',
     originalDims:'Orijinal: {width} × {height}',
-    originalEmpty:'Orijinal: —'
+    originalEmpty:'Orijinal: —',
+    queueEmpty:'Henüz dosya eklenmedi. Bir veya daha fazla görsel seçerek başla.',
+    jxlLoadFailed:'JPEG XL codec could not be loaded. Check your connection and try again.'
   };
   const t = key => window.ZWLanguage ? window.ZWLanguage.translate(key) : (tr[key] || key);
   const msg = (key, vars={}) => String(t(tr[key] || key)).replace(/\{(\w+)\}/g, (_, name) => String(vars[name] == null ? '' : vars[name]));
-  const state = { files: [], formats: [], busy: false, serial: 0 };
+  const state = { files: [], formats: [], busy: false, serial: 0, jxlCodecPromise: null };
   const nativeFormats = [
     {id:'jpeg',label:'JPEG',ext:'jpg',mime:'image/jpeg',kind:'canvas',quality:true},
     {id:'png',label:'PNG',ext:'png',mime:'image/png',kind:'canvas'},
     {id:'webp',label:'WebP',ext:'webp',mime:'image/webp',kind:'canvas',quality:true},
     {id:'avif',label:'AVIF',ext:'avif',mime:'image/avif',kind:'canvas',quality:true},
     {id:'ico',label:'ICO',ext:'ico',kind:'ico'},
+    {id:'tiff',label:'TIFF',ext:'tiff',mime:'image/tiff',kind:'tiff'},
+    {id:'jxl',label:'JPEG XL (JXL)',ext:'jxl',mime:'image/jxl',kind:'jxl',quality:true},
     {id:'svg',label:'SVG · raster',ext:'svg',kind:'svg'},
     {id:'xbm',label:'XBM',ext:'xbm',kind:'xbm'},
     {id:'bmp',label:'BMP',ext:'bmp',kind:'bmp'},
@@ -55,10 +59,10 @@
   const cleanName = name => name.replace(/\.[^.]+$/,'').replace(/[\\/:*?"<>|]/g,'_').slice(0,120) || 'image';
   const setStatus = (text, mode='ready') => { status.dataset.state=mode; status.lastElementChild.textContent=text; };
   function updateActions() {
-    convertButton.disabled = state.busy || !state.files.some(item=>item.status!=='done');
+    convertButton.disabled = state.busy || state.files.length===0;
     queueCount.textContent = String(state.files.length);
     empty.hidden = state.files.length > 0;
-    if (!state.files.length) empty.textContent = 'Henüz dosya eklenmedi. Bir veya daha fazla görsel seçerek başla.';
+    if (!state.files.length) empty.textContent = msg('queueEmpty');
   }
   function release(item) {
     if(item.previewUrl) URL.revokeObjectURL(item.previewUrl);
@@ -97,7 +101,7 @@
     if(w&&h)previewDimensions.textContent=w+' × '+h+' px';
   }
   function selectFile(item) {
-    selectedId=item.id;
+    selectedId=item.id;customDimensions=false;
     preview.src=item.previewUrl;
     preview.onload=()=>{
       const w=preview.naturalWidth,h=preview.naturalHeight;
@@ -110,18 +114,51 @@
   }
   function openModal(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
   function closeModal(){if(state.busy)return;modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-  function addFiles(list) {
-    const files=Array.from(list||[]).filter(file=>file.type.startsWith('image/') || /\.(jpe?g|png|webp|avif|jxl|heic|heif|tiff?|bmp|gif|svg|ico|qoi|tga|psd|dng|jp2|j2k)$/i.test(file.name));
+  const isJxlFile = file => /\\.jxl$/i.test(file.name) || file.type==='image/jxl';
+  async function loadJxlCodec(){
+    if(!state.jxlCodecPromise)state.jxlCodecPromise=import('https://esm.sh/@jsquash/jxl@1.3.0?bundle');
+    return state.jxlCodecPromise;
+  }
+  async function loadBitmap(file){
+    try{return await createImageBitmap(file);}
+    catch(error){
+      if(!isJxlFile(file))throw error;
+      const codec=await loadJxlCodec();
+      const pixels=await codec.decode(await file.arrayBuffer());
+      const canvas=document.createElement('canvas');canvas.width=pixels.width;canvas.height=pixels.height;
+      const context=canvas.getContext('2d');if(!context)throw new Error('canvas');
+      context.putImageData(pixels,0,0);
+      return createImageBitmap(canvas);
+    }
+  }
+  async function previewUrlFor(file){
+    const bitmap=await loadBitmap(file);
+    try{
+      const canvas=document.createElement('canvas');canvas.width=bitmap.width;canvas.height=bitmap.height;
+      const context=canvas.getContext('2d');if(!context)throw new Error('canvas');
+      context.drawImage(bitmap,0,0);
+      return URL.createObjectURL(await canvasBlob(canvas,'image/png'));
+    }finally{bitmap.close&&bitmap.close();}
+  }
+  async function addFiles(list) {
+    const accepted=/\\.(jpe?g|png|webp|avif|gif|bmp|svg|ico|jxl)$/i;
+    const files=Array.from(list||[]).filter(file=>accepted.test(file.name));
     if(!files.length){setStatus(msg('invalid'),'error');return;}
     if(state.files.length+files.length>25){setStatus(msg('maxFiles'),'error');return;}
     let count=0,firstAdded=null;
     for(const file of files){
-      if(!file.size || file.size>60*1048576)continue;
-      const item={id:++state.serial,file,previewUrl:URL.createObjectURL(file),outputUrl:null,output:null,status:'queued',format:null,error:''};state.files.push(item);if(!firstAdded)firstAdded=item;count++;
+      if(!file.size||file.size>60*1048576)continue;
+      try{
+        const previewUrl=await previewUrlFor(file);
+        const item={id:++state.serial,file,previewUrl,outputUrl:null,output:null,status:'queued',format:null,error:''};
+        state.files.push(item);if(!firstAdded)firstAdded=item;count++;
+      }catch(error){
+        setStatus(isJxlFile(file)?msg('jxlLoadFailed'):msg('invalid'),'error');
+      }
     }
-    if(!count){setStatus(msg('invalid'),'error');return;}
+    if(!count){if(status.dataset.state!=='error')setStatus(msg('invalid'),'error');return;}
     selectFile(firstAdded||state.files[0]);
-    openModal(); setStatus(msg('selected',{count:count}),'ready');
+    openModal();setStatus(msg('selected',{count}),'ready');
   }
   const u32 = n => [(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255];
   function bmp(data,w,h) {
@@ -130,6 +167,20 @@
     view.setInt32(18,w,true);view.setInt32(22,h,true);view.setUint16(26,1,true);view.setUint16(28,24,true);view.setUint32(34,stride*h,true);
     for(let y=0;y<h;y++)for(let x=0;x<w;x++){const s=(y*w+x)*4,d=54+(h-1-y)*stride+x*3;out[d]=data[s+2];out[d+1]=data[s+1];out[d+2]=data[s];}
     return new Blob([out],{type:'image/bmp'});
+  }
+  function tiff(data,w,h) {
+    const entries=11,ifdOffset=8,bitsOffset=ifdOffset+2+entries*12+4,pixelOffset=bitsOffset+8;
+    const out=new Uint8Array(pixelOffset+data.length),view=new DataView(out.buffer);
+    out[0]=0x49;out[1]=0x49;view.setUint16(2,42,true);view.setUint32(4,ifdOffset,true);
+    view.setUint16(ifdOffset,entries,true);
+    const entry=(index,tag,type,count,value)=>{const p=ifdOffset+2+index*12;view.setUint16(p,tag,true);view.setUint16(p+2,type,true);view.setUint32(p+4,count,true);if(type===3&&count===1)view.setUint16(p+8,value,true);else view.setUint32(p+8,value,true);};
+    entry(0,256,4,1,w);entry(1,257,4,1,h);entry(2,258,3,4,bitsOffset);entry(3,259,3,1,1);
+    entry(4,262,3,1,2);entry(5,273,4,1,pixelOffset);entry(6,277,3,1,4);entry(7,278,4,1,h);
+    entry(8,279,4,1,data.length);entry(9,284,3,1,1);entry(10,338,3,1,2);
+    view.setUint32(ifdOffset+2+entries*12,0,true);
+    view.setUint16(bitsOffset,8,true);view.setUint16(bitsOffset+2,8,true);view.setUint16(bitsOffset+4,8,true);view.setUint16(bitsOffset+6,8,true);
+    out.set(data,pixelOffset);
+    return new Blob([out],{type:'image/tiff'});
   }
   function tga(data,w,h) {
     if(w>65535||h>65535)throw new Error('TGA dimensions');
@@ -177,7 +228,7 @@
   const canvasBlob=(canvas,mime,q)=>new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('encoder')),mime,q));
   async function canEncode(mime){const canvas=document.createElement('canvas');canvas.width=canvas.height=1;try{return (await canvasBlob(canvas,mime,.8)).type===mime;}catch{return false;}}
   async function encode(item,fmt){
-    const bitmap=await createImageBitmap(item.file);
+    const bitmap=await loadBitmap(item.file);
     try{
       const sourceW=bitmap.width,sourceH=bitmap.height;
       const w=resizeEnabled.checked?(Number.parseInt(resizeWidth.value,10)||sourceW):sourceW;
@@ -205,10 +256,16 @@
         const encoded=btoa(binary),svg='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><image width="'+w+'" height="'+h+'" xlink:href="data:image/png;base64,'+encoded+'"/></svg>';
         return new Blob([svg],{type:'image/svg+xml'});
       }
+      if(fmt.kind==='jxl'){
+        const codec=await loadJxlCodec();
+        const encoded=await codec.encode(ctx.getImageData(0,0,w,h),{quality:Number(quality.value)});
+        return new Blob([encoded],{type:'image/jxl'});
+      }
       if(fmt.kind==='canvas'){const blob=await canvasBlob(canvas,fmt.mime,fmt.quality?Number(quality.value)/100:undefined);if(blob.type!==fmt.mime)throw new Error(msg('unsupported'));return blob;}
       const data=ctx.getImageData(0,0,w,h).data;
       if(fmt.kind==='bmp')return bmp(data,w,h);
       if(fmt.kind==='tga')return tga(data,w,h);
+      if(fmt.kind==='tiff')return tiff(data,w,h);
       if(fmt.kind==='qoi')return qoi(data,w,h);
       if(['ppm','pgm','pbm','pam'].includes(fmt.kind))return portable(data,w,h,fmt.kind);
       if(fmt.kind==='farbfeld')return farbfeld(data,w,h);
@@ -225,7 +282,7 @@
     formatMeta.textContent=msg('engine');
     setStatus(msg('ready'),'ready');updateActions();
   }
-  input.addEventListener('change',()=>{addFiles(input.files);input.value='';});
+  input.addEventListener('change',()=>{const files=input.files;input.value='';addFiles(files);});
   $('closeImageModal').addEventListener('click',closeModal);
   modal.addEventListener('click',event=>{if(event.target.hasAttribute('data-close-modal'))closeModal();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('open'))closeModal();});
@@ -241,7 +298,7 @@
   convertButton.addEventListener('click',async()=>{
     if(state.busy)return;const fmt=state.formats.find(item=>item.id===select.value);
     if(!fmt){setStatus(msg('unsupported'),'error');return;}
-    const pending=state.files.filter(item=>item.status!=='done');if(!pending.length){setStatus(msg('empty'),'error');return;}
+    const pending=state.files.slice();if(!pending.length){setStatus(msg('empty'),'error');return;}
     state.busy=true;convertButton.disabled=true;setStatus(msg('working'),'working');
     for(const item of pending){
       item.status='working';render();setStatus(msg('processing',{name:item.file.name}),'working');
@@ -255,6 +312,7 @@
     const current=state.files.find(item=>item.id===selectedId);if(current)previewDimensions.textContent=resizeEnabled.checked?resizeWidth.value+' × '+resizeHeight.value+' px':current.file.name;
   });
   window.addEventListener('beforeunload',()=>state.files.forEach(release));
-  updateActions();initFormats().catch(error=>setStatus(error.message||msg('unsupported'),'error'));
+  window.addEventListener('zw-language-ready',()=>{render();if(state.formats.length)setStatus(msg('ready'),'ready');});
+  updateActions();Promise.resolve(window.ZWLanguage?.ready).catch(()=>{}).then(()=>initFormats()).catch(error=>setStatus(error.message||msg('unsupported'),'error'));
   const first=state.files[0];if(first)selectFile(first);
 })();
