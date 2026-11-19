@@ -28,7 +28,8 @@
     formatCount:'{count} çıkış biçimi kullanılabilir',
     engine:'Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.',
     pngQuality:'PNG kayıpsızdır; kalite ayarı kullanılmaz.',
-    originalDims:'Orijinal: {width} × {height}'
+    originalDims:'Orijinal: {width} × {height}',
+    originalEmpty:'Orijinal: —'
   };
   const t = key => window.ZWLanguage ? window.ZWLanguage.translate(key) : (tr[key] || key);
   const msg = (key, vars={}) => String(t(tr[key] || key)).replace(/\{(\w+)\}/g, (_, name) => String(vars[name] == null ? '' : vars[name]));
@@ -83,7 +84,7 @@
       }
       const remove=document.createElement('button'); remove.type='button'; remove.className='image-file-remove'; remove.textContent=msg('remove');
       remove.disabled=state.busy;
-      remove.addEventListener('click',()=>{release(item);state.files=state.files.filter(x=>x.id!==item.id);if(selectedId===item.id){selectedId=null;const next=state.files[0];if(next)selectFile(next);else{preview.removeAttribute('src');previewDimensions.textContent='Önizleme';originalDimensions.textContent='Orijinal: —';}}render();});
+      remove.addEventListener('click',()=>{release(item);state.files=state.files.filter(x=>x.id!==item.id);if(selectedId===item.id){selectedId=null;const next=state.files[0];if(next)selectFile(next);else{preview.removeAttribute('src');previewDimensions.textContent=window.ZWLanguage?.translate('Önizleme')||'Önizleme';originalDimensions.textContent=msg('originalEmpty');}}render();});
       actions.append(remove); row.append(thumb,meta,actions); queue.append(row);
     });
     updateActions();
