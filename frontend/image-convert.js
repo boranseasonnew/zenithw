@@ -187,7 +187,7 @@
       if(fmt.kind==='xbm'){
         const pixels=ctx.getImageData(0,0,w,h).data,rows=[];
         for(let y=0;y<h;y++){const bytes=[];for(let x=0;x<w;x+=8){let value=0;for(let bit=0;bit<8&&x+bit<w;bit++){const p=((y*w+x+bit)*4),gray=.2126*pixels[p]+.7152*pixels[p+1]+.0722*pixels[p+2];if(gray<128)value|=1<<bit;}bytes.push('0x'+value.toString(16).padStart(2,'0'));}rows.push(bytes.join(', '));}
-        const source='#define image_width '+w+'\\n#define image_height '+h+'\\nstatic unsigned char image_bits[] = {\\n'+rows.map(row+'').join(',\\n')+'\\n};';
+        const source='#define image_width '+w+'\\n#define image_height '+h+'\\nstatic unsigned char image_bits[] = {\\n'+rows.join(',\\n')+'\\n};';
         return new Blob([source],{type:'image/x-xbitmap'});
       }
       if(fmt.kind==='svg'){
