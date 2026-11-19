@@ -3785,5 +3785,9 @@
   "Orijinal: —": "Orijinal: —",
   "Henüz dosya eklenmedi.": "Henüz dosya eklenmedi.",
   "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.",
-  "Format motoru hazırlanıyor…": "Format motoru hazırlanıyor…"
+  "Format motoru hazırlanıyor…": "Format motoru hazırlanıyor…",
+  "Görsel Dönüştürücü ve Boyutlandırıcı | ZenithW": "Görsel Dönüştürücü ve Boyutlandırıcı | ZenithW",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve JPEG XL biçimlerine dönüştür ve yeniden boyutlandır. İşlem cihazında yapılır.": "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve JPEG XL biçimlerine dönüştür ve yeniden boyutlandır. İşlem cihazında yapılır.",
+  "Görsel Dönüştürücü | ZenithW": "Görsel Dönüştürücü | ZenithW",
+  "Görsellerini onlarca biçime dönüştür. Dosyaların cihazından çıkmaz.": "Görsellerini onlarca biçime dönüştür. Dosyaların cihazından çıkmaz."
 }
