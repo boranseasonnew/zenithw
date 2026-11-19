@@ -3773,5 +3773,7 @@
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "Показаны только форматы, поддерживаемые браузером. Файлы не загружаются на сервер.",
   "Orijinal: {width} × {height}": "Оригинал: {width} × {height}",
   "01 / IMAGE RESIZER": "01 / РАЗМЕР ИЗОБРАЖЕНИЯ",
-  "02 / OUTPUT FORMAT": "02 / ФОРМАТ ВЫВОДА"
+  "02 / OUTPUT FORMAT": "02 / ФОРМАТ ВЫВОДА",
+  "Görsel önizlemesi": "Предпросмотр изображения",
+  "Görsel dönüştürme aracı": "Инструмент конвертации изображений"
 }
