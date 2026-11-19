@@ -3772,5 +3772,7 @@
   "{count} çıkış biçimi kullanılabilir": "利用可能な出力形式: {count}",
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "ブラウザーが対応する形式のみ表示されます。ファイルはアップロードされません。",
   "Orijinal: {width} × {height}": "元のサイズ: {width} × {height}",
-  "Bu tarayıcı bu çıkış biçimini desteklemiyor.": "この出力形式はブラウザーでサポートされていません。"
+  "Bu tarayıcı bu çıkış biçimini desteklemiyor.": "この出力形式はブラウザーでサポートされていません。",
+  "01 / IMAGE RESIZER": "01 / 画像サイズ変更",
+  "02 / OUTPUT FORMAT": "02 / 出力形式"
 }
