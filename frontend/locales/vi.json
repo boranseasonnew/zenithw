@@ -3729,5 +3729,17 @@
   "AÇIK KAYNAK SES MOTORU": "CÔNG CỤ ÂM THANH MÃ NGUỒN MỞ",
   "PROJECT LINKS": "LIÊN KẾT DỰ ÁN",
   "PROJE BAĞLANTILARI": "LIÊN KẾT DỰ ÁN",
-  "Repeat playback": "Phát lặp lại"
+  "Repeat playback": "Phát lặp lại",
+  "Uptodown submission rejected": "Hồ sơ Uptodown bị từ chối",
+  "Hồ sơ Uptodown bị từ chối": "Hồ sơ Uptodown bị từ chối",
+  "Rejected": "Bị từ chối",
+  "Bị từ chối": "Bị từ chối",
+  "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.": "Uptodown đã từ chối phát hành ZenithW, với lý do lo ngại ứng dụng có thể được dùng để tải nội dung có bản quyền hoặc thuộc quyền của bên thứ ba.",
+  "Uptodown đã từ chối phát hành ZenithW, với lý do lo ngại ứng dụng có thể được dùng để tải nội dung có bản quyền hoặc thuộc quyền của bên thứ ba.": "Uptodown đã từ chối phát hành ZenithW, với lý do lo ngại ứng dụng có thể được dùng để tải nội dung có bản quyền hoặc thuộc quyền của bên thứ ba.",
+  "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.": "Mô tả đó không phản ánh đúng bản chất của ZenithW. ZenithW không phải dịch vụ vi phạm bản quyền mà là một không gian làm việc đa phương tiện mã nguồn mở. Tải xuống chỉ là một trong nhiều tính năng, bên cạnh chuyển đổi phương tiện, remux, tách âm thanh, tạo GIF và các công cụ khác. ZenithW không phân phối nội dung có bản quyền.",
+  "Mô tả đó không phản ánh đúng bản chất của ZenithW. ZenithW không phải dịch vụ vi phạm bản quyền mà là một không gian làm việc đa phương tiện mã nguồn mở. Tải xuống chỉ là một trong nhiều tính năng, bên cạnh chuyển đổi phương tiện, remux, tách âm thanh, tạo GIF và các công cụ khác. ZenithW không phân phối nội dung có bản quyền.": "Mô tả đó không phản ánh đúng bản chất của ZenithW. ZenithW không phải dịch vụ vi phạm bản quyền mà là một không gian làm việc đa phương tiện mã nguồn mở. Tải xuống chỉ là một trong nhiều tính năng, bên cạnh chuyển đổi phương tiện, remux, tách âm thanh, tạo GIF và các công cụ khác. ZenithW không phân phối nội dung có bản quyền.",
+  "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.": "Chúng tôi không đồng tình với cách mô tả này, nhưng tôn trọng quyết định của Uptodown và sẽ không kháng nghị. Bản Android vẫn có thể tải trực tiếp từ GitHub.",
+  "Chúng tôi không đồng tình với cách mô tả này, nhưng tôn trọng quyết định của Uptodown và sẽ không kháng nghị. Bản Android vẫn có thể tải trực tiếp từ GitHub.": "Chúng tôi không đồng tình với cách mô tả này, nhưng tôn trọng quyết định của Uptodown và sẽ không kháng nghị. Bản Android vẫn có thể tải trực tiếp từ GitHub.",
+  "Download Android from GitHub Releases": "Tải Android từ GitHub Releases",
+  "Tải Android từ GitHub Releases": "Tải Android từ GitHub Releases"
 }
