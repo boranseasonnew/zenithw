@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,16 +33,15 @@ ZenithW — открытый инструмент для загрузки вид
 
 [Zenith Type](https://zenithw.space/typing) предлагает тренировку печати на турецком/английском, профили, проверенные рейтинги, рейтинговые дуэли и приватные комнаты. Для онлайн-функций нужна учётная запись; для локальной тренировки — нет. Рейтинги WPM и Elo рейтинговых дуэлей сбрасываются каждые 30 дней. Приватный Elo хранится отдельно и не сбрасывается. Правила, настройки комнат и статус развёртывания описаны в [документации Type](docs/TYPING.md).
 
-## Что нового в веб-версии 17.0
+## Что нового в веб-версии 17.1
 
-- Более отзывчивое [разделение аудио](https://zenithw.space/ru/audio-separator): обработка волновых форм небольшими порциями, память воспроизведения по необходимости и отменяемый экспорт WAV/ZIP. MP3 и FLAC остаются доступны.
-- [Remux](https://zenithw.space/ru/remux) позволяет выбрать выходной контейнер до запуска, включая MKV ↔ MP4 при совместимых дорожках. Несовместимые кодеки требуют конвертации.
-- Более понятные инструкции и поисковые метаданные на восьми языках сайта; исправленные навигационные ссылки.
-- Обновления безопасности зависимостей, общий предел ожидания обложек и защита от одновременных изменений аватара Type. Изменения сервера и установленных приложений требуют отдельных развёртываний.
+- **Новый [конвертер изображений](https://zenithw.space/ru/image-convert):** преобразование между форматами JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI и другими. Локальный движок поддерживает дополнительные форматы.
+- **Точное изменение размера:** задавайте собственную ширину и высоту, просматривайте результат и контролируйте размеры выходного изображения.
+- **Обновлённый [разделитель аудио](https://zenithw.space/ru/audio-separator):** новый интерфейс студии упрощает выбор файлов, работу с вокальной и инструментальной дорожками, предварительное прослушивание и экспорт.
+- **Восемь языков:** интерфейс конвертера и подписи доступности переведены на все восемь языков сайта. Конвертация и изменение размера выполняются локально в браузере.
+- Остальные инструменты остаются доступны, включая remux совместимых потоков MKV/MP4 без повторного кодирования.
 
-Аудио разделяется на вашем устройстве: файл до 96 MiB, обрабатываемый фрагмент до четырёх минут. При первом запуске загружаются модель и среда обработки. Скорость зависит от устройства. Номера версий Windows и Android независимы от Web 17.0.
-
-[Заметки о выпуске](https://zenithw.space/ru/updates) · [Отчёт о безопасности и проверках — английский](docs/full-code-audit-2026-11-02.md)
+У Windows и Android собственная нумерация версий; здесь указана версия веб-приложения.
 
 ## Проект
 
