@@ -69,8 +69,8 @@ test('web 17.1 is complete in eight languages and preserves v17.0 as an archive'
     assert.match(readFileSync(new URL('../'+file,import.meta.url),'utf8'),/17\.1/,file);
   }
   const versionSource=read('version.js');
-  const webVersion=/ver:\\s*'v([0-9.]+)'/.exec(versionSource)[1];
-  const desktopVersion=/desktop:\\s*\\{\\s*ver:\\s*'v([0-9.]+)'/.exec(versionSource)[1];
+  const webVersion=/ver:\s*'v([0-9.]+)'/.exec(versionSource)[1];
+  const desktopVersion=/desktop:\s*\{\s*ver:\s*'v([0-9.]+)'/.exec(versionSource)[1];
   const desktopReadme=new URL('../desktop/README.md',import.meta.url);
   if(existsSync(desktopReadme))assert.ok(readFileSync(desktopReadme,'utf8').includes('Web '+webVersion),'desktop/README.md web version');
   const storeReadme=new URL('../desktop/store/README.md',import.meta.url);
