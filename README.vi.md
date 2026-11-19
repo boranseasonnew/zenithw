@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,16 +33,15 @@ Dán liên kết được hỗ trợ, chọn định dạng rồi tải tệp. C
 
 [Zenith Type](https://zenithw.space/typing) có luyện gõ tiếng Thổ Nhĩ Kỳ/tiếng Anh, hồ sơ, bảng xếp hạng đã xác minh, đấu xếp hạng và phòng riêng. Tính năng trực tuyến cần tài khoản; luyện tập cục bộ thì không. Bảng WPM và Elo đấu xếp hạng đặt lại mỗi 30 ngày. Elo phòng riêng tách biệt và giữ lâu dài. Xem quy tắc, tùy chọn phòng và trạng thái triển khai trong [tài liệu Type](docs/TYPING.md).
 
-## Có gì mới trong web 17.0
+## Có gì mới trong web 17.1
 
-- [Tách âm thanh](https://zenithw.space/vi/audio-separator) phản hồi tốt hơn: tạo dạng sóng theo các phần nhỏ, cấp bộ nhớ phát khi cần và xuất WAV/ZIP có thể hủy. MP3 và FLAC vẫn có sẵn.
-- [Remux](https://zenithw.space/vi/remux) cho chọn định dạng đích trước khi bắt đầu, bao gồm MKV ↔ MP4 nếu các luồng tương thích. Codec không tương thích cần chuyển đổi.
-- Hướng dẫn media và thông tin tìm kiếm rõ hơn bằng tám ngôn ngữ của trang; sửa các liên kết điều hướng.
-- Cập nhật bảo mật thư viện, giới hạn tổng thời gian tải ảnh bìa và bảo vệ trước các yêu cầu đổi ảnh Type đồng thời. Thay đổi máy chủ và ứng dụng đã cài cần được triển khai riêng.
+- **Trình [chuyển đổi hình ảnh](https://zenithw.space/vi/image-convert) mới:** chuyển đổi giữa JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI và nhiều định dạng khác. Bộ xử lý cục bộ hỗ trợ thêm định dạng.
+- **Đổi kích thước chính xác:** nhập chiều rộng và chiều cao tùy chỉnh, xem trước kết quả và kiểm soát kích thước đầu ra.
+- **[Công cụ tách âm thanh](https://zenithw.space/vi/audio-separator) được thiết kế lại:** giao diện studio mới giúp chọn tệp, làm việc với giọng hát và nhạc nền đã tách, xem trước và xuất tệp rõ ràng hơn.
+- **Hỗ trợ tám ngôn ngữ:** giao diện và nhãn trợ năng của trình chuyển đổi được bản địa hóa bằng cả tám ngôn ngữ của trang web. Việc chuyển đổi và đổi kích thước diễn ra ngay trong trình duyệt.
+- Các công cụ media hiện có vẫn được giữ lại, bao gồm remux luồng MKV/MP4 tương thích mà không mã hóa lại.
 
-Âm thanh được tách trên thiết bị: tệp tối đa 96 MiB và đoạn xử lý tối đa bốn phút. Lần đầu cần tải mô hình và môi trường xử lý. Tốc độ tùy thiết bị. Windows và Android có số phiên bản riêng, độc lập với Web 17.0.
-
-[Ghi chú phát hành](https://zenithw.space/vi/updates) · [Báo cáo bảo mật và kiểm tra — tiếng Anh](docs/full-code-audit-2026-11-02.md)
+Windows và Android giữ số phiên bản riêng; số phiên bản này chỉ áp dụng cho web.
 
 ## Dự án
 
