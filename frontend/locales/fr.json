@@ -3773,5 +3773,7 @@
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "Seuls les formats pris en charge par votre navigateur sont affichés. Les fichiers ne sont pas téléversés.",
   "Orijinal: {width} × {height}": "Original : {width} × {height}",
   "01 / IMAGE RESIZER": "01 / REDIMENSIONNER",
-  "02 / OUTPUT FORMAT": "02 / FORMAT DE SORTIE"
+  "02 / OUTPUT FORMAT": "02 / FORMAT DE SORTIE",
+  "Görsel önizlemesi": "Aperçu de l’image",
+  "Görsel dönüştürme aracı": "Outil de conversion d’images"
 }
