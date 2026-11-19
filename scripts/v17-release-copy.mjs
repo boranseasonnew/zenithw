@@ -1,110 +1,163 @@
 // Reviewed release copy, in tr/en/de/fr/ru/vi/zh/ja order.
 export const rows = [
- [
-  'Daha akıcı medya araçları, daha sağlam bir ZenithW',
-  'Smoother media tools, a stronger ZenithW',
-  'Flüssigere Medienwerkzeuge, ein robusteres ZenithW',
-  'Des outils multimédias plus fluides, un ZenithW plus solide',
-  'Более плавные меди-инструменты и надёжный ZenithW',
-  'Công cụ media mượt hơn, ZenithW vững vàng hơn',
-  '更流畅的媒体工具，更稳健的 ZenithW',
-  'メディア操作をもっとスムーズに、ZenithWをもっと堅実に'
- ],
- [
-  'v17.0 ile ZenithW’nin günlük kullanımda en çok dokunulan yerlerini elden geçirdik: ses ayırma sonuçları, dosya indirme, remux seçenekleri ve farklı dillerde sayfalar arasında gezinme. Amacımız yeni düğmelerle ekranı doldurmak değil; dosyanla çalışırken daha az bekleten, ne yaptığını daha açık anlatan ve kontrolü sende tutan bir deneyim sunmak.',
-  'For v17.0, we revisited the parts of ZenithW you use every day: separation results, file exports, remux choices and navigation across languages. The aim is to make working with your files feel more responsive and understandable, with controls that stay useful while a task is running. The familiar media workspace remains at the centre of this release.',
-  'Für v17.0 haben wir häufig genutzte Bereiche überarbeitet: Ergebnisse der Audiotrennung, Dateiexport, Remux-Auswahl und die Navigation in verschiedenen Sprachen. Die Arbeit mit Dateien soll flüssiger und verständlicher werden, während laufende Aufgaben bedienbar bleiben. Der vertraute Medienarbeitsbereich steht weiterhin im Mittelpunkt.',
-  'Pour v17.0, nous avons revu les usages quotidiens de ZenithW : résultats de séparation audio, export de fichiers, choix de remux et navigation entre les langues. Travailler ses fichiers doit être plus fluide et plus compréhensible, avec des commandes utiles pendant les opérations. L’espace multimédia familier reste au centre de cette version.',
-  'В v17.0 мы пересмотрели повседневные функции ZenithW: результаты разделения звука, экспорт файлов, выбор контейнера и навигацию на разных языках. Работа с файлами должна стать плавнее и понятнее, а управление оставаться доступным во время обработки. Привычное рабочее пространство остаётся основой этой версии.',
-  'Trong v17.0, chúng tôi cải thiện những phần thường dùng: kết quả tách âm thanh, xuất tệp, lựa chọn remux và điều hướng giữa các ngôn ngữ. Mục tiêu là thao tác với tệp phản hồi tốt và dễ hiểu hơn, với các nút điều khiển vẫn hữu ích khi đang xử lý. Không gian media quen thuộc vẫn là trọng tâm.',
-  'v17.0 重新整理了 ZenithW 的日常使用环节：音频分离结果、文件导出、封装格式选择以及不同语言页面的导航。我们希望处理文件时的反馈更加流畅、操作更容易理解，并让任务进行时的控制仍然实用。熟悉的媒体工作区依然是这一版本的核心。',
-  'v17.0では、音声分離の結果、ファイルの書き出し、リマックスの形式選択、多言語ページの移動など、日常的に使う部分を見直しました。ファイルを扱うときの反応と分かりやすさを高め、処理中も必要な操作を使えるようにすることが目的です。使い慣れたメディア作業環境を引き続き大切にしています。'
- ],
- [
-  'Bu sürüm, görünür iyileştirmelerin yanında kaynak kodu ve bağımlılık incelemesini de bir araya getiriyor. Aşağıdaki yenilikler web 17.0’a aittir; Windows ve Android kendi sürüm numaralarını korur. Güvenlik ve altyapı değişikliklerinin ilgili sunucuya veya uygulama paketine ayrıca dağıtılması gerekir.',
-  'This release also brings together a source and dependency review. The web version is now 17.0; Windows and Android keep their own version numbers. Security and infrastructure changes reach their respective services or installed apps through separate deployments and releases.',
-  'Zur Version gehört auch eine Prüfung von Quellcode und Abhängigkeiten. Die Webversion heißt jetzt 17.0; Windows und Android behalten eigene Versionsnummern. Sicherheits- und Infrastrukturänderungen benötigen die jeweilige Bereitstellung auf dem Server oder als Anwendungspaket.',
-  'Cette version comprend aussi une revue du code et des dépendances. Le web passe à 17.0 ; Windows et Android conservent leur propre numérotation. Les changements de sécurité et d’infrastructure nécessitent un déploiement distinct sur le service ou dans le paquet de l’application concernée.',
-  'Выпуск включает проверку исходного кода и зависимостей. Версия веб-приложения — 17.0; Windows и Android сохраняют собственную нумерацию. Исправления безопасности и инфраструктуры требуют отдельного развёртывания соответствующего сервиса или выпуска приложения.',
-  'Bản này cũng bao gồm việc rà soát mã nguồn và các thư viện. Web chuyển sang 17.0; Windows và Android giữ số phiên bản riêng. Thay đổi bảo mật và hạ tầng cần được triển khai riêng trên dịch vụ hoặc phát hành trong gói ứng dụng tương ứng.',
-  '这一版本也包含源码和依赖审查。网页版更新为 17.0，Windows 和 Android 保留各自的版本编号。安全与基础设施修改仍需要分别部署到相关服务，或通过应用安装包发布。',
-  'ソースコードと依存関係の確認もまとめました。Web版は17.0になりますが、WindowsとAndroidはそれぞれのバージョン番号を維持します。セキュリティや基盤の変更は、対象サービスへの配備やアプリの個別リリースが必要です。'
- ],
- ['Ses ayırma sonuçlarında daha rahat gezin','More responsive separation results','Flüssiger durch Trennergebnisse navigieren','Des résultats de séparation plus réactifs','Более отзывчивые результаты разделения','Kết quả tách âm thanh phản hồi tốt hơn','更顺畅地查看音频分离结果','音声分離の結果をもっと快適に'],
- [
-  'Vokal ve enstrümantal hazır olduğunda dalga biçimlerini hazırlama ve ekranı güncelleme işlerini daha küçük parçalara ayırdık. Dinleme için gereken ek ses belleği, gerçekten oynatmaya veya zaman çizgisinde ilerlemeye başladığında hazırlanıyor. Böylece sonuç ekranı gereksiz işi daha geç yapıyor ve uzun bölümlerde arayüze daha sık çalışma fırsatı kalıyor. Modelin ayırma kalitesi değişmedi; işlem süresi hâlâ cihazına ve seçtiğin bölüme bağlı.',
-  'Once vocals and instrumental audio are ready, waveform preparation and screen updates are split into smaller pieces of work. Additional playback memory is prepared when you actually play or seek. This reduces eager work on the result screen and gives the interface more opportunities to respond during longer sections. Separation quality is unchanged, and processing time still depends on your device and selected audio.',
-  'Nach der Trennung werden Wellenformen und Bildschirmanzeigen in kleineren Arbeitsschritten vorbereitet. Zusätzlicher Wiedergabespeicher entsteht erst beim Abspielen oder Springen. Das reduziert vorzeitige Arbeit und lässt der Oberfläche bei längeren Abschnitten mehr Zeit zum Reagieren. Die Trennqualität bleibt gleich; die Verarbeitungszeit hängt weiterhin vom Gerät und dem gewählten Audio ab.',
-  'Après la séparation, la préparation des formes d’onde et les mises à jour de l’écran sont réparties en tâches plus petites. La mémoire supplémentaire de lecture est préparée au lancement ou au déplacement dans la piste. Cela réduit le travail anticipé et laisse davantage de temps à l’interface pour répondre. La qualité de séparation ne change pas ; la durée dépend toujours de l’appareil et de l’extrait choisi.',
-  'Когда вокал и инструментальная дорожка готовы, волновые формы и обновления экрана обрабатываются небольшими порциями. Дополнительная память для воспроизведения выделяется при запуске или перемотке. Экран результатов выполняет меньше преждевременной работы и чаще получает возможность реагировать на действия. Качество разделения не меняется; время обработки зависит от устройства и выбранного фрагмента.',
-  'Khi giọng hát và nhạc nền đã sẵn sàng, việc tạo dạng sóng và cập nhật màn hình được chia thành các phần nhỏ. Bộ nhớ phát bổ sung chỉ được chuẩn bị khi bạn phát hoặc tua. Màn hình kết quả giảm công việc làm trước và có thêm cơ hội phản hồi khi xử lý đoạn dài. Chất lượng tách không đổi; thời gian vẫn phụ thuộc thiết bị và đoạn âm thanh đã chọn.',
-  '人声与伴奏准备好后，波形生成和画面更新会拆分为更小的任务。播放所需的额外音频内存在实际播放或跳转时才准备，减少结果页面提前执行的工作，让较长片段的操作更容易获得响应。分离质量没有改变，处理时间仍取决于设备与所选音频片段。',
-  'ボーカルと伴奏の準備後、波形の作成と画面更新を小さな処理に分けました。再生用の追加メモリは、実際に再生やシークを行う際に用意します。結果画面で先に行う処理を減らし、長い区間でも画面が反応する機会を増やします。分離の品質は変わらず、処理時間は端末と選択した音声に依存します。'
- ],
- ['WAV ve ZIP indirirken kontrol sende','Stay in control during WAV and ZIP export','WAV und ZIP mit Kontrolle exportieren','Gardez la main pendant les exports WAV et ZIP','Управление экспортом WAV и ZIP','Kiểm soát khi xuất WAV và ZIP','WAV 与 ZIP 导出时也能掌控进度','WAVとZIPの書き出し中も操作を'],
- [
-  'Tek bir sesi WAV olarak indirmek veya iki sesi ZIP içinde almak artık uzun bir işi tek seferde arayüze yüklemiyor. Hazırlık sırasında ilerleme ve iptal kontrolleri kullanılabiliyor; ZIP oluştururken gereksiz tam dosya kopyaları azaltıldı. MP3 ve FLAC seçenekleri de yerinde. Dosyanın hazırlanması cihazında gerçekleşmeye devam ediyor; büyük sesler yine bellek ve zaman gerektirebilir, özellikle düşük güçlü telefonlarda.',
-  'Downloading one stem as WAV or both in a ZIP no longer puts all of the export work into one uninterrupted interface task. Progress and cancellation remain available while the files are prepared, and ZIP creation avoids an unnecessary full-file copy. MP3 and FLAC choices remain available. Preparation stays on your device; large audio can still take time and memory, particularly on less powerful phones.',
-  'Einzelne WAV-Spuren und ZIP-Dateien mit beiden Spuren werden ohne eine einzige lange, ununterbrochene Oberflächenaufgabe vorbereitet. Fortschritt und Abbrechen bleiben erreichbar; beim ZIP entfällt eine unnötige vollständige Dateikopie. MP3 und FLAC bleiben verfügbar. Die Vorbereitung läuft weiter auf deinem Gerät. Große Audiodateien benötigen besonders auf schwächeren Smartphones weiterhin Zeit und Speicher.',
-  'L’export d’une piste WAV ou des deux dans une archive ZIP n’occupe plus l’interface en une seule longue tâche ininterrompue. Progression et annulation restent accessibles pendant la préparation, et le ZIP évite une copie complète inutile. MP3 et FLAC restent disponibles. Tout se prépare sur votre appareil ; les fichiers volumineux demandent encore du temps et de la mémoire, surtout sur les téléphones modestes.',
-  'Экспорт одной дорожки в WAV или обеих в ZIP больше не выполняется одной длинной непрерывной задачей интерфейса. Во время подготовки доступны прогресс и отмена, а при создании ZIP не нужна лишняя полная копия файла. MP3 и FLAC остаются доступны. Подготовка выполняется на вашем устройстве; большой звук всё ещё требует времени и памяти, особенно на слабых телефонах.',
-  'Xuất một bản WAV hoặc cả hai trong ZIP không còn dồn toàn bộ công việc vào một tác vụ giao diện liên tục. Bạn có thể xem tiến độ và hủy trong lúc chuẩn bị; ZIP cũng tránh một bản sao toàn bộ tệp không cần thiết. MP3 và FLAC vẫn có sẵn. Tệp tiếp tục được chuẩn bị trên thiết bị; âm thanh lớn vẫn cần thời gian và bộ nhớ, nhất là trên điện thoại yếu.',
-  '导出单条 WAV 音轨或包含两条音轨的 ZIP 时，工作不再全部集中在一个持续占用界面的任务中。准备期间可查看进度并取消，ZIP 创建也减少了一次不必要的整文件复制。MP3、FLAC 选项继续保留。文件仍在设备本地准备，大音频依然需要时间和内存，性能较弱的手机尤其如此。',
-  '片方の音声をWAVで、または両方をZIPで書き出す処理を、長時間連続して画面を占有しない形にしました。準備中は進行状況の確認とキャンセルができ、ZIP作成時の不要なファイル全体のコピーも減らしました。MP3とFLACも引き続き選べます。処理は端末内で行われ、大きな音声には時間とメモリが必要です。'
- ],
- ['Remux: dosyanı seç, hedef biçimi belirle','Remux: choose your file and target container','Remux: Datei und Zielcontainer auswählen','Remux : choisissez le fichier et son conteneur','Remux: выберите файл и контейнер','Remux: chọn tệp và định dạng đích','重新封装：先选文件，再选目标格式','リマックス：ファイルと出力形式を選ぶ'],
- [
-  'Dosya seçer seçmez işlemi başlatmak yerine hedef biçimi seçip ardından başlatabiliyorsun. MKV’den MP4’e, MP4’ten MKV’ye ve uygun diğer kapsayıcılara geçiş daha anlaşılır; çıktı dosyasının adı da seçiminle uyumlu. Remux görüntüyü yeniden kodlamaz: içindeki ses ve video hedef biçime uyumluysa kalite korunur, uyumsuzsa açık hata alırsın. Ses biçimi seçersen yalnızca ses saklanır. <a href="/remux">Remux’u aç</a>.',
-  'Choosing a file now lets you select the destination before starting. MKV to MP4, MP4 to MKV and other compatible containers have a clearer workflow, with an output filename that follows your selection. Remuxing does not re-encode video: compatible audio and video retain their quality, while incompatible combinations return an error. Audio-only targets keep just the audio. <a href="/remux">Open remux</a>.',
-  'Nach der Dateiauswahl kannst du vor dem Start den Zielcontainer wählen. MKV zu MP4, MP4 zu MKV und weitere passende Container sind übersichtlicher; der Ausgabename folgt der Auswahl. Remux kodiert Video nicht neu: Kompatible Spuren behalten ihre Qualität, unpassende Kombinationen liefern einen Fehler. Reine Audioziele speichern nur Ton. <a href="/remux">Remux öffnen</a>.',
-  'Après le choix du fichier, sélectionnez la destination avant de lancer. MKV vers MP4, MP4 vers MKV et les autres conteneurs compatibles suivent un parcours plus clair, avec un nom de sortie cohérent. Le remux ne réencode pas la vidéo : les pistes compatibles conservent leur qualité ; les combinaisons incompatibles produisent une erreur. Une cible audio conserve uniquement le son. <a href="/remux">Ouvrir le remux</a>.',
-  'После выбора файла можно указать выходной контейнер и затем запустить обработку. Переход MKV в MP4, MP4 в MKV и другие совместимые варианты стал понятнее; имя результата соответствует выбору. Remux не перекодирует видео: совместимые дорожки сохраняют качество, несовместимые дают ошибку. Аудиоформат сохраняет только звук. <a href="/remux">Открыть remux</a>.',
-  'Sau khi chọn tệp, bạn có thể chọn định dạng đích rồi mới bắt đầu. MKV sang MP4, MP4 sang MKV và các định dạng tương thích khác có quy trình rõ hơn; tên tệp đầu ra theo đúng lựa chọn. Remux không mã hóa lại video: các luồng tương thích giữ chất lượng, tổ hợp không tương thích báo lỗi. Đích chỉ âm thanh chỉ giữ phần tiếng. <a href="/remux">Mở remux</a>.',
-  '选择文件后，可以先确定目标封装格式，再开始处理。MKV 转 MP4、MP4 转 MKV 及其他兼容容器的流程更清楚，输出文件名也与选择一致。重新封装不会重编码视频：兼容的音视频保留原有质量，不兼容的组合会报错。选择纯音频格式时只保留声音。<a href="/remux">打开重新封装工具</a>。',
-  'ファイルを選んでから出力形式を指定し、開始できるようになりました。MKVからMP4、MP4からMKVなど互換性のあるコンテナへの操作が分かりやすくなり、出力名も選択に合わせます。映像は再エンコードせず、対応する音声・映像の品質を保ちます。非対応の組み合わせはエラーとなり、音声形式では音声だけを保存します。<a href="/remux">リマックスを開く</a>。'
- ],
- ['Sekiz dilde daha açıklayıcı sayfalar','Clearer pages across eight languages','Verständlichere Seiten in acht Sprachen','Des pages plus claires dans huit langues','Понятные страницы на восьми языках','Trang rõ ràng hơn bằng tám ngôn ngữ','八种语言的页面说明更清楚','8言語のページを分かりやすく'],
- [
-  'Ses ayırıcının ne yaptığı, hangi dosyalarla çalıştığı ve ilk kullanımda neden model indirdiği artık sayfada daha açık anlatılıyor. Bu bilgiler mevcut sekiz dile uyarlandı; arama motorlarının okuyabildiği sayfa açıklamaları, dil bağlantıları ve site haritası da güncellendi. Farklı dilde ana sayfadan ayarlara giderken oluşan bozuk bağlantıları düzelttik. Böylece araçlara ulaşmak ve sınırlarını önceden anlamak daha kolay; arama sıralaması için garanti vermiyoruz.',
-  'The separator now explains its purpose, supported input and first-use model download more clearly on the page. The guidance is available in all eight existing languages, alongside refreshed search descriptions, language links and sitemap content. We also fixed broken settings links on localized homepages. It is easier to reach the tools and understand their limits before starting; these changes do not guarantee a search ranking.',
-  'Der Trenner erklärt Zweck, Eingaben und den Modelldownload beim ersten Start deutlicher. Die Hinweise stehen in allen acht bestehenden Sprachen bereit; Suchbeschreibungen, Sprachverknüpfungen und Sitemap wurden ebenfalls aktualisiert. Defekte Einstellungslinks auf übersetzten Startseiten sind behoben. Werkzeuge und Grenzen sind so leichter zu finden und zu verstehen. Eine bestimmte Suchplatzierung wird nicht zugesichert.',
-  'Le séparateur explique mieux son rôle, les entrées acceptées et le téléchargement du modèle au premier usage. Ces indications existent dans les huit langues déjà proposées, avec des descriptions de recherche, liens de langue et contenus du sitemap actualisés. Les liens de paramètres défectueux des accueils traduits sont corrigés. Les outils et leurs limites sont plus faciles à comprendre ; aucun classement de recherche n’est garanti.',
-  'На странице разделения понятнее описаны назначение, поддерживаемые файлы и загрузка модели при первом запуске. Материалы доступны на восьми существующих языках; обновлены описания для поиска, языковые ссылки и карта сайта. Исправлены ссылки настроек на локализованных главных страницах. Найти инструмент и заранее понять ограничения проще, но позиция в поиске не гарантируется.',
-  'Trang tách âm thanh giải thích rõ hơn chức năng, tệp đầu vào và việc tải mô hình lần đầu. Hướng dẫn có đủ tám ngôn ngữ hiện có, cùng mô tả tìm kiếm, liên kết ngôn ngữ và sitemap được cập nhật. Liên kết cài đặt lỗi trên trang chủ đã dịch cũng được sửa. Bạn dễ tìm công cụ và hiểu giới hạn trước khi dùng hơn; thay đổi không đảm bảo thứ hạng tìm kiếm.',
-  '音频分离页面更清楚地说明用途、输入要求以及首次使用为何需要下载模型。这些说明已覆盖现有的八种语言，搜索描述、语言链接和站点地图也同步更新。不同语言首页通往设置的失效链接已修复。现在更容易找到工具并提前了解限制，但这些修改并不保证搜索排名。',
-  '音声分離の用途、対応入力、初回のモデルダウンロードについて、ページ上の説明を充実させました。既存の8言語で案内し、検索向け説明、言語リンク、サイトマップも更新しています。各言語のホームから設定へ移動するリンクも修正しました。機能と制限を事前に理解しやすくしますが、検索順位は保証しません。'
- ],
- ['Güvenilirlik ve gizlilik üzerinde çalıştık','Reliability and privacy refinements','Verbesserungen für Zuverlässigkeit und Datenschutz','Fiabilité et confidentialité renforcées','Доработки надёжности и конфиденциальности','Cải thiện độ tin cậy và quyền riêng tư','可靠性与隐私方面的改进','安定性とプライバシーの改善'],
- [
-  'Kod incelemesinde kapak indirmelerinin toplam bekleme sınırını netleştirdik ve Type profil fotoğrafı isteklerinin aynı anda geldiğinde birbirinin sonucunu bozmasını önleyen değişiklikleri hazırladık. Web istemcisi ile sunucu ve masaüstü bağımlılıklarında güvenlik güncellemeleri yapıldı. Bu çalışma bütün açıkların bittiği anlamına gelmiyor: bazı geliştirme araçlarında orta önem dereceli kayıtlar takibimizde. Ses ayırma dosyaları cihazında kalıyor; reklam veya yeni bir veri toplama sistemi eklenmedi.',
-  'The code review tightened the total time budget for thumbnail downloads and prepared protection against overlapping Type avatar changes. Security updates cover the browser client and server/desktop dependencies. This does not mean every vulnerability is eliminated: some development-tool findings remain open at moderate severity. Separation audio stays on your device, and this release introduces no advertising or new data-collection system.',
-  'Die Codeprüfung begrenzt die Gesamtwartezeit von Vorschaubildern klarer und bereitet den Schutz vor gleichzeitigen Type-Avataränderungen vor. Sicherheitsupdates betreffen Browserclient sowie Server- und Desktop-Abhängigkeiten. Das beseitigt nicht jede mögliche Schwachstelle; einige moderate Meldungen in Entwicklungswerkzeugen bleiben offen. Audio bleibt bei der Trennung auf deinem Gerät. Werbung oder neue Datenerfassung wurden nicht eingeführt.',
-  'La revue du code précise le délai total des miniatures et prépare une protection contre les changements d’avatar Type simultanés. Les mises à jour de sécurité couvrent le client web et les dépendances serveur et bureau. Cela ne signifie pas l’absence de toute faille : des alertes modérées subsistent dans certains outils de développement. L’audio reste sur votre appareil, sans publicité ni nouveau système de collecte.',
-  'Проверка кода уточнила общий предел ожидания обложек и подготовила защиту от пересекающихся изменений аватара Type. Обновления безопасности затронули браузерный клиент и зависимости сервера и настольного приложения. Это не означает устранение всех уязвимостей: в инструментах разработки остаются умеренные предупреждения. Разделяемый звук остаётся на устройстве; рекламы и новой системы сбора данных нет.',
-  'Rà soát mã làm rõ giới hạn tổng thời gian tải ảnh bìa và chuẩn bị bảo vệ trước các yêu cầu đổi ảnh Type chồng nhau. Cập nhật bảo mật áp dụng cho trình duyệt cùng thư viện máy chủ và desktop. Điều này không có nghĩa mọi lỗ hổng đã biến mất; một số cảnh báo trung bình ở công cụ phát triển vẫn còn. Âm thanh tách ở trên thiết bị; không thêm quảng cáo hay hệ thống thu thập dữ liệu mới.',
-  '代码审查明确了封面下载的总等待上限，并准备了防止 Type 头像并发修改互相覆盖的保护措施。安全更新涉及浏览器客户端以及服务器、桌面端依赖。这不意味着所有漏洞都已消除，部分开发工具仍有中等级别记录待处理。音频分离文件继续保留在设备上，本次没有加入广告或新的数据收集系统。',
-  'コードの確認でサムネイル取得の総待機時間を明確にし、Typeのアバター変更が同時に来ても結果を上書きしない対策を準備しました。ブラウザ用クライアント、サーバー、デスクトップの依存関係も更新しています。すべての脆弱性がなくなったわけではなく、一部開発ツールの中程度の指摘は残っています。音声は端末内に留まり、広告や新しいデータ収集は追加していません。'
- ],
- ['Kontrol edildi, sınırları açık bırakıldı','Checked, with clear limits','Geprüft, mit klaren Grenzen','Des vérifications et des limites explicites','Проверено с понятными ограничениями','Đã kiểm tra, nêu rõ giới hạn','经过检查，也说明验证边界','確認した内容と残る範囲'],
- [
-  'Sayfa üretimini, dil bağlantılarını, ses dışa aktarmayı, yerel remux’u ve hata senaryolarını yeniden kontrol ettik. Otomatik kontroller ve tarayıcı denemeleri geçti; masaüstünün kuyruk ve geçmiş testleri de güncellendi. Bu sonuçlar her telefonda aynı hız veya her kaynaktan sorunsuz indirme sözü değil. Gerçek AI modeliyle tüm cihazları ve yeni Windows kurulum paketini bu yayında test etmedik. <a href="/audio-separator">Ses ayırıcıyı dene</a> veya <a href="/typing">Zenith Type’a geç</a>.',
-  'We rechecked page generation, language links, audio exports, local remux and failure scenarios. Automated checks and browser regressions passed, and desktop queue/history tests were refreshed. These results do not promise the same speed on every phone or successful downloads from every source. The real AI model across physical devices and a new Windows installer were not tested for this release. <a href="/audio-separator">Try the separator</a> or <a href="/typing">visit Zenith Type</a>.',
-  'Seitenerzeugung, Sprachlinks, Audioexport, lokales Remux und Fehlerfälle wurden erneut geprüft. Automatische Kontrollen und Browsertests bestanden; Desktop-Tests für Warteschlange und Verlauf wurden erneuert. Das verspricht keine gleiche Geschwindigkeit auf jedem Smartphone oder jeden Download. Das echte KI-Modell auf physischen Geräten und ein neuer Windows-Installer wurden hier nicht getestet. <a href="/audio-separator">Trenner ausprobieren</a> oder <a href="/typing">Zenith Type öffnen</a>.',
-  'Génération des pages, liens de langue, exports audio, remux local et erreurs ont été revérifiés. Les contrôles automatiques et les essais navigateur passent ; les tests de file et d’historique du bureau ont été actualisés. Cela ne promet ni la même vitesse sur chaque téléphone ni tous les téléchargements réussis. Le modèle IA sur des appareils physiques et un nouvel installateur Windows n’ont pas été testés ici. <a href="/audio-separator">Essayer le séparateur</a> ou <a href="/typing">ouvrir Zenith Type</a>.',
-  'Повторно проверены генерация страниц, языковые ссылки, экспорт звука, локальный remux и ошибки. Автотесты и браузерные проверки прошли; обновлены тесты очереди и истории настольного приложения. Это не обещание одинаковой скорости на всех телефонах или загрузки с любого сайта. Реальная ИИ-модель на физических устройствах и новый установщик Windows здесь не проверялись. <a href="/audio-separator">Попробовать разделение</a> или <a href="/typing">открыть Zenith Type</a>.',
-  'Chúng tôi kiểm tra lại việc tạo trang, liên kết ngôn ngữ, xuất âm thanh, remux cục bộ và tình huống lỗi. Kiểm tra tự động và thử trên trình duyệt đều đạt; kiểm thử hàng đợi và lịch sử desktop cũng được cập nhật. Đây không phải cam kết tốc độ giống nhau trên mọi máy hay tải được từ mọi nguồn. Mô hình AI trên thiết bị thật và bộ cài Windows mới chưa được thử trong bản này. <a href="/audio-separator">Thử tách âm thanh</a> hoặc <a href="/typing">mở Zenith Type</a>.',
-  '我们重新检查了页面生成、语言链接、音频导出、本地重新封装以及错误情形。自动检查和浏览器回归通过，桌面端的队列与历史记录测试也已更新。这不代表每台手机速度相同，或所有网站都能成功下载。本次未在实体设备上验证真实 AI 模型，也未测试新的 Windows 安装包。<a href="/audio-separator">试用音频分离</a>，或<a href="/typing">进入 Zenith Type</a>。',
-  'ページ生成、言語リンク、音声書き出し、ローカルのリマックス、エラー処理を再確認しました。自動チェックとブラウザ試験は通過し、デスクトップのキューと履歴のテストも更新しています。すべての端末で同じ速度や、すべての配信元からの成功を約束するものではありません。実機のAIモデルと新しいWindowsインストーラーは今回未検証です。<a href="/audio-separator">音声分離を試す</a>、または<a href="/typing">Zenith Typeを開く</a>。'
- ],
- ['2 kasım 2026','November 2, 2026','2. November 2026','2 novembre 2026','2 ноября 2026','2 tháng 11, 2026','2026年11月2日','2026年11月2日']
+  [
+    "Yeni araçlar, daha iyi medya kontrolü",
+    "New tools, better media control",
+    "Neue Werkzeuge, mehr Medienkontrolle",
+    "De nouveaux outils, plus de contrôle sur les médias",
+    "Новые инструменты и больше контроля над медиа",
+    "Công cụ mới, kiểm soát media tốt hơn",
+    "新工具，更灵活的媒体控制",
+    "新しいツールと、より細かなメディア操作"
+  ],
+  [
+    "Web 17.1, ZenithW’ye yeni bir görsel çalışma alanı ekliyor. Image Converter ile görselleri farklı biçimlere dönüştürebilir, kendi ölçülerini belirleyebilir ve sonucu dışa aktarmadan önce önizleyebilirsin. Audio Separator da yenilenen stüdyo arayüzüyle daha anlaşılır bir deneyim sunuyor.",
+    "Web 17.1 adds a dedicated image workspace to ZenithW. Image Converter converts images between formats, supports custom dimensions and previews results before export. Audio Separator also gets a refreshed studio interface for a clearer workflow.",
+    "Web 17.1 ergänzt ZenithW um einen eigenen Bildbereich. Mit dem Bildkonverter kannst du Formate umwandeln, eigene Maße festlegen und Ergebnisse vor dem Export ansehen. Auch der Audiotrenner erhält eine überarbeitete Studiooberfläche.",
+    "Web 17.1 ajoute à ZenithW un espace dédié aux images. Le convertisseur change les formats, accepte des dimensions personnalisées et affiche un aperçu avant l’export. Le séparateur audio bénéficie lui aussi d’une interface studio repensée.",
+    "В Web 17.1 в ZenithW появилась отдельная рабочая область для изображений. Конвертер меняет форматы, позволяет задавать размеры и просматривать результат перед экспортом. Разделитель аудио также получил обновлённый интерфейс студии.",
+    "Web 17.1 bổ sung không gian làm việc riêng cho hình ảnh trong ZenithW. Trình chuyển đổi giúp đổi định dạng, đặt kích thước tùy chỉnh và xem trước trước khi xuất. Công cụ tách âm thanh cũng có giao diện studio mới.",
+    "Web 17.1 为 ZenithW 增加了专门的图片工作区。图片转换器支持更改格式、自定义尺寸，并可在导出前预览结果。音频分离工具也换上了重新设计的工作室界面。",
+    "Web 17.1では、ZenithWに画像専用の作業スペースを追加しました。画像変換ツールで形式を変換し、サイズを指定して、書き出す前にプレビューできます。音声分離ツールもスタジオ画面を刷新しました。"
+  ],
+  [
+    "Bu sürüm web uygulamasına aittir. Görseller tarayıcında yerel olarak işlenir; dosyaların ZenithW sunucusuna yüklenmez. Windows ve Android uygulamalarının sürüm numaraları bundan bağımsızdır.",
+    "This release applies to the web app. Images are processed locally in your browser and are not uploaded to ZenithW servers. Windows and Android apps keep independent version numbers.",
+    "Diese Version betrifft die Web-App. Bilder werden lokal im Browser verarbeitet und nicht auf ZenithW-Server hochgeladen. Windows- und Android-Apps behalten eigene Versionsnummern.",
+    "Cette version concerne l’application web. Les images sont traitées localement dans le navigateur et ne sont pas envoyées aux serveurs de ZenithW. Windows et Android conservent leurs propres versions.",
+    "Этот выпуск относится к веб-приложению. Изображения обрабатываются локально в браузере и не загружаются на серверы ZenithW. У Windows и Android собственные номера версий.",
+    "Bản phát hành này áp dụng cho ứng dụng web. Hình ảnh được xử lý trong trình duyệt và không tải lên máy chủ ZenithW. Windows và Android vẫn có số phiên bản riêng.",
+    "本次更新适用于网页版。图片在浏览器本地处理，不会上传到 ZenithW 服务器。Windows 和 Android 应用继续使用各自独立的版本编号。",
+    "このリリースはWebアプリ向けです。画像はブラウザ内で処理され、ZenithWのサーバーにはアップロードされません。Windows版とAndroid版は独立したバージョン番号を維持します。"
+  ],
+  [
+    "Yeni Image Converter",
+    "A new Image Converter",
+    "Neuer Bildkonverter",
+    "Un nouveau convertisseur d’images",
+    "Новый конвертер изображений",
+    "Trình chuyển đổi hình ảnh mới",
+    "全新的图片转换器",
+    "新しい画像変換ツール"
+  ],
+  [
+    "Image Converter artık Araçlar menüsünde. JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA ve QOI gibi yaygın biçimleri açabilir. Çıkış biçimleri tarayıcının kodlayıcı desteğine göre belirlenir; birden çok görsel aynı kuyruğa eklenebilir.",
+    "Image Converter is now in the Tools menu. It opens common formats such as JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA and QOI. Output formats are detected from browser encoder support, and multiple images can share one queue.",
+    "Der Bildkonverter ist jetzt im Werkzeuge-Menü. Er öffnet gängige Formate wie JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA und QOI. Ausgabeformate richten sich nach der Encoder-Unterstützung des Browsers; mehrere Bilder können in eine Warteschlange.",
+    "Le convertisseur est désormais dans le menu Outils. Il ouvre des formats courants comme JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA et QOI. Les formats de sortie dépendent des encodeurs du navigateur et plusieurs images peuvent partager la même file.",
+    "Конвертер изображений теперь находится в меню «Инструменты». Он открывает JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA и QOI. Форматы экспорта зависят от кодировщиков браузера; несколько изображений можно добавить в одну очередь.",
+    "Trình chuyển đổi hiện có trong menu Công cụ. Công cụ mở các định dạng phổ biến như JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA và QOI. Định dạng đầu ra dựa trên bộ mã hóa của trình duyệt; có thể thêm nhiều ảnh vào một hàng đợi.",
+    "图片转换器现已加入“工具”菜单。它可以打开 JPEG、PNG、WebP、AVIF、TIFF、BMP、TGA 和 QOI 等常见格式。输出格式根据浏览器编码器支持情况检测，多张图片可加入同一队列。",
+    "画像変換ツールを「ツール」メニューから利用できます。JPEG、PNG、WebP、AVIF、TIFF、BMP、TGA、QOIなどを開けます。出力形式はブラウザのエンコーダー対応状況に応じて検出され、複数画像を同じキューに追加できます。"
+  ],
+  [
+    "Özel boyutlar ve canlı önizleme",
+    "Custom dimensions and live preview",
+    "Eigene Maße und Live-Vorschau",
+    "Dimensions personnalisées et aperçu",
+    "Свои размеры и предварительный просмотр",
+    "Kích thước tùy chỉnh và xem trước",
+    "自定义尺寸与实时预览",
+    "サイズ指定とライブプレビュー"
+  ],
+  [
+    "Görseli açtığında ayrı bir düzenleme penceresinde önizleme, çıktı biçimi ve boyutlandırma kontrolleri bulunur. Genişlik ve yüksekliği kendin girebilir, en-boy oranını kilitleyebilir veya orijinal ölçülere dönebilirsin. Boyutlar bellek ayrılmadan önce doğrulanır; kenar başına 12.000 piksel ve toplam 28 megapiksel sınırı uygulanır. Görsel değiştirirken özel ölçülerin korunması ve orijinal ölçülere dönüldüğünde önizlemenin yenilenmesi de düzeltildi.",
+    "Opening an image brings up a dedicated dialog with preview, output-format choices and resize controls. Enter custom width and height, lock the aspect ratio or restore original dimensions. Values are validated before canvas memory allocation, with limits of 12,000 pixels per side and 28 megapixels overall. Custom sizes now persist when switching previews, and the preview refreshes when original dimensions are restored.",
+    "Beim Öffnen erscheint ein eigener Dialog mit Vorschau, Ausgabeformaten und Größensteuerung. Du kannst Breite und Höhe eingeben, das Seitenverhältnis sperren oder die Originalmaße wiederherstellen. Vor der Speicherreservierung werden die Werte geprüft: höchstens 12.000 Pixel pro Seite und 28 Megapixel insgesamt. Eigene Maße bleiben beim Wechsel der Vorschau erhalten.",
+    "À l’ouverture, une fenêtre dédiée affiche l’aperçu, le format de sortie et les commandes de redimensionnement. Saisissez largeur et hauteur, verrouillez les proportions ou rétablissez la taille d’origine. Les valeurs sont vérifiées avant l’allocation mémoire : 12 000 pixels par côté et 28 mégapixels au total. Les dimensions personnalisées sont conservées lors du changement d’aperçu.",
+    "При открытии появляется отдельное окно с предпросмотром, форматом и настройками размера. Можно задать ширину и высоту, сохранить пропорции или вернуть исходный размер. Значения проверяются до выделения памяти: не более 12 000 пикселей по стороне и 28 мегапикселей суммарно. Пользовательские размеры сохраняются при переключении изображений.",
+    "Khi mở ảnh, hộp thoại riêng hiển thị bản xem trước, định dạng và điều khiển kích thước. Bạn có thể nhập chiều rộng, chiều cao, khóa tỷ lệ hoặc khôi phục kích thước gốc. Kích thước được kiểm tra trước khi cấp phát bộ nhớ canvas: tối đa 12.000 pixel mỗi cạnh và 28 megapixel tổng cộng. Kích thước tùy chỉnh được giữ khi chuyển ảnh.",
+    "打开图片后会出现独立编辑窗口，包含预览、输出格式和尺寸控件。你可以输入宽度和高度、锁定纵横比，或恢复原始尺寸。画布分配内存前会先验证尺寸：每边最多 12,000 像素，总计不超过 2,800 万像素。切换图片时会保留自定义尺寸。",
+    "画像を開くと、プレビュー、出力形式、サイズ変更をまとめたダイアログが表示されます。幅と高さを入力し、縦横比を固定したり元のサイズに戻したりできます。メモリ確保前にサイズを検証し、各辺12,000ピクセル、合計2,800万画素までに制限します。画像を切り替えても指定サイズを保持します。"
+  ],
+  [
+    "Görsel codec desteği iyileştirildi",
+    "Improved image codec support",
+    "Verbesserte Bildcodec-Unterstützung",
+    "Prise en charge améliorée des codecs",
+    "Улучшена поддержка графических кодеков",
+    "Cải thiện hỗ trợ codec hình ảnh",
+    "改进图片编解码支持",
+    "画像コーデック対応を改善"
+  ],
+  [
+    "Görsel biçimi tanıma ve kodlayıcı kayıtları iyileştirildi. TIFF kaydı ve kodlayıcı sözdizimi düzeltildi; codec MIME türleri, tarayıcının uygun yedek çözme yolunu seçmesine yardımcı oluyor. Desteklenen biçimlerin algılanması böylece daha tutarlı hale geliyor.",
+    "Image format detection and encoder registration have been improved. TIFF registration and encoder syntax were corrected, while codec MIME-type detection helps the browser choose an appropriate decoder fallback. Supported formats are now identified more consistently.",
+    "Die Erkennung von Bildformaten und die Encoder-Registrierung wurden verbessert. TIFF-Registrierung und Encoder-Syntax sind korrigiert; MIME-Typen helfen dem Browser, einen passenden Decoder-Fallback auszuwählen.",
+    "La détection des formats et l’enregistrement des encodeurs ont été améliorés. L’enregistrement TIFF et la syntaxe de l’encodeur sont corrigés ; les types MIME aident le navigateur à choisir une solution de décodage de secours.",
+    "Улучшены определение форматов изображений и регистрация кодировщиков. Исправлены регистрация TIFF и синтаксис кодировщика; MIME-типы помогают браузеру выбрать подходящий резервный декодер.",
+    "Việc nhận diện định dạng và đăng ký bộ mã hóa hình ảnh được cải thiện. Đăng ký TIFF và cú pháp bộ mã hóa đã sửa; MIME type giúp trình duyệt chọn phương án giải mã dự phòng phù hợp.",
+    "改进了图片格式检测和编码器注册，修复 TIFF 注册及编码器语法问题。通过检测编解码器 MIME 类型，浏览器可以选择合适的备用解码路径。",
+    "画像形式の検出とエンコーダー登録を改善しました。TIFFの登録とエンコーダー構文を修正し、MIMEタイプ検出によって適切な代替デコーダーを選べるようにしました。"
+  ],
+  [
+    "Audio Separator tasarımı yenilendi",
+    "Audio Separator gets a new design",
+    "Audio Separator mit neuem Design",
+    "Nouvelle interface pour Audio Separator",
+    "Обновлённый дизайн Audio Separator",
+    "Audio Separator được thiết kế lại",
+    "Audio Separator 焕新设计",
+    "Audio Separatorのデザインを刷新"
+  ],
+  [
+    "Audio Separator’ın stüdyo arayüzü yeniden tasarlandı. Yerel dosya seçme alanı daha açık hale getirildi; vokal ve enstrümantal kanallarla çalışma akışı daha tutarlı bir görünüme kavuştu. Düzen, sitenin sekiz dilinde birleştirildi ve dosya seçimi açıklamaları netleştirildi.",
+    "The Audio Separator studio interface has been redesigned. The local file picker is clearer, and the workflow for vocal and instrumental stems has a more consistent visual structure. The design is unified across all eight website languages, with clearer local-file guidance.",
+    "Die Studiooberfläche wurde neu gestaltet. Die lokale Dateiauswahl ist klarer, und der Ablauf für Gesangs- und Instrumentalspuren wirkt einheitlicher. Das Design ist in allen acht Website-Sprachen angeglichen; Hinweise zur lokalen Dateiauswahl wurden präzisiert.",
+    "L’interface studio a été repensée. La sélection locale est plus claire et le travail avec les pistes vocales et instrumentales bénéficie d’une présentation plus cohérente. Le design est harmonisé dans les huit langues du site.",
+    "Интерфейс студии переработан. Выбор локального файла стал понятнее, а работа с вокальной и инструментальной дорожками получила более единое оформление. Дизайн унифицирован для восьми языков сайта.",
+    "Giao diện studio được thiết kế lại. Khu vực chọn tệp cục bộ rõ ràng hơn, quy trình làm việc với giọng hát và nhạc nền có bố cục nhất quán hơn. Thiết kế được đồng bộ ở tám ngôn ngữ.",
+    "Audio Separator 的工作室界面经过重新设计。本地文件选择区域更加清晰，人声与伴奏分轨的操作流程也更统一。新设计覆盖网站八种语言。",
+    "スタジオ画面を刷新しました。ローカルファイルの選択が分かりやすくなり、ボーカルと伴奏の操作フローも統一感のある見た目になりました。サイトの8言語でデザインを統一しました。"
+  ],
+  [
+    "Araçlar menüsü ve sayfa düzeni sadeleşti",
+    "A simpler Tools menu and page layout",
+    "Ein übersichtlicheres Werkzeugmenü und Seitenlayout",
+    "Un menu Outils et des pages plus épurés",
+    "Более простое меню инструментов и страницы",
+    "Menu Công cụ và bố cục trang gọn hơn",
+    "工具菜单与页面布局更简洁",
+    "ツールメニューとページ構成を整理"
+  ],
+  [
+    "Image Converter Araçlar menüsüne eklendi ve medya araçları tek bir yerden erişilebilir hale getirildi. Oluşturulan sayfalardaki kalabalık sosyal bağlantı altbilgisi kaldırıldı. Böylece yeni araca ulaşmak kolaylaşırken içerik alanı daha sade kaldı.",
+    "Image Converter has been added to the Tools menu, bringing media tools together in one place. The cluttered social-link footer was removed from generated pages, making the new tool easier to find and keeping the content area cleaner.",
+    "Der Bildkonverter wurde zum Werkzeuge-Menü hinzugefügt, sodass Medienwerkzeuge an einem Ort erreichbar sind. Die überladene Fußzeile mit sozialen Links wurde aus generierten Seiten entfernt.",
+    "Le convertisseur a été ajouté au menu Outils pour regrouper les outils multimédias. Le pied de page encombré de liens sociaux a été retiré des pages générées.",
+    "Конвертер изображений добавлен в меню «Инструменты». Перегруженный нижний блок с социальными ссылками удалён с генерируемых страниц.",
+    "Trình chuyển đổi được thêm vào menu Công cụ, tập trung công cụ media tại một nơi. Chân trang chứa nhiều liên kết mạng xã hội đã được gỡ khỏi các trang tạo tự động.",
+    "图片转换器已加入“工具”菜单，媒体工具集中在同一入口。生成页面中拥挤的社交链接页脚也已移除。",
+    "画像変換ツールを「ツール」メニューに追加し、メディア関連ツールを一か所にまとめました。生成ページにあったソーシャルフッターも削除しました。"
+  ],
+  [
+    "Sekiz dilde tamamlanan arayüz",
+    "Interface completed in eight languages",
+    "Oberfläche in acht Sprachen vervollständigt",
+    "Interface finalisée dans huit langues",
+    "Интерфейс завершён на восьми языках",
+    "Hoàn thiện giao diện bằng tám ngôn ngữ",
+    "八种语言的界面翻译已完善",
+    "8言語のインターフェースを完成"
+  ],
+  [
+    "Image Converter’ın sayfa metinleri, durum mesajları, gizlilik açıklamaları ve erişilebilirlik etiketleri sekiz dilde tamamlandı. Dil değişimi arayüz metinlerini sayfa yenilenmeden güncelleyebilir. Audio Separator’ın stüdyo tasarımı da aynı sekiz dilde tutarlı hale getirildi.",
+    "The Image Converter’s page copy, status messages, privacy wording and accessibility labels are complete in all eight languages. Language changes can update interface copy without a page reload. Audio Separator’s studio design is also consistent across the same eight languages.",
+    "Seitentexte, Statusmeldungen, Datenschutzhinweise und Barrierefreiheitsbeschriftungen des Bildkonverters sind in allen acht Sprachen vollständig. Ein Sprachwechsel aktualisiert die Oberflächentexte ohne Neuladen. Auch das Studio-Design ist einheitlich.",
+    "Les textes de page, messages d’état, informations de confidentialité et libellés d’accessibilité sont complets dans les huit langues. Le changement de langue actualise les textes sans recharger la page. Le design studio est harmonisé.",
+    "Тексты страницы, сообщения о состоянии, уведомления о конфиденциальности и подписи доступности конвертера переведены на восемь языков. Переключение языка обновляет интерфейс без перезагрузки. Дизайн студии унифицирован.",
+    "Nội dung trang, thông báo trạng thái, thông tin quyền riêng tư và nhãn trợ năng đã hoàn thiện bằng tám ngôn ngữ. Đổi ngôn ngữ cập nhật văn bản mà không cần tải lại trang. Thiết kế studio cũng được đồng bộ.",
+    "图片转换器的页面文案、状态消息、隐私说明和无障碍标签现已覆盖八种语言。切换语言时无需刷新页面即可更新文案。工作室设计也已在八种语言中保持一致。",
+    "画像変換ツールのページ文言、状態メッセージ、プライバシー説明、アクセシビリティ用ラベルを8言語すべてで整えました。言語切替時に再読み込みせず文言を更新できます。スタジオデザインも統一しました。"
+  ],
+  [
+    "20 kasım 2026",
+    "November 20, 2026",
+    "20. November 2026",
+    "20 novembre 2026",
+    "20 ноября 2026",
+    "20 tháng 11, 2026",
+    "2026年11月20日",
+    "2026年11月20日"
+  ]
 ];
-
-export const release = {
- ver:'v17.0',latest:true,dateTr:rows.at(-1)[0],dateEn:rows.at(-1)[1],cover:null,
- titleTr:rows[0][0],titleEn:rows[0][1],introTr:[rows[1][0],rows[2][0]],introEn:[rows[1][1],rows[2][1]],
- sections:Array.from({length:6},(_,index)=>{
-  const heading=rows[3+index*2],paragraph=rows[4+index*2];
-  return {hTr:heading[0],hEn:heading[1],pTr:paragraph[0],pEn:paragraph[1]};
- }),
- outroTr:'',outroEn:''
-};
