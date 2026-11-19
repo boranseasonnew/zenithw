@@ -3794,5 +3794,6 @@
   "Bu biçim tarayıcında desteklenmiyor.": "Trình duyệt của bạn không hỗ trợ định dạng này.",
   "PNG kayıpsızdır; kalite ayarı kullanılmaz.": "PNG là định dạng không mất dữ liệu; không áp dụng cài đặt chất lượng.",
   "Henüz dosya eklenmedi.": "Chưa có tệp nào được thêm.",
-  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "Không thể tải codec JPEG XL. Kiểm tra kết nối và thử lại."
+  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "Không thể tải codec JPEG XL. Kiểm tra kết nối và thử lại.",
+  "Format motoru hazırlanıyor…": "Đang chuẩn bị bộ định dạng…"
 }
