@@ -3729,5 +3729,17 @@
   "AÇIK KAYNAK SES MOTORU": "开源音频引擎",
   "PROJECT LINKS": "项目链接",
   "PROJE BAĞLANTILARI": "项目链接",
-  "Repeat playback": "循环播放"
+  "Repeat playback": "循环播放",
+  "Uptodown submission rejected": "Uptodown 上架申请被拒",
+  "Uptodown 上架申请被拒": "Uptodown 上架申请被拒",
+  "Rejected": "已拒绝",
+  "已拒绝": "已拒绝",
+  "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.": "Uptodown 拒绝上架 ZenithW，理由是担心该应用可能被用于下载受版权或第三方权利保护的内容。",
+  "Uptodown 拒绝上架 ZenithW，理由是担心该应用可能被用于下载受版权或第三方权利保护的内容。": "Uptodown 拒绝上架 ZenithW，理由是担心该应用可能被用于下载受版权或第三方权利保护的内容。",
+  "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.": "这一描述并不能代表 ZenithW 的实际定位。ZenithW 不是盗版服务，而是一个开源媒体工作空间。下载只是其中一项功能，此外还提供媒体转换、Remux、音频分离、GIF 制作及其他媒体工具。ZenithW 不分发受版权保护的媒体内容。",
+  "这一描述并不能代表 ZenithW 的实际定位。ZenithW 不是盗版服务，而是一个开源媒体工作空间。下载只是其中一项功能，此外还提供媒体转换、Remux、音频分离、GIF 制作及其他媒体工具。ZenithW 不分发受版权保护的媒体内容。": "这一描述并不能代表 ZenithW 的实际定位。ZenithW 不是盗版服务，而是一个开源媒体工作空间。下载只是其中一项功能，此外还提供媒体转换、Remux、音频分离、GIF 制作及其他媒体工具。ZenithW 不分发受版权保护的媒体内容。",
+  "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.": "我们不同意这一描述，但尊重 Uptodown 的决定，并不会提出申诉。Android 版本仍可直接通过 GitHub 获取。",
+  "我们不同意这一描述，但尊重 Uptodown 的决定，并不会提出申诉。Android 版本仍可直接通过 GitHub 获取。": "我们不同意这一描述，但尊重 Uptodown 的决定，并不会提出申诉。Android 版本仍可直接通过 GitHub 获取。",
+  "Download Android from GitHub Releases": "从 GitHub Releases 下载 Android 版",
+  "从 GitHub Releases 下载 Android 版": "从 GitHub Releases 下载 Android 版"
 }
