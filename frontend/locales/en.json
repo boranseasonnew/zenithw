@@ -3789,5 +3789,9 @@
   "PNG kayıpsızdır; kalite ayarı kullanılmaz.": "PNG is lossless; the quality setting does not apply.",
   "Henüz dosya eklenmedi.": "No files added yet.",
   "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "JPEG XL codec could not be loaded. Check your connection and try again.",
-  "Format motoru hazırlanıyor…": "Preparing format engine…"
+  "Format motoru hazırlanıyor…": "Preparing format engine…",
+  "Görsel Dönüştürücü ve Boyutlandırıcı | ZenithW": "Image Converter & Resizer | ZenithW",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve JPEG XL biçimlerine dönüştür ve yeniden boyutlandır. İşlem cihazında yapılır.": "Convert and resize images to JPEG, PNG, WebP, AVIF, TIFF and JPEG XL. Everything is processed on your device.",
+  "Görsel Dönüştürücü | ZenithW": "Image Converter | ZenithW",
+  "Görsellerini onlarca biçime dönüştür. Dosyaların cihazından çıkmaz.": "Convert your images to dozens of formats. Your files never leave your device."
 }
