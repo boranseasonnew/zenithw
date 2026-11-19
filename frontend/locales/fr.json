@@ -3771,5 +3771,7 @@
   "Dönüştürme başarısız": "Échec de la conversion",
   "{count} çıkış biçimi kullanılabilir": "{count} formats de sortie disponibles",
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "Seuls les formats pris en charge par votre navigateur sont affichés. Les fichiers ne sont pas téléversés.",
-  "Orijinal: {width} × {height}": "Original : {width} × {height}"
+  "Orijinal: {width} × {height}": "Original : {width} × {height}",
+  "01 / IMAGE RESIZER": "01 / REDIMENSIONNER",
+  "02 / OUTPUT FORMAT": "02 / FORMAT DE SORTIE"
 }
