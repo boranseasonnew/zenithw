@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -31,18 +31,15 @@ ZenithW is an open-source media downloader with tools for audio extraction, conv
 
 Paste a supported link, choose a format and download the file. Available formats depend on the source.
 
-## What changes in web 17.0
+## What's new in web 17.1
 
-- A more responsive [audio separator](https://zenithw.space/audio-separator): cooperative waveform preparation, playback memory on demand, and cancellable WAV/ZIP export. MP3 and FLAC remain available.
-- [Remux](https://zenithw.space/remux) lets you choose the destination before starting, including MKV ↔ MP4 for compatible streams. Incompatible codecs need conversion.
-- Clearer media-tool guidance and search metadata across eight website languages, with repaired navigation links.
-- Dependency security updates, bounded thumbnail requests and protection against concurrent Type avatar changes. Server and installed-app changes require their own deployments.
+- **New [Image Converter](https://zenithw.space/image-convert):** convert images between formats including JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA and QOI. More formats are supported by the local processing engine.
+- **Resize images precisely:** enter custom width and height values, preview the result and keep control over the output dimensions.
+- **A redesigned [Audio Separator](https://zenithw.space/audio-separator):** a refreshed studio interface makes choosing files, working with separated vocals and instrumentals, previewing audio and exporting results clearer.
+- **Eight-language coverage:** the Image Converter interface and its accessibility labels are localized across all eight website languages. Image conversion and resizing run locally in your browser.
+- Existing media tools remain available, including remuxing compatible MKV/MP4 streams without re-encoding.
 
-The separator runs on your device: up to 96 MiB and a four-minute section, with a first-use model/runtime download. Speed depends on your device. Web 17.0 keeps Windows and Android version numbers separate.
-
-[Release notes](https://zenithw.space/updates) · [Security and validation report](docs/full-code-audit-2026-11-02.md)
-
-[Zenith Type](https://zenithw.space/typing) adds typing practice and duels with ranked seasons, rematches, private rooms and match history. An account is required for online play. See the [typing documentation](docs/TYPING.md) for rules and deployment status.
+Windows and Android keep their own independent version numbers; this release label refers to the web version.
 
 ## Project
 
