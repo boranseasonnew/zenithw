@@ -3766,5 +3766,7 @@
   "Dönüştürme başarısız": "Conversion failed",
   "{count} çıkış biçimi kullanılabilir": "{count} output formats available",
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "Only formats supported by your browser are listed. Files are not uploaded.",
-  "Orijinal: {width} × {height}": "Original: {width} × {height}"
+  "Orijinal: {width} × {height}": "Original: {width} × {height}",
+  "01 / IMAGE RESIZER": "01 / IMAGE RESIZER",
+  "02 / OUTPUT FORMAT": "02 / OUTPUT FORMAT"
 }
