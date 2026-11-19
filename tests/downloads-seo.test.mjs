@@ -100,6 +100,10 @@ test('download choices use actual release assets, verified versions and honest p
  assert.ok(!html.includes('https://apps.microsoft.com/detail/'));assert.ok(!html.includes('https://www.uptodown.com/zenith'));
  assert.ok(html.includes('winget install --id ZenithW.Desktop --exact --source winget'));
  assert.ok(visible(html).includes(catalogs.en['This command will be available after the WinGet package is approved.']));
+ assert.match(html,/class="status status-rejected"/);
+ for(const key of ['Uptodown submission rejected','Rejected','Uptodown declined to list ZenithW','That description does not reflect what ZenithW is','We disagree with this characterization'])assert.ok(visible(html).includes(catalogs.en[key]||key),key);
+ assert.ok(html.includes('href="'+config.android.release+'"'));
+ for(const lang of languages){const localized=read(fileFor(languagePath('/downloads',lang)));assert.match(localized,/class="status status-rejected"/);assert.ok(visible(localized).includes(catalogs[lang]['Rejected']));assert.ok(localized.includes('href="'+config.android.release+'"'));}
 });
 
 test('Telegram links on all public/private pages use the shared URL and safe new-tab attributes',()=>{
