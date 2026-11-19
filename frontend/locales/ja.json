@@ -3771,5 +3771,6 @@
   "Dönüştürme başarısız": "変換に失敗しました",
   "{count} çıkış biçimi kullanılabilir": "利用可能な出力形式: {count}",
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "ブラウザーが対応する形式のみ表示されます。ファイルはアップロードされません。",
-  "Orijinal: {width} × {height}": "元のサイズ: {width} × {height}"
+  "Orijinal: {width} × {height}": "元のサイズ: {width} × {height}",
+  "Bu tarayıcı bu çıkış biçimini desteklemiyor.": "この出力形式はブラウザーでサポートされていません。"
 }
