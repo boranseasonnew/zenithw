@@ -34,11 +34,11 @@
   <section class="image-hero" aria-labelledby="imageTitle">
     <div class="image-kicker" data-image-copy="kicker" data-l10n="{&quot;text:0&quot;:&quot;LOCAL MEDIA WORKSPACE&quot;}">LOCAL MEDIA WORKSPACE</div>
     <h1 id="imageTitle" data-image-copy="heroTitle" data-l10n="{&quot;text:0&quot;:&quot;Görsellerini dönüştür.&quot;}">Görsellerini dönüştür.</h1>
-    <p data-l10n="{&quot;text:0&quot;:&quot;JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.&quot;}">JPEG, PNG, WebP, AVIF, BMP, QOI ve daha fazlası. Dönüştür ve yeniden boyutlandır. Her şey bu cihazda.</p>
+    <p data-image-copy="heroDescription" data-l10n="{&quot;text:0&quot;:&quot;JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.&quot;}">JPEG, PNG, WebP, AVIF, BMP, QOI ve daha fazlası. Dönüştür ve yeniden boyutlandır. Her şey bu cihazda.</p>
     <div class="image-trust-row">
-      <span><i aria-hidden="true"></i><b data-l10n="{&quot;text:0&quot;:&quot;Yalnızca bu cihaz&quot;}">Yalnızca bu cihaz</b></span>
-      <span><i aria-hidden="true"></i><b id="formatCount" data-l10n="{&quot;text:0&quot;:&quot;Geniş format desteği&quot;}">Geniş format desteği</b></span>
-      <span><i aria-hidden="true"></i><b data-l10n="{&quot;text:0&quot;:&quot;Toplu dönüştürme&quot;}">Toplu dönüştürme</b></span>
+      <span><i aria-hidden="true"></i><b data-image-copy="deviceOnly" data-l10n="{&quot;text:0&quot;:&quot;Yalnızca bu cihaz&quot;}">Yalnızca bu cihaz</b></span>
+      <span><i aria-hidden="true"></i><b id="formatCount" data-image-copy="wideFormats" data-l10n="{&quot;text:0&quot;:&quot;Geniş format desteği&quot;}">Geniş format desteği</b></span>
+      <span><i aria-hidden="true"></i><b data-image-copy="batch" data-l10n="{&quot;text:0&quot;:&quot;Toplu dönüştürme&quot;}">Toplu dönüştürme</b></span>
     </div>
   </section>
 
@@ -67,7 +67,7 @@
       <section class="image-modal-panel" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
         <header class="image-modal-head">
           <div><span class="image-panel-eyebrow">ZENITHW / IMAGE STUDIO</span><h2 data-image-copy="modal" data-l10n="{&quot;text:0&quot;:&quot;Görsel düzenleyici&quot;}">Görsel düzenleyici</h2></div>
-          <button class="image-modal-close" id="closeImageModal" type="button" aria-label="Kapat" data-l10n="{&quot;aria-label&quot;:&quot;Kapat&quot;}">×</button>
+          <button class="image-modal-close" id="closeImageModal" type="button" aria-label="Kapat" data-image-copy-aria="close" data-l10n="{&quot;aria-label&quot;:&quot;Kapat&quot;}">×</button>
         </header>
         <div class="image-modal-layout">
           <aside class="image-modal-files"><div class="image-queue-heading"><h3 data-image-copy="selected" data-l10n="{&quot;text:0&quot;:&quot;Seçilen görseller&quot;}">Seçilen görseller</h3><span id="queueCount">0</span></div><div class="image-queue-empty" id="queueEmpty" data-image-copy="queueEmpty">Henüz dosya eklenmedi.</div><div class="image-queue" id="imageQueue"></div><label class="image-add-more" data-image-copy="addMore" data-l10n="{&quot;text:0&quot;:&quot;＋ Başka görsel ekle&quot;}" for="imageFiles">＋ Başka görsel ekle</label></aside>
@@ -75,7 +75,7 @@
             <div class="image-preview-stage"><img id="imagePreview" alt="Görsel önizlemesi" data-l10n="{&quot;alt&quot;:&quot;Görsel önizlemesi&quot;}"><span id="previewDimensions" data-image-copy="preview" data-l10n="{&quot;text:0&quot;:&quot;Önizleme&quot;}">Önizleme</span></div>
             <div class="image-editor-tools">
               <section class="image-editor-card">
-                <div class="image-editor-title"><span data-l10n="{&quot;text:0&quot;:&quot;01 / IMAGE RESIZER&quot;}">01 / IMAGE RESIZER</span><b data-image-copy="resize" data-l10n="{&quot;text:0&quot;:&quot;Boyutlandır&quot;}">Boyutlandır</b></div>
+                <div class="image-editor-title"><span data-image-copy="resizeEyebrow" data-l10n="{&quot;text:0&quot;:&quot;01 / IMAGE RESIZER&quot;}">01 / IMAGE RESIZER</span><b data-image-copy="resize" data-l10n="{&quot;text:0&quot;:&quot;Boyutlandır&quot;}">Boyutlandır</b></div>
                 <div class="image-dimensions">
                   <label data-image-copy="width" data-image-copy-first="1" data-l10n="{&quot;text:0&quot;:&quot;Genişlik&quot;}">Genişlik <input id="resizeWidth" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
                   <button id="aspectLock" data-image-copy-title="aspect" class="image-lock active" type="button" aria-pressed="true" title="En-boy oranını koru" data-l10n="{&quot;title&quot;:&quot;En-boy oranını koru&quot;}">↔</button>
@@ -85,7 +85,7 @@
                 <label class="image-check" data-image-copy="apply" data-image-copy-first="1" data-l10n="{&quot;text:1&quot;:&quot;Boyutları uygula&quot;}"><input id="resizeEnabled" type="checkbox" checked> Boyutları uygula</label>
               </section>
               <section class="image-editor-card">
-                <div class="image-editor-title"><span data-l10n="{&quot;text:0&quot;:&quot;02 / OUTPUT FORMAT&quot;}">02 / OUTPUT FORMAT</span><b data-image-copy="output" data-l10n="{&quot;text:0&quot;:&quot;Çıkış biçimi&quot;}">Çıkış biçimi</b></div>
+                <div class="image-editor-title"><span data-image-copy="formatEyebrow" data-l10n="{&quot;text:0&quot;:&quot;02 / OUTPUT FORMAT&quot;}">02 / OUTPUT FORMAT</span><b data-image-copy="output" data-l10n="{&quot;text:0&quot;:&quot;Çıkış biçimi&quot;}">Çıkış biçimi</b></div>
                 <input id="formatSearch" type="search" placeholder="JPEG, PNG, AVIF..." autocomplete="off">
                 <select id="formatSelect" aria-label="Çıkış biçimi" data-l10n="{&quot;aria-label&quot;:&quot;Çıkış biçimi&quot;}" disabled><option>Format motoru hazırlanıyor…</option></select>
                 <small id="formatMeta" data-image-copy="formatMeta">Desteklenen yazma biçimleri cihazında taranır.</small>
