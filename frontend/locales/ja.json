@@ -3774,5 +3774,7 @@
   "Orijinal: {width} × {height}": "元のサイズ: {width} × {height}",
   "Bu tarayıcı bu çıkış biçimini desteklemiyor.": "この出力形式はブラウザーでサポートされていません。",
   "01 / IMAGE RESIZER": "01 / 画像サイズ変更",
-  "02 / OUTPUT FORMAT": "02 / 出力形式"
+  "02 / OUTPUT FORMAT": "02 / 出力形式",
+  "Görsel önizlemesi": "画像プレビュー",
+  "Görsel dönüştürme aracı": "画像変換ツール"
 }
