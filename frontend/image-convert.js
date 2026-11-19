@@ -229,7 +229,14 @@
   }
   const canvasBlob=(canvas,mime,q)=>new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('encoder')),mime,q));
   async function canEncode(mime){const canvas=document.createElement('canvas');canvas.width=canvas.height=1;try{return (await canvasBlob(canvas,mime,.8)).type===mime;}catch{return false;}}
-  async function decodeImage(file){\n    try{return await createImageBitmap(file);}catch(nativeError){\n      if(typeof ImageDecoder==='undefined'||!file.type)throw nativeError;\n      const decoder=new ImageDecoder({data:await file.arrayBuffer(),type:file.type});\n      try{await decoder.tracks.ready;const result=await decoder.decode({frameIndex:0});try{return await createImageBitmap(result.image);}finally{result.image.close?.();}}finally{decoder.close();}\n    }\n  }\n  async function encode(item,fmt){
+  async function decodeImage(file){
+    try{return await createImageBitmap(file);}catch(nativeError){
+      if(typeof ImageDecoder==='undefined'||!file.type)throw nativeError;
+      const decoder=new ImageDecoder({data:await file.arrayBuffer(),type:file.type});
+      try{await decoder.tracks.ready;const result=await decoder.decode({frameIndex:0});try{return await createImageBitmap(result.image);}finally{result.image.close?.();}}finally{decoder.close();}
+    }
+  }
+  async function encode(item,fmt){
     const bitmap=await decodeImage(item.file);
     try{
       const sourceW=bitmap.width,sourceH=bitmap.height;
@@ -278,7 +285,8 @@
     formatMeta.textContent=msg('engine');
     setStatus(msg('ready'),'ready');updateActions();
   }
-  input.addEventListener('change',()=>{addFiles(input.files);input.value='';});\n  window.ZWLanguage?.onChange(()=>{applyLanguage();render();setStatus(msg(state.busy?'working':'ready'),state.busy?'working':'ready');});
+  input.addEventListener('change',()=>{addFiles(input.files);input.value='';});
+  window.ZWLanguage?.onChange(()=>{applyLanguage();render();setStatus(msg(state.busy?'working':'ready'),state.busy?'working':'ready');});
   $('closeImageModal').addEventListener('click',closeModal);
   modal.addEventListener('click',event=>{if(event.target.hasAttribute('data-close-modal'))closeModal();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('open'))closeModal();});
