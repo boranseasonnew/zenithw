@@ -1,6 +1,63 @@
 const LATEST_UPDATE = {
-  "ver": "v17.0",
+  "ver": "v17.1",
   "latest": true,
+  "dateTr": "20 kasım 2026",
+  "dateEn": "November 20, 2026",
+  "cover": null,
+  "titleTr": "Yeni araçlar, daha iyi medya kontrolü",
+  "titleEn": "New tools, better media control",
+  "introTr": [
+    "Web 17.1, ZenithW’ye yeni bir görsel çalışma alanı ekliyor. Image Converter ile görselleri farklı biçimlere dönüştürebilir, kendi ölçülerini belirleyebilir ve sonucu dışa aktarmadan önce önizleyebilirsin. Audio Separator da yenilenen stüdyo arayüzüyle daha anlaşılır bir deneyim sunuyor.",
+    "Bu sürüm web uygulamasına aittir. Görseller tarayıcında yerel olarak işlenir; dosyaların ZenithW sunucusuna yüklenmez. Windows ve Android uygulamalarının sürüm numaraları bundan bağımsızdır."
+  ],
+  "introEn": [
+    "Web 17.1 adds a dedicated image workspace to ZenithW. Image Converter converts images between formats, supports custom dimensions and previews results before export. Audio Separator also gets a refreshed studio interface for a clearer workflow.",
+    "This release applies to the web app. Images are processed locally in your browser and are not uploaded to ZenithW servers. Windows and Android apps keep independent version numbers."
+  ],
+  "sections": [
+    {
+      "hTr": "Yeni Image Converter",
+      "hEn": "A new Image Converter",
+      "pTr": "Image Converter artık Araçlar menüsünde. JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA ve QOI gibi yaygın biçimleri açabilir. Çıkış biçimleri tarayıcının kodlayıcı desteğine göre belirlenir; birden çok görsel aynı kuyruğa eklenebilir.",
+      "pEn": "Image Converter is now in the Tools menu. It opens common formats such as JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA and QOI. Output formats are detected from browser encoder support, and multiple images can share one queue."
+    },
+    {
+      "hTr": "Özel boyutlar ve canlı önizleme",
+      "hEn": "Custom dimensions and live preview",
+      "pTr": "Görseli açtığında ayrı bir düzenleme penceresinde önizleme, çıktı biçimi ve boyutlandırma kontrolleri bulunur. Genişlik ve yüksekliği kendin girebilir, en-boy oranını kilitleyebilir veya orijinal ölçülere dönebilirsin. Boyutlar bellek ayrılmadan önce doğrulanır; kenar başına 12.000 piksel ve toplam 28 megapiksel sınırı uygulanır. Görsel değiştirirken özel ölçülerin korunması ve orijinal ölçülere dönüldüğünde önizlemenin yenilenmesi de düzeltildi.",
+      "pEn": "Opening an image brings up a dedicated dialog with preview, output-format choices and resize controls. Enter custom width and height, lock the aspect ratio or restore original dimensions. Values are validated before canvas memory allocation, with limits of 12,000 pixels per side and 28 megapixels overall. Custom sizes now persist when switching previews, and the preview refreshes when original dimensions are restored."
+    },
+    {
+      "hTr": "Görsel codec desteği iyileştirildi",
+      "hEn": "Improved image codec support",
+      "pTr": "Görsel biçimi tanıma ve kodlayıcı kayıtları iyileştirildi. TIFF kaydı ve kodlayıcı sözdizimi düzeltildi; codec MIME türleri, tarayıcının uygun yedek çözme yolunu seçmesine yardımcı oluyor. Desteklenen biçimlerin algılanması böylece daha tutarlı hale geliyor.",
+      "pEn": "Image format detection and encoder registration have been improved. TIFF registration and encoder syntax were corrected, while codec MIME-type detection helps the browser choose an appropriate decoder fallback. Supported formats are now identified more consistently."
+    },
+    {
+      "hTr": "Audio Separator tasarımı yenilendi",
+      "hEn": "Audio Separator gets a new design",
+      "pTr": "Audio Separator’ın stüdyo arayüzü yeniden tasarlandı. Yerel dosya seçme alanı daha açık hale getirildi; vokal ve enstrümantal kanallarla çalışma akışı daha tutarlı bir görünüme kavuştu. Düzen, sitenin sekiz dilinde birleştirildi ve dosya seçimi açıklamaları netleştirildi.",
+      "pEn": "The Audio Separator studio interface has been redesigned. The local file picker is clearer, and the workflow for vocal and instrumental stems has a more consistent visual structure. The design is unified across all eight website languages, with clearer local-file guidance."
+    },
+    {
+      "hTr": "Araçlar menüsü ve sayfa düzeni sadeleşti",
+      "hEn": "A simpler Tools menu and page layout",
+      "pTr": "Image Converter Araçlar menüsüne eklendi ve medya araçları tek bir yerden erişilebilir hale getirildi. Oluşturulan sayfalardaki kalabalık sosyal bağlantı altbilgisi kaldırıldı. Böylece yeni araca ulaşmak kolaylaşırken içerik alanı daha sade kaldı.",
+      "pEn": "Image Converter has been added to the Tools menu, bringing media tools together in one place. The cluttered social-link footer was removed from generated pages, making the new tool easier to find and keeping the content area cleaner."
+    },
+    {
+      "hTr": "Sekiz dilde tamamlanan arayüz",
+      "hEn": "Interface completed in eight languages",
+      "pTr": "Image Converter’ın sayfa metinleri, durum mesajları, gizlilik açıklamaları ve erişilebilirlik etiketleri sekiz dilde tamamlandı. Dil değişimi arayüz metinlerini sayfa yenilenmeden güncelleyebilir. Audio Separator’ın stüdyo tasarımı da aynı sekiz dilde tutarlı hale getirildi.",
+      "pEn": "The Image Converter’s page copy, status messages, privacy wording and accessibility labels are complete in all eight languages. Language changes can update interface copy without a page reload. Audio Separator’s studio design is also consistent across the same eight languages."
+    }
+  ],
+  "outroTr": "",
+  "outroEn": ""
+};
+const UPDATE_V17_0 = {
+  "ver": "v17.0",
+  "latest": false,
   "dateTr": "2 kasım 2026",
   "dateEn": "November 2, 2026",
   "cover": null,
@@ -546,8 +603,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v17.0', 'v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V16_1,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v17.1', 'v17.0', 'v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V17_0,UPDATE_V16_1,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;
