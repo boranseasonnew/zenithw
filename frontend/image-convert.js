@@ -180,9 +180,9 @@
     const bitmap=await createImageBitmap(item.file);
     try{
       const sourceW=bitmap.width,sourceH=bitmap.height;
-      const w=resizeEnabled.checked?Math.max(1,Math.min(12000,Number.parseInt(resizeWidth.value,10)||sourceW)):sourceW;
-      const h=resizeEnabled.checked?Math.max(1,Math.min(12000,Number.parseInt(resizeHeight.value,10)||sourceH)):sourceH;
-      if(!sourceW||!sourceH||w*h>28000000)throw new Error(msg('tooLarge'));
+      const w=resizeEnabled.checked?(Number.parseInt(resizeWidth.value,10)||sourceW):sourceW;
+      const h=resizeEnabled.checked?(Number.parseInt(resizeHeight.value,10)||sourceH):sourceH;
+      if(!sourceW||!sourceH||w<1||h<1||w>12000||h>12000||w*h>28000000)throw new Error(msg('tooLarge'));
       const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
       const ctx=canvas.getContext('2d',{willReadFrequently:fmt.kind!=='canvas'});if(!ctx)throw new Error('canvas');
       if(fmt.id==='jpeg'){ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);}
