@@ -233,7 +233,7 @@
   resizeWidth.addEventListener('input',()=>{const w=Math.max(1,Number(resizeWidth.value)||1);if(lockAspect)resizeHeight.value=Math.max(1,Math.round(w/aspectRatio));updatePreviewDimensions();});
   resizeHeight.addEventListener('input',()=>{const h=Math.max(1,Number(resizeHeight.value)||1);if(lockAspect)resizeWidth.value=Math.max(1,Math.round(h*aspectRatio));updatePreviewDimensions();});
   resizeEnabled.addEventListener('change',updatePreviewDimensions);
-  $('resetDimensions').addEventListener('click',()=>{const item=state.files.find(x=>x.id===selectedId);if(!item)return;const img=new Image();img.onload=()=>{resizeWidth.value=img.naturalWidth;resizeHeight.value=img.naturalHeight;aspectRatio=img.naturalWidth/img.naturalHeight;};img.src=item.previewUrl;});
+  $('resetDimensions').addEventListener('click',()=>{const item=state.files.find(x=>x.id===selectedId);if(!item)return;const img=new Image();img.onload=()=>{resizeWidth.value=img.naturalWidth;resizeHeight.value=img.naturalHeight;aspectRatio=img.naturalWidth/img.naturalHeight;updatePreviewDimensions();};img.src=item.previewUrl;});
   ['dragenter','dragover'].forEach(type=>drop.addEventListener(type,event=>{event.preventDefault();drop.classList.add('drag');}));
   ['dragleave','drop'].forEach(type=>drop.addEventListener(type,event=>{event.preventDefault();drop.classList.remove('drag');if(type==='drop')addFiles(event.dataTransfer&&event.dataTransfer.files);}));
   quality.addEventListener('input',()=>{qualityValue.value=quality.value;});
