@@ -80,7 +80,8 @@
     {id:'ico',label:'ICO',ext:'ico',kind:'ico'},
     {id:'svg',label:'SVG · raster',ext:'svg',kind:'svg'},
     {id:'xbm',label:'XBM',ext:'xbm',kind:'xbm'},
-    {id:'bmp',label:'BMP',ext:'bmp',kind:'bmp'},\n    {id:'tiff',label:'TIFF',ext:'tiff',mime:'image/tiff',kind:'tiff'},
+    {id:'bmp',label:'BMP',ext:'bmp',kind:'bmp'},
+    {id:'tiff',label:'TIFF',ext:'tiff',mime:'image/tiff',kind:'tiff'},
     {id:'tga',label:'TGA',ext:'tga',kind:'tga'},
     {id:'qoi',label:'QOI',ext:'qoi',kind:'qoi'},
     {id:'ppm',label:'PPM',ext:'ppm',kind:'ppm'},
@@ -267,7 +268,8 @@
       }
       if(fmt.kind==='canvas'){const blob=await canvasBlob(canvas,fmt.mime,fmt.quality?Number(quality.value)/100:undefined);if(blob.type!==fmt.mime)throw new Error(msg('unsupported'));return blob;}
       const data=ctx.getImageData(0,0,w,h).data;
-      if(fmt.kind==='bmp')return bmp(data,w,h);\n      if(fmt.kind==='tiff')return tiff(data,w,h);
+      if(fmt.kind==='bmp')return bmp(data,w,h);
+      if(fmt.kind==='tiff')return tiff(data,w,h);
       if(fmt.kind==='tga')return tga(data,w,h);
       if(fmt.kind==='qoi')return qoi(data,w,h);
       if(['ppm','pgm','pbm','pam'].includes(fmt.kind))return portable(data,w,h,fmt.kind);
