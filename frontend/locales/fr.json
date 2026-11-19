@@ -3775,5 +3775,7 @@
   "01 / IMAGE RESIZER": "01 / REDIMENSIONNER",
   "02 / OUTPUT FORMAT": "02 / FORMAT DE SORTIE",
   "Görsel önizlemesi": "Aperçu de l’image",
-  "Görsel dönüştürme aracı": "Outil de conversion d’images"
+  "Görsel dönüştürme aracı": "Outil de conversion d’images",
+  "JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.": "Convertis des images JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI et bien plus. Tout est traité sur cet appareil.",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve daha birçok biçime dönüştür. Yeniden boyutlandır; dosyaların cihazından çıkmasın.": "Convertis tes images en JPEG, PNG, WebP, AVIF, TIFF et bien d’autres formats. Redimensionne-les sans quitter ton appareil."
 }
