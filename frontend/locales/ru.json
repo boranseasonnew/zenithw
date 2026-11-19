@@ -3775,5 +3775,7 @@
   "01 / IMAGE RESIZER": "01 / РАЗМЕР ИЗОБРАЖЕНИЯ",
   "02 / OUTPUT FORMAT": "02 / ФОРМАТ ВЫВОДА",
   "Görsel önizlemesi": "Предпросмотр изображения",
-  "Görsel dönüştürme aracı": "Инструмент конвертации изображений"
+  "Görsel dönüştürme aracı": "Инструмент конвертации изображений",
+  "JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.": "Преобразуйте изображения в JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI и другие форматы. Обработка выполняется на этом устройстве.",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve daha birçok biçime dönüştür. Yeniden boyutlandır; dosyaların cihazından çıkmasın.": "Преобразуйте изображения в JPEG, PNG, WebP, AVIF, TIFF и другие форматы. Меняйте размер, не отправляя файлы с устройства."
 }
