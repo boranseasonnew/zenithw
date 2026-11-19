@@ -232,8 +232,12 @@
   async function canEncode(mime){const canvas=document.createElement('canvas');canvas.width=canvas.height=1;try{return (await canvasBlob(canvas,mime,.8)).type===mime;}catch{return false;}}
   async function decodeImage(file){
     try{return await createImageBitmap(file);}catch(nativeError){
-      if(typeof ImageDecoder==='undefined'||!file.type)throw nativeError;
-      const decoder=new ImageDecoder({data:await file.arrayBuffer(),type:file.type});
+      if(typeof ImageDecoder==='undefined')throw nativeError;
+      const extension=(file.name.split('.').pop()||'').toLowerCase();
+      const inferred={jxl:'image/jxl',heic:'image/heic',heif:'image/heif',avif:'image/avif',tif:'image/tiff',tiff:'image/tiff',jp2:'image/jp2',j2k:'image/j2k'};
+      const type=file.type&&file.type!=='application/octet-stream'?file.type:inferred[extension];
+      if(!type||!(await ImageDecoder.isTypeSupported(type).catch(()=>false)))throw nativeError;
+      const decoder=new ImageDecoder({data:await file.arrayBuffer(),type});
       try{await decoder.tracks.ready;const result=await decoder.decode({frameIndex:0});try{return await createImageBitmap(result.image);}finally{result.image.close?.();}}finally{decoder.close();}
     }
   }
