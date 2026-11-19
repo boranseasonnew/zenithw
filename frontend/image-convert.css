@@ -167,3 +167,7 @@
  .image-modal-footer .image-convert-button{width:100%}
 }
 @media(prefers-reduced-motion:reduce){.image-dropzone,.image-drop-glow,.image-modal.open,.image-modal-panel{animation:none!important;transition:none!important}}
+
+.image-file-row.selected{border-color:rgba(255,255,255,.34);background:rgba(255,255,255,.055)}
+.image-file-row:focus-visible{outline:2px solid rgba(255,255,255,.55);outline-offset:2px}
+.image-file-remove:disabled{opacity:.4;cursor:not-allowed}
