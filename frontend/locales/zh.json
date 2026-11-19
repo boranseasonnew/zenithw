@@ -3773,5 +3773,7 @@
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "仅显示浏览器支持的格式。文件不会上传到服务器。",
   "Orijinal: {width} × {height}": "原始尺寸：{width} × {height}",
   "01 / IMAGE RESIZER": "01 / 调整图片尺寸",
-  "02 / OUTPUT FORMAT": "02 / 输出格式"
+  "02 / OUTPUT FORMAT": "02 / 输出格式",
+  "Görsel önizlemesi": "图片预览",
+  "Görsel dönüştürme aracı": "图片转换工具"
 }
