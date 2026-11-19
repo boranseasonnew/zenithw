@@ -3775,5 +3775,7 @@
   "01 / IMAGE RESIZER": "01 / BILDGRÖSSE",
   "02 / OUTPUT FORMAT": "02 / AUSGABEFORMAT",
   "Görsel önizlemesi": "Bildvorschau",
-  "Görsel dönüştürme aracı": "Bildkonverter"
+  "Görsel dönüştürme aracı": "Bildkonverter",
+  "JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.": "Konvertiere JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI und mehr. Alles wird auf diesem Gerät verarbeitet.",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve daha birçok biçime dönüştür. Yeniden boyutlandır; dosyaların cihazından çıkmasın.": "Konvertiere Bilder in JPEG, PNG, WebP, AVIF, TIFF und viele weitere Formate. Ändere die Größe, ohne Dateien von deinem Gerät zu übertragen."
 }
