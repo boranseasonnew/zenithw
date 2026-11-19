@@ -3771,5 +3771,7 @@
   "Dönüştürme başarısız": "Chuyển đổi thất bại",
   "{count} çıkış biçimi kullanılabilir": "Có {count} định dạng đầu ra",
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "Chỉ hiển thị định dạng mà trình duyệt hỗ trợ. Tệp không được tải lên máy chủ.",
-  "Orijinal: {width} × {height}": "Gốc: {width} × {height}"
+  "Orijinal: {width} × {height}": "Gốc: {width} × {height}",
+  "01 / IMAGE RESIZER": "01 / ĐỔI KÍCH THƯỚC",
+  "02 / OUTPUT FORMAT": "02 / ĐỊNH DẠNG ĐẦU RA"
 }
