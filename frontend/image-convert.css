@@ -171,3 +171,27 @@
 .image-file-row.selected{border-color:rgba(255,255,255,.34);background:rgba(255,255,255,.055)}
 .image-file-row:focus-visible{outline:2px solid rgba(255,255,255,.55);outline-offset:2px}
 .image-file-remove:disabled{opacity:.4;cursor:not-allowed}
+
+/* Keep this tool independent from the visitor's global accent/theme. */
+body.image-convert-page{
+  --accent:#e5e5e7;
+  --accent-rgb:225,225,230;
+  --text:#f2f2f3;
+  --text2:#d0d0d3;
+  --text3:#929297;
+  --border:#2b2b2f;
+  --border2:#38383d;
+  background:#09090a!important;
+  color:#f2f2f3;
+}
+body.image-convert-page .image-convert-main{color:#f2f2f3}
+body.image-convert-page .image-hero h1,
+body.image-convert-page .image-panel-head h2{color:#f2f2f3}
+body.image-convert-page .image-kicker{color:#d0d0d3}
+body.image-convert-page .image-workspace{background:#111113;border-color:#303034;box-shadow:0 22px 65px rgba(0,0,0,.32)}
+body.image-convert-page .image-dropzone{background:linear-gradient(135deg,#151517,#252528 48%,#111113);border-color:#55555b}
+body.image-convert-page .image-dropzone:hover,
+body.image-convert-page .image-dropzone.drag{background:linear-gradient(135deg,#202023,#303034 48%,#171719);border-color:#aaaab0}
+body.image-convert-page .image-convert-button{background:linear-gradient(135deg,#ededf0,#bdbdc3);border-color:#eee;color:#111}
+body.image-convert-page .image-convert-button svg{stroke:#111}
+body.image-convert-page .image-file-download{border-color:#68686e;color:#eee}
