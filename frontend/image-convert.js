@@ -39,7 +39,8 @@
     {id:'webp',label:'WebP',ext:'webp',mime:'image/webp',kind:'canvas',quality:true},
     {id:'avif',label:'AVIF',ext:'avif',mime:'image/avif',kind:'canvas',quality:true},
     {id:'ico',label:'ICO',ext:'ico',kind:'ico'},
-    {id:'svg',label:'SVG',ext:'svg',kind:'svg'},
+    {id:'svg',label:'SVG · raster',ext:'svg',kind:'svg'},
+    {id:'xbm',label:'XBM',ext:'xbm',kind:'xbm'},
     {id:'bmp',label:'BMP',ext:'bmp',kind:'bmp'},
     {id:'tga',label:'TGA',ext:'tga',kind:'tga'},
     {id:'qoi',label:'QOI',ext:'qoi',kind:'qoi'},
@@ -182,6 +183,12 @@
         const png=await canvasBlob(iconCanvas,'image/png');const bytes=new Uint8Array(22+png.size),view=new DataView(bytes.buffer);
         view.setUint16(2,1,true);view.setUint16(4,1,true);bytes[6]=iw===256?0:iw;bytes[7]=ih===256?0:ih;view.setUint16(10,1,true);view.setUint16(12,32,true);view.setUint32(14,png.size,true);view.setUint32(18,22,true);bytes.set(new Uint8Array(await png.arrayBuffer()),22);
         return new Blob([bytes],{type:'image/x-icon'});
+      }
+      if(fmt.kind==='xbm'){
+        const pixels=ctx.getImageData(0,0,w,h).data,rows=[];
+        for(let y=0;y<h;y++){const bytes=[];for(let x=0;x<w;x+=8){let value=0;for(let bit=0;bit<8&&x+bit<w;bit++){const p=((y*w+x+bit)*4),gray=.2126*pixels[p]+.7152*pixels[p+1]+.0722*pixels[p+2];if(gray<128)value|=1<<bit;}bytes.push('0x'+value.toString(16).padStart(2,'0'));}rows.push(bytes.join(', '));}
+        const source='#define image_width '+w+'\\n#define image_height '+h+'\\nstatic unsigned char image_bits[] = {\\n'+rows.map(row+'').join(',\\n')+'\\n};';
+        return new Blob([source],{type:'image/x-xbitmap'});
       }
       if(fmt.kind==='svg'){
         const png=await canvasBlob(canvas,'image/png');let binary='';for(const byte of new Uint8Array(await png.arrayBuffer()))binary+=String.fromCharCode(byte);
