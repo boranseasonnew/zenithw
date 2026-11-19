@@ -3794,5 +3794,6 @@
   "Bu biçim tarayıcında desteklenmiyor.": "你的浏览器不支持此格式。",
   "PNG kayıpsızdır; kalite ayarı kullanılmaz.": "PNG 为无损格式，不适用质量设置。",
   "Henüz dosya eklenmedi.": "尚未添加文件。",
-  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "无法加载 JPEG XL 编解码器。请检查网络连接后重试。"
+  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "无法加载 JPEG XL 编解码器。请检查网络连接后重试。",
+  "Format motoru hazırlanıyor…": "正在准备格式引擎…"
 }
