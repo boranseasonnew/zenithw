@@ -3794,5 +3794,6 @@
   "Bu biçim tarayıcında desteklenmiyor.": "Этот формат не поддерживается вашим браузером.",
   "PNG kayıpsızdır; kalite ayarı kullanılmaz.": "PNG — формат без потерь; настройка качества не применяется.",
   "Henüz dosya eklenmedi.": "Файлы ещё не добавлены.",
-  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "Не удалось загрузить кодек JPEG XL. Проверьте подключение и повторите попытку."
+  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "Не удалось загрузить кодек JPEG XL. Проверьте подключение и повторите попытку.",
+  "Format motoru hazırlanıyor…": "Формат подготавливается…"
 }
