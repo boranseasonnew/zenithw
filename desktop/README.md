@@ -4,7 +4,7 @@
 
 ZenithW’nin Windows için yerel medya uygulaması. Video ve ses indirme, playlist seçimi, format/kalite tercihleri ve kalıcı geçmiş tek çalışma alanında toplanır. İndirmeler bilgisayarının bağlantısını kullanır; kaynak sitelerin erişim, oturum ve codec kısıtlamaları geçerlidir.
 
-Web 17.0 ve Windows 5.0.0 ayrı yayın sürümleridir.
+Web 17.1 ve Windows 5.0.0 ayrı yayın sürümleridir.
 
 [Windows yayınları](https://github.com/boranseasonnew/zenithw/releases) · [Ana proje](../README.tr.md) · [Hata bildir](https://github.com/boranseasonnew/zenithw/issues)
 
