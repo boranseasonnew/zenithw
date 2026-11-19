@@ -3729,5 +3729,17 @@
   "AÇIK KAYNAK SES MOTORU": "オープンソース音声エンジン",
   "PROJECT LINKS": "プロジェクトリンク",
   "PROJE BAĞLANTILARI": "プロジェクトリンク",
-  "Repeat playback": "リピート再生"
+  "Repeat playback": "リピート再生",
+  "Uptodown submission rejected": "Uptodownへの申請は却下されました",
+  "Uptodownへの申請は却下されました": "Uptodownへの申請は却下されました",
+  "Rejected": "却下",
+  "却下": "却下",
+  "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.": "Uptodownは、アプリが著作権または第三者の権利で保護されたコンテンツのダウンロードに使われる可能性への懸念を理由に、ZenithWの掲載を拒否しました。",
+  "Uptodownは、アプリが著作権または第三者の権利で保護されたコンテンツのダウンロードに使われる可能性への懸念を理由に、ZenithWの掲載を拒否しました。": "Uptodownは、アプリが著作権または第三者の権利で保護されたコンテンツのダウンロードに使われる可能性への懸念を理由に、ZenithWの掲載を拒否しました。",
+  "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.": "この説明はZenithWの実態を表していません。ZenithWは海賊版サービスではなく、オープンソースのメディアワークスペースです。ダウンロードは機能の一つにすぎず、メディア変換、リマックス、音声分離、GIF作成などのツールも備えています。ZenithWは著作権で保護されたメディアを配布しません。",
+  "この説明はZenithWの実態を表していません。ZenithWは海賊版サービスではなく、オープンソースのメディアワークスペースです。ダウンロードは機能の一つにすぎず、メディア変換、リマックス、音声分離、GIF作成などのツールも備えています。ZenithWは著作権で保護されたメディアを配布しません。": "この説明はZenithWの実態を表していません。ZenithWは海賊版サービスではなく、オープンソースのメディアワークスペースです。ダウンロードは機能の一つにすぎず、メディア変換、リマックス、音声分離、GIF作成などのツールも備えています。ZenithWは著作権で保護されたメディアを配布しません。",
+  "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.": "この評価には同意しませんが、Uptodownの判断を尊重し、異議申し立ては行いません。Android版は引き続きGitHubから直接入手できます。",
+  "この評価には同意しませんが、Uptodownの判断を尊重し、異議申し立ては行いません。Android版は引き続きGitHubから直接入手できます。": "この評価には同意しませんが、Uptodownの判断を尊重し、異議申し立ては行いません。Android版は引き続きGitHubから直接入手できます。",
+  "Download Android from GitHub Releases": "GitHub ReleasesからAndroid版をダウンロード",
+  "GitHub ReleasesからAndroid版をダウンロード": "GitHub ReleasesからAndroid版をダウンロード"
 }
