@@ -25,3 +25,6 @@
 
 /* The rejection state changes only the compact status badge, matching other source rows. */
 .status-rejected{color:#ffb4ba;background:#55252a;border-color:#a94750}
+
+/* Rejected is a visible publication state; keep the red badge aligned with WinGet's compact row. */
+.channel-details.uptodown-rejected > summary > .status.status-rejected{color:#ffb4ba;background:rgba(161,44,58,.22);border-color:rgba(231,88,104,.55)}
