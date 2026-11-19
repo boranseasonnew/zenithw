@@ -3729,5 +3729,17 @@
   "AÇIK KAYNAK SES MOTORU": "MOTEUR AUDIO OPEN SOURCE",
   "PROJECT LINKS": "LIENS DU PROJET",
   "PROJE BAĞLANTILARI": "LIENS DU PROJET",
-  "Repeat playback": "Répéter la lecture"
+  "Repeat playback": "Répéter la lecture",
+  "Uptodown submission rejected": "Candidature Uptodown refusée",
+  "Candidature Uptodown refusée": "Candidature Uptodown refusée",
+  "Rejected": "Refusée",
+  "Refusée": "Refusée",
+  "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.": "Uptodown a refusé de publier ZenithW, invoquant le risque que l’application puisse servir à télécharger des contenus protégés par le droit d’auteur ou par les droits de tiers.",
+  "Uptodown a refusé de publier ZenithW, invoquant le risque que l’application puisse servir à télécharger des contenus protégés par le droit d’auteur ou par les droits de tiers.": "Uptodown a refusé de publier ZenithW, invoquant le risque que l’application puisse servir à télécharger des contenus protégés par le droit d’auteur ou par les droits de tiers.",
+  "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.": "Cette description ne reflète pas la nature de ZenithW. ZenithW n’est pas un service de piratage, mais un espace de travail multimédia open source. Le téléchargement n’est qu’une fonction parmi d’autres, aux côtés de la conversion, du remux, de la séparation audio, de la création de GIF et d’autres outils multimédias. ZenithW ne distribue pas de médias protégés par le droit d’auteur.",
+  "Cette description ne reflète pas la nature de ZenithW. ZenithW n’est pas un service de piratage, mais un espace de travail multimédia open source. Le téléchargement n’est qu’une fonction parmi d’autres, aux côtés de la conversion, du remux, de la séparation audio, de la création de GIF et d’autres outils multimédias. ZenithW ne distribue pas de médias protégés par le droit d’auteur.": "Cette description ne reflète pas la nature de ZenithW. ZenithW n’est pas un service de piratage, mais un espace de travail multimédia open source. Le téléchargement n’est qu’une fonction parmi d’autres, aux côtés de la conversion, du remux, de la séparation audio, de la création de GIF et d’autres outils multimédias. ZenithW ne distribue pas de médias protégés par le droit d’auteur.",
+  "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.": "Nous ne partageons pas cette caractérisation, mais respectons la décision d’Uptodown et ne ferons pas appel. La version Android reste disponible directement sur GitHub.",
+  "Nous ne partageons pas cette caractérisation, mais respectons la décision d’Uptodown et ne ferons pas appel. La version Android reste disponible directement sur GitHub.": "Nous ne partageons pas cette caractérisation, mais respectons la décision d’Uptodown et ne ferons pas appel. La version Android reste disponible directement sur GitHub.",
+  "Download Android from GitHub Releases": "Télécharger Android depuis GitHub Releases",
+  "Télécharger Android depuis GitHub Releases": "Télécharger Android depuis GitHub Releases"
 }
