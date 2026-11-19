@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,16 +33,15 @@ ZenithW は、動画・音声のダウンロード、音声抽出、変換、リ
 
 対応するリンクを貼り付け、形式を選んでダウンロードします。利用できる形式は配信元によって異なります。
 
-## Web 17.0の変更点
+## Web 17.1の新機能
 
-- [音声分離](https://zenithw.space/audio-separator)の反応を改善。波形処理の分割、必要時の再生メモリ確保、キャンセル可能なWAV／ZIP書き出しに対応。MP3とFLACも利用できます。
-- [リマックス](https://zenithw.space/remux)で開始前に出力形式を選択。対応するストリームではMKV ↔ MP4を利用でき、非対応コーデックは変換が必要です。
-- 8言語でメディアツールの説明と検索向け情報を充実し、画面移動のリンクを修正しました。
-- 依存関係のセキュリティ更新、サムネイル取得の総時間制限、Typeアバター同時変更への対策。サーバーとアプリには個別の配備が必要です。
+- **新しい[画像変換ツール](https://zenithw.space/ja/image-convert)：**JPEG、PNG、WebP、AVIF、TIFF、BMP、TGA、QOIなど、さまざまな形式間で変換できます。ローカル処理エンジンはさらに多くの形式に対応しています。
+- **画像サイズを細かく調整：**幅と高さを自由に入力し、結果をプレビューして出力サイズを指定できます。
+- **デザインを刷新した[音声分離ツール](https://zenithw.space/ja/audio-separator)：**新しいスタジオ画面で、ファイル選択、ボーカルと伴奏の操作、プレビュー、書き出しが分かりやすくなりました。
+- **8言語に対応：**画像変換ツールの画面とアクセシビリティ用ラベルを、サイトの8言語すべてに対応させました。画像変換とサイズ変更はブラウザ内で処理されます。
+- 互換性のあるMKV/MP4ストリームを再エンコードせずにコンテナ変換するリマックスなど、既存のメディアツールも引き続き利用できます。
 
-音声分離は端末内で動作し、96 MiBまでのファイルと最長4分の区間に対応します。初回はモデルなどをダウンロードし、速度は端末に依存します。WindowsとAndroidのバージョン番号はそれぞれ維持されます。
-
-[更新情報](https://zenithw.space/updates) · [セキュリティ・検証レポート（英語）](docs/full-code-audit-2026-11-02.md)
+WindowsとAndroidはそれぞれ独自のバージョン番号を維持します。この番号はWeb版のバージョンです。
 
 ## プロジェクト
 
