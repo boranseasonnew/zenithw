@@ -31,7 +31,7 @@
     originalDims:'Orijinal: {width} × {height}',
     originalEmpty:'Orijinal: —',
     queueEmpty:'Henüz dosya eklenmedi. Bir veya daha fazla görsel seçerek başla.',
-    jxlLoadFailed:'JPEG XL codec could not be loaded. Check your connection and try again.'
+    jxlLoadFailed:'JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.'
   };
   const t = key => window.ZWLanguage ? window.ZWLanguage.translate(key) : (tr[key] || key);
   const msg = (key, vars={}) => String(t(tr[key] || key)).replace(/\{(\w+)\}/g, (_, name) => String(vars[name] == null ? '' : vars[name]));
@@ -44,7 +44,7 @@
     {id:'ico',label:'ICO',ext:'ico',kind:'ico'},
     {id:'tiff',label:'TIFF',ext:'tiff',mime:'image/tiff',kind:'tiff'},
     {id:'jxl',label:'JPEG XL (JXL)',ext:'jxl',mime:'image/jxl',kind:'jxl',quality:true},
-    {id:'svg',label:'SVG · raster',ext:'svg',kind:'svg'},
+    {id:'svg',label:'SVG (embedded PNG)',ext:'svg',kind:'svg'},
     {id:'xbm',label:'XBM',ext:'xbm',kind:'xbm'},
     {id:'bmp',label:'BMP',ext:'bmp',kind:'bmp'},
     {id:'tga',label:'TGA',ext:'tga',kind:'tga'},
@@ -116,7 +116,7 @@
   function closeModal(){if(state.busy)return;modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}
   const isJxlFile = file => /\.jxl$/i.test(file.name) || file.type==='image/jxl';
   async function loadJxlCodec(){
-    if(!state.jxlCodecPromise)state.jxlCodecPromise=import('https://esm.sh/@jsquash/jxl@1.3.0?bundle');
+    if(!state.jxlCodecPromise)state.jxlCodecPromise=import('https://esm.sh/@jsquash/jxl@1.3.0?bundle').catch(error=>{state.jxlCodecPromise=null;throw error;});
     return state.jxlCodecPromise;
   }
   async function loadBitmap(file){
