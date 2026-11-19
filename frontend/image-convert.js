@@ -8,7 +8,7 @@
   const modal=$('imageModal'), preview=$('imagePreview'), previewDimensions=$('previewDimensions');
   const resizeWidth=$('resizeWidth'), resizeHeight=$('resizeHeight'), resizeEnabled=$('resizeEnabled');
   const aspectLock=$('aspectLock'), originalDimensions=$('originalDimensions');
-  let selectedId=null, aspectRatio=1, lockAspect=true;
+  let selectedId=null, aspectRatio=1, lockAspect=true, customDimensions=false;
   if (!input || !drop || !select || !queue || !convertButton) return;
   const tr = {
     ready:'Dönüştürücü hazır. Görsellerin bu cihazda işlenir.',
@@ -101,7 +101,7 @@
     preview.src=item.previewUrl;
     preview.onload=()=>{
       const w=preview.naturalWidth,h=preview.naturalHeight;
-      aspectRatio=w/h; resizeWidth.value=w; resizeHeight.value=h;
+      aspectRatio=w/h;if(!customDimensions){resizeWidth.value=w;resizeHeight.value=h;}
       originalDimensions.textContent=msg('originalDims',{width:w,height:h});
       previewDimensions.textContent=w+' × '+h+' px';
       updatePreviewDimensions();
@@ -230,10 +230,10 @@
   modal.addEventListener('click',event=>{if(event.target.hasAttribute('data-close-modal'))closeModal();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('open'))closeModal();});
   aspectLock.addEventListener('click',()=>{lockAspect=!lockAspect;aspectLock.classList.toggle('active',lockAspect);aspectLock.setAttribute('aria-pressed',String(lockAspect));});
-  resizeWidth.addEventListener('input',()=>{const w=Math.max(1,Number(resizeWidth.value)||1);if(lockAspect)resizeHeight.value=Math.max(1,Math.round(w/aspectRatio));updatePreviewDimensions();});
-  resizeHeight.addEventListener('input',()=>{const h=Math.max(1,Number(resizeHeight.value)||1);if(lockAspect)resizeWidth.value=Math.max(1,Math.round(h*aspectRatio));updatePreviewDimensions();});
+  resizeWidth.addEventListener('input',()=>{customDimensions=true;const w=Math.max(1,Number(resizeWidth.value)||1);if(lockAspect)resizeHeight.value=Math.max(1,Math.round(w/aspectRatio));updatePreviewDimensions();});
+  resizeHeight.addEventListener('input',()=>{customDimensions=true;const h=Math.max(1,Number(resizeHeight.value)||1);if(lockAspect)resizeWidth.value=Math.max(1,Math.round(h*aspectRatio));updatePreviewDimensions();});
   resizeEnabled.addEventListener('change',updatePreviewDimensions);
-  $('resetDimensions').addEventListener('click',()=>{const item=state.files.find(x=>x.id===selectedId);if(!item)return;const img=new Image();img.onload=()=>{resizeWidth.value=img.naturalWidth;resizeHeight.value=img.naturalHeight;aspectRatio=img.naturalWidth/img.naturalHeight;updatePreviewDimensions();};img.src=item.previewUrl;});
+  $('resetDimensions').addEventListener('click',()=>{customDimensions=false;const item=state.files.find(x=>x.id===selectedId);if(!item)return;const img=new Image();img.onload=()=>{resizeWidth.value=img.naturalWidth;resizeHeight.value=img.naturalHeight;aspectRatio=img.naturalWidth/img.naturalHeight;updatePreviewDimensions();};img.src=item.previewUrl;});
   ['dragenter','dragover'].forEach(type=>drop.addEventListener(type,event=>{event.preventDefault();drop.classList.add('drag');}));
   ['dragleave','drop'].forEach(type=>drop.addEventListener(type,event=>{event.preventDefault();drop.classList.remove('drag');if(type==='drop')addFiles(event.dataTransfer&&event.dataTransfer.files);}));
   quality.addEventListener('input',()=>{qualityValue.value=quality.value;});
