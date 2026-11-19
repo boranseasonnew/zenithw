@@ -3794,5 +3794,6 @@
   "Bu biçim tarayıcında desteklenmiyor.": "Ce format n’est pas pris en charge par votre navigateur.",
   "PNG kayıpsızdır; kalite ayarı kullanılmaz.": "Le PNG est sans perte ; le réglage de qualité ne s’applique pas.",
   "Henüz dosya eklenmedi.": "Aucun fichier ajouté.",
-  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "Le codec JPEG XL n’a pas pu être chargé. Vérifiez votre connexion et réessayez."
+  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "Le codec JPEG XL n’a pas pu être chargé. Vérifiez votre connexion et réessayez.",
+  "Format motoru hazırlanıyor…": "Préparation du moteur de formats…"
 }
