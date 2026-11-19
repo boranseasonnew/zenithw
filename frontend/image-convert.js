@@ -82,7 +82,8 @@
         link.download=cleanName(item.file.name)+'.'+item.format.ext; link.textContent=msg('download'); actions.append(link);
       }
       const remove=document.createElement('button'); remove.type='button'; remove.className='image-file-remove'; remove.textContent=msg('remove');
-      remove.addEventListener('click',()=>{release(item);state.files=state.files.filter(x=>x.id!==item.id);render();});
+      remove.disabled=state.busy;
+      remove.addEventListener('click',()=>{release(item);state.files=state.files.filter(x=>x.id!==item.id);if(selectedId===item.id){selectedId=null;const next=state.files[0];if(next)selectFile(next);else{preview.removeAttribute('src');previewDimensions.textContent='Önizleme';originalDimensions.textContent='Orijinal: —';}}render();});
       actions.append(remove); row.append(thumb,meta,actions); queue.append(row);
     });
     updateActions();
