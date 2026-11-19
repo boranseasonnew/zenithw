@@ -3775,5 +3775,7 @@
   "01 / IMAGE RESIZER": "01 / ĐỔI KÍCH THƯỚC",
   "02 / OUTPUT FORMAT": "02 / ĐỊNH DẠNG ĐẦU RA",
   "Görsel önizlemesi": "Xem trước hình ảnh",
-  "Görsel dönüştürme aracı": "Công cụ chuyển đổi hình ảnh"
+  "Görsel dönüştürme aracı": "Công cụ chuyển đổi hình ảnh",
+  "JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.": "Chuyển đổi JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI và nhiều định dạng khác. Mọi thao tác đều diễn ra trên thiết bị này.",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve daha birçok biçime dönüştür. Yeniden boyutlandır; dosyaların cihazından çıkmasın.": "Chuyển đổi hình ảnh sang JPEG, PNG, WebP, AVIF, TIFF và nhiều định dạng khác. Đổi kích thước mà không tải tệp lên máy chủ."
 }

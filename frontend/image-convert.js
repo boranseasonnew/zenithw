@@ -31,8 +31,46 @@
     originalDims:'Orijinal: {width} × {height}',
     originalEmpty:'Orijinal: —'
   };
-  const t = key => window.ZWLanguage ? window.ZWLanguage.translate(key) : (tr[key] || key);
-  const msg = (key, vars={}) => String(t(tr[key] || key)).replace(/\{(\w+)\}/g, (_, name) => String(vars[name] == null ? '' : vars[name]));
+  const copy = {
+    en: {
+      ready:'Converter ready. Your images stay on this device.',invalid:'Choose a supported image file.',selected:'{count} image(s) added.',maxFiles:'You can add up to 25 images at a time.',working:'Converting…',processing:'Converting {name}…',complete:'Conversion complete.',empty:'There are no images to convert.',unsupported:'This format is not supported by your browser.',tooLarge:'Image is too large. The limit is 28 megapixels.',download:'Download',remove:'Remove',queued:'Queued',failed:'Conversion failed',formatCount:'{count} output formats available',engine:'Available output formats are detected in your browser. Files are never uploaded.',pngQuality:'PNG is lossless; the quality setting does not apply.',originalDims:'Original: {width} × {height}',originalEmpty:'Original: —',queueEmpty:'No files added yet. Choose one or more images to get started.',preview:'Preview',searchPlaceholder:'Search formats…',qualityNote:'Used by lossy formats such as JPEG, WebP and AVIF.',keepAspect:'Keep aspect ratio',resize:'Resize',output:'Output format'
+    },
+    tr: {
+      ready:'Dönüştürücü hazır. Görsellerin bu cihazda işlenir.',invalid:'Desteklenen bir görsel dosyası seç.',selected:'{count} görsel eklendi.',maxFiles:'Bir seferde en fazla 25 görsel ekleyebilirsin.',working:'Dönüştürülüyor…',processing:'{name} dönüştürülüyor…',complete:'Dönüştürme tamamlandı.',empty:'Dönüştürülecek görsel yok.',unsupported:'Bu biçim tarayıcında desteklenmiyor.',tooLarge:'Görsel çok büyük. En fazla 28 megapiksel destekleniyor.',download:'İndir',remove:'Kaldır',queued:'Bekliyor',failed:'Dönüştürme başarısız',formatCount:'{count} çıkış biçimi kullanılabilir',engine:'Tarayıcında kullanılabilen çıkış biçimleri listelenir. Dosyalar sunucuya gönderilmez.',pngQuality:'PNG kayıpsızdır; kalite ayarı kullanılmaz.',originalDims:'Orijinal: {width} × {height}',originalEmpty:'Orijinal: —',queueEmpty:'Henüz dosya eklenmedi. Başlamak için bir veya daha fazla görsel seç.',preview:'Önizleme',searchPlaceholder:'Biçim ara…',qualityNote:'JPEG, WebP ve AVIF gibi kayıplı biçimlerde kullanılır.',keepAspect:'En-boy oranını koru',resize:'Boyutlandır',output:'Çıkış biçimi'
+    },
+    de: {
+      ready:'Konverter bereit. Deine Bilder bleiben auf diesem Gerät.',invalid:'Wähle eine unterstützte Bilddatei.',selected:'{count} Bild(er) hinzugefügt.',maxFiles:'Du kannst höchstens 25 Bilder gleichzeitig hinzufügen.',working:'Wird konvertiert…',processing:'{name} wird konvertiert…',complete:'Konvertierung abgeschlossen.',empty:'Keine Bilder zum Konvertieren vorhanden.',unsupported:'Dieses Format wird von deinem Browser nicht unterstützt.',tooLarge:'Das Bild ist zu groß. Maximal 28 Megapixel.',download:'Herunterladen',remove:'Entfernen',queued:'Warteschlange',failed:'Konvertierung fehlgeschlagen',formatCount:'{count} Ausgabeformate verfügbar',engine:'Verfügbare Ausgabeformate werden in deinem Browser erkannt. Dateien werden nicht hochgeladen.',pngQuality:'PNG ist verlustfrei; die Qualitätseinstellung gilt nicht.',originalDims:'Original: {width} × {height}',originalEmpty:'Original: —',queueEmpty:'Noch keine Dateien hinzugefügt. Wähle ein oder mehrere Bilder aus.',preview:'Vorschau',searchPlaceholder:'Formate suchen…',qualityNote:'Für verlustbehaftete Formate wie JPEG, WebP und AVIF.',keepAspect:'Seitenverhältnis beibehalten',resize:'Größe ändern',output:'Ausgabeformat'
+    },
+    fr: {
+      ready:'Convertisseur prêt. Tes images restent sur cet appareil.',invalid:'Choisis un fichier image compatible.',selected:'{count} image(s) ajoutée(s).',maxFiles:'Tu peux ajouter jusqu’à 25 images à la fois.',working:'Conversion en cours…',processing:'Conversion de {name}…',complete:'Conversion terminée.',empty:'Aucune image à convertir.',unsupported:'Ce format n’est pas pris en charge par ton navigateur.',tooLarge:'Image trop grande. Limite : 28 mégapixels.',download:'Télécharger',remove:'Supprimer',queued:'En attente',failed:'Échec de la conversion',formatCount:'{count} formats de sortie disponibles',engine:'Les formats de sortie disponibles sont détectés dans ton navigateur. Aucun fichier n’est envoyé.',pngQuality:'PNG est sans perte ; le réglage de qualité ne s’applique pas.',originalDims:'Original : {width} × {height}',originalEmpty:'Original : —',queueEmpty:'Aucun fichier ajouté. Sélectionne une ou plusieurs images pour commencer.',preview:'Aperçu',searchPlaceholder:'Rechercher un format…',qualityNote:'Utilisé par les formats avec perte comme JPEG, WebP et AVIF.',keepAspect:'Conserver les proportions',resize:'Redimensionner',output:'Format de sortie'
+    },
+    ru: {
+      ready:'Конвертер готов. Изображения остаются на этом устройстве.',invalid:'Выберите поддерживаемый файл изображения.',selected:'Добавлено изображений: {count}.',maxFiles:'Можно добавить не более 25 изображений за раз.',working:'Конвертация…',processing:'Конвертация {name}…',complete:'Конвертация завершена.',empty:'Нет изображений для конвертации.',unsupported:'Браузер не поддерживает этот формат.',tooLarge:'Изображение слишком большое. Максимум 28 мегапикселей.',download:'Скачать',remove:'Удалить',queued:'В очереди',failed:'Ошибка конвертации',formatCount:'Доступно форматов вывода: {count}',engine:'Доступные форматы вывода определяются браузером. Файлы не загружаются на сервер.',pngQuality:'PNG — формат без потерь; настройка качества не применяется.',originalDims:'Оригинал: {width} × {height}',originalEmpty:'Оригинал: —',queueEmpty:'Файлы ещё не добавлены. Выберите одно или несколько изображений.',preview:'Предпросмотр',searchPlaceholder:'Поиск формата…',qualityNote:'Используется форматами с потерями, например JPEG, WebP и AVIF.',keepAspect:'Сохранять пропорции',resize:'Изменить размер',output:'Формат вывода'
+    },
+    vi: {
+      ready:'Bộ chuyển đổi đã sẵn sàng. Hình ảnh chỉ được xử lý trên thiết bị này.',invalid:'Hãy chọn tệp hình ảnh được hỗ trợ.',selected:'Đã thêm {count} hình ảnh.',maxFiles:'Bạn có thể thêm tối đa 25 hình ảnh mỗi lần.',working:'Đang chuyển đổi…',processing:'Đang chuyển đổi {name}…',complete:'Chuyển đổi hoàn tất.',empty:'Không có hình ảnh để chuyển đổi.',unsupported:'Trình duyệt không hỗ trợ định dạng này.',tooLarge:'Hình ảnh quá lớn. Giới hạn là 28 megapixel.',download:'Tải xuống',remove:'Xóa',queued:'Đang chờ',failed:'Chuyển đổi thất bại',formatCount:'Có {count} định dạng đầu ra',engine:'Các định dạng đầu ra khả dụng được phát hiện trong trình duyệt. Tệp không được tải lên máy chủ.',pngQuality:'PNG không mất dữ liệu; cài đặt chất lượng không áp dụng.',originalDims:'Gốc: {width} × {height}',originalEmpty:'Gốc: —',queueEmpty:'Chưa có tệp nào. Chọn một hoặc nhiều hình ảnh để bắt đầu.',preview:'Xem trước',searchPlaceholder:'Tìm định dạng…',qualityNote:'Dùng cho định dạng nén mất dữ liệu như JPEG, WebP và AVIF.',keepAspect:'Giữ tỷ lệ khung hình',resize:'Đổi kích thước',output:'Định dạng đầu ra'
+    },
+    zh: {
+      ready:'转换器已就绪。图片仅在此设备上处理。',invalid:'请选择受支持的图像文件。',selected:'已添加 {count} 张图片。',maxFiles:'一次最多可添加 25 张图片。',working:'正在转换…',processing:'正在转换 {name}…',complete:'转换完成。',empty:'没有可转换的图片。',unsupported:'浏览器不支持此格式。',tooLarge:'图片过大。最大支持 2800 万像素。',download:'下载',remove:'移除',queued:'排队中',failed:'转换失败',formatCount:'可用输出格式：{count} 种',engine:'浏览器会检测可用的输出格式。文件不会上传到服务器。',pngQuality:'PNG 为无损格式，不使用质量设置。',originalDims:'原始尺寸：{width} × {height}',originalEmpty:'原始尺寸：—',queueEmpty:'尚未添加文件。请选择一张或多张图片开始。',preview:'预览',searchPlaceholder:'搜索格式…',qualityNote:'适用于 JPEG、WebP 和 AVIF 等有损格式。',keepAspect:'保持宽高比',resize:'调整尺寸',output:'输出格式'
+    },
+    ja: {
+      ready:'コンバーターの準備ができました。画像はこのデバイス内で処理されます。',invalid:'対応している画像ファイルを選択してください。',selected:'画像を {count} 件追加しました。',maxFiles:'一度に追加できる画像は最大 25 件です。',working:'変換中…',processing:'{name} を変換中…',complete:'変換が完了しました。',empty:'変換する画像がありません。',unsupported:'この形式はブラウザーでサポートされていません。',tooLarge:'画像が大きすぎます。上限は 2,800 万ピクセルです。',download:'ダウンロード',remove:'削除',queued:'待機中',failed:'変換に失敗しました',formatCount:'利用可能な出力形式：{count}',engine:'ブラウザーで利用可能な出力形式を検出します。ファイルはアップロードされません。',pngQuality:'PNG は可逆形式のため、品質設定は適用されません。',originalDims:'元のサイズ：{width} × {height}',originalEmpty:'元のサイズ：—',queueEmpty:'ファイルはまだありません。画像を 1 枚以上選択してください。',preview:'プレビュー',searchPlaceholder:'形式を検索…',qualityNote:'JPEG、WebP、AVIF などの非可逆形式に使用します。',keepAspect:'縦横比を維持',resize:'サイズ変更',output:'出力形式'
+    }
+  };
+  const languageCopy = () => copy[window.ZWLanguage?.current || document.documentElement.lang?.split('-')[0] || 'en'] || copy.en;
+  const t = key => languageCopy()[key] || tr[key] || key;
+  const msg = (key, vars={}) => String(t(key)).replace(/\{(\w+)\}/g, (_, name) => String(vars[name] == null ? '' : vars[name]));
+  function applyLanguage() {
+    const c=languageCopy();
+    if(empty) empty.textContent=c.queueEmpty;
+    if(search) search.placeholder=c.searchPlaceholder;
+    if(formatMeta) formatMeta.textContent=c.engine;
+    const note=document.querySelector('.image-quality-heading + small');
+    if(note) note.textContent=c.qualityNote;
+    if(aspectLock) aspectLock.title=c.keepAspect;
+    if(!selectedId && previewDimensions) previewDimensions.textContent=c.preview;
+    if(originalDimensions && !selectedId) originalDimensions.textContent=c.originalEmpty;
+  }
   const state = { files: [], formats: [], busy: false, serial: 0 };
   const nativeFormats = [
     {id:'jpeg',label:'JPEG',ext:'jpg',mime:'image/jpeg',kind:'canvas',quality:true},
@@ -43,6 +81,7 @@
     {id:'svg',label:'SVG · raster',ext:'svg',kind:'svg'},
     {id:'xbm',label:'XBM',ext:'xbm',kind:'xbm'},
     {id:'bmp',label:'BMP',ext:'bmp',kind:'bmp'},
+    {id:'tiff',label:'TIFF',ext:'tiff',mime:'image/tiff',kind:'tiff'},
     {id:'tga',label:'TGA',ext:'tga',kind:'tga'},
     {id:'qoi',label:'QOI',ext:'qoi',kind:'qoi'},
     {id:'ppm',label:'PPM',ext:'ppm',kind:'ppm'},
@@ -84,7 +123,7 @@
       }
       const remove=document.createElement('button'); remove.type='button'; remove.className='image-file-remove'; remove.textContent=msg('remove');
       remove.disabled=state.busy;
-      remove.addEventListener('click',()=>{release(item);state.files=state.files.filter(x=>x.id!==item.id);if(selectedId===item.id){selectedId=null;const next=state.files[0];if(next)selectFile(next);else{preview.removeAttribute('src');previewDimensions.textContent=window.ZWLanguage?.translate('Önizleme')||'Önizleme';originalDimensions.textContent=msg('originalEmpty');}}render();});
+      remove.addEventListener('click',()=>{release(item);state.files=state.files.filter(x=>x.id!==item.id);if(selectedId===item.id){selectedId=null;const next=state.files[0];if(next)selectFile(next);else{preview.removeAttribute('src');previewDimensions.textContent=msg('preview');originalDimensions.textContent=msg('originalEmpty');}}render();});
       actions.append(remove); row.append(thumb,meta,actions); queue.append(row);
     });
     updateActions();
@@ -131,6 +170,21 @@
     for(let y=0;y<h;y++)for(let x=0;x<w;x++){const s=(y*w+x)*4,d=54+(h-1-y)*stride+x*3;out[d]=data[s+2];out[d+1]=data[s+1];out[d+2]=data[s];}
     return new Blob([out],{type:'image/bmp'});
   }
+  function tiff(data,w,h) {
+    const tags=11, ifdOffset=8, bitsOffset=ifdOffset+2+tags*12+4, pixelsOffset=bitsOffset+8;
+    const out=new Uint8Array(pixelsOffset+data.length), view=new DataView(out.buffer);
+    out[0]=0x49;out[1]=0x49;view.setUint16(2,42,true);view.setUint32(4,ifdOffset,true);
+    view.setUint16(ifdOffset,tags,true);
+    const entries=[
+      [256,4,1,w],[257,4,1,h],[258,3,4,bitsOffset],[259,3,1,1],[262,3,1,2],
+      [273,4,1,pixelsOffset],[277,3,1,4],[278,4,1,h],[279,4,1,data.length],[284,3,1,1],[338,3,1,2]
+    ];
+    entries.forEach((entry,index)=>{const p=ifdOffset+2+index*12;view.setUint16(p,entry[0],true);view.setUint16(p+2,entry[1],true);view.setUint32(p+4,entry[2],true);if(entry[0]===258)view.setUint32(p+8,entry[3],true);else if(entry[1]===3)view.setUint16(p+8,entry[3],true);else view.setUint32(p+8,entry[3],true);});
+    view.setUint32(ifdOffset+2+tags*12,0,true);
+    for(let i=0;i<4;i++)view.setUint16(bitsOffset+i*2,8,true);
+    out.set(data,pixelsOffset);
+    return new Blob([out],{type:'image/tiff'});
+  }
   function tga(data,w,h) {
     if(w>65535||h>65535)throw new Error('TGA dimensions');
     const alpha=data.some((v,i)=>i%4===3&&v!==255),channels=alpha?4:3,out=new Uint8Array(18+w*h*channels);
@@ -176,8 +230,19 @@
   }
   const canvasBlob=(canvas,mime,q)=>new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('encoder')),mime,q));
   async function canEncode(mime){const canvas=document.createElement('canvas');canvas.width=canvas.height=1;try{return (await canvasBlob(canvas,mime,.8)).type===mime;}catch{return false;}}
+  async function decodeImage(file){
+    try{return await createImageBitmap(file);}catch(nativeError){
+      if(typeof ImageDecoder==='undefined')throw nativeError;
+      const extension=(file.name.split('.').pop()||'').toLowerCase();
+      const inferred={jxl:'image/jxl',heic:'image/heic',heif:'image/heif',avif:'image/avif',tif:'image/tiff',tiff:'image/tiff',jp2:'image/jp2',j2k:'image/j2k'};
+      const type=file.type&&file.type!=='application/octet-stream'?file.type:inferred[extension];
+      if(!type||!(await ImageDecoder.isTypeSupported(type).catch(()=>false)))throw nativeError;
+      const decoder=new ImageDecoder({data:await file.arrayBuffer(),type});
+      try{await decoder.tracks.ready;const result=await decoder.decode({frameIndex:0});try{return await createImageBitmap(result.image);}finally{result.image.close?.();}}finally{decoder.close();}
+    }
+  }
   async function encode(item,fmt){
-    const bitmap=await createImageBitmap(item.file);
+    const bitmap=await decodeImage(item.file);
     try{
       const sourceW=bitmap.width,sourceH=bitmap.height;
       const w=resizeEnabled.checked?(Number.parseInt(resizeWidth.value,10)||sourceW):sourceW;
@@ -208,6 +273,7 @@
       if(fmt.kind==='canvas'){const blob=await canvasBlob(canvas,fmt.mime,fmt.quality?Number(quality.value)/100:undefined);if(blob.type!==fmt.mime)throw new Error(msg('unsupported'));return blob;}
       const data=ctx.getImageData(0,0,w,h).data;
       if(fmt.kind==='bmp')return bmp(data,w,h);
+      if(fmt.kind==='tiff')return tiff(data,w,h);
       if(fmt.kind==='tga')return tga(data,w,h);
       if(fmt.kind==='qoi')return qoi(data,w,h);
       if(['ppm','pgm','pbm','pam'].includes(fmt.kind))return portable(data,w,h,fmt.kind);
@@ -226,6 +292,7 @@
     setStatus(msg('ready'),'ready');updateActions();
   }
   input.addEventListener('change',()=>{addFiles(input.files);input.value='';});
+  window.ZWLanguage?.onChange(()=>{applyLanguage();render();setStatus(msg(state.busy?'working':'ready'),state.busy?'working':'ready');});
   $('closeImageModal').addEventListener('click',closeModal);
   modal.addEventListener('click',event=>{if(event.target.hasAttribute('data-close-modal'))closeModal();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('open'))closeModal();});
@@ -255,6 +322,6 @@
     const current=state.files.find(item=>item.id===selectedId);if(current)previewDimensions.textContent=resizeEnabled.checked?resizeWidth.value+' × '+resizeHeight.value+' px':current.file.name;
   });
   window.addEventListener('beforeunload',()=>state.files.forEach(release));
-  updateActions();initFormats().catch(error=>setStatus(error.message||msg('unsupported'),'error'));
+  applyLanguage();updateActions();initFormats().catch(error=>setStatus(error.message||msg('unsupported'),'error'));
   const first=state.files[0];if(first)selectFile(first);
 })();
