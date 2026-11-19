@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" data-static-language="tr" data-localized-route="/image-convert">
+<html lang="tr">
 <head>
 <script src="/site-language.js?v=17.1-localized-copy"></script>
 <meta charset="UTF-8">
@@ -32,8 +32,8 @@
 <main class="tool-page-main image-convert-main">
   <a class="tool-page-brand" href="/">ZenithW<span>.</span></a>
   <section class="image-hero" aria-labelledby="imageTitle">
-    <div class="image-kicker" data-l10n="{&quot;text:0&quot;:&quot;LOCAL MEDIA WORKSPACE&quot;}">LOCAL MEDIA WORKSPACE</div>
-    <h1 id="imageTitle" data-l10n="{&quot;text:0&quot;:&quot;Görsellerini dönüştür.&quot;}">Görsellerini dönüştür.</h1>
+    <div class="image-kicker" data-image-copy="kicker" data-l10n="{&quot;text:0&quot;:&quot;LOCAL MEDIA WORKSPACE&quot;}">LOCAL MEDIA WORKSPACE</div>
+    <h1 id="imageTitle" data-image-copy="heroTitle" data-l10n="{&quot;text:0&quot;:&quot;Görsellerini dönüştür.&quot;}">Görsellerini dönüştür.</h1>
     <p data-l10n="{&quot;text:0&quot;:&quot;JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.&quot;}">JPEG, PNG, WebP, AVIF, BMP, QOI ve daha fazlası. Dönüştür ve yeniden boyutlandır. Her şey bu cihazda.</p>
     <div class="image-trust-row">
       <span><i aria-hidden="true"></i><b data-l10n="{&quot;text:0&quot;:&quot;Yalnızca bu cihaz&quot;}">Yalnızca bu cihaz</b></span>
@@ -46,9 +46,9 @@
     <header class="image-panel-head">
       <div>
         <span class="image-panel-eyebrow" data-l10n="{&quot;text:0&quot;:&quot;ZENITHW / IMAGE CONVERTER&quot;}">ZENITHW / IMAGE CONVERTER</span>
-        <h2 data-l10n="{&quot;text:0&quot;:&quot;Dönüştürme alanı&quot;}">Dönüştürme alanı</h2>
+        <h2 data-image-copy="workspace" data-l10n="{&quot;text:0&quot;:&quot;Dönüştürme alanı&quot;}">Dönüştürme alanı</h2>
       </div>
-      <span class="local-pill"><i aria-hidden="true"></i><span data-l10n="{&quot;text:0&quot;:&quot;Yerel işlem&quot;}">Yerel işlem</span></span>
+      <span class="local-pill"><i aria-hidden="true"></i><span data-image-copy="local" data-l10n="{&quot;text:0&quot;:&quot;Yerel işlem&quot;}">Yerel işlem</span></span>
     </header>
 
     <label class="image-dropzone" id="imageDrop" for="imageFiles">
@@ -56,9 +56,9 @@
       <span class="image-drop-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
       </span>
-      <strong data-l10n="{&quot;text:0&quot;:&quot;Fotoğraflarını buraya bırak&quot;}">Fotoğraflarını buraya bırak</strong>
-      <span class="image-drop-sub" data-l10n="{&quot;text:0&quot;:&quot;veya cihazından dosya seç · aynı anda birden fazla dosya&quot;}">veya cihazından dosya seç · aynı anda birden fazla dosya</span>
-      <span class="image-choose" data-l10n="{&quot;text:0&quot;:&quot;Dosya seç&quot;}">Dosya seç</span>
+      <strong data-image-copy="dropTitle" data-l10n="{&quot;text:0&quot;:&quot;Fotoğraflarını buraya bırak&quot;}">Fotoğraflarını buraya bırak</strong>
+      <span class="image-drop-sub" data-image-copy="dropSub" data-l10n="{&quot;text:0&quot;:&quot;veya cihazından dosya seç · aynı anda birden fazla dosya&quot;}">veya cihazından dosya seç · aynı anda birden fazla dosya</span>
+      <span class="image-choose" data-image-copy="choose" data-l10n="{&quot;text:0&quot;:&quot;Dosya seç&quot;}">Dosya seç</span>
       <input id="imageFiles" type="file" accept="image/*,.jxl,.avif,.heic,.heif,.dng,.psd,.svg,.pdf,.eps,.exr,.hdr,.qoi,.dds,.jp2,.j2k,.tif,.tiff,.ico,.icns" multiple>
     </label>
 
@@ -66,37 +66,37 @@
       <div class="image-modal-backdrop" data-close-modal></div>
       <section class="image-modal-panel" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
         <header class="image-modal-head">
-          <div><span class="image-panel-eyebrow">ZENITHW / IMAGE STUDIO</span><h2 data-l10n="{&quot;text:0&quot;:&quot;Görsel düzenleyici&quot;}">Görsel düzenleyici</h2></div>
+          <div><span class="image-panel-eyebrow">ZENITHW / IMAGE STUDIO</span><h2 data-image-copy="modal" data-l10n="{&quot;text:0&quot;:&quot;Görsel düzenleyici&quot;}">Görsel düzenleyici</h2></div>
           <button class="image-modal-close" id="closeImageModal" type="button" aria-label="Kapat" data-l10n="{&quot;aria-label&quot;:&quot;Kapat&quot;}">×</button>
         </header>
         <div class="image-modal-layout">
-          <aside class="image-modal-files"><div class="image-queue-heading"><h3 data-l10n="{&quot;text:0&quot;:&quot;Seçilen görseller&quot;}">Seçilen görseller</h3><span id="queueCount">0</span></div><div class="image-queue-empty" id="queueEmpty">Henüz dosya eklenmedi.</div><div class="image-queue" id="imageQueue"></div><label class="image-add-more" data-l10n="{&quot;text:0&quot;:&quot;＋ Başka görsel ekle&quot;}" for="imageFiles">＋ Başka görsel ekle</label></aside>
+          <aside class="image-modal-files"><div class="image-queue-heading"><h3 data-image-copy="selected" data-l10n="{&quot;text:0&quot;:&quot;Seçilen görseller&quot;}">Seçilen görseller</h3><span id="queueCount">0</span></div><div class="image-queue-empty" id="queueEmpty" data-image-copy="queueEmpty">Henüz dosya eklenmedi.</div><div class="image-queue" id="imageQueue"></div><label class="image-add-more" data-image-copy="addMore" data-l10n="{&quot;text:0&quot;:&quot;＋ Başka görsel ekle&quot;}" for="imageFiles">＋ Başka görsel ekle</label></aside>
           <div class="image-editor">
-            <div class="image-preview-stage"><img id="imagePreview" alt="Görsel önizlemesi" data-l10n="{&quot;alt&quot;:&quot;Görsel önizlemesi&quot;}"><span id="previewDimensions" data-l10n="{&quot;text:0&quot;:&quot;Önizleme&quot;}">Önizleme</span></div>
+            <div class="image-preview-stage"><img id="imagePreview" alt="Görsel önizlemesi" data-l10n="{&quot;alt&quot;:&quot;Görsel önizlemesi&quot;}"><span id="previewDimensions" data-image-copy="preview" data-l10n="{&quot;text:0&quot;:&quot;Önizleme&quot;}">Önizleme</span></div>
             <div class="image-editor-tools">
               <section class="image-editor-card">
-                <div class="image-editor-title"><span data-l10n="{&quot;text:0&quot;:&quot;01 / IMAGE RESIZER&quot;}">01 / IMAGE RESIZER</span><b data-l10n="{&quot;text:0&quot;:&quot;Boyutlandır&quot;}">Boyutlandır</b></div>
+                <div class="image-editor-title"><span data-l10n="{&quot;text:0&quot;:&quot;01 / IMAGE RESIZER&quot;}">01 / IMAGE RESIZER</span><b data-image-copy="resize" data-l10n="{&quot;text:0&quot;:&quot;Boyutlandır&quot;}">Boyutlandır</b></div>
                 <div class="image-dimensions">
-                  <label data-l10n="{&quot;text:0&quot;:&quot;Genişlik&quot;}">Genişlik <input id="resizeWidth" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
-                  <button id="aspectLock" class="image-lock active" type="button" aria-pressed="true" title="En-boy oranını koru" data-l10n="{&quot;title&quot;:&quot;En-boy oranını koru&quot;}">↔</button>
-                  <label data-l10n="{&quot;text:0&quot;:&quot;Yükseklik&quot;}">Yükseklik <input id="resizeHeight" type="number" min="1" max="12000" value="1080" inputmode="numeric"></label>
+                  <label data-image-copy="width" data-image-copy-first="1" data-l10n="{&quot;text:0&quot;:&quot;Genişlik&quot;}">Genişlik <input id="resizeWidth" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
+                  <button id="aspectLock" data-image-copy-title="aspect" class="image-lock active" type="button" aria-pressed="true" title="En-boy oranını koru" data-l10n="{&quot;title&quot;:&quot;En-boy oranını koru&quot;}">↔</button>
+                  <label data-image-copy="height" data-image-copy-first="1" data-l10n="{&quot;text:0&quot;:&quot;Yükseklik&quot;}">Yükseklik <input id="resizeHeight" type="number" min="1" max="12000" value="1080" inputmode="numeric"></label>
                 </div>
-                <div class="image-resize-meta"><span id="originalDimensions" data-l10n="{&quot;text:0&quot;:&quot;Orijinal: —&quot;}">Orijinal: —</span><button id="resetDimensions" type="button" data-l10n="{&quot;text:0&quot;:&quot;Orijinale dön&quot;}">Orijinale dön</button></div>
-                <label class="image-check" data-l10n="{&quot;text:1&quot;:&quot;Boyutları uygula&quot;}"><input id="resizeEnabled" type="checkbox" checked> Boyutları uygula</label>
+                <div class="image-resize-meta"><span id="originalDimensions" data-l10n="{&quot;text:0&quot;:&quot;Orijinal: —&quot;}">Orijinal: —</span><button id="resetDimensions" data-image-copy="reset" type="button" data-l10n="{&quot;text:0&quot;:&quot;Orijinale dön&quot;}">Orijinale dön</button></div>
+                <label class="image-check" data-image-copy="apply" data-image-copy-first="1" data-l10n="{&quot;text:1&quot;:&quot;Boyutları uygula&quot;}"><input id="resizeEnabled" type="checkbox" checked> Boyutları uygula</label>
               </section>
               <section class="image-editor-card">
-                <div class="image-editor-title"><span data-l10n="{&quot;text:0&quot;:&quot;02 / OUTPUT FORMAT&quot;}">02 / OUTPUT FORMAT</span><b data-l10n="{&quot;text:0&quot;:&quot;Çıkış biçimi&quot;}">Çıkış biçimi</b></div>
+                <div class="image-editor-title"><span data-l10n="{&quot;text:0&quot;:&quot;02 / OUTPUT FORMAT&quot;}">02 / OUTPUT FORMAT</span><b data-image-copy="output" data-l10n="{&quot;text:0&quot;:&quot;Çıkış biçimi&quot;}">Çıkış biçimi</b></div>
                 <input id="formatSearch" type="search" placeholder="JPEG, PNG, AVIF..." autocomplete="off">
                 <select id="formatSelect" aria-label="Çıkış biçimi" data-l10n="{&quot;aria-label&quot;:&quot;Çıkış biçimi&quot;}" disabled><option>Format motoru hazırlanıyor…</option></select>
-                <small id="formatMeta">Desteklenen yazma biçimleri cihazında taranır.</small>
-                <div class="image-quality-heading"><label for="imageQuality" data-l10n="{&quot;text:0&quot;:&quot;Kalite&quot;}">Kalite</label><output id="qualityValue">90</output></div>
+                <small id="formatMeta" data-image-copy="formatMeta">Desteklenen yazma biçimleri cihazında taranır.</small>
+                <div class="image-quality-heading"><label for="imageQuality" data-image-copy="quality" data-l10n="{&quot;text:0&quot;:&quot;Kalite&quot;}">Kalite</label><output id="qualityValue">90</output></div>
                 <input id="imageQuality" type="range" min="1" max="100" value="90">
-                <small>JPEG, WebP ve AVIF gibi kayıplı biçimlerde kullanılır.</small>
+                <small data-image-copy="qualityNote">JPEG, WebP ve AVIF gibi kayıplı biçimlerde kullanılır.</small>
               </section>
             </div>
             <div class="image-modal-footer">
-              <div class="image-engine-status" id="imageStatus" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span data-l10n="{&quot;text:0&quot;:&quot;Görseller yalnızca cihazında işlenir.&quot;}">Görseller yalnızca cihazında işlenir.</span></div>
-              <button class="image-convert-button" id="convertImages" type="button" disabled><span data-l10n="{&quot;text:0&quot;:&quot;Görselleri dönüştür&quot;}">Görselleri dönüştür</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10M17 7 7 17"/></svg></button>
+              <div class="image-engine-status" id="imageStatus" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span data-image-copy="status" data-l10n="{&quot;text:0&quot;:&quot;Görseller yalnızca cihazında işlenir.&quot;}">Görseller yalnızca cihazında işlenir.</span></div>
+              <button class="image-convert-button" id="convertImages" type="button" disabled><span data-image-copy="convert" data-l10n="{&quot;text:0&quot;:&quot;Görselleri dönüştür&quot;}">Görselleri dönüştür</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10M17 7 7 17"/></svg></button>
             </div>
           </div>
         </div>
@@ -104,12 +104,10 @@
     </div>
     <p class="image-privacy-note"><span aria-hidden="true">⌁</span><span data-l10n="{&quot;text:0&quot;:&quot;Gizlilik notu: Seçtiğin görseller cihazında işlenir. ZenithW sunucusuna veya bir dönüştürme API'sine yüklenmez.&quot;}">Gizlilik notu: Seçtiğin görseller cihazında işlenir. ZenithW sunucusuna veya bir dönüştürme API'sine yüklenmez.</span></p>
   </section>
-  <p class="image-footnote" data-l10n="{&quot;text:0&quot;:&quot;Bazı biçimler ve çok büyük görseller tarayıcının bellek sınırlarına bağlıdır. Animasyonlu dosyalarda ilk kare dönüştürülür.&quot;}">Bazı biçimler ve çok büyük görseller tarayıcının bellek sınırlarına bağlıdır. Animasyonlu dosyalarda ilk kare dönüştürülür.</p>
+  <p class="image-footnote" data-image-copy="footnote" data-l10n="{&quot;text:0&quot;:&quot;Bazı biçimler ve çok büyük görseller tarayıcının bellek sınırlarına bağlıdır. Animasyonlu dosyalarda ilk kare dönüştürülür.&quot;}">Bazı biçimler ve çok büyük görseller tarayıcının bellek sınırlarına bağlıdır. Animasyonlu dosyalarda ilk kare dönüştürülür.</p>
 </main>
 
 <div id="siteBottomNav" data-active="image-convert"></div>
-<footer class="site-community-footer" data-community="footer"><a href="https://github.com/boranseasonnew/zenithw" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.instagram.com/zenithwonline/" target="_blank" rel="noopener noreferrer">Instagram</a><a class="telegram-link" href="https://t.me/zenithwon" target="_blank" rel="noopener noreferrer"><img src="/cache-assets/telegram.f438f2293a19.svg" width="18" height="18" alt=""><span data-l10n="{&quot;text:0&quot;:&quot;Join Telegram&quot;}">Telegram’a katıl</span></a></footer>
-
 <script src="/image-convert.js" defer></script>
 <script src="/site-shell.js?v=17.1-image-convert" defer></script>
 </body>
