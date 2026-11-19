@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.0-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.0"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,16 +33,15 @@ ZenithW 是开源媒体工具，可下载视频与音频、提取声音、转换
 
 [Zenith Type](https://zenithw.space/typing) 提供土耳其语和英语打字练习、个人主页、经过验证的排行榜、排位对战和私人房间。在线功能需要账户，本地练习则不需要。WPM 排行榜和排位 Elo 每 30 天重置；私人房间 Elo 独立且永久保留。规则、房间设置和部署状态见 [Type 文档](docs/TYPING.md)。
 
-## 网页版 17.0 的变化
+## 网页版 17.1 的更新
 
-- [音频分离](https://zenithw.space/zh/audio-separator)反馈更流畅：分批准备波形，按需分配播放内存，支持取消 WAV/ZIP 导出。MP3 和 FLAC 继续保留。
-- [重新封装](https://zenithw.space/zh/remux)可在开始前选择目标容器，兼容的音视频流支持 MKV ↔ MP4。不兼容的编码需要转换。
-- 网站现有八种语言的媒体说明和搜索信息更清楚，导航链接也已修复。
-- 更新依赖安全补丁，明确封面下载的总等待上限，并防止 Type 头像并发修改互相覆盖。服务器和已安装应用仍需分别部署。
+- **新增[图片转换器](https://zenithw.space/zh/image-convert)：**支持 JPEG、PNG、WebP、AVIF、TIFF、BMP、TGA、QOI 等格式之间的转换，本地处理引擎还支持更多格式。
+- **精确调整图片尺寸：**输入自定义宽度和高度，预览处理结果，并控制输出尺寸。
+- **重新设计的[音频分离工具](https://zenithw.space/zh/audio-separator)：**全新的工作室界面让文件选择、人声与伴奏分轨、试听和导出更加清晰。
+- **支持八种语言：**图片转换器界面及无障碍标签已覆盖网站现有的八种语言。图片转换和缩放均在浏览器本地完成。
+- 现有媒体工具继续提供，包括对兼容 MKV/MP4 流进行无需重新编码的重新封装。
 
-音频在设备本地分离：文件上限为 96 MiB，处理片段最长四分钟。首次使用会下载模型与运行环境，速度取决于设备。Windows、Android 的版本编号与 Web 17.0 分别管理。
-
-[更新说明](https://zenithw.space/zh/updates) · [安全与验证报告（英语）](docs/full-code-audit-2026-11-02.md)
+Windows 和 Android 继续使用各自独立的版本编号；此处版本号仅指网页版。
 
 ## 项目
 
