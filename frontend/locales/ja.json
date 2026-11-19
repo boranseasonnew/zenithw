@@ -3795,5 +3795,6 @@
   "Bu biçim tarayıcında desteklenmiyor.": "この形式はブラウザーでサポートされていません。",
   "PNG kayıpsızdır; kalite ayarı kullanılmaz.": "PNG は可逆形式のため、品質設定は適用されません。",
   "Henüz dosya eklenmedi.": "ファイルはまだ追加されていません。",
-  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "JPEG XL コーデックを読み込めませんでした。接続を確認して再試行してください。"
+  "JPEG XL codec yüklenemedi. Bağlantını kontrol edip tekrar dene.": "JPEG XL コーデックを読み込めませんでした。接続を確認して再試行してください。",
+  "Format motoru hazırlanıyor…": "フォーマットエンジンを準備しています…"
 }
