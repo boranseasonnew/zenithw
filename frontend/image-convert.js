@@ -27,7 +27,8 @@
     failed:'Dönüştürme başarısız',
     formatCount:'{count} çıkış biçimi kullanılabilir',
     engine:'Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.',
-    pngQuality:'PNG kayıpsızdır; kalite ayarı kullanılmaz.'
+    pngQuality:'PNG kayıpsızdır; kalite ayarı kullanılmaz.',
+    originalDims:'Orijinal: {width} × {height}'
   };
   const t = key => window.ZWLanguage ? window.ZWLanguage.translate(key) : (tr[key] || key);
   const msg = (key, vars={}) => String(t(tr[key] || key)).replace(/\{(\w+)\}/g, (_, name) => String(vars[name] == null ? '' : vars[name]));
@@ -91,7 +92,7 @@
     preview.onload=()=>{
       const w=preview.naturalWidth,h=preview.naturalHeight;
       aspectRatio=w/h; resizeWidth.value=w; resizeHeight.value=h;
-      originalDimensions.textContent='Orijinal: '+w+' × '+h;
+      originalDimensions.textContent=msg('originalDims',{width:w,height:h});
       previewDimensions.textContent=w+' × '+h+' px';
     };
     render();
