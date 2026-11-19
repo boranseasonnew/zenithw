@@ -3775,5 +3775,7 @@
   "01 / IMAGE RESIZER": "01 / 调整图片尺寸",
   "02 / OUTPUT FORMAT": "02 / 输出格式",
   "Görsel önizlemesi": "图片预览",
-  "Görsel dönüştürme aracı": "图片转换工具"
+  "Görsel dönüştürme aracı": "图片转换工具",
+  "JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI ve daha fazlası. İşlem tamamen bu cihazda yapılır.": "支持 JPEG、PNG、WebP、AVIF、TIFF、BMP、TGA、QOI 等格式。所有处理均在此设备上完成。",
+  "Görsellerini JPEG, PNG, WebP, AVIF, TIFF ve daha birçok biçime dönüştür. Yeniden boyutlandır; dosyaların cihazından çıkmasın.": "将图片转换为 JPEG、PNG、WebP、AVIF、TIFF 等多种格式。可调整尺寸，文件始终保留在设备上。"
 }
