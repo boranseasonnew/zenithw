@@ -12,14 +12,14 @@
   labels.vi = {"home": "trang chủ", "history": "lịch sử", "updates": "cập nhật", "convert": "chuyển đổi", "more": "thêm", "remux": "remux", "settings": "cài đặt", "about": "giới thiệu", "support": "ủng hộ", "privacy": "riêng tư", "terms": "điều khoản", "credits": "đóng góp", "status": "trạng thái"};
   labels.zh = {"home": "首页", "history": "历史", "updates": "更新", "convert": "转换", "more": "更多", "remux": "重新封装", "settings": "设置", "about": "关于", "support": "支持", "privacy": "隐私", "terms": "条款", "credits": "贡献者", "status": "状态"};
   labels.ja = {"home": "ホーム", "history": "履歴", "updates": "更新", "convert": "変換", "more": "その他", "remux": "リマックス", "settings": "設定", "about": "概要", "support": "支援", "privacy": "プライバシー", "terms": "利用規約", "credits": "貢献者", "status": "状況"};
-  Object.assign(labels.tr,{"tools": "araçlar", "vocal": "vokal ayırıcı", "typing": "Zenith Type"});
-  Object.assign(labels.en,{"tools": "tools", "vocal": "vocal separator", "typing": "Zenith Type"});
-  Object.assign(labels.fr,{"tools": "outils", "vocal": "séparateur vocal", "typing": "Zenith Type"});
-  Object.assign(labels.de,{"tools": "werkzeuge", "vocal": "gesang trennen", "typing": "Zenith Type"});
-  Object.assign(labels.ru,{"tools": "инструменты", "vocal": "отделение вокала", "typing": "Zenith Type"});
-  Object.assign(labels.vi,{"tools": "công cụ", "vocal": "tách giọng hát", "typing": "Zenith Type"});
-  Object.assign(labels.zh,{"tools": "工具", "vocal": "人声分离", "typing": "Zenith Type"});
-  Object.assign(labels.ja,{"tools": "ツール", "vocal": "ボーカル分離", "typing": "Zenith Type"});
+  Object.assign(labels.tr,{"tools": "araçlar", "vocal": "vokal ayırıcı", "typing": "Zenith Type", "imageConvert": "görsel dönüştür"});
+  Object.assign(labels.en,{"tools": "tools", "vocal": "vocal separator", "typing": "Zenith Type", "imageConvert": "image converter"});
+  Object.assign(labels.fr,{"tools": "outils", "vocal": "séparateur vocal", "typing": "Zenith Type", "imageConvert": "convertisseur d’images"});
+  Object.assign(labels.de,{"tools": "werkzeuge", "vocal": "gesang trennen", "typing": "Zenith Type", "imageConvert": "Bildkonverter"});
+  Object.assign(labels.ru,{"tools": "инструменты", "vocal": "отделение вокала", "typing": "Zenith Type", "imageConvert": "конвертер изображений"});
+  Object.assign(labels.vi,{"tools": "công cụ", "vocal": "tách giọng hát", "typing": "Zenith Type", "imageConvert": "chuyển đổi hình ảnh"});
+  Object.assign(labels.zh,{"tools": "工具", "vocal": "人声分离", "typing": "Zenith Type", "imageConvert": "图片转换"});
+  Object.assign(labels.ja,{"tools": "ツール", "vocal": "ボーカル分離", "typing": "Zenith Type", "imageConvert": "画像変換"});
   function currentLang(){
     if(window.ZWLanguage)return ZWLanguage.current;
     try{const saved=localStorage.getItem('zw_lang');if(labels[saved])return saved;}catch(e){}
@@ -50,7 +50,7 @@
     }else{host.innerHTML=`
       <nav class="bottom-bar" aria-label="ZenithW">
         <a class="bar-btn ${active==='home'?'active':''}" href="/" aria-current="${active==='home'?'page':'false'}">${svg('home')}<span id="bbSave"></span></a>
-        <a class="bar-btn ${['convert','image-convert'].includes(active)?'active':''}" href="/image-convert" aria-current="${['convert','image-convert'].includes(active)?'page':'false'}">${svg('convert')}<span id="bbTools"></span></a>
+        <button class="bar-btn ${['remux','convert','audio-separator','typing'].includes(active)?'active':''}" type="button" id="toolsNavButton" popovertarget="siteToolsMenu" aria-controls="siteToolsMenu">${svg('tools')}<span id="bbTools"></span></button>
         <a class="bar-btn ${active==='settings'?'active':''}" href="/settings.html" aria-current="${active==='settings'?'page':'false'}">${svg('settings')}<span id="bbSettings"></span></a>
         <a class="bar-btn ${active==='support'?'active':''}" href="/support.html" aria-current="${active==='support'?'page':'false'}">${svg('support')}<span id="bbSupport"></span></a>
         <a class="bar-btn ${active==='updates'?'active':''}" href="/updates" aria-current="${active==='updates'?'page':'false'}">${svg('updates')}<span id="bbUpdates"></span></a>
@@ -62,10 +62,22 @@
         <a class="more-item ${active==='about'?'active':''}" href="/about">${svg('about')}<span id="moreItemAbout"></span></a>
       </div>`;}
   }
+  if(host && host.dataset.mode!=='info'){
+    const panel=document.createElement('div');panel.id='siteToolsMenu';panel.className='tools-popover';panel.setAttribute('popover','auto');
+    panel.innerHTML='<nav class="tools-list">'+[['vocal','/audio-separator'],['typing','/typing'],['remux','/remux'],['convert','/convert'],['imageConvert','/image-convert']].map(([key,path])=>'<a data-tool-label="'+key+'" data-tool-path="'+path+'" href="'+path+'"><span></span><b aria-hidden="true">↗</b></a>').join('')+'</nav>';
+    host.appendChild(panel);
+    const button=document.getElementById('toolsNavButton');
+    if(!('showPopover' in panel)){
+      panel.removeAttribute('popover');button.removeAttribute('popovertarget');
+      panel.hidden=true;button.addEventListener('click',()=>{panel.hidden=!panel.hidden;button.setAttribute('aria-expanded',String(!panel.hidden));});
+      document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){panel.hidden=true;button.setAttribute('aria-expanded','false');button.focus();}});
+      document.addEventListener('click',event=>{if(!panel.contains(event.target)&&!button.contains(event.target)){panel.hidden=true;button.setAttribute('aria-expanded','false');}});
+    }
+  }
   if(window.ZWLanguage)ZWLanguage.onChange(applyShellLanguage);
   function applyShellLanguage(){
     const lang=currentLang(),copy=window.ZWLanguage?ZWLanguage.copy(labels,lang):(labels[lang]||labels.en);
-    const map={bbTools:'convert',bbSave:'home',bbRemux:'remux',bbSettings:'settings',bbSupport:'support',bbUpdates:'updates',bbHistoryMobile:'history',bbConvertMobile:'convert',bbAboutMobile:'about',moreItemHistory:'history',moreItemConvert:'convert',moreItemAbout:'about'};
+    const map={bbTools:'tools',bbSave:'home',bbRemux:'remux',bbSettings:'settings',bbSupport:'support',bbUpdates:'updates',bbHistoryMobile:'history',bbConvertMobile:'convert',bbAboutMobile:'about',moreItemHistory:'history',moreItemConvert:'convert',moreItemAbout:'about'};
     Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=copy[key];});
     const toolsPanel=document.getElementById('siteToolsMenu');if(toolsPanel)toolsPanel.setAttribute('aria-label',copy.tools);
     document.querySelectorAll('[data-tool-label]').forEach(link=>{
