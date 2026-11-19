@@ -114,7 +114,7 @@
   }
   function openModal(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
   function closeModal(){if(state.busy)return;modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-  const isJxlFile = file => /\\.jxl$/i.test(file.name) || file.type==='image/jxl';
+  const isJxlFile = file => /\.jxl$/i.test(file.name) || file.type==='image/jxl';
   async function loadJxlCodec(){
     if(!state.jxlCodecPromise)state.jxlCodecPromise=import('https://esm.sh/@jsquash/jxl@1.3.0?bundle');
     return state.jxlCodecPromise;
@@ -141,7 +141,7 @@
     }finally{bitmap.close&&bitmap.close();}
   }
   async function addFiles(list) {
-    const accepted=/\\.(jpe?g|png|webp|avif|gif|bmp|svg|ico|jxl)$/i;
+    const accepted=/\.(jpe?g|png|webp|avif|gif|bmp|svg|ico|jxl)$/i;
     const files=Array.from(list||[]).filter(file=>accepted.test(file.name));
     if(!files.length){setStatus(msg('invalid'),'error');return;}
     if(state.files.length+files.length>25){setStatus(msg('maxFiles'),'error');return;}
