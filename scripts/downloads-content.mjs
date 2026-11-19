@@ -370,3 +370,84 @@ for (const [lang, labels] of Object.entries(android231Copy)) {
 
 const android240Copy = {"en": "Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime.", "tr": "İndirme panelini hemen aç; yeniden kullanılan analiz ortamıyla gerçek medya bilgilerini aşamalı gör.", "de": "Die Download-Konfiguration öffnet sofort und zeigt echte Metadaten schrittweise mit wiederverwendbarer Analyseumgebung.", "fr": "Ouvrez immédiatement les options et affichez progressivement les métadonnées réelles grâce au moteur réutilisable.", "ru": "Панель открывается сразу, реальные метаданные появляются постепенно; среда анализа используется повторно.", "vi": "Mở bảng tải xuống ngay và hiển thị dần siêu dữ liệu thực bằng môi trường phân tích tái sử dụng.", "zh": "立即打开下载设置，通过可复用的分析环境逐步显示真实元数据。", "ja": "設定画面をすぐに開き、解析環境を再利用して実際のメタデータを段階的に表示します。"};
 for (const [lang, value] of Object.entries(android240Copy)) downloadCopy[lang]["Open download configuration immediately and see real metadata progressively, with a reusable analysis runtime."] = value;
+
+
+// Uptodown review outcome, shown transparently on the Android download card.
+const uptodownStatusKeys = [
+  "Uptodown submission rejected",
+  "Rejected",
+  "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.",
+  "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.",
+  "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.",
+  "Download Android from GitHub Releases"
+];
+const uptodownStatusCopy = {
+  "en": [
+    "Uptodown submission rejected",
+    "Rejected",
+    "Uptodown declined to list ZenithW, citing concerns that the app may be used to download copyrighted or other third-party-protected content.",
+    "That description does not reflect what ZenithW is. ZenithW is an open-source media workspace, not a piracy service. Downloading is one part of the project, alongside media conversion, remuxing, audio separation, GIF creation and other media tools. ZenithW does not distribute copyrighted media.",
+    "We disagree with this characterization, but we respect Uptodown’s decision and will not appeal it. The Android release remains available directly from GitHub.",
+    "Download Android from GitHub Releases"
+  ],
+  "tr": [
+    "Uptodown başvurusu reddedildi",
+    "Reddedildi",
+    "Uptodown, uygulamanın telif hakkıyla korunan veya üçüncü taraf haklarına tabi içerikleri indirmek için kullanılabileceği endişesiyle ZenithW’yi mağazasında yayımlamayı reddetti.",
+    "Bu tanım ZenithW’nin ne olduğunu yansıtmıyor. ZenithW bir korsanlık hizmeti değil, açık kaynaklı bir medya çalışma alanı. İndirme, medya dönüştürme, remux, ses ayırma, GIF oluşturma ve diğer medya araçlarının yanında sunduğumuz özelliklerden yalnızca biri. ZenithW telifli medya dağıtmaz.",
+    "Bu nitelendirmeye katılmıyoruz; ancak Uptodown’un kararına saygı duyuyor ve itiraz etmiyoruz. Android sürümü doğrudan GitHub üzerinden indirilebilir.",
+    "Android sürümünü GitHub Releases üzerinden indir"
+  ],
+  "de": [
+    "Uptodown-Einreichung abgelehnt",
+    "Abgelehnt",
+    "Uptodown hat die Veröffentlichung von ZenithW abgelehnt. Als Grund wurden Bedenken genannt, dass die App zum Herunterladen urheberrechtlich geschützter oder anderweitig durch Drittrechte geschützter Inhalte verwendet werden könnte.",
+    "Diese Beschreibung entspricht nicht dem Zweck von ZenithW. ZenithW ist kein Pirateriedienst, sondern ein quelloffener Medienarbeitsbereich. Downloads sind nur eine von mehreren Funktionen neben Medienkonvertierung, Remuxing, Audiotrennung, GIF-Erstellung und weiteren Medientools. ZenithW verbreitet keine urheberrechtlich geschützten Medien.",
+    "Wir teilen diese Einordnung nicht, respektieren aber die Entscheidung von Uptodown und werden keinen Einspruch einlegen. Die Android-Version bleibt direkt über GitHub verfügbar.",
+    "Android-Version über GitHub Releases herunterladen"
+  ],
+  "fr": [
+    "Candidature Uptodown refusée",
+    "Refusée",
+    "Uptodown a refusé de publier ZenithW, invoquant le risque que l’application puisse servir à télécharger des contenus protégés par le droit d’auteur ou par les droits de tiers.",
+    "Cette description ne reflète pas la nature de ZenithW. ZenithW n’est pas un service de piratage, mais un espace de travail multimédia open source. Le téléchargement n’est qu’une fonction parmi d’autres, aux côtés de la conversion, du remux, de la séparation audio, de la création de GIF et d’autres outils multimédias. ZenithW ne distribue pas de médias protégés par le droit d’auteur.",
+    "Nous ne partageons pas cette caractérisation, mais respectons la décision d’Uptodown et ne ferons pas appel. La version Android reste disponible directement sur GitHub.",
+    "Télécharger Android depuis GitHub Releases"
+  ],
+  "ru": [
+    "Заявка в Uptodown отклонена",
+    "Отклонено",
+    "Uptodown отказал в публикации ZenithW, сославшись на опасения, что приложение может использоваться для загрузки материалов, защищённых авторским правом или правами третьих лиц.",
+    "Это описание не отражает назначение ZenithW. ZenithW — не пиратский сервис, а медиаплатформа с открытым исходным кодом. Загрузка — лишь одна из функций наряду с конвертацией медиа, remux, разделением аудио, созданием GIF и другими инструментами. ZenithW не распространяет материалы, защищённые авторским правом.",
+    "Мы не согласны с такой характеристикой, но уважаем решение Uptodown и не будем его обжаловать. Версия для Android по-прежнему доступна напрямую на GitHub.",
+    "Скачать Android-версию в GitHub Releases"
+  ],
+  "vi": [
+    "Hồ sơ Uptodown bị từ chối",
+    "Bị từ chối",
+    "Uptodown đã từ chối phát hành ZenithW, với lý do lo ngại ứng dụng có thể được dùng để tải nội dung có bản quyền hoặc thuộc quyền của bên thứ ba.",
+    "Mô tả đó không phản ánh đúng bản chất của ZenithW. ZenithW không phải dịch vụ vi phạm bản quyền mà là một không gian làm việc đa phương tiện mã nguồn mở. Tải xuống chỉ là một trong nhiều tính năng, bên cạnh chuyển đổi phương tiện, remux, tách âm thanh, tạo GIF và các công cụ khác. ZenithW không phân phối nội dung có bản quyền.",
+    "Chúng tôi không đồng tình với cách mô tả này, nhưng tôn trọng quyết định của Uptodown và sẽ không kháng nghị. Bản Android vẫn có thể tải trực tiếp từ GitHub.",
+    "Tải Android từ GitHub Releases"
+  ],
+  "zh": [
+    "Uptodown 上架申请被拒",
+    "已拒绝",
+    "Uptodown 拒绝上架 ZenithW，理由是担心该应用可能被用于下载受版权或第三方权利保护的内容。",
+    "这一描述并不能代表 ZenithW 的实际定位。ZenithW 不是盗版服务，而是一个开源媒体工作空间。下载只是其中一项功能，此外还提供媒体转换、Remux、音频分离、GIF 制作及其他媒体工具。ZenithW 不分发受版权保护的媒体内容。",
+    "我们不同意这一描述，但尊重 Uptodown 的决定，并不会提出申诉。Android 版本仍可直接通过 GitHub 获取。",
+    "从 GitHub Releases 下载 Android 版"
+  ],
+  "ja": [
+    "Uptodownへの申請は却下されました",
+    "却下",
+    "Uptodownは、アプリが著作権または第三者の権利で保護されたコンテンツのダウンロードに使われる可能性への懸念を理由に、ZenithWの掲載を拒否しました。",
+    "この説明はZenithWの実態を表していません。ZenithWは海賊版サービスではなく、オープンソースのメディアワークスペースです。ダウンロードは機能の一つにすぎず、メディア変換、リマックス、音声分離、GIF作成などのツールも備えています。ZenithWは著作権で保護されたメディアを配布しません。",
+    "この評価には同意しませんが、Uptodownの判断を尊重し、異議申し立ては行いません。Android版は引き続きGitHubから直接入手できます。",
+    "GitHub ReleasesからAndroid版をダウンロード"
+  ]
+};
+for (const [lang, labels] of Object.entries(uptodownStatusCopy)) {
+  if (labels.length !== uptodownStatusKeys.length) throw new Error(`Uptodown status copy mismatch: ${lang}`);
+  uptodownStatusKeys.forEach((key, index) => { downloadCopy[lang][key] = labels[index]; });
+}
