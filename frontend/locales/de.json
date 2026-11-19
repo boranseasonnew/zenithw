@@ -3771,5 +3771,7 @@
   "Dönüştürme başarısız": "Konvertierung fehlgeschlagen",
   "{count} çıkış biçimi kullanılabilir": "{count} Ausgabeformate verfügbar",
   "Tarayıcında kullanılabilen biçimler listelenir. Dosyalar sunucuya gönderilmez.": "Es werden nur Formate angezeigt, die dein Browser unterstützt. Dateien werden nicht hochgeladen.",
-  "Orijinal: {width} × {height}": "Original: {width} × {height}"
+  "Orijinal: {width} × {height}": "Original: {width} × {height}",
+  "01 / IMAGE RESIZER": "01 / BILDGRÖSSE",
+  "02 / OUTPUT FORMAT": "02 / AUSGABEFORMAT"
 }
