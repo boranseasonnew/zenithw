@@ -125,6 +125,7 @@
       if(!isJxlFile(file))throw error;
       const codec=await loadJxlCodec();
       const pixels=await codec.decode(await file.arrayBuffer());
+      if(!pixels.width||!pixels.height||pixels.width*pixels.height>28000000)throw new Error(msg('tooLarge'));
       const canvas=document.createElement('canvas');canvas.width=pixels.width;canvas.height=pixels.height;
       const context=canvas.getContext('2d');if(!context)throw new Error('canvas');
       context.putImageData(pixels,0,0);
@@ -132,6 +133,8 @@
     }
   }
   async function previewUrlFor(file){
+    if(!isJxlFile(file))return URL.createObjectURL(file);
+    try{const nativeBitmap=await createImageBitmap(file);nativeBitmap.close&&nativeBitmap.close();return URL.createObjectURL(file);}catch{}
     const bitmap=await loadBitmap(file);
     try{
       const canvas=document.createElement('canvas');canvas.width=bitmap.width;canvas.height=bitmap.height;
@@ -153,7 +156,8 @@
         const item={id:++state.serial,file,previewUrl,outputUrl:null,output:null,status:'queued',format:null,error:''};
         state.files.push(item);if(!firstAdded)firstAdded=item;count++;
       }catch(error){
-        setStatus(isJxlFile(file)?msg('jxlLoadFailed'):msg('invalid'),'error');
+        const message=error.message===msg('tooLarge')?msg('tooLarge'):(isJxlFile(file)?msg('jxlLoadFailed'):msg('invalid'));
+        setStatus(message,'error');
       }
     }
     if(!count){if(status.dataset.state!=='error')setStatus(msg('invalid'),'error');return;}
