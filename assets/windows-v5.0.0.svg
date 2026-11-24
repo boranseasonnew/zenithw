@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="142" height="24" viewBox="0 0 142 24" role="img" aria-label="Windows v5.0.0">
+  <title>Windows v5.0.0</title>
+  <rect width="142" height="24" rx="5" fill="#242833"/>
+  <g fill="#60A5FA">
+    <path d="M6 6.2 12 5.3v5.9H6z"/>
+    <path d="m13 5.1 6-.9v7h-6z"/>
+    <path d="M6 12h6v5.9l-6-.9z"/>
+    <path d="m13 12h6v7l-6-.9z"/>
+  </g>
+  <text x="25" y="15.8" fill="#E5E7EB" font-family="Arial,sans-serif" font-size="10" font-weight="600">WINDOWS</text>
+  <text x="134" y="15.8" fill="#93C5FD" text-anchor="end" font-family="Arial,sans-serif" font-size="10" font-weight="600">5.0.0</text>
+</svg>
