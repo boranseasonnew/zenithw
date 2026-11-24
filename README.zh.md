@@ -44,8 +44,6 @@ ZenithW 是开源媒体工具，可下载视频与音频、提取声音、转换
 git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
-# Set SECRET_KEY in .env to a strong random value before starting.
-docker compose up -d --build
 ```
 
 将 `.env.example` 复制为 `.env`，并将 `SECRET_KEY` 设置为强随机值。
