@@ -48,7 +48,11 @@ cp .env.example .env
 
 将 `.env.example` 复制为 `.env`，并将 `SECRET_KEY` 设置为强随机值。
 
-构建并启动服务，然后打开 `http://localhost:8080`。
+```bash
+docker compose up -d --build
+```
+
+在浏览器中打开 `http://localhost:8080`：
 
 ## 网页版 17.2 的更新
 
