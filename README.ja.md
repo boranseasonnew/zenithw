@@ -44,8 +44,6 @@ ZenithW は、動画・音声のダウンロード、音声抽出、変換、リ
 git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
-# Set SECRET_KEY in .env to a strong random value before starting.
-docker compose up -d --build
 ```
 
 `.env.example` を `.env` にコピーし、`SECRET_KEY` を強力なランダム値に設定します。
