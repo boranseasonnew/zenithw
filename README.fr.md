@@ -48,7 +48,11 @@ cp .env.example .env
 
 Copiez `.env.example` vers `.env`, puis définissez `SECRET_KEY` avec une valeur aléatoire robuste.
 
-Construisez et démarrez les services, puis ouvrez `http://localhost:8080`.
+```bash
+docker compose up -d --build
+```
+
+Ouvrez `http://localhost:8080` dans votre navigateur :
 
 ## Nouveautés du Web 17.2
 
