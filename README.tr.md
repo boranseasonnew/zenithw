@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,7 +33,7 @@ ZenithW; video ve ses indirme, ses ayıklama, dönüştürme ve remux için aç�
 
 Desteklenen bağlantıyı yapıştır, formatı seç ve dosyayı indir. Kullanılabilir formatlar kaynağa bağlıdır.
 
-## Web 17.1 ile neler değişti?
+## Web 17.2 ile neler değişti?
 
 - **Yeni [Görsel Dönüştürücü](https://zenithw.space/tr/image-convert):** JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA ve QOI dahil farklı biçimler arasında dönüştürme. Yerel işleme motoru daha fazla biçimi destekler.
 - **Hassas görsel boyutlandırma:** özel genişlik ve yükseklik değerleri gir, sonucu önizle ve çıktı ölçülerini kontrol et.

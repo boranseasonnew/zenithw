@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,7 +33,7 @@ ZenithW est un outil multimédia open source pour télécharger des vidéos et d
 
 Collez un lien pris en charge, choisissez un format et téléchargez le fichier. Les formats disponibles dépendent de la source.
 
-## Nouveautés du Web 17.1
+## Nouveautés du Web 17.2
 
 - **Nouveau [convertisseur d’images](https://zenithw.space/fr/image-convert) :** convertissez entre plusieurs formats, notamment JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA et QOI. Le moteur local prend en charge d’autres formats.
 - **Redimensionnement précis :** saisissez une largeur et une hauteur personnalisées, prévisualisez le résultat et gardez le contrôle des dimensions de sortie.

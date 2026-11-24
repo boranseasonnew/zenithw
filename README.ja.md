@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
   <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
   <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
@@ -33,7 +33,7 @@ ZenithW は、動画・音声のダウンロード、音声抽出、変換、リ
 
 対応するリンクを貼り付け、形式を選んでダウンロードします。利用できる形式は配信元によって異なります。
 
-## Web 17.1の新機能
+## Web 17.2の新機能
 
 - **新しい[画像変換ツール](https://zenithw.space/ja/image-convert)：**JPEG、PNG、WebP、AVIF、TIFF、BMP、TGA、QOIなど、さまざまな形式間で変換できます。ローカル処理エンジンはさらに多くの形式に対応しています。
 - **画像サイズを細かく調整：**幅と高さを自由に入力し、結果をプレビューして出力サイズを指定できます。

@@ -81,6 +81,12 @@
 /guides.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/image-convert.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/image-convert.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /info-page.412ae0f21fba.js
   Cache-Control: public, max-age=3600, must-revalidate
 

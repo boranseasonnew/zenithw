@@ -1,4 +1,43 @@
 const LATEST_UPDATE = {
+  "ver": "v17.2",
+  "latest": true,
+  "dateTr": "24 kas\u0131m 2026",
+  "dateEn": "November 24, 2026",
+  "cover": null,
+  "titleTr": "Vimeo, daha açık indirme durumu ve güncel altyapı",
+  "titleEn": "Vimeo guidance, clearer download status and updated tooling",
+  "introTr": [
+    "Vimeo bağlantıları için web sürümü artık indirme denemesi başlatmadan önce durumu açıkça anlatıyor. Bu sürüm ayrıca yt-dlp bağımlılığını güncel stable sürüme taşıyor ve son kullanıcı geri bildirimlerinden gelen arayüz iyileştirmelerini bir araya getiriyor.",
+    "Bu web sürümü yeniliğidir. Vimeo erişiminin değişeceği veya her bağlantının indirilebileceği anlamına gelmez. Windows ve Android uygulamalarındaki gömülü tarayıcıda Vimeo oturumu açma yöntemi denenmemiştir; çalışacağı garanti edilmez. Oturum çerezleri cihazda kalır ve Vimeo’ya kimlik doğrulaması için gönderilir."
+  ],
+  "introEn": [
+    "For Vimeo links, the web app now explains the current limitation before starting a download attempt. This release also updates the yt-dlp dependency to its latest stable version and brings together interface refinements based on recent user feedback.",
+    "This is a web release update. It does not mean Vimeo access has changed or that every link can be downloaded. Signing in to Vimeo in the built-in browser in the Windows or Android app has not been tested and is not guaranteed to work. Session cookies remain on the device and are sent to Vimeo for authentication."
+  ],
+  "sections": [
+    {
+      "hTr": "Vimeo durumunu baştan öğren",
+      "hEn": "Know the Vimeo limitation upfront",
+      "pTr": "Geçerli bir Vimeo adresinde Continue düğmesine basıldığında indirme penceresi yerine açıklama açılır; web servisine analiz isteği gönderilmez. Açıklama, Windows ve Android uygulama bağlantılarını da içerir. Ekip, yt-dlp stable güncellemelerini takip edip Vimeo desteğini yeniden değerlendirecek.",
+      "pEn": "After Continue is pressed for a valid Vimeo URL, an explanation opens instead of the download dialog, and no analysis request is sent to the web service. The notice also links to the Windows and Android apps. We will follow stable yt-dlp updates and review Vimeo support again as it changes."
+    },
+    {
+      "hTr": "yt-dlp stable sürüme güncellendi",
+      "hEn": "yt-dlp updated to the latest stable release",
+      "pTr": "Backend bağımlılık kilidi yt-dlp 2026.11.23 sürümüne yükseltildi. Bu, bağımlılık güncellemesidir; Vimeo bağlantılarının artık çalıştığı iddiası değildir. Yeni sürüm, backend paketleri güncellendiğinde etkinleşir.",
+      "pEn": "The backend dependency lock now pins yt-dlp 2026.11.23. This is a dependency update, not a claim that Vimeo links now work. The new version takes effect when the backend packages are updated."
+    },
+    {
+      "hTr": "Ana sayfa geri bildirimleri",
+      "hEn": "Homepage refinements from feedback",
+      "pTr": "Ana sayfada kendiliğinden açılan uygulama tanıtım penceresi kaldırıldı. Vimeo açıklaması yalnızca kullanıcı bağlantıyı göndermeyi seçtiğinde görünür. İngilizce ana sayfanın paylaşım başlığı ve önizleme bilgileri de İngilizce varsayılanlarla eşitlendi.",
+      "pEn": "The app promotion that opened automatically on the homepage has been removed. The Vimeo notice appears only after the user chooses to submit a link. English title and preview metadata are also aligned with the English homepage."
+    }
+  ],
+  "outroTr": "Geri bildiriminiz için teşekkürler. Bu sürüm, desteklenen platform adlarını ve arayüz ipuçlarını daha tutarlı hale getirmeye yönelik diğer düzeltmeleri de içeriyor.",
+  "outroEn": "Thanks for the feedback. This release also includes related refinements to keep supported-platform names and interface guidance consistent."
+};
+const UPDATE_V17_1 = {
   "ver": "v17.1",
   "latest": true,
   "dateTr": "20 kasım 2026",
@@ -603,8 +642,8 @@ sections:[
 outroTr:'Kısacası v14.1, yönetilen bir platformun rahatlığından kendi sunucumuzun kontrolüne geçiş sürümü. Daha fazla görünürlük ve özgürlük kazandık; karşılığında bakım, maliyet ve erişilebilirlik sorumluluğunu da üstlendik.',
 outroEn:'In short, v14.1 moves ZenithW from the convenience of a managed platform to the control of its own server. We gained visibility and freedom while taking on maintenance, cost, and availability responsibilities.'
 };
-const UPDATE_VERSIONS=['v17.1', 'v17.0', 'v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
-const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V17_0,UPDATE_V16_1,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
+const UPDATE_VERSIONS=['v17.2', 'v17.1', 'v17.0', 'v16.1', 'v16.0', 'v15.9', 'v15.8', 'v15.7', 'v15.6', 'v15.5', 'v15.4', 'v15.3', 'v15.2', 'v15.1', 'v15.0', 'v14.4', 'v14.3', 'v14.2', 'v14.1', 'v14.0', 'v13.8', 'v13.7', 'v13.6', 'v13.5', 'v13.4', 'v13.3', 'v13.2', 'v13.1', 'v13.0', 'v12.9', 'v12.8', 'v12.7', 'v12.6', 'v12.5', 'v12.4', 'v12.3', 'v12.2', 'v12.1', 'v12.0', 'v11.7', 'v11.6', 'v11.5', 'v11.4', 'v11.3', 'v11.2', 'v11.1', 'v11.0', 'v10.9', 'v10.8', 'v10.7', 'v10.6', 'v10.5', 'v10.4', 'v10.3', 'v10.2', 'v10.1', 'v10.0', 'v9.0', 'v8.1', 'v8.0', 'v7.3', 'v7.2', 'v7.1', 'v7.0', 'v6.1', 'v6.0', 'v5.6', 'v5.5', 'v5.4', 'v5.3', 'v5.2', 'v5.1', 'v5.0', 'v4.0'];
+const CURRENT_RELEASES=[LATEST_UPDATE,UPDATE_V17_1,UPDATE_V17_0,UPDATE_V16_1,UPDATE_V16_0,UPDATE_V15_9,UPDATE_V15_8,UPDATE_V15_7,UPDATE_V15_6,UPDATE_V15_5,UPDATE_V15_4,UPDATE_V15_3,UPDATE_V15_2,UPDATE_V15_1,UPDATE_V15_0,UPDATE_V14_4,UPDATE_V14_3,UPDATE_V14_2,UPDATE_V14_1];
 let UPDATES=[...CURRENT_RELEASES];
 let archivePromise=null;
 let archiveLoaded=false;

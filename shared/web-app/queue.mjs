@@ -272,6 +272,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   const youtubeAppOverlay=document.getElementById('youtubeAppOverlay');
   document.getElementById('youtubeAppClose')?.addEventListener('click',()=>closeOverlay('youtubeAppOverlay'));
   youtubeAppOverlay?.addEventListener('click',e=>{if(e.target===youtubeAppOverlay)closeOverlay('youtubeAppOverlay');});
+  const vimeoUnavailableOverlay=document.getElementById('vimeoUnavailableOverlay');
+  document.getElementById('vimeoAppClose')?.addEventListener('click',()=>closeOverlay('vimeoUnavailableOverlay'));
+  vimeoUnavailableOverlay?.addEventListener('click',e=>{if(e.target===vimeoUnavailableOverlay)closeOverlay('vimeoUnavailableOverlay');});
   checkQueueResume();
 });
 }

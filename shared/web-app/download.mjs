@@ -2,7 +2,7 @@
 import {API, MEDIA_JOB_TIMEOUT_MS, cancelBackendJob, ensureSocket, handoffPreparedDownload, scheduleSocketDisconnect} from './api.mjs';
 import {showPublicError} from './errors.mjs';
 import {addToLocalHistory} from './history.mjs';
-import {handleYoutubeAppRequired, shouldRouteYoutubeToApps, showYoutubeAppRequired} from './input.mjs';
+import {handleVimeoUnavailable, handleYoutubeAppRequired, shouldRouteVimeoToApps, shouldRouteYoutubeToApps, showVimeoUnavailable, showYoutubeAppRequired} from './input.mjs';
 import {t} from './language.mjs';
 import {resetProgress, setProgress} from './progress.mjs';
 import {fireConfetti} from './save.mjs';
@@ -15,6 +15,7 @@ export async function startDownload(options={}){
   const bulk=!!options.bulk;
   const sourceInfo=bulk?{url:String(options.url||'').trim(),title:''}:state.videoInfo;
   if(!sourceInfo.url)return {ok:false,error_code:'invalid_url'};
+  if(shouldRouteVimeoToApps(sourceInfo.url)){showVimeoUnavailable();return {ok:false,error_code:'vimeo_login_required'};}
   if(shouldRouteYoutubeToApps(sourceInfo.url)){showYoutubeAppRequired();return {ok:false,error_code:'youtube_app_required'};}
   const plan=options.plan||S,mode=options.mode||state.DL_MODE;
   const isAudio=(mode==='audio'),isMute=(mode==='mute'),fmt=isAudio?plan.afmt:plan.vfmt;
@@ -52,6 +53,7 @@ export async function startDownload(options={}){
     if(!bulk)state.dlId=null;
     if(res.status===409)return {ok:false,error_code:'cancelled'};
     if(!res.ok){
+      if(handleVimeoUnavailable(payload))return {ok:false,error_code:'vimeo_login_required',status:res.status};
       if(handleYoutubeAppRequired(payload))return {ok:false,error_code:'youtube_app_required',status:res.status};
       if(!bulk){resetProgress();showPublicError(payload,res.status,sourceInfo.url,false);}
       return {ok:false,error_code:payload.error_code||'request_failed',status:res.status,retry_after:res.headers.get('Retry-After')};

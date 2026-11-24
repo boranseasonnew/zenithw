@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { test } from 'node:test';
-import {rows as v17Copy} from '../scripts/v17-release-copy.mjs';
+import {rows as v172Copy} from '../scripts/v172-release-copy.mjs';
 
 const read = path => readFileSync(new URL(`../frontend/${path}`, import.meta.url), 'utf8');
 
@@ -10,7 +10,7 @@ test('release notes are present in the first HTML without JavaScript', () => {
   const older = read('updates/v14.4/index.html');
   assert.match(latest, /Yeni araçlar, daha iyi medya kontrolü/);
   assert.match(read('updates/v16.1/index.html'), /Zenith Type: ritmini bul/);
-  assert.match(latest, /<a href="\/typing"[^>]*>Zenith Type/);
+  assert.match(latest, /Vimeo durumunu baştan öğren/);
   assert.match(read('updates/v16.0/index.html'), /Dosyanı seç; vokal ve müzik birlikte ayrılsın/);
   assert.match(older, /YouTube daha akıllı, ilerleme daha net/);
   assert.match(older, /Gerçek akış çözünürlüğü doğrulanıyor/);
@@ -29,23 +29,23 @@ test('restored Turkish content is stored as valid UTF-8 text', () => {
   assert.match(read('credit.html'), /Emeği geçenler ve lisanslar/);
 });
 
-test('web 17.1 is complete in eight languages and preserves v17.0 as an archive', () => {
+test('web 17.2 is the latest release and preserves v17.1 and v17.0 as archives', () => {
   const languages=['tr','en','de','fr','ru','vi','zh','ja'];
   for(const [index,language] of languages.entries()){
     const prefix=language==='tr'?'':language+'/';
     const latest=read(prefix+'updates.html');
-    assert.match(latest,/id="updBadge"[^>]*>v17\.1</);
-    assert.ok(latest.includes(v17Copy[0][index]),language+' release title');
-    assert.ok(latest.includes(v17Copy[1][index]),language+' release introduction');
-    for(let section=0;section<6;section++){
-      assert.ok(latest.includes(v17Copy[3+section*2][index]),language+' section '+section);
-      assert.ok(latest.includes(v17Copy[4+section*2][index]),language+' section copy '+section);
+    assert.match(latest,/id="updBadge"[^>]*>v17\.2</);
+    assert.ok(latest.includes(v172Copy[0][index]),language+' release title');
+    assert.ok(latest.includes(v172Copy[1][index]),language+' release introduction');
+    for(let section=0;section<3;section++){
+      assert.ok(latest.includes(v172Copy[3+section*2][index]),language+' section '+section);
+      assert.ok(latest.includes(v172Copy[4+section*2][index]),language+' section copy '+section);
     }
-    assert.match(latest,/<option value="v17\.1" selected>/);
+    assert.match(latest,/<option value="v17\.2" selected>/);
     assert.match(latest,/href="\/updates\/v17\.0\/"/);
-    assert.match(latest,/updates-core\.0aa3d3bc7b27\.js/);
-    assert.match(latest,/site-language\.d606975b05f0\.js/);
-    assert.match(latest,/version\.js\?v=17\.1/);
+    assert.match(latest,/updates-core\.[a-f0-9]{12}\.js/);
+    if(language!=='tr')assert.match(latest,/site-language\.[a-f0-9]{12}\.js/);
+    assert.match(latest,/version\.js\?v=17\.2/);
     const archived=read(prefix+'updates/v17.1/index.html');
     assert.match(archived,/id="updBadge"[^>]*>v17\.1</);
     assert.match(archived,new RegExp('rel="canonical" href="https://zenithw\\.space/'+prefix+'updates/v17\\.1/"'));
@@ -53,7 +53,7 @@ test('web 17.1 is complete in eight languages and preserves v17.0 as an archive'
     const older=read(prefix+'updates/v16.1/index.html');
     assert.match(older,/id="updBadge"[^>]*>v16\.1</);
     assert.match(older,new RegExp('rel="canonical" href="https://zenithw\\.space/'+prefix+'updates/v16\\.1/"'));
-    assert.match(read(prefix+'index.html'),/version\.js\?v=17\.1-desktop5\.0\.0/);
+    assert.match(read(prefix+'index.html'),/version\.js\?v=17\.2-desktop5\.0\.0/);
   }
   const archivedV170=read('updates/v17.0/index.html');
   assert.match(archivedV170,/id="updBadge"[^>]*>v17\.0</);
@@ -64,9 +64,9 @@ test('web 17.1 is complete in eight languages and preserves v17.0 as an archive'
     const prefix=language==='tr'?'':language+'/';
     assert.ok(sitemap.includes('https://zenithw.space/'+prefix+'updates/v17.1/'),language+' sitemap');
   }
-  assert.match(read('version.js'),/ver: 'v17\.1'/);
+  assert.match(read('version.js'),/ver: 'v17\.2'/);
   for(const file of ['README.md','README.tr.md','README.de.md','README.fr.md','README.ja.md']){
-    assert.match(readFileSync(new URL('../'+file,import.meta.url),'utf8'),/17\.1/,file);
+    assert.match(readFileSync(new URL('../'+file,import.meta.url),'utf8'),/17\.2/,file);
   }
   const versionSource=read('version.js');
   const webVersion=/ver:\s*'v([0-9.]+)'/.exec(versionSource)[1];

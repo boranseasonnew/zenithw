@@ -1,7 +1,7 @@
 // ZenithW bulk; built into the existing classic-script entry point.
 import {cancelBackendJob} from './api.mjs';
 import {startDownload} from './download.mjs';
-import {shouldRouteYoutubeToApps, showYoutubeAppRequired, toggleBulkMode} from './input.mjs';
+import {shouldRouteVimeoToApps, shouldRouteYoutubeToApps, showVimeoUnavailable, showYoutubeAppRequired, toggleBulkMode} from './input.mjs';
 import {t} from './language.mjs';
 import {S} from './settings.mjs';
 import {state} from './state.mjs';
@@ -14,8 +14,11 @@ export async function fetchBulkVideos(){
   try{requestedUrls=(await state.DOWNLOAD_POLICY_READY).normalizeBulkUrls(textarea.value);}catch(e){toast(t(e instanceof RangeError?'bulkMaxLinks':'errUnsupported'),'#ed4245');return;}
   if(requestedUrls.length===0){toast(t('bulkNeedLink'),'#ed4245');return;}
   if(requestedUrls.length>10){toast(t('bulkMaxLinks'),'#f59e0b');return;}
-  const blockedYoutube=requestedUrls.filter(shouldRouteYoutubeToApps);
-  const urls=requestedUrls.filter(url=>!shouldRouteYoutubeToApps(url));
+  const blockedVimeo=requestedUrls.filter(shouldRouteVimeoToApps);
+  const vimeoFiltered=requestedUrls.filter(url=>!shouldRouteVimeoToApps(url));
+  if(blockedVimeo.length)showVimeoUnavailable();
+  const blockedYoutube=vimeoFiltered.filter(shouldRouteYoutubeToApps);
+  const urls=vimeoFiltered.filter(url=>!shouldRouteYoutubeToApps(url));
   if(blockedYoutube.length)showYoutubeAppRequired();
   if(urls.length===0)return;
 

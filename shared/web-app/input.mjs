@@ -97,11 +97,19 @@ export function handleYoutubeAppRequired(payload){
 }
 
 
+export function shouldRouteVimeoToApps(url){return isVimeo(url);}
+
+
+export function showVimeoUnavailable(){openOverlay('vimeoUnavailableOverlay');}
+
+
+export function handleVimeoUnavailable(payload){
+  if(payload&&payload.error_code==='vimeo_login_required'){showVimeoUnavailable();return true;}
+  return false;
+}
+
+
 export function isValidUrl(u){try{const p=new URL(u);return p.protocol==='http:'||p.protocol==='https:';}catch(e){return false;}}
-
-
-let vimeoNoticeTimer=null;
-let lastVimeoNoticeUrl='';
 
 
 export function onInput(){
@@ -114,17 +122,6 @@ export function onInput(){
   hideQR();state.videoInfo={};
   document.getElementById('urlSpinWrap').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--text3)"><circle cx="12" cy="12" r="10"/></svg>';
   const trimmed=v.trim();
-  if(vimeoNoticeTimer)clearTimeout(vimeoNoticeTimer);
-  if(trimmed&&isVimeo(trimmed)&&trimmed!==lastVimeoNoticeUrl){
-    vimeoNoticeTimer=setTimeout(()=>{
-      if(document.getElementById('urlInput').value.trim()!==trimmed)return;
-      lastVimeoNoticeUrl=trimmed;
-      const title=document.getElementById('ytErrTitle'),message=document.getElementById('ytErrTxt');
-      if(title)title.textContent=t('vimeoUnavailableTitle');
-      if(message)message.textContent=t('vimeoUnavailableText');
-      showYtErr();
-    },450);
-  }else if(!trimmed||!isVimeo(trimmed))lastVimeoNoticeUrl='';
   if(trimmed&&isValidUrl(trimmed)&&trimmed!==state.lastRadarUrl){state.lastRadarUrl=trimmed;fireRadar();}
   if(!trimmed)state.lastRadarUrl='';
 }

@@ -20,6 +20,8 @@ export function openDlModal(){
   document.getElementById('dlAnalysisTitle').textContent=t('dlAnalysisTitle');
   document.getElementById('dlAnalysisDesc').textContent=t('dlAnalysisDesc');
   document.getElementById('dlThumbActionTxt').textContent=t('dlThumbActionTxt');
+  const settingsLink=document.querySelector('.dl-settings-link');
+  if(settingsLink)settingsLink.href=state.DL_MODE==='audio'?'/settings#audio':'/settings#video';
   document.getElementById('dlSettingsTxt').textContent=t('dlSettingsTxt');
   renderDownloadPlan();
   resetProgress();openOverlay('dlOverlay');
