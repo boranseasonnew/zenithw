@@ -137,6 +137,11 @@ async function pageResponse(context) {
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+  if (url.pathname === "/settings/" && ["GET", "HEAD"].includes(context.request.method)) {
+    const destination = new URL(url);
+    destination.pathname = "/settings";
+    return new Response(null, { status: 301, headers: { Location: destination.href, "Cache-Control": "public, max-age=3600" } });
+  }
   if ([AUDIO_WORKER_PATH, AUDIO_EXPORT_WORKER_PATH].includes(url.pathname) && ["GET", "HEAD"].includes(context.request.method)) {
     const response = await context.next();
     const headers = new Headers(response.headers);

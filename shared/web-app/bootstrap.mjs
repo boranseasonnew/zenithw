@@ -15,14 +15,13 @@ export function initializeApplication(){
   setAccent(S.accent||'default');
   applyLang(); // LAST — after all functions are defined
   renderHomeActivity();
-  if(document.body.classList.contains('settings-page')&&window.matchMedia('(max-width:900px)').matches)showMobileSettingsHome();
   if(document.body.classList.contains('settings-page')){
     const returnPath=new URLSearchParams(location.search).get('return')||'';
-    const tab=(location.hash.slice(1)||returnPath.split('#')[1]||'').toLowerCase();
-    if(tab==='video'||tab==='audio'){
-      const button=document.querySelector(`.st-nav-btn[data-page="${tab}"]`);
-      if(button){document.body.classList.remove('mobile-settings-index');button.click();}
-    }
+    let hashTab='';try{hashTab=decodeURIComponent(location.hash.slice(1));}catch{hashTab=location.hash.slice(1);}
+    const tab=(hashTab||returnPath.split('#')[1]||'').toLowerCase();
+    const button=Array.from(document.querySelectorAll('.st-nav-btn')).find(candidate=>candidate.dataset.page===tab);
+    if(window.matchMedia('(max-width:900px)').matches)showMobileSettingsHome();
+    if(button){document.body.classList.remove('mobile-settings-index');button.click();}
   }
   if(typeof resetCatTimer==='function')resetCatTimer();
   window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{if(S.theme==='auto')setTheme('auto');});

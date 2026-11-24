@@ -104,6 +104,24 @@ test('legacy Android and Windows requests permanently redirect to the right lang
  }
 });
 
+test('the trailing-slash Settings URL redirects cleanly while preserving its query',async()=>{
+ const response=await onRequest({request:new Request('https://zenithw.space/settings/?return=%2Fen%2F',{method:'GET'}),env:{},next(){throw new Error('Settings normalization must not request an asset');}});
+ assert.equal(response.status,301);
+ assert.equal(response.headers.get('Location'),'https://zenithw.space/settings?return=%2Fen%2F');
+ assert.equal(response.headers.get('Cache-Control'),'public, max-age=3600');
+});
+
+test('Settings loads the current web app bundle and exposes all seven deep-link tabs',()=>{
+ const html=read('frontend/settings.html');
+ const manifest=JSON.parse(read('scripts/cache-assets-manifest.json'));
+ assert.ok(html.includes(`src="${manifest['app.d4596317c4a7.js'].url}"`));
+ for(const tab of ['video','audio','appearance','accessibility','meta','filename','advanced'])assert.ok(html.includes(`data-page="${tab}"`),`Missing Settings tab: ${tab}`);
+ const app=read('shared/web-app/bootstrap.mjs');
+ assert.ok(app.includes("candidate.dataset.page===tab"));
+ const settings=read('shared/web-app/settings.mjs');
+ assert.ok(settings.includes('location.pathname}${location.search}#${encodeURIComponent(el.dataset.page)}'));
+});
+
 test('download choices use actual release assets, verified versions and honest pending-store labels',()=>{
  const html=read('frontend/en/downloads.html');
  assert.ok(html.includes('Windows 10/11'));assert.ok(html.includes('Android 7.0'));
@@ -176,6 +194,20 @@ test('focused search metadata is translated and consistent with social previews 
   assert.equal(decode(/name="description"[^>]*content="([^"]*)"/.exec(html)[1]),description);
   const graph=JSON.parse(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html)[1]);
   assert.equal(graph['@graph'].find(item=>item['@type']==='WebPage').description,description);
+ }
+});
+
+test('homepage application copy has Vimeo guidance and a localized tab title in every interface language',()=>{
+ const app=read('shared/web-app/language.mjs');
+ const vimeoTitle='Vimeo downloads need a signed-in session';
+ const vimeoBody="Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.";
+ assert.ok(app.includes(`vimeoAppTitle:'${vimeoTitle}'`));
+ assert.ok(app.includes(`vimeoAppBody:"${vimeoBody}"`));
+ assert.ok(app.includes("document.title=title"));
+ for(const lang of languages){
+  assert.ok(catalogs[lang][vimeoTitle],`Missing Vimeo title translation: ${lang}`);
+  assert.ok(catalogs[lang][vimeoBody],`Missing Vimeo body translation: ${lang}`);
+  assert.ok(catalogs[lang]['Ücretsiz Video İndirici: TikTok, Instagram | ZenithW'],`Missing homepage title translation: ${lang}`);
  }
 });
 

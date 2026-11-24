@@ -8,7 +8,9 @@ const {chromium}=await import(process.env.PLAYWRIGHT_MODULE?pathToFileURL(proces
 const root=resolve('frontend');
 const server=createServer(async(req,res)=>{
  try{
-  const url=new URL(req.url,'http://localhost'),path=resolve(root,'.'+url.pathname);
+  const url=new URL(req.url,'http://localhost');
+  if(url.pathname==='/settings/') {res.writeHead(301,{Location:'/settings'+url.search});res.end();return;}
+  const path=resolve(root,'.'+url.pathname);
   if(path!==root&&!path.startsWith(root+'\\')&&!path.startsWith(root+'/'))throw Error('path');
   const target=url.pathname.endsWith('/')?join(path,'index.html'):extname(path)?path:path+'.html';
   res.setHeader('Content-Type',({'.js':'application/javascript','.css':'text/css','.html':'text/html; charset=utf-8','.json':'application/json','.svg':'image/svg+xml','.png':'image/png'})[extname(target)]||'application/octet-stream');res.end(await readFile(target));
@@ -111,6 +113,7 @@ const vimeoBody="Our tests show that yt-dlp currently needs a signed-in Vimeo se
    const title=catalog[youtubeTitle]||youtubeTitle;
    await page.goto(base+'/'+(language==='tr'?'':language+'/'));
    await page.evaluate(async theme=>{await ZWLanguage.ready;setTheme(theme);},theme);
+   assert.equal(await page.title(),catalog['Ücretsiz Video İndirici: TikTok, Instagram | ZenithW']);
    const infoCountBeforeVimeo=infoRequestCount;
    await page.locator('#urlInput').fill('https://vimeo.com/123456789');
    assert.equal(await page.locator('#vimeoUnavailableOverlay').getAttribute('aria-hidden'),'true','Typing a Vimeo URL must not open the notice before Continue');
@@ -158,6 +161,14 @@ const vimeoBody="Our tests show that yt-dlp currently needs a signed-in Vimeo se
  await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='video');
  await page.goto(base+'/settings#audio');
  await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='audio');
+ for(const tab of ['video','audio','appearance','accessibility','meta','filename','advanced']){
+  await page.goto(base+'/settings/#'+tab);
+  await page.waitForFunction(expected=>document.querySelector('.st-nav-btn.active')?.dataset.page===expected,tab);
+  assert.equal(new URL(page.url()).pathname,'/settings','The slash form should normalize to /settings');
+  assert.equal(new URL(page.url()).hash,'#'+tab,'The browser should preserve the hash across the redirect');
+  await page.locator(`.st-nav-btn[data-page="${tab}"]`).click();
+  assert.equal(new URL(page.url()).hash,'#'+tab,'Selecting a Settings tab should update its direct link');
+ }
  await page.goto(base+'/en/');
  await page.evaluate(()=>ZWLanguage.ready);
  const settingsHref=await page.locator('.bar-btn[href^="/settings"]').getAttribute('href');

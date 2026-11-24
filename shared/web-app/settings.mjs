@@ -171,11 +171,12 @@ export function openSettings(){openOverlay('stOverlay');}
 
 export function stTab(el){
   document.querySelectorAll('.st-nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});document.querySelectorAll('.st-page').forEach(p=>p.classList.remove('active'));el.classList.add('active');el.setAttribute('aria-selected','true');const pg=document.getElementById('stPage'+el.dataset.page.charAt(0).toUpperCase()+el.dataset.page.slice(1));if(pg)pg.classList.add('active');const content=document.querySelector('.st-content');if(content)content.scrollTop=0;
+  if(document.body.classList.contains('settings-page')&&el.dataset.page&&window.history?.replaceState)window.history.replaceState(window.history.state,'',`${location.pathname}${location.search}#${encodeURIComponent(el.dataset.page)}`);
   if(window.matchMedia('(max-width:900px)').matches&&document.body.classList.contains('settings-page')){document.body.classList.remove('mobile-settings-index');const title=document.getElementById('mobileSettingsTitle'),label=el.querySelector('span');if(title&&label)title.textContent=label.textContent;window.scrollTo({top:0,behavior:'auto'});}
 }
 
 
-export function showMobileSettingsHome(){if(!document.body.classList.contains('settings-page'))return;document.body.classList.add('mobile-settings-index');const title=document.getElementById('mobileSettingsTitle');if(title)title.textContent=t('stModalTitle');window.scrollTo({top:0,behavior:'auto'});}
+export function showMobileSettingsHome(){if(!document.body.classList.contains('settings-page'))return;document.body.classList.add('mobile-settings-index');if(location.hash&&window.history?.replaceState)window.history.replaceState(window.history.state,'',location.pathname+location.search);const title=document.getElementById('mobileSettingsTitle');if(title)title.textContent=t('stModalTitle');window.scrollTo({top:0,behavior:'auto'});}
 
 
 export function stChip(el,key){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');S[key]=el.dataset.v;if(PROFILE_FIELDS.includes(key))S.downloadProfile='custom';saveSt();applyStUI();}

@@ -8,6 +8,9 @@ import {state} from './state.mjs';
 
 export const TX={
   tr:{
+    homeDocumentTitle:'Ücretsiz Video İndirici: TikTok, Instagram | ZenithW',
+    vimeoAppTitle:'Vimeo indirmek için giriş gerekiyor',
+    vimeoAppBody:'Testlerimizde yt-dlp, bu Vimeo bağlantısına erişmek için oturum açılmış bir hesap gerektiğini bildirdi. ZenithW web sitesi Vimeo giriş çerezlerini kullanmaz; bu nedenle web üzerinden indirme başarısız olabilir. Windows ve Android uygulamalarında gömülü tarayıcı bulunur. Vimeo\'ya oradan giriş yaparsanız yt-dlp cihazınızda saklanan çerezleri kullanabilir. Çerezler cihazınızda kalır ve kimlik doğrulama için doğrudan Vimeo\'ya gönderilir; ZenithW\'ye yüklenmez. Bu yöntemi test etmedik, bu nedenle çalışacağını garanti edemeyiz. yt-dlp güncellemelerini takip etmeyi sürdüreceğiz.',
     desktopPromoCloseLabel:'Kapat',
     youtubeAppCloseLabel:'Kapat',
     placeholder:'video bağlantısını buraya bırak',bulkPlaceholder:'linkleri her satıra bir tane olacak şekilde yapıştır... (Enter ile indir, Shift+Enter ile yeni satır)',modeAutoTxt:'otomatik',modeAudioTxt:'ses',modeMuteTxt:'sessiz',bulkToggleTxt:'çoklu indirme',paste:'yapıştır',continueBtn:'devam et',homeStatusTxt:'hizmet aktif',homeActivityTitle:'son aktiviteler',homeActivityAllTxt:'tümünü gör',homeActivityEmpty:'henüz bu tarayıcıda bir indirme yok',
@@ -79,6 +82,9 @@ export const TX={
     updBadge:'GÜNCEL',
   },
   en:{
+    homeDocumentTitle:'Free Video Downloader: TikTok, Instagram | ZenithW',
+    vimeoAppTitle:'Vimeo downloads need a signed-in session',
+    vimeoAppBody:"Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.",
     desktopPromoCloseLabel:'Close',
     youtubeAppCloseLabel:'Close',
     placeholder:'drop a media link here',bulkPlaceholder:'paste links, one per line... (Enter to download, Shift+Enter for a new line)',modeAutoTxt:'automatic',modeAudioTxt:'audio',modeMuteTxt:'mute',bulkToggleTxt:'bulk',paste:'paste',continueBtn:'continue',homeStatusTxt:'service active',homeActivityTitle:'recent activity',homeActivityAllTxt:'view all',homeActivityEmpty:'no downloads in this browser yet',
@@ -308,6 +314,18 @@ export function detectLang(){if(window.ZWLanguage)return ZWLanguage.current;cons
 
 export function applyLang(){
   document.documentElement.lang=state.LANG;
+  if(document.body.classList.contains('home-page')){
+    const sourceTitle=TX.tr.homeDocumentTitle;
+    const localizedTitle=window.ZWLanguage?.translate(sourceTitle,state.LANG);
+    const title=localizedTitle&&localizedTitle!==sourceTitle?localizedTitle:t('homeDocumentTitle');
+    document.title=title;
+    for(const selector of ['meta[property="og:title"]','meta[name="twitter:title"]']){
+      const meta=document.querySelector(selector);if(meta)meta.content=title;
+    }
+    const locale=window.ZWLanguage?.locales[state.LANG];
+    const ogLocale=document.querySelector('meta[property="og:locale"]');
+    if(locale&&ogLocale)ogLocale.content=locale.replace('-','_');
+  }
   // All elements with matching IDs
   const ids=Object.keys(TX.tr);
   ids.forEach(k=>{const el=document.getElementById(k);if(el){if(el.tagName==='INPUT')el.placeholder=t(k);else el.innerHTML=t(k);}});
