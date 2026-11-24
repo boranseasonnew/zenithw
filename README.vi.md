@@ -56,14 +56,13 @@ Mở `http://localhost:8080` trong trình duyệt:
 
 ## Có gì mới trong web 17.2
 
-- **Trình [chuyển đổi hình ảnh](https://zenithw.space/vi/image-convert) mới:** chuyển đổi giữa JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI và nhiều định dạng khác. Bộ xử lý cục bộ hỗ trợ thêm định dạng.
-- **Đổi kích thước chính xác:** nhập chiều rộng và chiều cao tùy chỉnh, xem trước kết quả và kiểm soát kích thước đầu ra.
-- **[Công cụ tách âm thanh](https://zenithw.space/vi/audio-separator) được thiết kế lại:** giao diện studio mới giúp chọn tệp, làm việc với giọng hát và nhạc nền đã tách, xem trước và xuất tệp rõ ràng hơn.
-- **Hỗ trợ tám ngôn ngữ:** giao diện và nhãn trợ năng của trình chuyển đổi được bản địa hóa bằng cả tám ngôn ngữ của trang web. Việc chuyển đổi và đổi kích thước diễn ra ngay trong trình duyệt.
-- Các công cụ media hiện có vẫn được giữ lại, bao gồm remux luồng MKV/MP4 tương thích mà không mã hóa lại.
+- **Đã tắt Vimeo trên ứng dụng web công khai:** tính năng hỗ trợ được gỡ bỏ vì một số liên kết Vimeo yêu cầu cookie và khả năng tương thích với yt-dlp không ổn định.
+- **Sửa lỗi dịch thuật:** tên định dạng như AVI và tên nền tảng như Rumble không còn bị dịch sai.
+- **Sửa liên kết Cài đặt:** liên kết trong bảng tải xuống giờ mở đúng phần cài đặt Video thay vì tab Giao diện.
+- **Bản địa hóa siêu dữ liệu SEO:** tiêu đề trang và bản xem trước khi chia sẻ giờ sử dụng đúng ngôn ngữ của từng phiên bản trang web.
+- **Đã xóa cửa sổ quảng bá ứng dụng:** cửa sổ này không còn làm gián đoạn người dùng khi nhập liên kết.
 
 Windows và Android giữ số phiên bản riêng; số phiên bản này chỉ áp dụng cho web.
-
 ## Dự án
 
 - [Giao diện web](frontend/) và [API](backend/)
