@@ -48,7 +48,11 @@ cp .env.example .env
 
 `.env.example` nach `.env` kopieren und `SECRET_KEY` durch einen starken, zufälligen Wert ersetzen.
 
-Dienste erstellen und starten, dann `http://localhost:8080` öffnen.
+```bash
+docker compose up -d --build
+```
+
+Öffne `http://localhost:8080` im Browser:
 
 ## Neu in Web 17.2
 
