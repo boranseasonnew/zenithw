@@ -56,14 +56,13 @@ docker compose up -d --build
 
 ## Neu in Web 17.2
 
-- **Neuer [Bildkonverter](https://zenithw.space/de/image-convert):** Bilder zwischen Formaten wie JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA und QOI konvertieren. Die lokale Engine unterstützt weitere Formate.
-- **Bilder präzise skalieren:** eigene Breite und Höhe eingeben, das Ergebnis in der Vorschau prüfen und die Ausgabemaße kontrollieren.
-- **Überarbeiteter [Audiotrenner](https://zenithw.space/de/audio-separator):** eine erneuerte Studio-Oberfläche vereinfacht Dateiauswahl, getrennte Gesangs- und Instrumentalspuren, Vorschau und Export.
-- **Acht Sprachen:** Oberfläche und Barrierefreiheitstexte des Bildkonverters sind in allen acht Website-Sprachen verfügbar. Konvertierung und Skalierung erfolgen lokal im Browser.
-- Bestehende Medienwerkzeuge bleiben verfügbar, darunter Remux kompatibler MKV-/MP4-Streams ohne erneute Codierung.
+- **Vimeo in der öffentlichen Web-App deaktiviert:** Die Unterstützung wurde entfernt, da einige Vimeo-Links Cookies benötigen und die Kompatibilität mit yt-dlp uneinheitlich ist.
+- **Übersetzungen korrigiert:** Formatnamen wie AVI und Plattformnamen wie Rumble werden nicht mehr falsch übersetzt.
+- **Einstellungslink korrigiert:** Der Link im Downloadbereich öffnet jetzt direkt die passenden Video-Einstellungen statt des Tabs „Darstellung“.
+- **Lokalisierte SEO-Metadaten:** Seitentitel und Social-Media-Vorschauen verwenden jetzt die passende Sprache der jeweiligen Website-Version.
+- **App-Werbe-Popup entfernt:** Es unterbricht Nutzer nicht mehr bei der Eingabe eines Links.
 
 Windows und Android behalten ihre eigenen Versionsnummern; diese Versionsangabe bezieht sich auf das Web.
-
 ## Projekt
 
 - [Weboberfläche](frontend/) und [API](backend/)
