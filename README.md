@@ -46,7 +46,11 @@ cp .env.example .env
 
 Copy `.env.example` to `.env`, then set `SECRET_KEY` to a strong random value.
 
-Build and start the services, then open `http://localhost:8080`.
+```bash
+docker compose up -d --build
+```
+
+Open `http://localhost:8080` in your browser:
 
 ## What's new in web 17.2
 
