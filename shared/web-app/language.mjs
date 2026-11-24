@@ -11,7 +11,6 @@ export const TX={
     homeDocumentTitle:'Ücretsiz Video İndirici: TikTok, Instagram | ZenithW',
     vimeoAppTitle:'Vimeo indirmek için giriş gerekiyor',
     vimeoAppBody:'Testlerimizde yt-dlp, bu Vimeo bağlantısına erişmek için oturum açılmış bir hesap gerektiğini bildirdi. ZenithW web sitesi Vimeo giriş çerezlerini kullanmaz; bu nedenle web üzerinden indirme başarısız olabilir. Windows ve Android uygulamalarında gömülü tarayıcı bulunur. Vimeo\'ya oradan giriş yaparsanız yt-dlp cihazınızda saklanan çerezleri kullanabilir. Çerezler cihazınızda kalır ve kimlik doğrulama için doğrudan Vimeo\'ya gönderilir; ZenithW\'ye yüklenmez. Bu yöntemi test etmedik, bu nedenle çalışacağını garanti edemeyiz. yt-dlp güncellemelerini takip etmeyi sürdüreceğiz.',
-    desktopPromoCloseLabel:'Kapat',
     youtubeAppCloseLabel:'Kapat',
     placeholder:'video bağlantısını buraya bırak',bulkPlaceholder:'linkleri her satıra bir tane olacak şekilde yapıştır... (Enter ile indir, Shift+Enter ile yeni satır)',modeAutoTxt:'otomatik',modeAudioTxt:'ses',modeMuteTxt:'sessiz',bulkToggleTxt:'çoklu indirme',paste:'yapıştır',continueBtn:'devam et',homeStatusTxt:'hizmet aktif',homeActivityTitle:'son aktiviteler',homeActivityAllTxt:'tümünü gör',homeActivityEmpty:'henüz bu tarayıcıda bir indirme yok',
     vcDl:'indir',dlBtn:'indir',dlCancel:'iptal',dlAnalysisKicker:'hazır',dlAnalysisTitle:'İndirmeye hazır',dlAnalysisDesc:'Bağlantı analiz edildi. Kalite ve ses tercihlerini Ayarlar’dan değiştirebilirsin.',dlThumbActionTxt:'kapak görseli',dlSettingsTxt:'ayarlar',dlPlanLabel:'indirme planı',dlPlanVideo:'video planı',dlPlanAudio:'ses planı',dlPlanFallback:'Kaynakta yoksa en yakın güvenli seçenek kullanılır.',dlPlanAdaptive:'YouTube: boşken 1080p, yoğunlukta 720p.',dlQualityVerified:'Kalite doğrulandı',dlProgressTitle:'İndirmen hazırlanıyor',
@@ -85,7 +84,6 @@ export const TX={
     homeDocumentTitle:'Free Video Downloader: TikTok, Instagram | ZenithW',
     vimeoAppTitle:'Vimeo downloads need a signed-in session',
     vimeoAppBody:"Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.",
-    desktopPromoCloseLabel:'Close',
     youtubeAppCloseLabel:'Close',
     placeholder:'drop a media link here',bulkPlaceholder:'paste links, one per line... (Enter to download, Shift+Enter for a new line)',modeAutoTxt:'automatic',modeAudioTxt:'audio',modeMuteTxt:'mute',bulkToggleTxt:'bulk',paste:'paste',continueBtn:'continue',homeStatusTxt:'service active',homeActivityTitle:'recent activity',homeActivityAllTxt:'view all',homeActivityEmpty:'no downloads in this browser yet',
     vcDl:'download',dlBtn:'download',dlCancel:'cancel',dlAnalysisKicker:'ready',dlAnalysisTitle:'Ready to download',dlAnalysisDesc:'The link has been analyzed. You can adjust quality and audio preferences in Settings.',dlThumbActionTxt:'cover image',dlSettingsTxt:'settings',dlPlanLabel:'download plan',dlPlanVideo:'video plan',dlPlanAudio:'audio plan',dlPlanFallback:'If the source does not offer it, the nearest safe option is used.',dlPlanAdaptive:'YouTube: up to 1080p when idle, 720p when busy.',dlQualityVerified:'Quality verified',dlProgressTitle:'Preparing your download',
@@ -158,7 +156,6 @@ export const TX={
     updBadge:'LATEST',
   },
   fr:{
-    desktopPromoCloseLabel:'Fermer',
     youtubeAppCloseLabel:'Fermer',
     placeholder:'déposez un lien média ici',bulkPlaceholder:'collez les liens, un par ligne... (Entrée pour télécharger, Maj+Entrée pour une nouvelle ligne)',modeAutoTxt:'automatique',modeAudioTxt:'audio',modeMuteTxt:'muet',bulkToggleTxt:'lot',paste:'coller',continueBtn:'continuer',homeStatusTxt:'service actif',homeActivityTitle:'activité récente',homeActivityAllTxt:'tout voir',homeActivityEmpty:'aucun téléchargement dans ce navigateur pour le moment',
     vcDl:'télécharger',dlBtn:'télécharger',dlCancel:'annuler',dlAnalysisKicker:'prêt',dlAnalysisTitle:'Prêt à télécharger',dlAnalysisDesc:'Le lien a été analysé. Vous pouvez modifier la qualité et le son dans les paramètres.',dlThumbActionTxt:'image de couverture',dlSettingsTxt:'paramètres',dlPlanLabel:'plan de téléchargement',dlPlanVideo:'plan vidéo',dlPlanAudio:'plan audio',dlPlanFallback:'Si la source ne le propose pas, l’option sûre la plus proche est utilisée.',dlPlanAdaptive:'YouTube : jusqu’à 1080p au repos, 720p en charge.',dlQualityVerified:'Qualité vérifiée',dlProgressTitle:'Préparation du téléchargement',
@@ -231,7 +228,6 @@ export const TX={
     updBadge:'RÉCENT',
   },
   de:{
-    desktopPromoCloseLabel:'Schließen',
     youtubeAppCloseLabel:'Schließen',
     placeholder:'medienlink hier ablegen',bulkPlaceholder:'links einfügen, einen pro Zeile... (Enter zum Herunterladen, Umschalt+Enter für neue Zeile)',modeAutoTxt:'automatisch',modeAudioTxt:'audio',modeMuteTxt:'stumm',bulkToggleTxt:'stapel',paste:'einfügen',continueBtn:'weiter',homeStatusTxt:'dienst aktiv',homeActivityTitle:'letzte aktivitäten',homeActivityAllTxt:'alle ansehen',homeActivityEmpty:'noch keine downloads in diesem browser',
     vcDl:'herunterladen',dlBtn:'herunterladen',dlCancel:'abbrechen',dlAnalysisKicker:'bereit',dlAnalysisTitle:'Bereit zum Herunterladen',dlAnalysisDesc:'Der Link wurde analysiert. Qualität und Audio lassen sich in den Einstellungen anpassen.',dlThumbActionTxt:'Vorschaubild',dlSettingsTxt:'Einstellungen',dlPlanLabel:'download-plan',dlPlanVideo:'video-plan',dlPlanAudio:'audio-plan',dlPlanFallback:'Wenn die Quelle es nicht anbietet, wird die nächstbeste sichere Option verwendet.',dlPlanAdaptive:'YouTube: bis 1080p bei Leerlauf, 720p bei Auslastung.',dlQualityVerified:'Qualität bestätigt',dlProgressTitle:'Download wird vorbereitet',

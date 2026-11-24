@@ -1588,7 +1588,7 @@
   "Servis listesini kapat": "关闭服务列表",
   "×": "×",
   "bilibili": "哔哩哔哩",
-  "bluesky": "蓝天",
+  "bluesky": "bluesky",
   "dailymotion": "日常运动",
   "facebook": "脸书",
   "pornhub": "色情中心",
@@ -1819,7 +1819,7 @@
   "Ürün karşılaştırması": "产品比较",
   "vs": "与",
   "İki reklamsız indirme aracını platform kapsamı, toplu işlemler ve dönüştürme yetenekleri üzerinden karşılaştırın.": "比较两个无广告下载器的平台覆盖范围、批量交易和转换能力。",
-  "ZW": "Z.W.",
+  "ZW": "ZW",
   "Hızlı karar": "快速决定",
   "Bağlantı indirme, yerel medya araçları ve uygulama seçeneklerini birlikte değerlendir.": "考虑一起下载链接、本地媒体工具和应用程序选项。",
   "Ayrıntılı değerlendirme": "详细评测",
@@ -3832,5 +3832,12 @@
   "Geri bildiriminiz için teşekkürler. Bu sürüm, desteklenen platform adlarını ve arayüz ipuçlarını daha tutarlı hale getirmeye yönelik diğer düzeltmeleri de içeriyor.": "感谢你提供反馈。本次更新还改进了受支持平台名称和界面提示的一致性。",
   "Thanks for the feedback. This release also includes related refinements to keep supported-platform names and interface guidance consistent.": "感谢你提供反馈。本次更新还改进了受支持平台名称和界面提示的一致性。",
   "Vimeo downloads need a signed-in session": "下载 Vimeo 视频需要登录账号",
-  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "我们的测试显示，yt-dlp 目前需要已登录的 Vimeo 会话才能访问此链接。ZenithW 网站不会使用 Vimeo 登录 Cookie，因此网页下载可能失败。Windows 和 Android 应用内置浏览器；如果你在其中登录 Vimeo，yt-dlp 可能可以使用保存在设备上的 Cookie。Cookie 会留在你的设备上，并直接发送给 Vimeo 用于身份验证，不会上传到 ZenithW。我们尚未测试此方式，因此无法保证它能正常使用。我们会继续关注 yt-dlp 的更新。"
+  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "我们的测试显示，yt-dlp 目前需要已登录的 Vimeo 会话才能访问此链接。ZenithW 网站不会使用 Vimeo 登录 Cookie，因此网页下载可能失败。Windows 和 Android 应用内置浏览器；如果你在其中登录 Vimeo，yt-dlp 可能可以使用保存在设备上的 Cookie。Cookie 会留在你的设备上，并直接发送给 Vimeo 用于身份验证，不会上传到 ZenithW。我们尚未测试此方式，因此无法保证它能正常使用。我们会继续关注 yt-dlp 的更新。",
+  "Uptodown başvurusu reddedildi": "Uptodown 上架申请被拒",
+  "Reddedildi": "已拒绝",
+  "Uptodown, uygulamanın telif hakkıyla korunan veya üçüncü taraf haklarına tabi içerikleri indirmek için kullanılabileceği endişesiyle ZenithW’yi mağazasında yayımlamayı reddetti.": "Uptodown 拒绝上架 ZenithW，理由是担心该应用可能被用于下载受版权或第三方权利保护的内容。",
+  "Bu tanım ZenithW’nin ne olduğunu yansıtmıyor. ZenithW bir korsanlık hizmeti değil, açık kaynaklı bir medya çalışma alanı. İndirme, medya dönüştürme, remux, ses ayırma, GIF oluşturma ve diğer medya araçlarının yanında sunduğumuz özelliklerden yalnızca biri. ZenithW telifli medya dağıtmaz.": "这一描述并不能代表 ZenithW 的实际定位。ZenithW 不是盗版服务，而是一个开源媒体工作空间。下载只是其中一项功能，此外还提供媒体转换、Remux、音频分离、GIF 制作及其他媒体工具。ZenithW 不分发受版权保护的媒体内容。",
+  "Bu nitelendirmeye katılmıyoruz; ancak Uptodown’un kararına saygı duyuyor ve itiraz etmiyoruz. Android sürümü doğrudan GitHub üzerinden indirilebilir.": "我们不同意这一描述，但尊重 Uptodown 的决定，并不会提出申诉。Android 版本仍可直接通过 GitHub 获取。",
+  "Android sürümünü GitHub Releases üzerinden indir": "从 GitHub Releases 下载 Android 版",
+  "Döngüde oynat": "循环播放"
 }

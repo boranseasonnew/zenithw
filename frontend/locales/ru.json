@@ -1600,7 +1600,7 @@
   "Servis listesini kapat": "Закрыть список услуг",
   "×": "×",
   "bilibili": "билибили",
-  "bluesky": "голубое небо",
+  "bluesky": "bluesky",
   "dailymotion": "ежедневное движение",
   "facebook": "Фейсбук",
   "pornhub": "порнхаб",
@@ -1830,7 +1830,7 @@
   "Ürün karşılaştırması": "Сравнение продуктов",
   "vs": "против",
   "İki reklamsız indirme aracını platform kapsamı, toplu işlemler ve dönüştürme yetenekleri üzerinden karşılaştırın.": "Сравните два загрузчика без рекламы по охвату платформы, массовым транзакциям и возможностям конвертации.",
-  "ZW": "З.В.",
+  "ZW": "ZW",
   "Hızlı karar": "быстрое решение",
   "Bağlantı indirme, yerel medya araçları ve uygulama seçeneklerini birlikte değerlendir.": "Рассмотрите возможность совместного скачивания ссылок, локальных медиа-инструментов и вариантов приложений.",
   "Ayrıntılı değerlendirme": "Детальная оценка",
@@ -3832,5 +3832,12 @@
   "Geri bildiriminiz için teşekkürler. Bu sürüm, desteklenen platform adlarını ve arayüz ipuçlarını daha tutarlı hale getirmeye yönelik diğer düzeltmeleri de içeriyor.": "Спасибо за отзыв. В выпуск также вошли улучшения, которые делают названия поддерживаемых платформ и подсказки интерфейса последовательнее.",
   "Thanks for the feedback. This release also includes related refinements to keep supported-platform names and interface guidance consistent.": "Спасибо за отзыв. В выпуск также вошли улучшения, которые делают названия поддерживаемых платформ и подсказки интерфейса последовательнее.",
   "Vimeo downloads need a signed-in session": "Для скачивания с Vimeo требуется войти в аккаунт",
-  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "Наши тесты показывают, что сейчас yt-dlp требуется активный сеанс Vimeo для доступа к этой ссылке. Сайт ZenithW не использует cookies для входа в Vimeo, поэтому загрузка через сайт может не сработать. В приложениях для Windows и Android есть встроенный браузер. Если войти там в Vimeo, yt-dlp, возможно, сможет использовать cookies, сохранённые на устройстве. Они останутся на устройстве и будут отправлены напрямую в Vimeo для проверки входа, а не на сервер ZenithW. Мы не тестировали этот способ и не можем гарантировать его работу. Мы продолжим следить за обновлениями yt-dlp."
+  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "Наши тесты показывают, что сейчас yt-dlp требуется активный сеанс Vimeo для доступа к этой ссылке. Сайт ZenithW не использует cookies для входа в Vimeo, поэтому загрузка через сайт может не сработать. В приложениях для Windows и Android есть встроенный браузер. Если войти там в Vimeo, yt-dlp, возможно, сможет использовать cookies, сохранённые на устройстве. Они останутся на устройстве и будут отправлены напрямую в Vimeo для проверки входа, а не на сервер ZenithW. Мы не тестировали этот способ и не можем гарантировать его работу. Мы продолжим следить за обновлениями yt-dlp.",
+  "Uptodown başvurusu reddedildi": "Заявка в Uptodown отклонена",
+  "Reddedildi": "Отклонено",
+  "Uptodown, uygulamanın telif hakkıyla korunan veya üçüncü taraf haklarına tabi içerikleri indirmek için kullanılabileceği endişesiyle ZenithW’yi mağazasında yayımlamayı reddetti.": "Uptodown отказал в публикации ZenithW, сославшись на опасения, что приложение может использоваться для загрузки материалов, защищённых авторским правом или правами третьих лиц.",
+  "Bu tanım ZenithW’nin ne olduğunu yansıtmıyor. ZenithW bir korsanlık hizmeti değil, açık kaynaklı bir medya çalışma alanı. İndirme, medya dönüştürme, remux, ses ayırma, GIF oluşturma ve diğer medya araçlarının yanında sunduğumuz özelliklerden yalnızca biri. ZenithW telifli medya dağıtmaz.": "Это описание не отражает назначение ZenithW. ZenithW — не пиратский сервис, а медиаплатформа с открытым исходным кодом. Загрузка — лишь одна из функций наряду с конвертацией медиа, remux, разделением аудио, созданием GIF и другими инструментами. ZenithW не распространяет материалы, защищённые авторским правом.",
+  "Bu nitelendirmeye katılmıyoruz; ancak Uptodown’un kararına saygı duyuyor ve itiraz etmiyoruz. Android sürümü doğrudan GitHub üzerinden indirilebilir.": "Мы не согласны с такой характеристикой, но уважаем решение Uptodown и не будем его обжаловать. Версия для Android по-прежнему доступна напрямую на GitHub.",
+  "Android sürümünü GitHub Releases üzerinden indir": "Скачать Android-версию в GitHub Releases",
+  "Döngüde oynat": "Повторять воспроизведение"
 }
