@@ -48,7 +48,11 @@ cp .env.example .env
 
 Sao chép `.env.example` thành `.env`, sau đó đặt `SECRET_KEY` thành một giá trị ngẫu nhiên mạnh.
 
-Build và khởi chạy các dịch vụ, sau đó mở `http://localhost:8080`.
+```bash
+docker compose up -d --build
+```
+
+Mở `http://localhost:8080` trong trình duyệt:
 
 ## Có gì mới trong web 17.2
 
