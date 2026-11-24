@@ -10,18 +10,9 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
-  <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=flat-square&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=flat-square&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows%20downloads&amp;logo=windows11&amp;color=2563EB" alt="Windows GitHub release downloads"></a>
 </p>
-
-<p align="center">
-  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=PC%20downloads&amp;logo=github&amp;color=7C3AED" alt="PC GitHub release asset downloads, all releases"></a>
-  <a href="https://github.com/boranseasonnew/zenithw-android/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw-android/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android%20downloads&amp;logo=android&amp;color=2E7D32" alt="Android GitHub release asset downloads, all releases"></a>
-</p>
-
-<p align="center"><sub>Download badges show GitHub release file downloads across all releases, not unique users or Microsoft Store installs.</sub></p>
 
 <p align="center"><strong><a href="why_zenithw.md">✦ Why ZenithW? Read our story</a></strong></p>
 
@@ -30,6 +21,34 @@
 ZenithW is an open-source media downloader with tools for audio extraction, conversion and remuxing. No ads, subscription or mandatory account.
 
 Paste a supported link, choose a format and download the file. Available formats depend on the source.
+
+## Why ZenithW?
+
+An open-source media workspace for downloading and processing media without mandatory accounts, subscriptions or ads.
+
+## Features
+
+- Download media from supported sources with a simple link-based workflow.
+- Extract and process audio from media.
+- Convert media formats and remux compatible MKV/MP4 streams without re-encoding.
+- Convert and resize images locally in your browser.
+- Separate vocals and instrumentals with the Audio Separator.
+
+## Quick start
+
+Clone the repository and enter the project directory:
+
+```bash
+git clone https://github.com/boranseasonnew/zenithw.git
+cd zenithw
+cp .env.example .env
+# Set SECRET_KEY in .env to a strong random value before starting.
+docker compose up -d --build
+```
+
+Copy `.env.example` to `.env`, then set `SECRET_KEY` to a strong random value.
+
+Build and start the services, then open `http://localhost:8080`.
 
 ## What's new in web 17.2
 
