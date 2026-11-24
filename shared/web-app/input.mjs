@@ -78,6 +78,9 @@ export function fireRadar(){
 export function isYT(u){try{const h=new URL(u).hostname.toLowerCase();return h==='youtube.com'||h.endsWith('.youtube.com')||h==='youtu.be'||h.endsWith('.youtu.be');}catch(e){return false;}}
 
 
+export function isVimeo(u){try{const h=new URL(u).hostname.toLowerCase();return h==='vimeo.com'||h.endsWith('.vimeo.com');}catch(e){return false;}}
+
+
 export function shouldRouteYoutubeToApps(url){return !YOUTUBE_WEB_ENABLED&&isYT(url);}
 
 

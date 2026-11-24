@@ -1,5 +1,5 @@
 // ZenithW errors; built into the existing classic-script entry point.
-import {isYT} from './input.mjs';
+import {isVimeo, isYT} from './input.mjs';
 import {t} from './language.mjs';
 import {state} from './state.mjs';
 import {toast} from './ui.mjs';
@@ -11,6 +11,7 @@ export const PUBLIC_ERROR_TX={
   youtube_restricted:'errYoutubeRestricted',format_unavailable:'errFormatUnavailable',
   private_video:'errPrivate',copyright_restricted:'errPlatformRestricted',age_restricted:'errUnavailable',video_unavailable:'errUnavailable',live_not_supported:'errLive',
   instagram_ratelimit:'igBusy',platform_restricted:'errPlatformRestricted',unsupported_url:'errUnsupported',playlist_not_supported:'errUnsupported',video_too_long:'errUnavailable',
+  vimeo_restricted:'errVimeoRestricted',vimeo_region_restricted:'errVimeoRegionRestricted',
   invalid_url:'errInvalidUrl',network_error:'errNetwork',request_timeout:'errTimeout',file_too_large:'errFileTooLarge',server_busy:'errServerBusy',media_probe_failed:'errConversion',conversion_too_long:'errConversion',conversion_failed:'errConversion',remux_incompatible:'errConversion',request_failed:'errGeneric'
 };
 
@@ -27,6 +28,7 @@ export function publicErrorMessage(payload,status,url){
   if(status===503)return t('errServerBusy');
   if(status===504)return t('errTimeout');
   if(isYT(url||''))return t('errYoutubeRestricted');
+  if(isVimeo(url||''))return t('errVimeoRestricted');
   return t('errGeneric');
 }
 

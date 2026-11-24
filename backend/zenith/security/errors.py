@@ -1,6 +1,6 @@
 """Shared security errors helpers."""
 from flask import jsonify
-from zenith.security.urls import is_instagram, is_pornhub, is_tiktok, is_youtube
+from zenith.security.urls import is_instagram, is_pornhub, is_tiktok, is_vimeo, is_youtube
 
 def classify_error(error_msg, url):
     """Map upstream/technical failures to stable codes safe for public clients."""
@@ -48,6 +48,16 @@ def classify_error(error_msg, url):
         # its page request is rejected. Keep the public response actionable
         # instead of exposing the generic retry-only message.
         return "platform_restricted"
+    if is_vimeo(url):
+        if any(token in es for token in ("private", "password", "login")):
+            return "private_video"
+        if any(token in es for token in ("not found", "does not exist", "deleted")):
+            return "video_unavailable"
+        if any(token in es for token in ("geo", "region", "country", "location")):
+            return "vimeo_region_restricted"
+        if any(token in es for token in ("403", "forbidden", "blocked", "bot", "cloudflare", "captcha")):
+            return "vimeo_restricted"
+        return "vimeo_restricted"
     if "no video formats" in es or "requested format" in es:
         return "format_unavailable"
     if any(token in es for token in ("network", "connection", "403", "forbidden")):
@@ -159,6 +169,8 @@ PUBLIC_ERROR_MESSAGES = {
     "video_unavailable": "This video is currently unavailable.",
     "live_not_supported": "Live streams are not currently supported.",
     "instagram_ratelimit": "Instagram is temporarily limiting requests. Please try again shortly.",
+    "vimeo_restricted": "Vimeo blocked or restricted this download on the web. You can try the ZenithW desktop app.",
+    "vimeo_region_restricted": "This Vimeo video is region-restricted or blocked for web servers. You can try the ZenithW desktop app.",
     "platform_restricted": "The platform did not allow this download. Please try again later.",
     "unsupported_url": "This link or platform is not supported.",
     "invalid_url": "Enter a valid public video page URL starting with https:// or http://.",

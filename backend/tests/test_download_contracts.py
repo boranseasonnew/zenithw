@@ -550,12 +550,18 @@ class PlatformPolicyTests(unittest.TestCase):
             "_get_hostname": hostname,
             "_hostname_matches": matches,
         })
+        is_vimeo = load_function("is_vimeo", {
+            "_get_hostname": hostname,
+            "_hostname_matches": matches,
+        })
         cls.is_pornhub = staticmethod(is_pornhub)
+        cls.is_vimeo = staticmethod(is_vimeo)
         cls.classify_error = staticmethod(load_function("classify_error", {
             "is_youtube": lambda url: False,
             "is_instagram": lambda url: False,
             "is_tiktok": lambda url: False,
             "is_pornhub": is_pornhub,
+            "is_vimeo": is_vimeo,
         }))
 
     def test_pornhub_is_not_blocked_by_unsupported_domain_policy(self):
@@ -576,6 +582,30 @@ class PlatformPolicyTests(unittest.TestCase):
                 "https://www.pornhub.com/view_video.php?viewkey=example",
             ),
             "platform_restricted",
+        )
+
+    def test_vimeo_domains_are_recognized(self):
+        self.assertTrue(self.is_vimeo("https://vimeo.com/123456789"))
+        self.assertTrue(self.is_vimeo("https://player.vimeo.com/video/123456789"))
+        self.assertFalse(self.is_vimeo("https://notvimeo.com/123456789"))
+
+    def test_vimeo_error_classification(self):
+        vimeo_url = "https://vimeo.com/123456789"
+        self.assertEqual(
+            self.classify_error("HTTP Error 403: Forbidden", vimeo_url),
+            "vimeo_restricted",
+        )
+        self.assertEqual(
+            self.classify_error("This video is password-protected or private", vimeo_url),
+            "private_video",
+        )
+        self.assertEqual(
+            self.classify_error("The video does not exist or has been deleted", vimeo_url),
+            "video_unavailable",
+        )
+        self.assertEqual(
+            self.classify_error("This video is not available in your country/region (geo-restricted)", vimeo_url),
+            "vimeo_region_restricted",
         )
 
 

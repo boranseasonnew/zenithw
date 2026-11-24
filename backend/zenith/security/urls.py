@@ -18,6 +18,9 @@ def is_youtube(u):
 def is_tiktok(u):
     return _hostname_matches(_get_hostname(u), "tiktok.com")
 
+def is_vimeo(u):
+    return _hostname_matches(_get_hostname(u), "vimeo.com")
+
 def is_instagram(u):
     return _hostname_matches(_get_hostname(u), "instagram.com")
 
