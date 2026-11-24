@@ -42,8 +42,6 @@ Clone the repository and enter the project directory:
 git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
-# Set SECRET_KEY in .env to a strong random value before starting.
-docker compose up -d --build
 ```
 
 Copy `.env.example` to `.env`, then set `SECRET_KEY` to a strong random value.
