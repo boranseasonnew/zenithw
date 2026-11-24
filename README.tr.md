@@ -48,7 +48,11 @@ cp .env.example .env
 
 `.env.example` dosyasını `.env` olarak kopyala ve `SECRET_KEY` değerini güçlü, rastgele bir değerle değiştir.
 
-Servisleri oluşturup başlat, ardından `http://localhost:8080` adresini aç.
+```bash
+docker compose up -d --build
+```
+
+Tarayıcında `http://localhost:8080` adresini aç:
 
 ## Web 17.2 ile neler değişti?
 
