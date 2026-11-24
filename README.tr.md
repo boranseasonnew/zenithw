@@ -56,14 +56,13 @@ Tarayıcında `http://localhost:8080` adresini aç:
 
 ## Web 17.2 ile neler değişti?
 
-- **Yeni [Görsel Dönüştürücü](https://zenithw.space/tr/image-convert):** JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA ve QOI dahil farklı biçimler arasında dönüştürme. Yerel işleme motoru daha fazla biçimi destekler.
-- **Hassas görsel boyutlandırma:** özel genişlik ve yükseklik değerleri gir, sonucu önizle ve çıktı ölçülerini kontrol et.
-- **Yenilenen [Ses Ayırıcı](https://zenithw.space/tr/audio-separator):** dosya seçimi, ayrılan vokal ve enstrümantal parçalar, önizleme ve dışa aktarma için daha anlaşılır bir stüdyo arayüzü.
-- **Sekiz dil desteği:** Görsel Dönüştürücü arayüzü ve erişilebilirlik metinleri sitenin sekiz dilinde yerelleştirildi. Görsel dönüştürme ve boyutlandırma tarayıcında yerel olarak yapılır.
-- Uyumlu MKV/MP4 akışlarını yeniden kodlamadan kapsayıcı değiştiren remux dahil mevcut medya araçları kullanılmaya devam eder.
+- **Vimeo web sürümünden kaldırıldı:** Bazı Vimeo bağlantılarının çerez gerektirmesi ve yt-dlp uyumluluğunun tutarsız olması nedeniyle herkese açık web uygulamasında Vimeo desteği devre dışı bırakıldı.
+- **Çeviri düzeltmeleri:** AVI gibi biçim adları ve Rumble gibi platform isimleri artık yanlış çevrilmiyor.
+- **Ayarlar kısayolu düzeltildi:** İndirme panelindeki bağlantı artık Görünüm yerine ilgili Video ayarlarını açıyor.
+- **Yerelleştirilmiş SEO metaverileri:** Sayfa başlıkları ve sosyal önizlemeler her dil için doğru dili kullanıyor.
+- **Uygulama tanıtım penceresi kaldırıldı:** Kullanıcı bağlantı girerken artık araya girmiyor.
 
 Windows ve Android kendi bağımsız sürüm numaralarını korur; bu sürüm etiketi web sürümünü belirtir.
-
 ## Proje
 
 - [Web arayüzü](frontend/) ve [API](backend/)
