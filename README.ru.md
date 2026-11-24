@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="assets/web-v17.2.svg" alt="ZenithW Web v17.2"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
+  <a href="https://zenithw.space"><img src="assets/web-v17.2.svg" width="116" height="24" alt="ZenithW Web v17.2"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="assets/windows-v5.0.0.svg" width="142" height="24" alt="ZenithW Windows v5.0.0"></a>
 </p>
 
 <p align="center"><strong><a href="why_zenithw.md">✦ Почему ZenithW? История проекта (на английском)</a></strong></p>
