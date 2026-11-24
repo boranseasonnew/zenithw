@@ -78,10 +78,10 @@ test('All release titles, introductions and sections have translations in eight 
   }
 });
 
-function runtime(saved='ru', {settings=true, browser=['ja-JP'], location, route}={}){
+function runtime(saved='ru', {settings=true, browser=['ja-JP'], location, route, links=[]}={}){
   const pending=[], writes=[];
   const select={value:'',setAttribute(){},removeAttribute(){},hasAttribute:()=>false,replaceChildren(){}};
-  const document={readyState:'complete',documentElement:{getAttribute:()=>route},querySelectorAll:()=>[],getElementById:()=>settings?select:null,
+  const document={readyState:'complete',documentElement:{getAttribute:()=>route},querySelectorAll:selector=>selector==='a[href]'?links:[],getElementById:()=>settings?select:null,
     createElement:tag=>{assert.equal(tag,'option');return {};},querySelector:()=>null};
   const window={dispatchEvent(){},location};
   const context=vm.createContext({window,document,navigator:{languages:browser},console:{error(){}},
@@ -129,4 +129,12 @@ test('changing locale preserves the current query and platform fragment',async()
   state.complete(0);await state.api.ready;
   const change=state.api.use('de');state.complete(1);await change;
   assert.deepEqual(assigned,['/de/downloads?source=navbar#windows']);
+});
+
+test('Settings navigation retains the source route and opens the Video tab directly',async()=>{
+  const settingsLink={href:'/settings.html',getAttribute(name){return name==='href'?this.href:null;},setAttribute(name,value){if(name==='href')this.href=value;}};
+  const location={pathname:'/en/',search:'',hash:''};
+  const state=runtime('en',{settings:false,location,route:'/',links:[settingsLink]});
+  state.complete(0);await state.api.ready;
+  assert.equal(settingsLink.href,'/settings?return=%2Fen%2F#video');
 });

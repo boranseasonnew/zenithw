@@ -92,8 +92,8 @@ try{
  assert.deepEqual(errors,[]);
  const base='http://127.0.0.1:8769';
  const youtubeTitle='YouTube downloads are unavailable on the web.';
-const vimeoTitle='Vimeo downloads are currently unavailable on the web.';
-const vimeoBody='In our tests, yt-dlp reported that this Vimeo link requires a signed-in session. The ZenithW website does not use your Vimeo account cookies, so it cannot complete the download. The Windows and Android apps include built-in browsers; signing in to Vimeo there may let yt-dlp use session cookies stored on your device. Those cookies stay on your device and are sent to Vimeo for authentication; they are not uploaded to ZenithW’s web server. We have not tested this Vimeo method, so it may not work and we cannot guarantee a download. We will follow stable yt-dlp updates and review Vimeo support as it changes.';
+const vimeoTitle='Vimeo downloads need a signed-in session';
+const vimeoBody="Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.";
  async function assertPopupFits(card){
   const metrics=await card.evaluate(el=>{
    const {top,left,bottom,right}=el.getBoundingClientRect();
@@ -119,6 +119,7 @@ const vimeoBody='In our tests, yt-dlp reported that this Vimeo link requires a s
    await vimeoDialog.waitFor({state:'visible'});
    assert.equal(await page.locator('#vimeoAppTitle').textContent(),catalog[vimeoTitle]);
    assert.equal(await page.locator('#vimeoAppBody').textContent(),catalog[vimeoBody]);
+   assert.ok(await page.locator('.vimeo-app-logo').evaluate(img=>img.complete&&img.naturalWidth>0),'The Vimeo logo should load locally');
    assert.equal(await page.locator('#dlOverlay').getAttribute('aria-hidden'),'true');
    assert.equal(infoRequestCount,infoCountBeforeVimeo,'Vimeo must be blocked before a backend metadata request');
    for(const [id,platform] of [['vimeoAppDesktop','windows'],['vimeoAppAndroid','android']])assert.equal(new URL(await page.locator('#'+id).getAttribute('href'),base).hash,'#'+platform);
@@ -151,10 +152,18 @@ const vimeoBody='In our tests, yt-dlp reported that this Vimeo link requires a s
 
  await page.goto(base+'/settings?return=%2F%23video');
  await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='video');
+ await page.goto(base+'/settings?return=%2Fen%2F#video');
+ await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='video');
  await page.goto(base+'/settings#video');
  await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='video');
  await page.goto(base+'/settings#audio');
  await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='audio');
+ await page.goto(base+'/en/');
+ await page.evaluate(()=>ZWLanguage.ready);
+ const settingsHref=await page.locator('.bar-btn[href^="/settings"]').getAttribute('href');
+ assert.equal(settingsHref,'/settings?return=%2Fen%2F#video','The sidebar Settings shortcut should open the Video tab');
+ await page.goto(base+settingsHref);
+ await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='video');
 
  const promoContext=await browser.newContext({viewport:{width:320,height:568},locale:'en'});
  await promoContext.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());

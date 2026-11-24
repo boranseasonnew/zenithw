@@ -27,7 +27,7 @@
       if (!original?.startsWith('/') || original.startsWith('//')) return;
       let destination=path(original);
       if (/^\/settings(?:\.html)?$/.test(original) && localizedRoutes.has(basePath(location.pathname))) {
-        destination='/settings?return='+encodeURIComponent(location.pathname+(location.hash||''));
+        destination='/settings?return='+encodeURIComponent(location.pathname+(location.hash||''))+'#video';
       }
       if (destination!==original) link.setAttribute('href',destination);
     });
