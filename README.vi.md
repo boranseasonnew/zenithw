@@ -44,8 +44,6 @@ Sao chép kho mã nguồn và mở thư mục dự án:
 git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
-# Set SECRET_KEY in .env to a strong random value before starting.
-docker compose up -d --build
 ```
 
 Sao chép `.env.example` thành `.env`, sau đó đặt `SECRET_KEY` thành một giá trị ngẫu nhiên mạnh.
