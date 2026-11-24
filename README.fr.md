@@ -56,14 +56,13 @@ Ouvrez `http://localhost:8080` dans votre navigateur :
 
 ## Nouveautés du Web 17.2
 
-- **Nouveau [convertisseur d’images](https://zenithw.space/fr/image-convert) :** convertissez entre plusieurs formats, notamment JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA et QOI. Le moteur local prend en charge d’autres formats.
-- **Redimensionnement précis :** saisissez une largeur et une hauteur personnalisées, prévisualisez le résultat et gardez le contrôle des dimensions de sortie.
-- **[Séparateur audio](https://zenithw.space/fr/audio-separator) repensé :** une interface studio renouvelée clarifie le choix des fichiers, l’utilisation des pistes voix et instrumentale, l’aperçu et l’export.
-- **Huit langues :** l’interface du convertisseur et ses libellés d’accessibilité sont traduits dans les huit langues du site. La conversion et le redimensionnement s’effectuent localement dans le navigateur.
-- Les outils existants restent disponibles, notamment le remux des flux MKV/MP4 compatibles sans réencodage.
+- **Vimeo désactivé sur le site web public :** la prise en charge a été retirée, car certains liens Vimeo nécessitent des cookies et leur compatibilité avec yt-dlp est irrégulière.
+- **Corrections de traduction :** les noms de formats comme AVI et de plateformes comme Rumble ne sont plus traduits à tort.
+- **Raccourci des paramètres corrigé :** le lien dans le panneau de téléchargement ouvre désormais les paramètres vidéo concernés au lieu de l’onglet Apparence.
+- **Métadonnées SEO localisées :** les titres des pages et les aperçus de partage utilisent désormais la langue appropriée à chaque version du site.
+- **Fenêtre promotionnelle de l’application supprimée :** elle n’interrompt plus les utilisateurs lorsqu’ils saisissent un lien.
 
 Windows et Android conservent leurs propres numéros de version ; cette version concerne le Web.
-
 ## Projet
 
 - [Interface web](frontend/) et [API](backend/)
