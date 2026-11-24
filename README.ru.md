@@ -44,8 +44,6 @@ ZenithW — открытый инструмент для загрузки вид
 git clone https://github.com/boranseasonnew/zenithw.git
 cd zenithw
 cp .env.example .env
-# Set SECRET_KEY in .env to a strong random value before starting.
-docker compose up -d --build
 ```
 
 Скопируйте `.env.example` в `.env` и задайте для `SECRET_KEY` надёжное случайное значение.
