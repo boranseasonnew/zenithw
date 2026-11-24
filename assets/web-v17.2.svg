@@ -1,9 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="150" height="28" role="img" aria-label="Web v17.2">
+<svg xmlns="http://www.w3.org/2000/svg" width="116" height="24" viewBox="0 0 116 24" role="img" aria-label="Web v17.2">
   <title>Web v17.2</title>
-  <rect width="150" height="28" rx="3" fill="#7C3AED"/>
-  <path fill="#6D28D9" d="M3 0h48v28H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3z"/>
-  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,sans-serif" font-size="11" font-weight="600">
-    <text x="26" y="18.5">WEB</text>
-    <text x="99" y="18.5">v17.2</text>
-  </g>
+  <rect width="116" height="24" rx="5" fill="#242833"/>
+  <circle cx="13" cy="12" r="6.5" fill="none" stroke="#A78BFA" stroke-width="1.4"/>
+  <path d="M6.8 12h12.4M13 5.5c2 1.8 2.8 4 2.8 6.5s-.8 4.7-2.8 6.5c-2-1.8-2.8-4-2.8-6.5s.8-4.7 2.8-6.5z" fill="none" stroke="#A78BFA" stroke-width="1"/>
+  <text x="26" y="15.8" fill="#E5E7EB" font-family="Arial,sans-serif" font-size="10" font-weight="600">WEB</text>
+  <text x="108" y="15.8" fill="#C4B5FD" text-anchor="end" font-family="Arial,sans-serif" font-size="10" font-weight="600">17.2</text>
 </svg>
