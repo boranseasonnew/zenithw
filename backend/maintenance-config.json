@@ -1,7 +1,7 @@
 {
-  "active": false,
-  "title": "Kısa bir pati molası",
-  "message": "Pati ekibimiz sunucuların kablolarını düzeltiyor. Kısa süre sonra yeniden buradayız.",
-  "until": "",
+  "active": true,
+  "title": "Fixing The Backend",
+  "message": "Yt-dlp-based errors, server errors, and translation errors",
+  "until": "2026-11-24T06:45:00+03:00",
   "retryAfter": 900
 }
