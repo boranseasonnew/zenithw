@@ -1,5 +1,4 @@
 // ZenithW ui; built into the existing classic-script entry point.
-import {DESKTOP_PROMO_DISMISS_KEY, DESKTOP_PROMO_SESSION_KEY} from './bootstrap.mjs';
 import {loadHistory} from './history.mjs';
 import {OVERLAY_FOCUSABLE, overlayReturnFocus} from './media-tools.mjs';
 import {closePlaylistQueue} from './queue.mjs';
@@ -92,14 +91,6 @@ export function handleOverlay(e,id){if(e.target===document.getElementById(id)){i
 export function closeOverlay(id,preservePending){
   const overlay=document.getElementById(id);if(!overlay)return;
   const wasOpen=overlay.classList.contains('open');
-  if(id==='desktopPromo'){
-    try{
-      sessionStorage.setItem(DESKTOP_PROMO_SESSION_KEY,'1');
-      if(document.getElementById('desktopPromoNever')?.checked)localStorage.setItem(DESKTOP_PROMO_DISMISS_KEY,'1');
-    }catch(e){}
-    overlay.classList.remove('is-visible');
-    setTimeout(()=>{if(!overlay.classList.contains('open'))overlay.hidden=true;},240);
-  }
   overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');overlay.inert=true;syncModalBackground();
   unlockPageScrollIfIdle();
   if(id==='servicesOverlay'){const chip=document.getElementById('servicesChip');if(chip){chip.classList.remove('open');chip.setAttribute('aria-expanded','false');}}

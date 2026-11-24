@@ -49,15 +49,22 @@ def classify_error(error_msg, url):
         # instead of exposing the generic retry-only message.
         return "platform_restricted"
     if is_vimeo(url):
-        if any(token in es for token in ("private", "password", "login")):
+        # Anonymous Vimeo extraction fails before a real privacy or block
+        # signal. Match that text first: it mentions "--password" and must
+        # not be reported as a private video.
+        if any(token in es for token in ("only works when logged-in", "use --cookies")):
+            return "vimeo_login_required"
+        if any(token in es for token in ("private video", "password-protected", "password protected")):
             return "private_video"
-        if any(token in es for token in ("not found", "does not exist", "deleted")):
+        if any(token in es for token in ("does not exist", "has been deleted", "video was deleted")):
             return "video_unavailable"
-        if any(token in es for token in ("geo", "region", "country", "location")):
+        if any(token in es for token in (
+            "geo-restricted", "geo restricted", "not available in your country",
+            "region-restricted", "region restricted", "blocked in your country",
+        )):
             return "vimeo_region_restricted"
-        if any(token in es for token in ("403", "forbidden", "blocked", "bot", "cloudflare", "captcha")):
+        if any(token in es for token in ("403", "forbidden", "blocked", "captcha", "cloudflare")):
             return "vimeo_restricted"
-        return "vimeo_restricted"
     if "no video formats" in es or "requested format" in es:
         return "format_unavailable"
     if any(token in es for token in ("network", "connection", "403", "forbidden")):
@@ -169,8 +176,9 @@ PUBLIC_ERROR_MESSAGES = {
     "video_unavailable": "This video is currently unavailable.",
     "live_not_supported": "Live streams are not currently supported.",
     "instagram_ratelimit": "Instagram is temporarily limiting requests. Please try again shortly.",
+    "vimeo_login_required": "Vimeo currently requires a login to download this video, so it can't be downloaded through ZenithW right now.",
     "vimeo_restricted": "Vimeo blocked or restricted this download on the web. You can try the ZenithW desktop app.",
-    "vimeo_region_restricted": "This Vimeo video is region-restricted or blocked for web servers. You can try the ZenithW desktop app.",
+    "vimeo_region_restricted": "This Vimeo video is region-restricted. You can try the ZenithW desktop app.",
     "platform_restricted": "The platform did not allow this download. Please try again later.",
     "unsupported_url": "This link or platform is not supported.",
     "invalid_url": "Enter a valid public video page URL starting with https:// or http://.",

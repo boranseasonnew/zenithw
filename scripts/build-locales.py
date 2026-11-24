@@ -22,7 +22,9 @@ class Markup(HTMLParser):
         script_src=attributes.get('src','')
         defer_script=(tag=='script' and script_src and 'async' not in attributes and 'defer' not in attributes
                   and script_type!='module' and not re.search(r'(?:^|/)site-language(?:\.[a-f0-9]+)?\.js(?:[?#]|$)',script_src))
-        node={'start':start,'raw':self.get_starttag_text(),'fields':{},'children':0,'tag':tag,'defer':bool(defer_script),'blocked':tag in blocked or any(item['blocked'] for item in self.stack)}
+        protected_brand=tag=='span' and 'services-tag' in attributes.get('class','').split()
+        protected_format=tag=='option' and attributes.get('value','').lower() in {'mp3','mp4','webm','mkv','mov','avi','m4v','3gp','ts','wmv','m4a','aac','opus','ogg','flac','wav','aiff','wma'}
+        node={'start':start,'raw':self.get_starttag_text(),'fields':{},'children':0,'tag':tag,'defer':bool(defer_script),'blocked':tag in blocked or any(item['blocked'] for item in self.stack),'protected':protected_brand or protected_format}
         if self.stack:self.stack[-1]['children']+=1
         # Previously recorded source text remains authoritative on rebuilds.
         if attributes.get('data-l10n'):node['fields']=json.loads(attributes['data-l10n'])
@@ -45,7 +47,7 @@ class Markup(HTMLParser):
     def handle_data(self, value):
         if not self.stack:return
         node=self.stack[-1];key='text:'+str(node['children']);node['children']+=1
-        if not node['blocked'] and value.strip() in catalog:node['fields'].setdefault(key,value)
+        if not node['blocked'] and not node['protected'] and value.strip() in catalog:node['fields'].setdefault(key,value)
     def handle_comment(self,value):
         if self.stack:self.stack[-1]['children']+=1
     def result(self):

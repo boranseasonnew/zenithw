@@ -591,6 +591,27 @@ class PlatformPolicyTests(unittest.TestCase):
 
     def test_vimeo_error_classification(self):
         vimeo_url = "https://vimeo.com/123456789"
+        real_login_error = (
+            "The web client only works when logged-in. "
+            "Use --cookies ... --username and --password ..."
+        )
+        self.assertEqual(self.classify_error(real_login_error, vimeo_url), "vimeo_login_required")
+        self.assertNotEqual(self.classify_error(real_login_error, vimeo_url), "private_video")
+        self.assertEqual(
+            self.classify_error("invalid password in the download config", vimeo_url),
+            "request_failed",
+        )
+        self.assertEqual(
+            self.classify_error("Use --username and --password", vimeo_url),
+            "request_failed",
+        )
+        self.assertEqual(self.classify_error("ERROR: ffmpeg not found", vimeo_url), "request_failed")
+        self.assertEqual(self.classify_error("both attempts failed", vimeo_url), "request_failed")
+        self.assertEqual(
+            self.classify_error("could not determine output location", vimeo_url),
+            "request_failed",
+        )
+        self.assertEqual(self.classify_error("Unable to download webpage", vimeo_url), "request_failed")
         self.assertEqual(
             self.classify_error("HTTP Error 403: Forbidden", vimeo_url),
             "vimeo_restricted",

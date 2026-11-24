@@ -85,6 +85,8 @@ try{
  assert.deepEqual(errors,[]);
  const base='http://127.0.0.1:8769';
  const youtubeTitle='YouTube downloads are unavailable on the web.';
+const vimeoTitle='Vimeo downloads are temporarily unavailable on the web';
+const vimeoBody='Vimeo’s web access restrictions persist across current stable and nightly yt-dlp releases, so Vimeo links cannot currently be downloaded through ZenithW Web. The desktop app may offer another route: you can sign in to Vimeo in its built-in browser, and the app can keep that session in a local cookie file for yt-dlp. Those cookies stay on your device and are sent to Vimeo for authentication; they are not uploaded to ZenithW’s web server. This Vimeo workflow has not yet been tested, so we cannot promise that it will work. We will follow yt-dlp updates and review web support if access becomes available again.';
  async function assertPopupFits(card){
   const metrics=await card.evaluate(el=>{
    const {top,left,bottom,right}=el.getBoundingClientRect();
@@ -102,6 +104,12 @@ try{
    const title=catalog[youtubeTitle]||youtubeTitle;
    await page.goto(base+'/'+(language==='tr'?'':language+'/'));
    await page.evaluate(async theme=>{await ZWLanguage.ready;setTheme(theme);},theme);
+   await page.locator('#urlInput').fill('https://vimeo.com/123456789');
+   await page.waitForFunction(()=>document.getElementById('ytPopup').classList.contains('show'));
+   assert.equal(await page.locator('#ytErrTitle').textContent(),catalog[vimeoTitle]);
+   assert.equal(await page.locator('#ytErrTxt').textContent(),catalog[vimeoBody]);
+   await page.locator('#urlInput').fill('');
+   await page.evaluate(()=>{clearTimeout(ytErrTimer);document.getElementById('ytPopup').classList.remove('show');});
    const input=page.locator('#urlInput');
    await input.fill('https://youtu.be/example');
    await input.press('Enter');
@@ -127,32 +135,20 @@ try{
  }
  assert.deepEqual(youtubeRequests,[]);
 
+ await page.goto(base+'/settings?return=%2F%23video');
+ await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='video');
+ await page.goto(base+'/settings#audio');
+ await page.waitForFunction(()=>document.querySelector('.st-nav-btn.active')?.dataset.page==='audio');
+
  const promoContext=await browser.newContext({viewport:{width:320,height:568},locale:'en'});
  await promoContext.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());
  const promoPage=await promoContext.newPage();
  await promoPage.goto(base+'/en/');
- const reminder=promoPage.getByRole('dialog',{name:'Use ZenithW on your device'});
- await reminder.waitFor();
- await assertPopupFits(reminder);
- await promoPage.mouse.click(2,2);
- await reminder.waitFor({state:'hidden'});
- assert.equal(await promoPage.evaluate(()=>sessionStorage.getItem('zw_desktop_promo_seen')),'1');
- assert.equal(await promoPage.evaluate(()=>localStorage.getItem('zw_desktop_promo_dismissed')),null);
- await promoPage.reload();
- await promoPage.evaluate(()=>initDesktopPromo());
- assert.equal(await promoPage.locator('#desktopPromo').getAttribute('hidden'),'');
- const newSession=await promoContext.newPage();
- await newSession.goto(base+'/en/');
- await newSession.locator('#desktopPromo.open').waitFor();
- await newSession.locator('#desktopPromoNever').check();
- await newSession.locator('#desktopPromoClose').click();
- assert.equal(await newSession.evaluate(()=>localStorage.getItem('zw_desktop_promo_dismissed')),'1');
- const dismissed=await promoContext.newPage();
- await dismissed.goto(base+'/en/');
- await dismissed.waitForTimeout(5200);
- assert.equal(await dismissed.locator('#desktopPromo').getAttribute('hidden'),'');
+ await promoPage.waitForTimeout(5200);
+ assert.equal(await promoPage.locator('#desktopPromo').count(),0,'the homepage must not inject a timed app promo');
+ assert.equal(await promoPage.getByRole('dialog',{name:'Use ZenithW on your device'}).count(),0);
  await promoContext.close();
  assert.deepEqual(errors,[]);
  console.log('PASS: metadata cancellation/race, modal callbacks, settings, and actionable URL errors in eight languages on desktop/mobile.');
- console.log('PASS: YouTube web handoff, localized popup layouts and keyboard behavior, download routes, and reminder persistence.');
+ console.log('PASS: YouTube web handoff, localized popup layouts and keyboard behavior, download routes, and no timed homepage promo.');
 }finally{await browser.close();await new Promise(r=>server.close(r));}

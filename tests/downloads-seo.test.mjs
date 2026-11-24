@@ -40,6 +40,20 @@ test('all generated localized pages have self-canonicals, complete reciprocal hr
  }
 });
 
+test('home share metadata defaults to English and platform and format names remain untranslated',()=>{
+ const rootHome=read('frontend/index.html');
+ for(const selector of ['<title>','property="og:title" content="','name="twitter:title" content="'])assert.ok(rootHome.includes(selector+'Free Video Downloader: TikTok, Instagram | ZenithW'));
+ for(const lang of languages){
+  const prefix=lang==='tr'?'':lang+'/';
+  const home=read(`frontend/${prefix}index.html`),converter=read(`frontend/${prefix}convert.html`);
+  assert.match(home,/<span class="services-tag">rutube<\/span>/,lang+' Rutube brand');
+  assert.match(home,/<span class="services-tag vimeo-unavailable">vimeo<\/span>/,lang+' red Vimeo status');
+  assert.doesNotMatch(home,/humidity/,lang+' must not translate a platform name');
+  assert.match(converter,/<option value="avi">AVI<\/option>/,lang+' AVI format name');
+  assert.match(home,/href="\/settings#video"/,'quality settings shortcut');
+ }
+});
+
 test('all four complete guide articles contain their translated paragraphs and steps without JavaScript',()=>{
  for(const guide of guides)for(const lang of languages){
   const source=visible(read(fileFor(languagePath('/guides/'+guide.slug,lang))));

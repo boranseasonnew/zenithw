@@ -3810,4 +3810,7 @@
   "The Image Converter’s page copy, status messages, privacy wording and accessibility labels are complete in all eight languages. Language changes can update interface copy without a page reload. Audio Separator’s studio design is also consistent across the same eight languages.": "图片转换器的页面文案、状态消息、隐私说明和无障碍标签现已覆盖八种语言。切换语言时无需刷新页面即可更新文案。工作室设计也已在八种语言中保持一致。",
   "20 kasım 2026": "2026年11月20日",
   "November 20, 2026": "2026年11月20日"
+,
+  "Vimeo downloads are temporarily unavailable on the web": "Vimeo 网页下载暂时不可用",
+  "Vimeo’s web access restrictions persist across current stable and nightly yt-dlp releases, so Vimeo links cannot currently be downloaded through ZenithW Web. The desktop app may offer another route: you can sign in to Vimeo in its built-in browser, and the app can keep that session in a local cookie file for yt-dlp. Those cookies stay on your device and are sent to Vimeo for authentication; they are not uploaded to ZenithW’s web server. This Vimeo workflow has not yet been tested, so we cannot promise that it will work. We will follow yt-dlp updates and review web support if access becomes available again.": "当前 yt-dlp 稳定版和 nightly 版仍受到 Vimeo 网页访问限制，因此目前无法通过 ZenithW Web 下载 Vimeo 链接。桌面应用可能提供另一种方式：你可以在应用内置浏览器中登录 Vimeo，让应用在本机保存会话 Cookie 文件供 yt-dlp 使用。Cookie 会留在你的设备上，并发送给 Vimeo 用于身份验证；不会上传到 ZenithW 网页服务器。我们尚未测试这套 Vimeo 流程，因此不能保证它有效。我们会继续关注 yt-dlp 更新，并在网页访问恢复后重新评估支持情况。"
 }

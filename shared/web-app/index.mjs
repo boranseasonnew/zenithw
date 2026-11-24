@@ -14,7 +14,7 @@ import {cancelDownload, startDownload} from './download.mjs';
 import {CONFETTI_COLORS, canCopySaveFile, canShareSaveFile, configureSaveModal, fireConfetti, openPreparedSaveModal, openSaveModal, releasePendingBlob, releaseUsedSaveLater, saveAction, saveFile, showSaveIssue} from './save.mjs';
 import {OVERLAY_FOCUSABLE, _updateConvBtn, formatLocalFileSize, handleConvDrop, handleConvFile, handleRemuxDrop, handleRemuxFile, openConvert, openRemux, overlayReturnFocus, renderConvPreflight, renderRemuxSignal, resetRemuxDrop, selectConvFile, setConvFmt, showSelectedToolFile, startConvert, startRemux, updateConvBtn, validateToolFile} from './media-tools.mjs';
 import {HISTORY_KEY, HISTORY_LIMIT, addToLocalHistory, clearHistory, getLocalHistory, loadHistory, reDownload, renderHomeActivity, saveLocalHistory} from './history.mjs';
-import {DESKTOP_PROMO_DISMISS_KEY, DESKTOP_PROMO_SESSION_KEY, bindDesktopReminder, closeDesktopPromo, initDesktopPromo, initializeApplication} from './bootstrap.mjs';
+import {initializeApplication} from './bootstrap.mjs';
 
 const legacyApi = {
   API, YOUTUBE_WEB_ENABLED, downloadThumbnail, createSocketClient, ensureSocket, scheduleSocketDisconnect, cancelBackendJob, NATIVE_HANDOFF_START_TIMEOUT_MS, NATIVE_TRANSFER_TIMEOUT_MS, waitForNativeTransfer, triggerNativeDownload, BLOB_SAVE_LIMIT, MAX_TOOL_FILE_BYTES, MEDIA_JOB_TIMEOUT_MS, PREPARED_TRANSFER_TIMEOUT_MS, PREPARED_TRANSFER_IDLE_MS, fetchMediaJob, handoffPreparedDownload,
@@ -31,7 +31,6 @@ const legacyApi = {
   CONFETTI_COLORS, fireConfetti, releasePendingBlob, saveFile, canShareSaveFile, canCopySaveFile, configureSaveModal, showSaveIssue, openSaveModal, openPreparedSaveModal, releaseUsedSaveLater, saveAction,
   openRemux, formatLocalFileSize, validateToolFile, showSelectedToolFile, resetRemuxDrop, renderRemuxSignal, handleRemuxFile, startRemux, handleRemuxDrop, openConvert, renderConvPreflight, setConvFmt, selectConvFile, handleConvFile, handleConvDrop, _updateConvBtn, updateConvBtn, startConvert, overlayReturnFocus, OVERLAY_FOCUSABLE,
   HISTORY_KEY, HISTORY_LIMIT, getLocalHistory, saveLocalHistory, addToLocalHistory, renderHomeActivity, loadHistory, clearHistory, reDownload,
-  DESKTOP_PROMO_SESSION_KEY, DESKTOP_PROMO_DISMISS_KEY, closeDesktopPromo, initDesktopPromo,
 };
 for (const [name,value] of Object.entries(legacyApi)) Object.defineProperty(window,name,{value,writable:true,configurable:true});
 for (const key of Object.keys(state)) Object.defineProperty(window,key,{get:()=>state[key],set:value=>{state[key]=value;},configurable:true});
@@ -50,5 +49,4 @@ bindModalKeyboard();
 bindModalState();
 bindClickRipple();
 initializeApplication();
-bindDesktopReminder();
 bindLanguageChanges();

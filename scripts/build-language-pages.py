@@ -48,7 +48,9 @@ class Translation(HTMLParser):
         line,col=self.getpos();return self.offsets[line-1]+col
     def handle_starttag(self,tag,attrs):
         a=dict(attrs);raw=self.get_starttag_text();start=self.position()
-        node={'tag':tag,'start':start,'raw':raw,'inner':start+len(raw),'blocked':tag in BLOCKED or any(n['blocked'] for n in self.stack),'fields':json.loads(a.get('data-l10n','{}')),'support_copy':a.get('data-support-copy'),'children':0}
+        protected_brand=tag=='span' and 'services-tag' in a.get('class','').split()
+        protected_format=tag=='option' and a.get('value','').lower() in {'mp3','mp4','webm','mkv','mov','avi','m4v','3gp','ts','wmv','m4a','aac','opus','ogg','flac','wav','aiff','wma'}
+        node={'tag':tag,'start':start,'raw':raw,'inner':start+len(raw),'blocked':tag in BLOCKED or any(n['blocked'] for n in self.stack),'protected':protected_brand or protected_format,'fields':json.loads(a.get('data-l10n','{}')),'support_copy':a.get('data-support-copy'),'children':0}
         if self.stack:self.stack[-1]['children']+=1
         if not node['blocked']:
             for key in ['alt','title','placeholder','aria-label','content']:
@@ -70,7 +72,7 @@ class Translation(HTMLParser):
     def handle_data(self,value):
         if not self.stack:return
         node=self.stack[-1];key='text:'+str(node['children']);node['children']+=1
-        if node['blocked']:return
+        if node['blocked'] or node['protected']:return
         original=node['fields'].get(key,value)
         translated=SUPPORT_COPY[self.lang].get(node['support_copy'],value) if node['support_copy'] and key=='text:0' else translate(original,self.lang)
         if translated==value:return
@@ -112,6 +114,11 @@ def metadata(source,route,lang):
     heading=body_text(re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)[1])
     if route in SEO_METADATA:
         title,description=SEO_METADATA[route][lang]
+    elif route=='/' and lang=='tr':
+        # The root URL is the shareable English entry point; other localized
+        # home routes keep their own language metadata.
+        title='Free Video Downloader: TikTok, Instagram | ZenithW'
+        description='Download video or audio from TikTok, Instagram, X and other supported sources. Explore the ZenithW web tools, Android and Windows apps.'
     elif route.startswith('/updates'):
         version=re.search(r'id="updBadge"[^>]*>(.*?)</span>',source,re.S)
         post=re.search(r'id="updPostTitle"[^>]*>(.*?)</h2>',source,re.S)
