@@ -10,18 +10,9 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
-  <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=flat-square&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=flat-square&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows%20downloads&amp;logo=windows11&amp;color=2563EB" alt="Windows GitHub release downloads"></a>
 </p>
-
-<p align="center">
-  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=PC%20downloads&amp;logo=github&amp;color=7C3AED" alt="PC GitHub release asset downloads, all releases"></a>
-  <a href="https://github.com/boranseasonnew/zenithw-android/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw-android/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android%20downloads&amp;logo=android&amp;color=2E7D32" alt="Android GitHub release asset downloads, all releases"></a>
-</p>
-
-<p align="center"><sub>Bộ đếm cộng lượt tải tệp của mọi bản phát hành GitHub, không phải người dùng duy nhất hay lượt cài từ Microsoft Store.</sub></p>
 
 <p align="center"><strong><a href="why_zenithw.md">✦ Vì sao có ZenithW? Đọc câu chuyện (tiếng Anh)</a></strong></p>
 
@@ -33,7 +24,35 @@ Dán liên kết được hỗ trợ, chọn định dạng rồi tải tệp. C
 
 [Zenith Type](https://zenithw.space/typing) có luyện gõ tiếng Thổ Nhĩ Kỳ/tiếng Anh, hồ sơ, bảng xếp hạng đã xác minh, đấu xếp hạng và phòng riêng. Tính năng trực tuyến cần tài khoản; luyện tập cục bộ thì không. Bảng WPM và Elo đấu xếp hạng đặt lại mỗi 30 ngày. Elo phòng riêng tách biệt và giữ lâu dài. Xem quy tắc, tùy chọn phòng và trạng thái triển khai trong [tài liệu Type](docs/TYPING.md).
 
-## Có gì mới trong web 17.1
+## Vì sao có ZenithW?
+
+Không gian media mã nguồn mở để tải xuống và xử lý media mà không cần tài khoản bắt buộc, thuê bao hay quảng cáo.
+
+## Tính năng
+
+- Tải media từ các nguồn được hỗ trợ bằng quy trình liên kết đơn giản.
+- Trích xuất và xử lý âm thanh từ media.
+- Chuyển đổi định dạng và remux luồng MKV/MP4 tương thích mà không mã hóa lại.
+- Chuyển đổi và thay đổi kích thước hình ảnh ngay trong trình duyệt.
+- Tách giọng hát và nhạc nền bằng Audio Separator.
+
+## Bắt đầu nhanh
+
+Sao chép kho mã nguồn và mở thư mục dự án:
+
+```bash
+git clone https://github.com/boranseasonnew/zenithw.git
+cd zenithw
+cp .env.example .env
+# Set SECRET_KEY in .env to a strong random value before starting.
+docker compose up -d --build
+```
+
+Sao chép `.env.example` thành `.env`, sau đó đặt `SECRET_KEY` thành một giá trị ngẫu nhiên mạnh.
+
+Build và khởi chạy các dịch vụ, sau đó mở `http://localhost:8080`.
+
+## Có gì mới trong web 17.2
 
 - **Trình [chuyển đổi hình ảnh](https://zenithw.space/vi/image-convert) mới:** chuyển đổi giữa JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI và nhiều định dạng khác. Bộ xử lý cục bộ hỗ trợ thêm định dạng.
 - **Đổi kích thước chính xác:** nhập chiều rộng và chiều cao tùy chỉnh, xem trước kết quả và kiểm soát kích thước đầu ra.
