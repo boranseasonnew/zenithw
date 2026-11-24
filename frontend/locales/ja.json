@@ -1598,7 +1598,7 @@
   "Servis listesini kapat": "サービス一覧を閉じる",
   "×": "×",
   "bilibili": "ビリビリ",
-  "bluesky": "青空",
+  "bluesky": "bluesky",
   "dailymotion": "デイリーモーション",
   "facebook": "フェイスブック",
   "pornhub": "ポルノハブ",
@@ -1828,7 +1828,7 @@
   "Ürün karşılaştırması": "製品比較",
   "vs": "対",
   "İki reklamsız indirme aracını platform kapsamı, toplu işlemler ve dönüştürme yetenekleri üzerinden karşılaştırın.": "プラットフォームのカバー範囲、一括トランザクション、変換機能に関して 2 つの広告なしダウンローダーを比較します。",
-  "ZW": "Z.W.",
+  "ZW": "ZW",
   "Hızlı karar": "素早い決断",
   "Bağlantı indirme, yerel medya araçları ve uygulama seçeneklerini birlikte değerlendir.": "リンク、ローカル メディア ツール、アプリケーション オプションを一緒にダウンロードすることを検討してください。",
   "Ayrıntılı değerlendirme": "詳細評価",
@@ -3833,5 +3833,12 @@
   "Geri bildiriminiz için teşekkürler. Bu sürüm, desteklenen platform adlarını ve arayüz ipuçlarını daha tutarlı hale getirmeye yönelik diğer düzeltmeleri de içeriyor.": "フィードバックをありがとうございます。このリリースには、対応プラットフォーム名と画面上の案内をより一貫させる改善も含まれています。",
   "Thanks for the feedback. This release also includes related refinements to keep supported-platform names and interface guidance consistent.": "フィードバックをありがとうございます。このリリースには、対応プラットフォーム名と画面上の案内をより一貫させる改善も含まれています。",
   "Vimeo downloads need a signed-in session": "Vimeoのダウンロードにはログインが必要です",
-  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "テストでは、このリンクにアクセスするため、現在の yt-dlp にはログイン済みの Vimeo セッションが必要でした。ZenithW のウェブサイトは Vimeo のログイン Cookie を使用できないため、ウェブからのダウンロードは失敗する場合があります。Windows と Android のアプリには内蔵ブラウザーがあります。そこで Vimeo にログインすると、yt-dlp が端末に保存された Cookie を利用できる可能性があります。Cookie は端末内に保存され、認証のため Vimeo に直接送信されます。ZenithW にはアップロードされません。この方法は未検証のため、動作を保証できません。今後も yt-dlp の更新を確認します。"
+  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "テストでは、このリンクにアクセスするため、現在の yt-dlp にはログイン済みの Vimeo セッションが必要でした。ZenithW のウェブサイトは Vimeo のログイン Cookie を使用できないため、ウェブからのダウンロードは失敗する場合があります。Windows と Android のアプリには内蔵ブラウザーがあります。そこで Vimeo にログインすると、yt-dlp が端末に保存された Cookie を利用できる可能性があります。Cookie は端末内に保存され、認証のため Vimeo に直接送信されます。ZenithW にはアップロードされません。この方法は未検証のため、動作を保証できません。今後も yt-dlp の更新を確認します。",
+  "Uptodown başvurusu reddedildi": "Uptodownへの申請は却下されました",
+  "Reddedildi": "却下",
+  "Uptodown, uygulamanın telif hakkıyla korunan veya üçüncü taraf haklarına tabi içerikleri indirmek için kullanılabileceği endişesiyle ZenithW’yi mağazasında yayımlamayı reddetti.": "Uptodownは、アプリが著作権または第三者の権利で保護されたコンテンツのダウンロードに使われる可能性への懸念を理由に、ZenithWの掲載を拒否しました。",
+  "Bu tanım ZenithW’nin ne olduğunu yansıtmıyor. ZenithW bir korsanlık hizmeti değil, açık kaynaklı bir medya çalışma alanı. İndirme, medya dönüştürme, remux, ses ayırma, GIF oluşturma ve diğer medya araçlarının yanında sunduğumuz özelliklerden yalnızca biri. ZenithW telifli medya dağıtmaz.": "この説明はZenithWの実態を表していません。ZenithWは海賊版サービスではなく、オープンソースのメディアワークスペースです。ダウンロードは機能の一つにすぎず、メディア変換、リマックス、音声分離、GIF作成などのツールも備えています。ZenithWは著作権で保護されたメディアを配布しません。",
+  "Bu nitelendirmeye katılmıyoruz; ancak Uptodown’un kararına saygı duyuyor ve itiraz etmiyoruz. Android sürümü doğrudan GitHub üzerinden indirilebilir.": "この評価には同意しませんが、Uptodownの判断を尊重し、異議申し立ては行いません。Android版は引き続きGitHubから直接入手できます。",
+  "Android sürümünü GitHub Releases üzerinden indir": "GitHub ReleasesからAndroid版をダウンロード",
+  "Döngüde oynat": "リピート再生"
 }

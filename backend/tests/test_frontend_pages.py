@@ -49,20 +49,13 @@ class StandaloneToolPageTests(unittest.TestCase):
         self.assertIn('class="services-popover"', source)
         self.assertFalse((FRONTEND / "services.html").exists())
 
-    def test_hidden_desktop_promo_never_blocks_navigation(self):
+    def test_removed_desktop_promo_leaves_youtube_overlay_styles(self):
         index = (FRONTEND / "index.html").read_text(encoding="utf-8")
         styles = (FRONTEND / "desktop-promo.css").read_text(encoding="utf-8")
-        promo = re.search(r'<div\b[^>]*\bid="desktopPromo"[^>]*>', index)
-        self.assertIsNotNone(promo)
-        classes = re.search(r'\sclass="([^"]*)"', promo[0])
-        self.assertIsNotNone(classes)
-        self.assertTrue({"overlay", "app-popup"}.issubset(classes[1].split()))
-        self.assertRegex(promo[0], r'\shidden(?=[\s=>])')
-        self.assertRegex(promo[0], r'\sinert(?=[\s=>])')
-        self.assertIn('aria-hidden="true"', promo[0])
-        hidden_rule = re.search(r'\.overlay\.app-popup\[\s*hidden\s*\]\s*\{([^}]*)\}', styles)
-        self.assertIsNotNone(hidden_rule)
-        self.assertRegex(hidden_rule[1], r'(?:^|;)\s*display\s*:\s*none(?:\s*!\s*important)?\s*(?:;|$)')
+        self.assertNotIn('id="desktopPromo"', index)
+        self.assertIn('id="youtubeAppOverlay"', index)
+        self.assertIn('class="overlay app-popup youtube-app-overlay"', index)
+        self.assertIn(".overlay.app-popup", styles)
 
     def test_about_routes_use_native_about_pages_without_cross_root_rewrites(self):
         redirects = (FRONTEND / "_redirects").read_text(encoding="utf-8")

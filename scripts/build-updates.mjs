@@ -42,6 +42,7 @@ const render = (release, index) => {
   const newer = index > 0 ? `<a class="upd-nav-link" href="${index === 1 ? '/updates' : '/updates/' + versions[index - 1] + '/'}"><span class="upd-nav-label">yeni sürüm</span>← ${versions[index - 1]}</a>` : '<span aria-hidden="true"></span>';
   const older = index < versions.length - 1 ? `<a class="upd-nav-link next" href="/updates/${versions[index + 1]}/"><span class="upd-nav-label">eski sürüm</span>${versions[index + 1]} →</a>` : '<span aria-hidden="true"></span>';
   return template
+    .replace(/<script src="\/version\.js\?v=[^"]+"(?: defer)?><\/script>/, `<script src="/version.js?v=${release.ver.replace(/^v/, '')}" defer></script>`)
     .replace(/<title id="pgTitle">.*?<\/title>/, `<title id="pgTitle">${escape(title)}</title>`)
     .replace(/<meta name="description" id="pgDesc" content="[^"]*">/, `<meta name="description" id="pgDesc" content="${escape(description)}">`)
     .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonical}">`)

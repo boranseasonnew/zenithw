@@ -1588,7 +1588,7 @@
   "Servis listesini kapat": "Đóng danh sách dịch vụ",
   "×": "×",
   "bilibili": "bilibili",
-  "bluesky": "bầu trời xanh",
+  "bluesky": "bluesky",
   "dailymotion": "chuyển động hàng ngày",
   "facebook": "facebook",
   "pornhub": "pornhub",
@@ -1819,7 +1819,7 @@
   "Ürün karşılaştırması": "So sánh sản phẩm",
   "vs": "so với",
   "İki reklamsız indirme aracını platform kapsamı, toplu işlemler ve dönüştürme yetenekleri üzerinden karşılaştırın.": "So sánh hai trình tải xuống không có quảng cáo về mức độ phù hợp của nền tảng, giao dịch hàng loạt và khả năng chuyển đổi.",
-  "ZW": "Z.W.",
+  "ZW": "ZW",
   "Hızlı karar": "quyết định nhanh chóng",
   "Bağlantı indirme, yerel medya araçları ve uygulama seçeneklerini birlikte değerlendir.": "Hãy cân nhắc việc tải xuống các liên kết, công cụ truyền thông địa phương và các tùy chọn ứng dụng cùng nhau.",
   "Ayrıntılı değerlendirme": "Đánh giá chi tiết",
@@ -3832,5 +3832,12 @@
   "Geri bildiriminiz için teşekkürler. Bu sürüm, desteklenen platform adlarını ve arayüz ipuçlarını daha tutarlı hale getirmeye yönelik diğer düzeltmeleri de içeriyor.": "Cảm ơn bạn đã góp ý. Bản phát hành này cũng có các cải tiến liên quan để tên nền tảng được hỗ trợ và hướng dẫn giao diện nhất quán hơn.",
   "Thanks for the feedback. This release also includes related refinements to keep supported-platform names and interface guidance consistent.": "Cảm ơn bạn đã góp ý. Bản phát hành này cũng có các cải tiến liên quan để tên nền tảng được hỗ trợ và hướng dẫn giao diện nhất quán hơn.",
   "Vimeo downloads need a signed-in session": "Cần đăng nhập để tải video từ Vimeo",
-  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "Kết quả thử nghiệm cho thấy yt-dlp hiện cần phiên Vimeo đã đăng nhập để truy cập liên kết này. Trang web ZenithW không thể dùng cookie đăng nhập Vimeo, nên tải xuống trên web có thể thất bại. Ứng dụng Windows và Android có trình duyệt tích hợp. Nếu bạn đăng nhập Vimeo trong đó, yt-dlp có thể sử dụng cookie được lưu trên thiết bị. Cookie vẫn ở trên thiết bị và được gửi trực tiếp đến Vimeo để xác thực, không được tải lên ZenithW. Chúng tôi chưa thử nghiệm cách này nên không thể đảm bảo sẽ hoạt động. Chúng tôi sẽ tiếp tục theo dõi các bản cập nhật yt-dlp."
+  "Our tests show that yt-dlp currently needs a signed-in Vimeo session to access this link. ZenithW's website cannot use Vimeo login cookies, so web downloads may fail. The Windows and Android apps include an embedded browser. If you sign in to Vimeo there, yt-dlp may be able to use cookies saved on your device. They stay on your device and are sent directly to Vimeo for authentication, not uploaded to ZenithW. We have not tested this flow, so it may not work. We will keep tracking yt-dlp updates.": "Kết quả thử nghiệm cho thấy yt-dlp hiện cần phiên Vimeo đã đăng nhập để truy cập liên kết này. Trang web ZenithW không thể dùng cookie đăng nhập Vimeo, nên tải xuống trên web có thể thất bại. Ứng dụng Windows và Android có trình duyệt tích hợp. Nếu bạn đăng nhập Vimeo trong đó, yt-dlp có thể sử dụng cookie được lưu trên thiết bị. Cookie vẫn ở trên thiết bị và được gửi trực tiếp đến Vimeo để xác thực, không được tải lên ZenithW. Chúng tôi chưa thử nghiệm cách này nên không thể đảm bảo sẽ hoạt động. Chúng tôi sẽ tiếp tục theo dõi các bản cập nhật yt-dlp.",
+  "Uptodown başvurusu reddedildi": "Hồ sơ Uptodown bị từ chối",
+  "Reddedildi": "Bị từ chối",
+  "Uptodown, uygulamanın telif hakkıyla korunan veya üçüncü taraf haklarına tabi içerikleri indirmek için kullanılabileceği endişesiyle ZenithW’yi mağazasında yayımlamayı reddetti.": "Uptodown đã từ chối phát hành ZenithW, với lý do lo ngại ứng dụng có thể được dùng để tải nội dung có bản quyền hoặc thuộc quyền của bên thứ ba.",
+  "Bu tanım ZenithW’nin ne olduğunu yansıtmıyor. ZenithW bir korsanlık hizmeti değil, açık kaynaklı bir medya çalışma alanı. İndirme, medya dönüştürme, remux, ses ayırma, GIF oluşturma ve diğer medya araçlarının yanında sunduğumuz özelliklerden yalnızca biri. ZenithW telifli medya dağıtmaz.": "Mô tả đó không phản ánh đúng bản chất của ZenithW. ZenithW không phải dịch vụ vi phạm bản quyền mà là một không gian làm việc đa phương tiện mã nguồn mở. Tải xuống chỉ là một trong nhiều tính năng, bên cạnh chuyển đổi phương tiện, remux, tách âm thanh, tạo GIF và các công cụ khác. ZenithW không phân phối nội dung có bản quyền.",
+  "Bu nitelendirmeye katılmıyoruz; ancak Uptodown’un kararına saygı duyuyor ve itiraz etmiyoruz. Android sürümü doğrudan GitHub üzerinden indirilebilir.": "Chúng tôi không đồng tình với cách mô tả này, nhưng tôn trọng quyết định của Uptodown và sẽ không kháng nghị. Bản Android vẫn có thể tải trực tiếp từ GitHub.",
+  "Android sürümünü GitHub Releases üzerinden indir": "Tải Android từ GitHub Releases",
+  "Döngüde oynat": "Phát lặp lại"
 }

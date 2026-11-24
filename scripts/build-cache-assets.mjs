@@ -1,7 +1,7 @@
 import { writeFileWithRetry as writeFileSync } from '../shared/build-files.mjs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +9,7 @@ const repository = fileURLToPath(new URL('../', import.meta.url));
 const frontend = join(repository, 'frontend');
 const output = join(frontend, 'cache-assets');
 const manifestPath = join(repository, 'scripts/cache-assets-manifest.json');
+const retentionPath = join(repository, 'scripts/cache-assets-retention.json');
 const check = process.argv.includes('--check');
 execFileSync(process.platform === 'win32' ? 'python' : 'python3',
   [join(repository, 'scripts/update_csp.py'), ...(check ? ['--check'] : [])], { stdio: 'inherit' });
@@ -90,12 +91,71 @@ for (const path of walk(frontend).filter(path => path.endsWith('.html'))) {
 }
 write(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 
+// Repair stale fingerprints in historical assets and any checked-in page that
+// still links to them.
+const fingerprintCorrections = new Map();
+for (const path of walk(output)) {
+  const filename = path.split(/[\\/]/).at(-1);
+  const match = /\.([a-f0-9]{12})\.[^.]+$/.exec(filename);
+  if (!match) continue;
+  const bytes = readFileSync(path);
+  const actual = hash(bytes).slice(0, 12);
+  if (actual === match[1]) continue;
+  const correctedFilename = filename.replace('.' + match[1] + '.', '.' + actual + '.');
+  const correctedPath = join(dirname(path), correctedFilename);
+  if (existsSync(correctedPath) && !readFileSync(correctedPath).equals(bytes)) {
+    throw new Error('Fingerprint repair would overwrite different content: ' + correctedPath);
+  }
+  write(correctedPath, bytes);
+  const oldUrl = '/cache-assets/' + filename;
+  fingerprintCorrections.set(oldUrl, '/cache-assets/' + correctedFilename);
+  changed.push(relative(repository, path).replaceAll('\\', '/'));
+  if (!check) rmSync(path);
+}
+if (fingerprintCorrections.size) {
+  for (const path of walk(frontend).filter(path => path.endsWith('.html'))) {
+    let text = readFileSync(path, 'utf8');
+    for (const [oldUrl, correctedUrl] of fingerprintCorrections) text = text.replaceAll(oldUrl, correctedUrl);
+    write(path, text);
+  }
+}
+
+// Retain each locale's current and two previous catalog fingerprints. A
+// checked-in history keeps the selection deterministic in local and CI builds.
+const localeLanguages = ['tr', 'en', 'fr', 'de', 'ru', 'vi', 'zh', 'ja'];
+const previousRetention = existsSync(retentionPath) ? JSON.parse(readFileSync(retentionPath, 'utf8')) : {};
+const localeRetention = {};
+const retainedLocaleAssets = new Set();
+for (const language of localeLanguages) {
+  const source = 'locales/' + language + '.json';
+  const candidates = [manifest[source].url, ...(previousRetention[language] || []), previous[source]?.url]
+    .map(url => fingerprintCorrections.get(url) || url)
+    .filter((url, index, all) => typeof url === 'string' && all.indexOf(url) === index);
+  const valid = candidates.filter(url => new RegExp('^/cache-assets/' + language + '\\.[a-f0-9]{12}\\.json$').test(url));
+  if (!valid.length || valid[0] !== manifest[source].url) throw new Error('Invalid locale asset retention history for ' + language);
+  localeRetention[language] = valid.slice(0, 3);
+  localeRetention[language].forEach(url => retainedLocaleAssets.add(url));
+}
+write(retentionPath, JSON.stringify(localeRetention, null, 2) + '\n');
+const staleLocaleAssets = new Set();
+for (const path of walk(output)) {
+  const url = '/' + relative(frontend, path).replaceAll('\\', '/');
+  if (!/^\/cache-assets\/(tr|en|fr|de|ru|vi|zh|ja)\.[a-f0-9]{12}\.json$/.test(url) || retainedLocaleAssets.has(url)) continue;
+  staleLocaleAssets.add(path);
+  changed.push(relative(repository, path).replaceAll('\\', '/'));
+  if (!check) rmSync(path);
+}
+
 const immutable = new Set(Object.values(manifest).map(entry => entry.url));
+for (const url of retainedLocaleAssets) immutable.add(url);
+for (const url of fingerprintCorrections.values()) immutable.add(url);
 if (existsSync(output)) {
   for (const path of walk(output)) {
+    if (staleLocaleAssets.has(path)) continue;
     const filename = path.split(/[\\/]/).at(-1);
     const match = /\.([a-f0-9]{12})\.[^.]+$/.exec(filename);
     if (!match || hash(readFileSync(path)).slice(0, 12) !== match[1]) {
+      if (fingerprintCorrections.has('/cache-assets/' + filename)) continue;
       throw new Error('Unsafe file in the immutable output directory: ' + path);
     }
     immutable.add('/' + relative(frontend, path).replaceAll('\\', '/'));

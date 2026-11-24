@@ -31,6 +31,34 @@ async function waveformPeaksAsync(channels, points = 400, signal) {
   return peaks;
 }
 
+// shared/audio-repeat.mjs
+function createRepeatController() {
+  let enabled = false, wasPlaying = false, lastMode = null;
+  return {
+    toggle() {
+      enabled = !enabled;
+      return enabled;
+    },
+    cancel() {
+      wasPlaying = false;
+      lastMode = null;
+    },
+    observe({ playing, vocals, instrumental, currentTime, duration }) {
+      if (playing) {
+        const mode2 = vocals && instrumental ? "both" : vocals ? "vocals" : instrumental ? "instrumental" : null;
+        if (mode2) {
+          wasPlaying = true;
+          lastMode = mode2;
+        }
+        return null;
+      }
+      const mode = enabled && wasPlaying && duration > 0 && currentTime >= duration ? lastMode : null;
+      wasPlaying = false;
+      return mode;
+    }
+  };
+}
+
 // shared/audio-export.mjs
 function writeFrames(view, channels, start, end) {
   for (let i = start; i < end; i++) for (let channel = 0; channel < 2; channel++) {
@@ -133,25 +161,6 @@ async function zipWavStems(result, name = "audio", signal, onProgress) {
   view.setUint32(12, directorySize, true);
   view.setUint32(16, offset, true);
   return new Blob([...localParts, ...directory, end], { type: "application/zip" });
-}
-
-// shared/audio-repeat.mjs
-function createRepeatController() {
-  let enabled = false, wasPlaying = false, lastMode = null;
-  return {
-    toggle() { enabled = !enabled; return enabled; },
-    cancel() { wasPlaying = false; lastMode = null; },
-    observe({ playing, vocals, instrumental, currentTime, duration }) {
-      if (playing) {
-        const mode = vocals && instrumental ? "both" : vocals ? "vocals" : instrumental ? "instrumental" : null;
-        if (mode) { wasPlaying = true; lastMode = mode; }
-        return null;
-      }
-      const mode = enabled && wasPlaying && duration > 0 && currentTime >= duration ? lastMode : null;
-      wasPlaying = false;
-      return mode;
-    }
-  };
 }
 
 // shared/lilith-studio.ts
@@ -259,7 +268,7 @@ function mountStudio(root2, overrides = {}, options = {}) {
     if (!isSolid) svg.setAttribute("stroke-width", "1.6");
     svg.setAttribute("aria-hidden", "true");
     const p = document.createElementNS(svg.namespaceURI, "path");
-    p.setAttribute("d", { upload: "M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4", download: "M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4", vocals: "M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8", instrumental: "M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z", shield: "m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6", play: "M8 5v14l11-7z", pause: "M6 19h4V5H6v14zm8-14v14h4V5h-4z", rewind: "M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z", forward: "M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z", repeat: "M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3" }[kind]);
+    p.setAttribute("d", { upload: "M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4", download: "M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4", vocals: "M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0V5Zm-3 6v1a6 6 0 0 0 12 0v-1m-6 7v4m-4 0h8", instrumental: "M9 18V6l11-3v12M9 7l11-3M9 18c0 2-5 4-5 1s5-4 5-1Zm11-3c0 2-5 4-5 1s5-4 5-1Z", shield: "m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5l8-3Zm-4 9 3 3 5-6", play: "M8 5v14l11-7z", pause: "M6 19h4V5H6v14zm8-14v14h4V5h-4z", rewind: "M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z", forward: "M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z", repeat: "m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h18M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3" }[kind]);
     svg.append(p);
     return svg;
   };
@@ -605,7 +614,10 @@ function mountStudio(root2, overrides = {}, options = {}) {
         repeatRestarting = true;
         void player.play(repeatMode).then(() => {
           repeatRestarting = false;
-          if (!destroyed && result === value) { cancelAnimationFrame(frame); tick(); }
+          if (!destroyed && result === value) {
+            cancelAnimationFrame(frame);
+            tick();
+          }
         }).catch((error) => {
           repeatRestarting = false;
           console.error("[ZenithW audio preview] Repeat failed:", error);
@@ -976,15 +988,16 @@ var api = window.ZWLanguage;
 if (api) await api.ready;
 var root = document.getElementById("studio");
 var strings = Object.fromEntries(Object.entries(ENGLISH).map(([key, text]) => [key, api?.translate(text) ?? text]));
-var audioLocale = document.documentElement.dataset.staticLanguage || document.documentElement.lang?.slice(0, 2) || "en";
-strings.repeat = {
-  tr: "Döngüde oynat",
+var repeatLabels = {
+  tr: "D\xF6ng\xFCde oynat",
   en: "Repeat playback",
   de: "Wiedergabe wiederholen",
-  fr: "Répéter la lecture",
-  ru: "Повторять воспроизведение",
-  vi: "Phát lặp lại",
-  zh: "循环播放",
-  ja: "リピート再生"
-}[audioLocale] || "Repeat playback";
+  fr: "R\xE9p\xE9ter la lecture",
+  ru: "\u041F\u043E\u0432\u0442\u043E\u0440\u044F\u0442\u044C \u0432\u043E\u0441\u043F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0438\u0435",
+  vi: "Ph\xE1t l\u1EB7p l\u1EA1i",
+  zh: "\u5FAA\u73AF\u64AD\u653E",
+  ja: "\u30EA\u30D4\u30FC\u30C8\u518D\u751F"
+};
+var audioLocale = document.documentElement.dataset.staticLanguage || document.documentElement.lang?.slice(0, 2) || "en";
+strings.repeat = repeatLabels[audioLocale] ?? ENGLISH.repeat;
 mountStudio(root, strings, { workerUrl: "/audio-separator-worker.js?v=fb3ef8db479a", exportWorkerUrl: "/audio-export-worker.js?v=8e89dd115571" });

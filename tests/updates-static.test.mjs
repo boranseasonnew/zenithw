@@ -42,10 +42,12 @@ test('web 17.2 is the latest release and preserves v17.1 and v17.0 as archives',
       assert.ok(latest.includes(v172Copy[4+section*2][index]),language+' section copy '+section);
     }
     assert.match(latest,/<option value="v17\.2" selected>/);
-    assert.match(latest,/href="\/updates\/v17\.0\/"/);
+    assert.match(latest,new RegExp('href="/'+prefix+'updates/v17\\.0/"'));
     assert.match(latest,/updates-core\.[a-f0-9]{12}\.js/);
     if(language!=='tr')assert.match(latest,/site-language\.[a-f0-9]{12}\.js/);
     assert.match(latest,/version\.js\?v=17\.2/);
+    const localizedV170=read(prefix+'updates/v17.0/index.html');
+    assert.match(localizedV170,new RegExp('rel="canonical" href="https://zenithw\\.space/'+prefix+'updates/v17\\.0/"'));
     const archived=read(prefix+'updates/v17.1/index.html');
     assert.match(archived,/id="updBadge"[^>]*>v17\.1</);
     assert.match(archived,new RegExp('rel="canonical" href="https://zenithw\\.space/'+prefix+'updates/v17\\.1/"'));
@@ -58,6 +60,7 @@ test('web 17.2 is the latest release and preserves v17.1 and v17.0 as archives',
   const archivedV170=read('updates/v17.0/index.html');
   assert.match(archivedV170,/id="updBadge"[^>]*>v17\.0</);
   assert.match(archivedV170,/rel="canonical" href="https:\/\/zenithw\.space\/updates\/v17\.0\//);
+  assert.match(read('updates/v17.2/index.html'),/version\.js\?v=17\.2"\s+defer>/);
   assert.match(read('site-language.js'),/updates\/v17\.1\//);
   const sitemap=read('sitemap.xml');
   for(const language of languages){

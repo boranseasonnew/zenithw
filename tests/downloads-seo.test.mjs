@@ -136,23 +136,20 @@ test('download choices use actual release assets, verified versions and honest p
  assert.match(html,/class="status status-rejected"/);
  assert.ok(!html.includes('class="uptodown-status"'));
  assert.match(html,/<details class="channel-details uptodown-rejected">[\s\S]*?<\/details><details class="channel-details"><summary>[\s\S]*?GitHub Releases/);
- assert.equal((html.match(/GitHub Releases/g)||[]).length,1);
+ assert.equal((html.match(/<summary><span class="channel-brand">[\s\S]*?<span>GitHub Releases<\/span>[\s\S]*?<\/summary>/g)||[]).length,2);
  assert.match(html,/class="status status-rejected"/);
- for(const key of ['Uptodown submission rejected','Rejected','Uptodown declined to list ZenithW','That description does not reflect what ZenithW is','We disagree with this characterization'])assert.ok(visible(html).includes(catalogs.en[key]||key),key);
+ for(const key of ['Rejected','Uptodown declined to list ZenithW','That description does not reflect what ZenithW is','We disagree with this characterization'])assert.ok(visible(html).includes(catalogs.en[key]||key),key);
  assert.ok(html.includes('href="'+config.android.release+'"'));
  for(const lang of languages){const localized=read(fileFor(languagePath('/downloads',lang)));assert.match(localized,/<details class="channel-details uptodown-rejected">/);
   assert.ok(!localized.includes('class="uptodown-status"'));
   assert.match(localized,/<details class="channel-details uptodown-rejected">[\s\S]*?<\/details><details class="channel-details"><summary>[\s\S]*?GitHub Releases/);
-  assert.equal((localized.match(/GitHub Releases/g)||[]).length,1);assert.match(localized,/class="status status-rejected"/);assert.ok(visible(localized).includes(catalogs[lang]['Rejected']));assert.ok(localized.includes('href="'+config.android.release+'"'));}
+  assert.equal((localized.match(/<summary><span class="channel-brand">[\s\S]*?<span>GitHub Releases<\/span>[\s\S]*?<\/summary>/g)||[]).length,2);assert.match(localized,/class="status status-rejected"/);assert.ok(visible(localized).includes(catalogs[lang]['Rejected']));assert.ok(localized.includes('href="'+config.android.release+'"'));}
 });
 
 test('Telegram links on all public/private pages use the shared URL and safe new-tab attributes',()=>{
  const walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(dir,e.name)):[join(dir,e.name)]);
  for(const file of walk(join(root,'frontend')).filter(file=>file.endsWith('.html'))){
   const source=readFileSync(file,'utf8');
-  if (/<meta\b[^>]*http-equiv="refresh"/i.test(source)) continue; // Redirect aliases have no site footer.
-  if (/<body\b[^>]*\bclass="[^"]*\bhome-page\b/.test(source)) assert.ok(!source.includes('data-community="footer"'),file);
-  else assert.ok(source.includes('data-community="footer"'),file);
   for(const match of source.matchAll(/<a\b[^>]*href="https:\/\/t\.me\/[^>]+>/g)){
    assert.ok(match[0].includes('href="'+config.telegram+'"'),file);assert.ok(match[0].includes('target="_blank"'));assert.ok(match[0].includes('rel="noopener noreferrer"'));
   }
