@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="28" role="img" aria-label="Web v17.2">
+  <title>Web v17.2</title>
+  <rect width="150" height="28" rx="3" fill="#7C3AED"/>
+  <path fill="#6D28D9" d="M3 0h48v28H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3z"/>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,sans-serif" font-size="11" font-weight="600">
+    <text x="26" y="18.5">WEB</text>
+    <text x="99" y="18.5">v17.2</text>
+  </g>
+</svg>
