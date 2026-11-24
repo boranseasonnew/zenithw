@@ -48,7 +48,11 @@ cp .env.example .env
 
 `.env.example` を `.env` にコピーし、`SECRET_KEY` を強力なランダム値に設定します。
 
-サービスをビルドして起動し、`http://localhost:8080` を開きます。
+```bash
+docker compose up -d --build
+```
+
+ブラウザで `http://localhost:8080` を開きます：
 
 ## Web 17.2の新機能
 
