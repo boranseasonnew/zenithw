@@ -10,18 +10,9 @@
 </p>
 
 <p align="center">
-  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.1-7C3AED?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.1"></a>
-  <a href="https://github.com/boranseasonnew/zenithw/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows&amp;logo=windows11&amp;color=2563EB" alt="Windows latest release"></a>
-  <a href="https://github.com/boranseasonnew/zenithw-android/releases/latest"><img src="https://img.shields.io/github/v/release/boranseasonnew/zenithw-android?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android&amp;logo=android&amp;color=2E7D32" alt="Android latest release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--only-64748B?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white" alt="AGPL-3.0-only license"></a>
+  <a href="https://zenithw.space"><img src="https://img.shields.io/badge/Web-v17.2-7C3AED?style=flat-square&amp;labelColor=151922&amp;logoColor=white&amp;logo=html5" alt="ZenithW Web v17.2"></a>
+  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=flat-square&amp;labelColor=151922&amp;logoColor=white&amp;label=Windows%20downloads&amp;logo=windows11&amp;color=2563EB" alt="Windows GitHub release downloads"></a>
 </p>
-
-<p align="center">
-  <a href="https://github.com/boranseasonnew/zenithw/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=PC%20downloads&amp;logo=github&amp;color=7C3AED" alt="PC GitHub release asset downloads, all releases"></a>
-  <a href="https://github.com/boranseasonnew/zenithw-android/releases"><img src="https://img.shields.io/github/downloads/boranseasonnew/zenithw-android/total?style=for-the-badge&amp;labelColor=151922&amp;logoColor=white&amp;label=Android%20downloads&amp;logo=android&amp;color=2E7D32" alt="Android GitHub release asset downloads, all releases"></a>
-</p>
-
-<p align="center"><sub>Счётчики суммируют загрузки файлов всех выпусков GitHub, а не уникальных пользователей или установки из Microsoft Store.</sub></p>
 
 <p align="center"><strong><a href="why_zenithw.md">✦ Почему ZenithW? История проекта (на английском)</a></strong></p>
 
@@ -33,7 +24,35 @@ ZenithW — открытый инструмент для загрузки вид
 
 [Zenith Type](https://zenithw.space/typing) предлагает тренировку печати на турецком/английском, профили, проверенные рейтинги, рейтинговые дуэли и приватные комнаты. Для онлайн-функций нужна учётная запись; для локальной тренировки — нет. Рейтинги WPM и Elo рейтинговых дуэлей сбрасываются каждые 30 дней. Приватный Elo хранится отдельно и не сбрасывается. Правила, настройки комнат и статус развёртывания описаны в [документации Type](docs/TYPING.md).
 
-## Что нового в веб-версии 17.1
+## Почему ZenithW?
+
+Открытая медиаплатформа для скачивания и обработки файлов без обязательной учётной записи, подписки и рекламы.
+
+## Возможности
+
+- Скачивание медиа из поддерживаемых источников по простой ссылке.
+- Извлечение и обработка аудио из медиафайлов.
+- Преобразование форматов и remux совместимых потоков MKV/MP4 без перекодирования.
+- Локальное преобразование и изменение размера изображений в браузере.
+- Разделение вокала и инструментала с помощью Audio Separator.
+
+## Быстрый старт
+
+Клонируйте репозиторий и перейдите в каталог проекта:
+
+```bash
+git clone https://github.com/boranseasonnew/zenithw.git
+cd zenithw
+cp .env.example .env
+# Set SECRET_KEY in .env to a strong random value before starting.
+docker compose up -d --build
+```
+
+Скопируйте `.env.example` в `.env` и задайте для `SECRET_KEY` надёжное случайное значение.
+
+Соберите и запустите сервисы, затем откройте `http://localhost:8080`.
+
+## Что нового в веб-версии 17.2
 
 - **Новый [конвертер изображений](https://zenithw.space/ru/image-convert):** преобразование между форматами JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA, QOI и другими. Локальный движок поддерживает дополнительные форматы.
 - **Точное изменение размера:** задавайте собственную ширину и высоту, просматривайте результат и контролируйте размеры выходного изображения.
