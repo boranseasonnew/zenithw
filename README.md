@@ -54,14 +54,13 @@ Open `http://localhost:8080` in your browser:
 
 ## What's new in web 17.2
 
-- **New [Image Converter](https://zenithw.space/image-convert):** convert images between formats including JPEG, PNG, WebP, AVIF, TIFF, BMP, TGA and QOI. More formats are supported by the local processing engine.
-- **Resize images precisely:** enter custom width and height values, preview the result and keep control over the output dimensions.
-- **A redesigned [Audio Separator](https://zenithw.space/audio-separator):** a refreshed studio interface makes choosing files, working with separated vocals and instrumentals, previewing audio and exporting results clearer.
-- **Eight-language coverage:** the Image Converter interface and its accessibility labels are localized across all eight website languages. Image conversion and resizing run locally in your browser.
-- Existing media tools remain available, including remuxing compatible MKV/MP4 streams without re-encoding.
+- **Vimeo disabled on the public web app:** support was removed because some Vimeo links require cookies and compatibility is inconsistent with yt-dlp.
+- **Translation fixes:** format names such as AVI and platform names such as Rumble are no longer incorrectly translated.
+- **Settings shortcut fixed:** the download panel now opens the relevant Video settings instead of the Appearance tab.
+- **Localized SEO metadata:** page titles and social previews now use the correct language for each site locale.
+- **App promotion popup removed:** it no longer interrupts users while they are entering a link.
 
 Windows and Android keep their own independent version numbers; this release label refers to the web version.
-
 ## Project
 
 - [Web interface](frontend/) and [API](backend/)
