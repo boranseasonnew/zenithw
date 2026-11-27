@@ -23,7 +23,7 @@ bgutil-ytdlp-pot-provider==2.0.1
 # çalışır, ama brotli/mutagen/pycryptodomex/websockets olmadan yt-dlp bazı
 # durumlarda sessizce daha yavaş/eksik code path'lere düşüyor.
 brotli==1.2.1
-mutagen==1.47.0
+mutagen==1.48.1
 pycryptodomex==3.21.0
 websockets==15.0.1
 psutil==7.0.0
